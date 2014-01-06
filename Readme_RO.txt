@@ -57,6 +57,9 @@ Changelog:
 v3 -- \/
 *Switched to SFJackBauer's RealEngines. Added partial B9, CSS, and ISS support from that pack.
 *Added Sum Dum Heavy Industries Service Module support
+*Added modular RCS support to KW, AIES, and RLA
+*Added KW battery support
+*Added some rescaled KW fairings
 *Added by redde: Fustek station parts rescaling (for 0.03.5a)
 *Added by jrandom: realchutes patch, ALCOR rescale, Nothke's Service Components rescale, additional fairing rings.
 *Added by amo28: NFPP solar panel support
