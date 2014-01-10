@@ -56,14 +56,16 @@ Note that only the two stack probes (now 2m and 3m) have much in the way of torq
 Changelog:
 v3 -- \/
 *Switched to SFJackBauer's RealEngines. Added partial B9, CSS, and ISS support from that pack.
-*Added Sum Dum Heavy Industries Service Module support
+*Sum Dum Heavy Industries Service Module support
 *Added modular RCS support to KW, AIES, and RLA
-*Added KW battery support
-*Added some rescaled KW fairings
+*KW battery support
+*Added rescaled KW fairings with realistic masses
+*Finished the Squad pods (lander cans, cupola)
 *Added by redde: Fustek station parts rescaling (for 0.03.5a)
 *Added by jrandom: realchutes patch, ALCOR rescale, Nothke's Service Components rescale, additional fairing rings.
 *Added by amo28: NFPP solar panel support
-*Added by NathanKell and Dragon01: partial FASA support (see above).
+*Added by SRFirefox: Hitchhiker and Lab rescale
+*Added by dlrk: 2M Clamp-O-Tron and Shielded Clamp-O-Tron
 
 v2 -- \/
 *Included missing 0.625m heatshield fix for DRE
