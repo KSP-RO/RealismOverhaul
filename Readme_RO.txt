@@ -1,7 +1,4 @@
-This mod is by NathanKell and Medieval Nerd with contributions from SFJackBauer, jrandom, and SRFirefox.
-It is a partial successor to the KATO Engines patch for MFSC, it just featuers tons more now.
-It grew out of the Realism Overhaul Dev thread.
-It supercedes any "NKReal" patch I released on the RSS thread.
+This mod is by NathanKell and Medieval Nerd with engines by SFJackBauer
 
 License CC-BY-SA
 
@@ -10,18 +7,20 @@ Module Manager is required for RO to work.
 
 INSTALL:
 1. Install required mods, updating as necessary
-2. Unzip this archive to KSP/GameData.
+2. Remove any existing RealismOverhaul folder in KSP/GameData/ and any existing SFJBRealEngines folder in KSP/GameData/
+3. Unzip this archive to KSP/GameData.
 ========================================
 
 This is a set of ModuleManager tweaks and part rescales for a 100% human-scale KSP.
 
 Requires:
 Real Solar System (else why use this?)
-Real Fuels v4+
-Stretchy SRB v8+ (or you won't have the right size tanks)
+Real Fuels v4.1+
+Stretchy SRB v8.1+ (or you won't have the right size tanks)
 Deadly Reentry v4.2+ (for the heatshields)
 Ferram Aerospace Research (made by the amazing ferram4)
 RealChutes (by stupid_chris)
+Engine Ignitor (by HoneyFox)
 
 Best with:
 Medieval Nerd's Realistic Tech Progression
@@ -38,7 +37,6 @@ BT Engine Pack (Merlin 1D)
 F-1 Engine replica (need to remove the space from the partName though)
 KerbX (for SpaceX engines)
 RLA Stockalike alternative models (Shuttle OMS)
-FASA: Gemini, Big Gemini (mostly), Titan II GLV, Titan IIIC, Mercury, Atlas MALV (rest coming).
 
 Changes:
 *New size system: 0.5m, 1m, 2m, 3m, etc.
