@@ -20,7 +20,7 @@ Stretchy SRB v8.1+ (or you won't have the right size tanks)
 Deadly Reentry v4.2+ (for the heatshields)
 Ferram Aerospace Research (made by the amazing ferram4)
 RealChutes (by stupid_chris)
-Engine Ignitor (by HoneyFox)
+Engine Ignitor (by HoneyFox). NOTE: You MUST delete all cfg files in the root EngineIgnitor folder after you install Engine Ignitor.
 
 Best with:
 Medieval Nerd's Realistic Tech Progression
