@@ -70,6 +70,7 @@ v4 -- \/
 *Remove FASA config (handled by RedAV8R)
 *Removed inbuilt support for RealEngines
 *Changed scaling method for likely-to-be-root parts
+*Add community rescales (broman [Porkworks habs], amo28 [KOSMOS Salyut], Phredward [10m heatshield, docking ports])
 
 v3 -- \/
 *Switched to SFJackBauer's RealEngines. Added partial B9, CSS, and ISS support from that pack.
