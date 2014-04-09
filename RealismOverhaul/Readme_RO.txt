@@ -69,6 +69,7 @@ v4 -- \/
 *Add missing KW RCS
 *Remove FASA config (handled by RedAV8R)
 *Removed inbuilt support for RealEngines
+*Changed scaling method for likely-to-be-root parts
 
 v3 -- \/
 *Switched to SFJackBauer's RealEngines. Added partial B9, CSS, and ISS support from that pack.
