@@ -1,8 +1,8 @@
-This mod is maintained by NathanKell with contributions from many
+This mod is maintained by NathanKell with contributions from many.
 
 License CC-BY-SA
 
-Also included: Module Manager (by sarbian, based on ialdabaoth's work). See Module Manager thread for details and license and source: http://http://forum.kerbalspaceprogram.com/threads/55219
+Also included: Module Manager (by sarbian, based on ialdabaoth's work). See Module Manager thread for details and license and source: http://forum.kerbalspaceprogram.com/threads/55219
 Module Manager is required for RO to work.
 
 INSTALL:
@@ -23,6 +23,7 @@ Deadly Reentry v4.6+ (for the heatshields)
 Ferram Aerospace Research (made by the amazing ferram4)
 RealChutes (by stupid_chris)
 Engine Ignitor (by HoneyFox)
+ModuleRCSFX by ialdabaoth
 
 Best with:
 Medieval Nerd's Realistic Tech Progression Lite tech tree (note: requires RftSEngines, not RealEngines)
@@ -64,6 +65,15 @@ Probes: the Squad probes. AIES probes have electrical charge fixed but neither r
 Note that only the two stack probes (now 2m and 3m) have much in the way of torque; even then you'll want to bring RCS. Everything else doesn't have any torque to speak of.
 
 Changelog:
+v5 -- \/
+*Moved WAC Corporal and V-2 parts to RPL; added in Engine Ignitor and throttle-limiting support
+*Merged RedAV8R's FASA patches
+*Merged brooklyn666's RT2 patches
+*Updated 2.5m heatshield title for clarity
+*Fix Proc Fairing node sizes
+*Switched to ModuleRCSFX for RCS thrusters. Now supports bipropellant RCS!
+*Updated RealChute integration with new parts (thanks stupid_chris!)
+
 v4 -- \/
 *Fix typo for RTG, Stayputnik, WAC probe core, AIES
 *Add missing KW RCS
