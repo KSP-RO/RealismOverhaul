@@ -17,7 +17,7 @@ This is a set of ModuleManager tweaks and part rescales for a 100% human-scale K
 
 Requires:
 Real Solar System (else why use this?)
-Real Fuels v5.1+
+Real Fuels v5.2+
 Stretchy SRB v9+ OR Procedural Parts (or you won't have the right size tanks)
 Deadly Reentry v4.6+ (for the heatshields)
 Ferram Aerospace Research (made by the amazing ferram4)
@@ -45,6 +45,7 @@ SDHI
 Fustek Parts Expansion
 NFPP Solar Panels
 PorkWorks Inflatable Habs
+FASA (via RedAV8R's patches, included here.)
 
 Engine Support:
 Realism Overhaul requires the selection of an Engine pack. The two suggested packs (pick one) are either SFJackBauer's RealEngines pack (which gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2) and my Reaching for the Stars pack, which gives engines "realistic" stats informed by real-world engines without being clones.
@@ -67,12 +68,13 @@ Note that only the two stack probes (now 2m and 3m) have much in the way of torq
 Changelog:
 v5 -- \/
 *Moved WAC Corporal and V-2 parts to RPL; added in Engine Ignitor and throttle-limiting support
-*Merged RedAV8R's FASA patches
+*Merged RedAV8R's FASA patches (maintained by RedAV8R)
 *Merged brooklyn666's RT2 patches
 *Updated 2.5m heatshield title for clarity
 *Fix Proc Fairing node sizes
 *Switched to ModuleRCSFX for RCS thrusters. Now supports bipropellant RCS!
 *Updated RealChute integration with new parts (thanks stupid_chris!)
+*Will automatically set correct FAR settings (0.13.2+)
 
 v4 -- \/
 *Fix typo for RTG, Stayputnik, WAC probe core, AIES
