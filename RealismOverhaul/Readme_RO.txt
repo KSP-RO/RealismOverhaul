@@ -7,10 +7,9 @@ Module Manager is required for RO to work.
 
 INSTALL:
 1. Install required mods, updating as necessary
-2. Remove any existing RealismOverhaul folder in KSP/GameData/
+2. Remove any existing RealismOverhaul or RedAV8R folder in KSP/GameData/
 3. Unzip this archive to KSP/GameData.
-4. Open GameData and open the FerramAerospaceResearch folder, then Plugins, then PluginData, then FerramAerospaceResearch, open config.xml in Notepad (or any text editor), find the attachNodeDiameterFactor line and change 1.25 to 1.0
-5. Pick and install an engine configs pack (see below)
+4. Pick and install an engine configs pack (see below)
 ========================================
 
 This is a set of ModuleManager tweaks and part rescales for a 100% human-scale KSP.
@@ -24,10 +23,11 @@ Ferram Aerospace Research (made by the amazing ferram4)
 RealChutes v1.1+ (by stupid_chris)
 Engine Ignitor (by HoneyFox)
 ModuleRCSFX by ialdabaoth
+Advanced Jet Engine by camlost
 
 Best with:
 Medieval Nerd's Realistic Tech Progression Lite tech tree (note: requires RftSEngines, not RealEngines)
-RemoteTech 2 and brooklyn666's antenna ranges (see post 2 in the Realism Overhaul thread)
+RemoteTech 2
 Procedural Fairings
 Supported parts packs
 Realism patches for those packs (see post 2 in the Realism Overhaul thread)
