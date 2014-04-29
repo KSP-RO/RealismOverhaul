@@ -21,7 +21,7 @@ Real Fuels v5.2+
 Stretchy SRB v9+ OR Procedural Parts (or you won't have the right size tanks)
 Deadly Reentry v4.6+ (for the heatshields)
 Ferram Aerospace Research (made by the amazing ferram4)
-RealChutes (by stupid_chris)
+RealChutes v1.1+ (by stupid_chris)
 Engine Ignitor (by HoneyFox)
 ModuleRCSFX by ialdabaoth
 
