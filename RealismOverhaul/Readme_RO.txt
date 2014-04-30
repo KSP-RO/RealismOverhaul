@@ -2,7 +2,7 @@ This mod is maintained by NathanKell with contributions from many.
 
 License CC-BY-SA
 
-Also included: Module Manager (by sarbian and ialdabaoth's work). See Module Manager thread for details and license and source: http://forum.kerbalspaceprogram.com/threads/55219
+Also included: Module Manager (by sarbian and ialdabaoth). See Module Manager thread for details and license and source: http://forum.kerbalspaceprogram.com/threads/55219
 Module Manager is required for RO to work.
 
 INSTALL:
