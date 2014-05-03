@@ -68,6 +68,11 @@ Probes: the Squad probes. AIES probes have electrical charge fixed but neither r
 Note that only the two stack probes (now 2m and 3m) have much in the way of torque; even then you'll want to bring RCS. Everything else doesn't have any torque to speak of.
 
 Changelog:
+v5.1  \/
+*Updates to FASA patches by RedAV8R
+*Fixed heatshield tangents not being set, leading to unexpected behavior
+*Add patch for MissionController (patches fuels and engine costs to be 1k = $1000 USD 1960)
+
 v5 -- \/
 *Moved WAC Corporal and V-2 parts to RPL; added in Engine Ignitor and throttle-limiting support
 *Merged RedAV8R's FASA patches (maintained by RedAV8R)
