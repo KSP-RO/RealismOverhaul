@@ -72,6 +72,9 @@ v5.1  \/
 *Updates to FASA patches by RedAV8R
 *Fixed heatshield tangents not being set, leading to unexpected behavior
 *Add patch for MissionController (patches fuels and engine costs to be 1k = $1000 USD 1960)
+*Update RT2 patch file, fix errors
+*Add throttling and EngineIgnitor support to BobCat Soviet Engines
+*Upgrade to ModuleManager 2.1.0
 
 v5 -- \/
 *Moved WAC Corporal and V-2 parts to RPL; added in Engine Ignitor and throttle-limiting support
