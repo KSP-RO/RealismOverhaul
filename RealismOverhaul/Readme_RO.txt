@@ -68,6 +68,15 @@ Probes: the Squad probes. AIES probes have electrical charge fixed but neither r
 Note that only the two stack probes (now 2m and 3m) have much in the way of torque; even then you'll want to bring RCS. Everything else doesn't have any torque to speak of.
 
 Changelog:
+v5.2 \/
+*Updates to FASA patches by RedAV8R
+*Support OLDD, Aerojet Kerbodyne/SDHI/Taurus for SLS.
+*Fix Proc Fairing fixed-size base nodes
+*Support Proc Fairings 3.0
+*Fix RT2 ranges, power, etc.; add missing dishes and C32.
+*Update ALCOR pod name
+*Removed landing gear and control surface rescales for B9
+
 v5.1  \/
 *Updates to FASA patches by RedAV8R
 *Fixed heatshield tangents not being set, leading to unexpected behavior
