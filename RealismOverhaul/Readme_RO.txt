@@ -6,26 +6,25 @@ Also included: Module Manager (by sarbian, swamp_ig, and ialdabaoth). See Module
 Module Manager is required for RO to work.
 
 INSTALL:
-1. Install required mods, updating as necessary
+1. Install required mods, updating as necessary. See the Requires list below for installation notes for those mods.
 2. Remove any existing RealismOverhaul or RedAV8R or SFJBRealEngines folder in KSP/GameData/
 3. Unzip this archive to KSP/GameData.
-4. Pick and install an engine configs pack (see below)
 ========================================
 
 This is a set of ModuleManager tweaks and part rescales for a 100% human-scale KSP.
 
 Requires:
 Real Solar System (else why use this?)
-Real Fuels v5.2+
-Stretchy SRB v9+ OR Procedural Parts (or you won't have the right size tanks)
+Real Fuels v6.2+
+Procedural Parts (or you won't have the right size tanks)
 Deadly Reentry v4.6+ (for the heatshields)
-Ferram Aerospace Research (made by the amazing ferram4)
-RealChutes v1.1+ (by stupid_chris)
-Engine Ignitor (by HoneyFox)
+Ferram Aerospace Research by the amazing ferram4
+RealChutes v1.1+ by stupid_chris
+Engine Ignitor by HoneyFox. NOTE: DO NOT extract the included zips of config files; if you already extracted the config files, delete them.
 ModuleRCSFX by ialdabaoth
 Advanced Jet Engine by camlost
-Engine Trhust Controller by HoneyFox (but DELETE the cfg that comes with it)
-KM_Gimbal. If you already have Space Shuttle Engines or Smart Parts, you have this. Otherwise you need it.
+Engine Thrust Controller by HoneyFox. NOTE: DELETE the cfg that comes with it.
+KM_Gimbal. If you already have Space Shuttle Engines, you have this. Otherwise you need it.
 
 Best with:
 Medieval Nerd's Realistic Tech Progression Lite tech tree (note: requires RftSEngines, not RealEngines)
@@ -51,9 +50,8 @@ PorkWorks Inflatable Habs
 FASA (via RedAV8R's patches, included here.)
 
 Engine Support:
-Realism Overhaul requires the selection of an Engine pack. The two suggested packs (pick one) are either SFJackBauer's RealEngines pack (which gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2) and my Reaching for the Stars pack, which gives engines "realistic" stats informed by real-world engines without being clones.
-SFJackBauer's RealEngines pack can be downloaded from http://forum.kerbalspaceprogram.com/threads/59207-0-22-Realism-Overhaul-ROv2-Modlist-for-RSS?p=825469&viewfull=1#post825469 (note that it requires KM_Gimbal for gimbals to work.)
-My RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833 (note that it requires ExsurgentEngineering for gimbals to work. Available at the link.)
+Realism Overhaul comes with the RealEngines set of engine patches. It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. However, it also supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats informed by real-world engines without being clones. Note that in either case you need KM_Gimbal for gimbals to work.
+My RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833
 
 Changes:
 *New size system: 0.5m, 1m, 2m, 3m, etc.
