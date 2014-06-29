@@ -31,6 +31,7 @@ Best with:
 Medieval Nerd's Realistic Tech Progression Lite tech tree (note: requires RftSEngines, not RealEngines)
 RemoteTech 2
 Procedural Fairings
+TAC Life Support
 Supported parts packs
 Realism patches for those packs (see post 2 in the Realism Overhaul thread)
 
@@ -68,6 +69,9 @@ Probes: the Squad probes. AIES probes have electrical charge fixed but neither r
 Note that only the two stack probes (now 2m and 3m) have much in the way of torque; even then you'll want to bring RCS. Everything else doesn't have any torque to speak of.
 
 Changelog:
+v6.0 \/
+*Converted to TAC Life Support.
+
 v5.2 \/
 *Updates to FASA patches by RedAV8R
 *Support OLDD, Aerojet Kerbodyne/SDHI/Taurus for SLS.
