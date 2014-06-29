@@ -7,7 +7,7 @@ Module Manager is required for RO to work.
 
 INSTALL:
 1. Install required mods, updating as necessary
-2. Remove any existing RealismOverhaul or RedAV8R folder in KSP/GameData/
+2. Remove any existing RealismOverhaul or RedAV8R or SFJBRealEngines folder in KSP/GameData/
 3. Unzip this archive to KSP/GameData.
 4. Pick and install an engine configs pack (see below)
 ========================================
@@ -70,7 +70,7 @@ Note that only the two stack probes (now 2m and 3m) have much in the way of torq
 
 Changelog:
 v6.0 \/
-*Converted to TAC Life Support.
+*Converted to TAC Life Support! Now includes TACLS settings file, to overwrite existing TACLS settings for realistic consumption rates for all resources. Your window positions will reset.
 *Upgraded to Module Manager 2.1.5
 *ThorBeorn: Add support for the new version of FusTek
 *Fix RT2 patch again.
