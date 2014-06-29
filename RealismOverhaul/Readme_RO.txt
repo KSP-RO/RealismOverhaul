@@ -1,8 +1,8 @@
-This mod is maintained by NathanKell with contributions from many.
+This mod is maintained by RedAV8R and NathanKell (with contributions from many)
 
 License CC-BY-SA
 
-Also included: Module Manager (by sarbian and ialdabaoth). See Module Manager thread for details and license and source: http://forum.kerbalspaceprogram.com/threads/55219
+Also included: Module Manager (by sarbian, swamp_ig, and ialdabaoth). See Module Manager thread for details and license and source: http://forum.kerbalspaceprogram.com/threads/55219
 Module Manager is required for RO to work.
 
 INSTALL:
@@ -71,6 +71,22 @@ Note that only the two stack probes (now 2m and 3m) have much in the way of torq
 Changelog:
 v6.0 \/
 *Converted to TAC Life Support.
+*Upgraded to Module Manager 2.1.5
+*ThorBeorn: Add support for the new version of FusTek
+*Fix RT2 patch again.
+*RedAV8R patch updates:
++FASA Realism Patch update to correspond with v4.91
++OLDD Realism Patch Added (Saturn only) – (Proton and N1 TBD)
++KerbX Realism Patch Added
++LazTek Realism Patch Added (supports Launch Pack 3.0, Exploration 2.0, Historic 1.0)
++AerojetKerbodyne/SDHI Service Module/Taurus HCV Realism Patch Added
++TAC Life Support support for all Realism Patches
++RealEngines now included – Klockheed Martian SSME (OMS coming soon), BobCat Soviet Engines, KOSMOS Engines, Hakari F-1, more coming soon (like SRBs and LES). RftS is optional, no action needed for use.
++All Realism Patches with new ModuleManager ‘:FOR[RealismOverhaul]’ tag added
++Coresponding changes/removal of duplicate/unneeded/unwanted configurations
+
+**NOTE** Delete your old SFJBRealEngines folder if you have one!
+
 
 v5.2 \/
 *Updates to FASA patches by RedAV8R
