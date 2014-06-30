@@ -33,21 +33,28 @@ Procedural Fairings
 TAC Life Support
 Supported parts packs
 Realism patches for those packs (see post 2 in the Realism Overhaul thread)
+ModuleFixer
 
 Supported parts packs:
 AIES (Partial support for pods, full support for battery/RTG/solar panels, RCS)
 KW Rocketry (batteries, fairings, RCS)
 NovaPunch (partially, more support coming soon)
-Bobcat Soviet engines pack (Soviet/Russian engines)
+
 KOSMOS Salyut parts
 RLA RCS
 ALCOR
 B9 (partial)
-SDHI
 Fustek Parts Expansion
 NFPP Solar Panels
 PorkWorks Inflatable Habs
-FASA (via RedAV8R's patches, included here.)
+FASA v4.91 - Latest Release
+Bobcat Soviet engines pack (Soviet/Russian engines)
+Lovad Saturn, HIIA/B
+KerbX
+LazTek - Latest Release
+Taurus HCV
+SDHI
+Aerojet Kerbodyne
 
 Engine Support:
 Realism Overhaul comes with the RealEngines set of engine patches. It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. However, it also supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats informed by real-world engines without being clones. Note that in either case you need KM_Gimbal for gimbals to work.
@@ -67,11 +74,14 @@ Probes: the Squad probes. AIES probes have electrical charge fixed but neither r
 Note that only the two stack probes (now 2m and 3m) have much in the way of torque; even then you'll want to bring RCS. Everything else doesn't have any torque to speak of.
 
 Changelog:
-v6.0 \/
+v5.2 \/
 *Converted to TAC Life Support! Now includes TACLS settings file, to overwrite existing TACLS settings for realistic consumption rates for all resources. Your window positions will reset.
 *Upgraded to Module Manager 2.1.5
 *ThorBeorn: Add support for the new version of FusTek
 *Fix RT2 patch again.
+*Update ALCOR pod name
+*Removed landing gear and control surface rescales for B9
+*Support Proc Fairings 3.0
 *RedAV8R patch updates:
 +FASA Realism Patch update to correspond with v4.91
 +OLDD Realism Patch Added (Saturn only) – (Proton and N1 TBD)
@@ -84,16 +94,6 @@ v6.0 \/
 +Coresponding changes/removal of duplicate/unneeded/unwanted configurations
 
 **NOTE** Delete your old SFJBRealEngines folder if you have one!
-
-
-v5.2 \/
-*Updates to FASA patches by RedAV8R
-*Support OLDD, Aerojet Kerbodyne/SDHI/Taurus for SLS.
-*Fix Proc Fairing fixed-size base nodes
-*Support Proc Fairings 3.0
-*Fix RT2 ranges, power, etc.; add missing dishes and C32.
-*Update ALCOR pod name
-*Removed landing gear and control surface rescales for B9
 
 v5.1  \/
 *Updates to FASA patches by RedAV8R
