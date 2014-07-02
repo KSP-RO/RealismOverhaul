@@ -74,13 +74,13 @@ v6.0 \/
 *Fix RT2 patch again.
 *RedAV8R patch updates:
 +FASA Realism Patch update to correspond with v4.91
-+OLDD Realism Patch Added (Saturn only) – (Proton and N1 TBD)
++OLDD Realism Patch Added (Saturn only) ï¿½ (Proton and N1 TBD)
 +KerbX Realism Patch Added
 +LazTek Realism Patch Added (supports Launch Pack 3.0, Exploration 2.0, Historic 1.0)
 +AerojetKerbodyne/SDHI Service Module/Taurus HCV Realism Patch Added
 +TAC Life Support support for all Realism Patches
-+RealEngines now included – Klockheed Martian SSME (OMS coming soon), BobCat Soviet Engines, KOSMOS Engines, Hakari F-1, more coming soon (like SRBs and LES). RftS is optional, no action needed for use.
-+All Realism Patches with new ModuleManager ‘:FOR[RealismOverhaul]’ tag added
++RealEngines now included ï¿½ Klockheed Martian SSME (OMS coming soon), BobCat Soviet Engines, KOSMOS Engines, Hakari F-1, more coming soon (like SRBs and LES). RftS is optional, no action needed for use.
++All Realism Patches with new ModuleManager ï¿½:FOR[RealismOverhaul]ï¿½ tag added
 +Coresponding changes/removal of duplicate/unneeded/unwanted configurations
 
 **NOTE** Delete your old SFJBRealEngines folder if you have one!
@@ -141,3 +141,13 @@ v2 -- \/
 
 v1 -- \/
 Initial Release.
+
+Contributors:
+Medieval Nerd
+brooklyn666
+jrandom
+SRFirefox
+broman
+amo28
+AndreyATGB
+Phredward
