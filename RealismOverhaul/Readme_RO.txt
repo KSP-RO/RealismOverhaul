@@ -1,99 +1,111 @@
-This mod is maintained by RedAV8R and NathanKell (with contributions from many)
+Realism Overhaul
+========
+This mod is maintained by RedAV8R and NathanKell (with contributions from many).
 
-License CC-BY-SA
+License CC BY-SA
 
-Also included: Module Manager (by sarbian, swamp_ig, and ialdabaoth). See Module Manager thread for details and license and source: http://forum.kerbalspaceprogram.com/threads/55219
+Also included: Module Manager (by sarbian, swamp_ig, and ialdabaoth). See Module Manager thread for details and license and source.
 Module Manager is required for RO to work.
 
 INSTALL:
 1. Install required mods, updating as necessary. See the Requires list below for installation notes for those mods.
 2. Remove any existing RealismOverhaul or RedAV8R or SFJBRealEngines folder in KSP/GameData/
 3. Unzip this archive to KSP/GameData.
+4. OPTIONAL - Those using PartCatalog, CUT and paste the folders within RealismOverhaul/RedAV8R into KSP/GameData.
 ========================================
 
 This is a set of ModuleManager tweaks and part rescales for a 100% human-scale KSP.
 
 Requires:
-Real Solar System (else why use this?)
-Real Fuels v6.2+
-Procedural Parts (or you won't have the right size tanks)
-Deadly Reentry v4.6+ (for the heatshields)
-Ferram Aerospace Research by the amazing ferram4
-RealChutes v1.1+ by stupid_chris
+Real Solar System
+Real Fuels
+Procedural Parts
+Deadly Reentry
+Ferram Aerospace Research by ferram4
+RealChutes by stupid_chris
 Engine Ignitor by HoneyFox. NOTE: DO NOT extract the included zips of config files; if you already extracted the config files, delete them.
 ModuleRCSFX by ialdabaoth
 Advanced Jet Engine by camlost
 Engine Thrust Controller by HoneyFox. NOTE: DELETE the cfg that comes with it.
-KM_Gimbal. If you already have Space Shuttle Engines, you have this. Otherwise you need it.
+KM_Gimbal by dtobi. If you already have Space Shuttle Engines, you have this. Otherwise you need it.
 
 Best with:
-Medieval Nerd's Realistic Tech Progression Lite tech tree (note: requires RftSEngines, not RealEngines)
 RemoteTech 2
 Procedural Fairings
 TAC Life Support
-Supported parts packs
-Realism patches for those packs (see post 2 in the Realism Overhaul thread)
+ModuleFixer
 
-Supported parts packs:
-AIES (Partial support for pods, full support for battery/RTG/solar panels, RCS)
-KW Rocketry (batteries, fairings, RCS)
-NovaPunch (partially, more support coming soon)
-Bobcat Soviet engines pack (Soviet/Russian engines)
-KOSMOS Salyut parts
-RLA RCS
+Optional:
+Medieval Nerd's Realistic Tech Progression Lite tech tree (note: requires RftSEngines)
+
+Supported parts packs: (With some packs not all parts are supported at this time, but will be in the future. Suggestions help)
+AIES
+KW Rocketry
+NovaPunch
+KOSMOS Spacecraft Design Bureau
+RLA
 ALCOR
-B9 (partial)
-SDHI
-Fustek Parts Expansion
-NFPP Solar Panels
+B9
+Fustek Station Parts
+Sum Dum Heavy Industries - Service Module System
+Near Future Power Pack
 PorkWorks Inflatable Habs
-FASA (via RedAV8R's patches, included here.)
+FASA v4.92
+Bobcat Soviet Engines
+World Space by Lovad
+KerbX
+LazTek SpaceX
+Taurus HCV
+Aerojet Kerbodyne
+OLDD Apollo/Saturn
+Rocketdyne F-1
+
+Coming Soon:
+TweakScale
+Lionhead ESA, Rovers, Landers, Probes, Solar Panels
 
 Engine Support:
 Realism Overhaul comes with the RealEngines set of engine patches. It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. However, it also supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats informed by real-world engines without being clones. Note that in either case you need KM_Gimbal for gimbals to work.
-My RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833
+My RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833.
 
 Changes:
-*New size system: 0.5m, 1m, 2m, 3m, etc.
-*Rescales of stock parts and Procedural Fairings to support the new size system.
+*New size system: 0.5m, 1m, 1.25m, 1.5m, 2m, 2.5m, 3m, 3.5m, 3.75m, 4m, 5m, etc
+*Rescales of stock parts and generic part packs to support the new size system.
 *Realistic battery and solar panel numbers, and usage for RT2 antennae. 1EC/s = 1kW. Solar panels don't produce much, but they're light.
 *RTGs are now modeled after real RTGs.
 *DRE Heatshields support RSS, new heatshields added
-*Various structural/aero parts had their masses tweaked, including PF large bases. PF lage bases now have tiny decouplers.
-
-Partial support:
-Pods: Squad Mk1, Mk1-2, AIES Orbital Pod.
-Probes: the Squad probes. AIES probes have electrical charge fixed but neither rescaled nor remassed as yet.
-Note that only the two stack probes (now 2m and 3m) have much in the way of torque; even then you'll want to bring RCS. Everything else doesn't have any torque to speak of.
+*Masses tweaked
+*Realistic use of Reaction Wheels - very few parts have them, and those that do their forces are limited and RCS would be a good thing.
 
 Changelog:
-v6.0 \/
+v6.0 ALPHA 1 \/
+*New File/Folder Organization
+*Integration of TweakScale
+*Various Realism patch updates and fixes
+
+v5.2.1 \/
+*Upgrade FASA support to the latest 4.92 release
+
+v5.2 \/
 *Converted to TAC Life Support! Now includes TACLS settings file, to overwrite existing TACLS settings for realistic consumption rates for all resources. Your window positions will reset.
 *Upgraded to Module Manager 2.1.5
 *ThorBeorn: Add support for the new version of FusTek
 *Fix RT2 patch again.
+*Update ALCOR pod name
+*Removed landing gear and control surface rescales for B9
+*Support Proc Fairings 3.0
 *RedAV8R patch updates:
 +FASA Realism Patch update to correspond with v4.91
-+OLDD Realism Patch Added (Saturn only) ï¿½ (Proton and N1 TBD)
++OLDD Realism Patch Added (Saturn only) – (Proton and N1 TBD)
 +KerbX Realism Patch Added
 +LazTek Realism Patch Added (supports Launch Pack 3.0, Exploration 2.0, Historic 1.0)
 +AerojetKerbodyne/SDHI Service Module/Taurus HCV Realism Patch Added
 +TAC Life Support support for all Realism Patches
-+RealEngines now included ï¿½ Klockheed Martian SSME (OMS coming soon), BobCat Soviet Engines, KOSMOS Engines, Hakari F-1, more coming soon (like SRBs and LES). RftS is optional, no action needed for use.
-+All Realism Patches with new ModuleManager ï¿½:FOR[RealismOverhaul]ï¿½ tag added
++RealEngines now included – Klockheed Martian SSME (OMS coming soon), BobCat Soviet Engines, KOSMOS Engines, Hakari F-1, more coming soon (like SRBs and LES). RftS is optional, no action needed for use.
++All Realism Patches with new ModuleManager ‘:FOR[RealismOverhaul]’ tag added
 +Coresponding changes/removal of duplicate/unneeded/unwanted configurations
 
 **NOTE** Delete your old SFJBRealEngines folder if you have one!
-
-
-v5.2 \/
-*Updates to FASA patches by RedAV8R
-*Support OLDD, Aerojet Kerbodyne/SDHI/Taurus for SLS.
-*Fix Proc Fairing fixed-size base nodes
-*Support Proc Fairings 3.0
-*Fix RT2 ranges, power, etc.; add missing dishes and C32.
-*Update ALCOR pod name
-*Removed landing gear and control surface rescales for B9
 
 v5.1  \/
 *Updates to FASA patches by RedAV8R
@@ -141,13 +153,3 @@ v2 -- \/
 
 v1 -- \/
 Initial Release.
-
-Contributors:
-Medieval Nerd
-brooklyn666
-jrandom
-SRFirefox
-broman
-amo28
-AndreyATGB
-Phredward
