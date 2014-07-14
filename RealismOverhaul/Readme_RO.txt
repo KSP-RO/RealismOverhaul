@@ -60,17 +60,18 @@ Taurus HCV
 Aerojet Kerbodyne
 OLDD Apollo/Saturn
 Rocketdyne F-1
+Universal Storage
 
 Coming Soon:
 Lionhead ESA, Rovers, Landers, Probes, Solar Panels
 
 Engine Support:
 Realism Overhaul comes with the RealEngines set of engine patches. It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. However, it also supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats informed by real-world engines without being clones. Note that in either case you need KM_Gimbal for gimbals to work.
-My RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833.
+RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833.
 
 Changes:
-*New size system: 0.5m, 1m, 1.25m, 1.5m, 2m, 2.5m, 3m, 3.5m, 3.75m, 4m, 5m, etc
-*Rescales of stock parts and generic part packs to support the new size system.
+*New size system: 0.5m, 1m, 1.25m, 1.5m, 2m, 2.5m, 3m, 3.5m, 3.75m, 4m, 5m, 6m, 7m, 8m, 9m, 10m
+*Tweakscale support added for stock parts and generic part packs to support the new size system.
 *Realistic battery and solar panel numbers, and usage for RT2 antennae. 1EC/s = 1kW. Solar panels don't produce much, but they're light.
 *RTGs are now modeled after real RTGs.
 *DRE Heatshields support RSS, new heatshields added
@@ -78,6 +79,15 @@ Changes:
 *Realistic use of Reaction Wheels - very few parts have them, and those that do their forces are limited and RCS would be a good thing.
 
 Changelog:
+v6.0 ALPHA 4 \/
+*Fixed some depreciated parts
+*Porkworks Habitat Pack rework
+*TACLS v.9 pre-release updates
+*KOSMOS Pack work (still WIP)
+*ElectricCharge update (WIP)
+*Plugin - Version Checker
+*ADD Universal Storage compatibility
+
 v6.0 ALPHA 3 \/
 *FusTek Complete (current with X0.04-4 DEV BUILD)
 *Fix ProceduralParts LifeSupport Tank to 1U=1L standard
