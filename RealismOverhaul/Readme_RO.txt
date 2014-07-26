@@ -1,4 +1,6 @@
 Realism Overhaul
+
+WARNING!!! THIS COULD AND PROBABLY WILL BREAK SAVES. THIS IS A WIP ALPHA RELEASE. THERE WILL BE BUGS. PLEASE REPORT.
 ========
 This mod is maintained by RedAV8R and NathanKell (with contributions from many).
 
@@ -17,68 +19,102 @@ INSTALL:
 This is a set of ModuleManager tweaks and part rescales for a 100% human-scale KSP.
 
 Requires:
-Real Solar System
-Real Fuels
-Procedural Parts
-Deadly Reentry
-Ferram Aerospace Research by ferram4
-RealChutes by stupid_chris
-Engine Ignitor by HoneyFox. NOTE: DO NOT extract the included zips of config files; if you already extracted the config files, delete them.
-ModuleRCSFX by ialdabaoth
-Advanced Jet Engine by camlost
-Engine Thrust Controller by HoneyFox. NOTE: DELETE the cfg that comes with it.
-KM_Gimbal by dtobi. If you already have Space Shuttle Engines, you have this. Otherwise you need it.
+Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.2.0)
+Real Solar System by NathanKell (v7.0)
+Real Fuels by NathanKell (v7.1)
+Deadly Reentry Continued by NathanKell (v5.2)
+Ferram Aerospace Research by ferram4 (v0.14.1.1)
+RealChutes by stupid_chris. (v1.2.2.2) NOTE: DO NOT install the MM files that are included.
+Engine Ignitor by HoneyFox. (v3.2) NOTE: DO NOT extract the included zips of config files; if you already extracted the config files, delete them.
+Advanced Jet Engine by camlost (v1.4) (NOT UPDATED YET to KSP 0.24.*)
+Engine Thrust Controller by HoneyFox. (v2) (FUNCTIONALITY BEING INTEGRATED INTO RealFuels SOON) NOTE: DELETE the cfg that comes with it.
 
 Best with:
-TweakScale
-RemoteTech 2
-Procedural Fairings
-TAC Life Support
-ModuleFixer
+TweakScale by Biotronic (v1.32)
+TAC Life Support by TaranisElsu (v0.9 PRE-RELEASE #3)
+CrossFeedEnabler by NathanKell (v2.2)
+Toolbar by blizzy78 (v1.7.5)
+ModuleFixer by arsenic87
+PartCatalog by BlackNecro (v3.0RC5)
+TextureReplacer by Shaw (v1.6.1)
+MechJeb by many (v2.3.1)
+Kerbal Joint Reinforcement (v2.4.3)
 
 Optional:
 Medieval Nerd's Realistic Tech Progression Lite tech tree (note: requires RftSEngines)
 
-Supported parts packs: (With some packs not all parts are supported at this time, but will be in the future. Suggestions/help welcome)
-AIES
-KW Rocketry
-NovaPunch
-KOSMOS Spacecraft Design Bureau
-RLA
-ALCOR
-B9
-Fustek Station Parts
-Sum Dum Heavy Industries - Service Module System
-Near Future Power Pack
-PorkWorks Inflatable Habs
-FASA v4.92
-Bobcat Soviet Engines
-World Space by Lovad
-KerbX
-LazTek SpaceX
-Taurus HCV
-Aerojet Kerbodyne
-OLDD Apollo/Saturn
-Rocketdyne F-1
-Universal Storage
+Mods/Part Packs:
+KW Rocketry by Winston & Kickasskyle (v2.6c) (FULL SUPPORT)
+Procedural Parts by swamp_ig (v0.9.16) (FULL SUPPORT)
+Procedural Fairings by e-dog (v3.08) (FULL SUPPORT)
+RemoteTech 2 by Remote Technologies Group (v1.4) (FULL SUPPORT) (???COMPATIBILITY WITH KSP 0.24.* ???)
+
+Procedural Dynamics - Procedural Wing by DYJ (v0.8) (WIP)
+AIES by carmics (v1.5.1) (WIP)
+NovaPunch by Tiberion (v2.05) (WIP)
+KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
+RLA (WIP)
+ALCOR by (WIP)
+B9 (WIP)
+Fustek Station Parts (WIP)
+Near Future Technologies by Nertea (v2.*) (WIP)
+PorkWorks Inflatable Habs by Porkjet (WIP)
+FASA by Frizzank (v4.97) (WIP)
+Bobcat Soviet Engines (WIP)
+World Space by Lovad (WIP)
+KerbX by Borklund (WIP)
+LazTek SpaceX by LazurusLuan (WIP)
+Taurus HCV by jnrobinson (v1.2.1) (WIP)
+Aerojet Kerbodyne (WIP)
+OLDD Apollo/Saturn (WIP)
+Rocketdyne F-1 (WIP)
+Universal Storage by PaulKingtiger (v0.752) (WIP)
 
 Coming Soon:
-Lionhead ESA, Rovers, Landers, Probes, Solar Panels
+Sum Dum Heavy Industries - Service Module System by sumghai (v2.0) (NOT SUPPORTED YET WILL BE SOON)
+Lionhead ESA, Rovers, Landers, Probes, Solar Panels by 
+Component Space Shuttle maintained by Dragon01
+USI Kolonization Systems (MKS/OKS) by RoverDude
+Spaceplane Plus by Porkjet
+Kethane by Majiir
+SCANsat by technogeeky
+SkyLab by raidernick
+International Space Station
+
+REMOVED
+ModuleRCSFX by ialdabaoth
 
 Engine Support:
-Realism Overhaul comes with the RealEngines set of engine patches. It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. However, it also supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats informed by real-world engines without being clones. Note that in either case you need KM_Gimbal for gimbals to work.
-RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833.
+Realism Overhaul comes with the RealEngines set of engine patches (originally by SFJackBauer). It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2.
+However, it also supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats with a real-world flavor without being clones. This is required when using Realistic Tech Progression Lite (RPL).
+The RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833.
 
 Changes:
 *New size system: 0.5m, 1m, 1.25m, 1.5m, 2m, 2.5m, 3m, 3.5m, 3.75m, 4m, 5m, 6m, 7m, 8m, 9m, 10m
-*Tweakscale support added for stock parts and generic part packs to support the new size system.
+*Rescales via TweakScale of stock and generic part packs to support the new size system
 *Realistic battery and solar panel numbers, and usage for RT2 antennae. 1EC/s = 1kW. Solar panels don't produce much, but they're light.
-*RTGs are now modeled after real RTGs.
-*DRE Heatshields support RSS, new heatshields added
+*RTGs are now modeled after real RTGs
+*DRE Heat shields now support RSS, with new heat shields added based on new size system
 *Masses tweaked
 *Realistic use of Reaction Wheels - very few parts have them, and those that do their forces are limited and RCS would be a good thing.
 
 Changelog:
+
+v6.0 ALPHA 6 \/
+**UPDATE to KSP 0.24.* (Work In Progress folks, PLEASE report bugs, and be forgiving)
+* Now using stock gimbal module - KM_Gimbal no longer required, but optional, and can be used on some parts for more realistic operation
+* Now using stock RCS module - Squad made some good welcome realistic changes
+* More RealEngine support added, WAY more to come!!!
+
+v6.0 ALPHA 5 \/
+***NOT ready for KSP 0.24 (this update contains a warning of that).
+*Fixed MOL issues
+*Added LazTek Docking Port back
+*RCS pod updates
+*TACLS updates
+*Universal Storage updates
+*KOSMOS updates
+
 v6.0 ALPHA 4 \/
 *Fixed some depreciated parts
 *Porkworks Habitat Pack rework
@@ -133,8 +169,6 @@ v5.2 \/
 +All Realism Patches with new ModuleManager ‘:FOR[RealismOverhaul]’ tag added
 +Coresponding changes/removal of duplicate/unneeded/unwanted configurations
 
-**NOTE** Delete your old SFJBRealEngines folder if you have one!
-
 v5.1  \/
 *Updates to FASA patches by RedAV8R
 *Fixed heatshield tangents not being set, leading to unexpected behavior
@@ -181,3 +215,20 @@ v2 -- \/
 
 v1 -- \/
 Initial Release.
+
+Download
+Github
+
+FAQ:
+Q: How do I do X in Real Solar System / RO?
+A: Check the RSS Wiki, it may have an answer!
+
+Q: My engines are disappearing into my fueltank!
+A: The "going into the fueltank" thing is a trick SFJackBauer devised to get around the issue that most KSP engine models are actually engines + giant fuel tank bottom domes, basically. (Look up pictures of rocket engines. At most they have a turbopump etc at the top, or a set-of-girders thrust structure. Not a giant dome; that's the bottom of the fuel or oxidizer capsule-shaped tank.) Which is bad if you, for instance, want to use the engine on a different-sized fuel tank. Can't do anything about using an engine with a giant dome on a *smaller* tank, but for bigger tanks SFJackBauer devised this system where the unsightly dome is hidden inside the fueltank. Works great for clusters like S-II.
+
+Q: How do I make a controlled, lifting reentry with the Mk1-2 Pod?
+A: See this awesome video for a tutorial.
+
+OLD THREADS:
+Old RealismOverhaul Thread
+Old RedAV8R Realism Patch Thread
