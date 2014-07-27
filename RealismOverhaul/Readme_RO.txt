@@ -116,7 +116,7 @@ v6.0 ALPHA 5 \/
 *KOSMOS updates
 
 v6.0 ALPHA 4 \/
-*Fixed some depreciated parts
+*Fixed some deprecated parts
 *Porkworks Habitat Pack rework
 *TACLS v.9 pre-release updates
 *KOSMOS Pack work (still WIP)
