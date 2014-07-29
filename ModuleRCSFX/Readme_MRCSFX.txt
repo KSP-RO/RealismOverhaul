@@ -15,6 +15,8 @@ which, when set to true, means that RCS will fire forwards with the throttle.
 
 FX attributes, which did more harm than good, have been stripped for now.
 
+correctThrust defaults to true. Set it to false if you want stock KSP behavior regarding Isp and fuel flow.
+
 v0.4
 
 INSTALLATION:
