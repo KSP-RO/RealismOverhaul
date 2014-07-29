@@ -100,6 +100,29 @@ Changes:
 
 Changelog:
 
+v6.0 ALPHA 7 \/
+*Rework DRE Heatshields, more size options available now.
+*Update TAC Consumption/Production Rates
+*Add new Thoikol M55 SRM
+*Apollo Heatshield fix for FAR
+*Add J-2 option
+*Fix Generic RCS and rework with +PART
+*Add back ModuleRCSFX - NOW INCLUDED
+*Life Support adds to Stock Pods
+*Add FASA UA1207
+*Add new SRB Thrust Curves to multiple engines (still some to do)
+*New TweakScale FreeScale option for structural components
+*Fix TAC Tank Definitions
+*ModuleManager 2.2.0 - NOW INCLUDED
+*Minor Isp Fix for Aerojet SPS Engine
+*New RealEngines SRBs - Castor 120/30/30XL/UA1205
+*New RealEngines Liquid - SpaceX Merlins, Aestus II
+*New TweakScale Nose Cone for SRBs
+
+v6.0 ALPHA 6 (6.1/6.2 HOTFIX) \/
+*Fix Typos
+*Fix RealChutes
+
 v6.0 ALPHA 6 \/
 **UPDATE to KSP 0.24.* (Work In Progress folks, PLEASE report bugs, and be forgiving)
 * Now using stock gimbal module - KM_Gimbal no longer required, but optional, and can be used on some parts for more realistic operation
