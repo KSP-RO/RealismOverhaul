@@ -27,30 +27,51 @@ Changes:
 *Realistic use of Reaction Wheels. Very few parts have them, and those that do have realistic forces. Most vessels will require some form of Reaction/Attitude Control System.
 
 Engine Support:
-Realism Overhaul comes with the RealEngines set of engine patches (originally by SFJackBauer). It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2.
+Realism Overhaul now comes integrated with the RealEngines set of engine patches (originally by SFJackBauer). It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. No action is required to use RealEngines.
 
 Realism Overhaul natively supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats with a real-world flavor without being clones. This is required when using Realistic Tech Progression Lite (RPL).
 The RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833.
 
 Realism Overhaul also natively will not interfere with "StockAlike" engine configurations.
 
+NOT Supported at this time:
+Integrated career mode. That means, no tech tree, no good cost system, contracts, the whole nine yards. It's enough work just getting things to work at all, let alone to take the time to ensure there is a good natural progression for career mode. So at this time, the only thing supported is 'sandbox' mode. If somebody else wants to take that part of the project on, please let me know. Otherwise it is the last on my list, and anything new that comes up will be placed in front of it as well. It is that low on my priorities list.
+
+Thinking out loud, some requirements for integration of career mode into RO:
+
+*The 'tech tree' for realism sake must be TIME based, not 'purchased'.
+*In addition to being time based...objects such as fuel tanks...anybody can make a tank...of any size...from the start. The question is, is it strong enough and light enough to fulfill the objective at hand. So generic fuel tanks would be required to have some sort of progression of cost/mass/strength rather than size...all the while minding the cost/strength/mass of 'RealTanks' as found on launch vehicles from other part mods. Ex. I don't want a generic tank of same characteristics as a Titan tank found in FASA to have different mass/strength/etc.
+*Cost, everything has a price. So how do we deal with inflation...to me this requires another plugin to automatically adjust cost based upon inflation at that time. Obviously there are going to be some guesses here as cost figures are likely going to be few and far between. Then there is a point, cost figures are likely going to be for a whole launcher or at least pieces as an aggregate...so balancing the cost individual small pieces as found in KSP is going to be a challenge.
+*I agree with your contracts, I honestly haven't played with 0.24 contracts so I don't know the interface they used. But having restraints on an apoapsis between two points and a periapsis between two points would be ideal. I remember playing with one older mod, (not sure if it's been updated) which did such things.
+*Wish list...RSS is designed to start in the 50's...with planets and everything in their respective places at that point in time...maybe with some help with NK and RSS, a person can choose at what point a person wishes to begin their game. Be it 50's, 60's...whatever.
+Otherwise...Lots of questions, not many answers.
+
 Q: What do I need to run Realism Overhaul?
-A: Realism Overhaul uses a set of 3rd party mods to enable certain aspects of realistic flight/performance/etc. Without these, 'realism' is going to be severely limited. Memory footprint (except RSS) is quite small so having them (you likely might already) is not going to produce a performance hit. Therefore, each one of these mods listed as REQUIRED are just that and support without them will not be received.
+A: Realism Overhaul uses a set of 3rd party mods to enable certain aspects of realistic flight/performance/etc. Without these, 'realism' is going to be severely limited. Memory footprint (except RSS) is quite small so having them (you likely might already) is not going to produce a performance hit. Therefore, each one of these mods listed as REQUIRED are just that: see next question.
 
 Q: I don't want to install ****** (some required mod), what will happen, what should I do?
-A: Install it anyway. Realism Overhaul+RealSolarSystem is designed around these dependencies. Generally KSP will still load, but you have now nerfed the entire experience, and have shown you do not wish to realistically experience spaceflight. Again, these are REQUIRED, and support without them will not be received.
+A: The mods marked as required are just that--required. Without it, things may break unexpectedly, your game will not play in the manner intended, and your life will be more difficult than it should be. For example, if you don't install FAR, you will need about twice the rocket you would need in real life. Realism Overhaul+RealSolarSystem is designed around these dependencies. We can't offer support if you haven't installed RO and the required mods as directed.
+
+Q: I want to install ********, but it's not on the supported list, what happens?
+A: Don't know. If it's not on the list, then it hasn't been tested and therefore there is no guarantee if it will work or not, and there will be NO SUPPORT for any issues that it may cause. If that mod is just parts, be warned now, it's behavior will likely cause you nothing but pain and anguish simply because it's performance is not what it should be, UNLESS it was designed for the real world. Likely it was not and things were 'kerbalized' so as not to be over powered. If you really like that mod, and you want it supported, then put in a request.
 
 Q: My Realism Overhaul installation is broken/doesn't work/etc. What do I do?
-A: First, go through these basic FAQ and see if your answer is there. If it is, great, problem solved. If not, follow the prescribed basic troubleshooting steps following the FAQ. If that doesn't fix it, THEN you may post. Please follow the directions for your post, otherwise be prepared to be chastised.
+A: First, go through these basic FAQ and see if your answer is there. If it is, great, problem solved. If not, follow the prescribed basic troubleshooting steps following the FAQ. If that doesn't fix it, THEN post your issue, following the directions for your post, otherwise be prepared to be chastised.
 
 Q: My engines don't throttle! How can I fix this?
 A: You don't, and we won't. It's working as designed. In real life, 99% of rocket engines don't throttle at all. A few throttle down to about 60-70% (like the SSME) to lower crew G forces on launch and to limit stress on the stack (especially at Max Q). Only a tiny, tiny few actually "deeply" throttle--basically just engines designed for landers. The Lunar Module Descent Engine is the largest deeply-throttling engine in RO right now, and will throttle down to about 12%. As more and more engines are added, your options will increase, but again, there aren't many engines that do throttle. Such is life. Welcome to Realism Overhaul.
 
+Q: This mod is unbalanced. Sizes, thrust, mass, Isp, etc just don't make sense. Part A is 2x bigger, 1/10 the thrust and 33% better Isp than part B. This has to be wrong, when will it be fixed?
+A: Well...it's not wrong. Seriously. It's not. Remember how I told you you needed unlearn or forget everything you have learned. This is just one of many examples. KSP teaches you bad things about rocket engines. What matters for a rocket engine's thrust is its *throat* diameter, not its nozzle exit diameter. The expansion ratio (exit:throat) varies greatly between different rocket engines, dependent on the altitude at which they are designed to operate. A rocket nozzle is designed to expand the exhaust gas to ambient pressure. At sea level, that's 101.325 kPa. In vacuum...that's 0. Compare the XLR11 with the RL-10, for example. There are dozens/hundreds/thousands of documents out there describing the ins and outs of rocket design. Those are now what you need to know (if you want to learn). "Well, this is how it is/how I did it in [stock] KSP before." isn't the right answer, and almost every time is going to be flat out wrong. Trust us. What you see in Realism Overhaul is how it's supposed to be.
+
+Q: Seriously, this part doesn't have the right numbers compared to what I've read here, here, and here. What should I do?
+A: The neat thing with this mod is that if you have a question about performance or something, do the research yourself with the real life component. IF what your research shows is grossly wrong with what you see in Realism Overhaul, then by all means, please point out the error. Typographical errors, or just plain missing something happens, best for everybody involved if you speak up, but PLEASE, do so AFTER you've done your research.
+
 Q: My parts are bigger/smaller than they were?
-A: Yep, they sure are, and no, we are not going to change it back. Parts have been resized to approximate or duplicate real life. Such as this is Realism Overhaul, that is kind of the point.
+A: Yep, they sure are, and no, we are not going to change it back. Parts have been resized to approximate or duplicate real life. Such as this is Realism Overhaul, that is kind of the point. It's also because otherwise you may burn up or over-G on reentry; if you go about using real life masses (as Kerbal pods do) with 2/3rds the size, you'll end up with density 4x what it should be, and ballistic coefficient (ratio of surface area to mass) 1/2 what it should be. It's like the difference between reentry with a nuclear warhead, and reentry with a pod designed for crew survival.
 
 Q: Some parts have CoM/CG offset from the true center of the part? AND/OR My craft won't fly straight, what is happening?
-A: Some parts (even more will be soon) have had their CoM adjusted to approximate real life. Once again, no, we aren't going to change it back. Soon we will add a moving CoM to further enhance realism. Remember, this Realism Overhaul not Kinda Sorta Maybe Real But Totally Fiction When Things Get Tough Overhaul.
+A: Some parts (even more will be soon) have had their CoM adjusted to approximate real life. Once again, no, we aren't going to change it back. Soon we will add a moving CoM to further enhance realism. Remember, this Realism Overhaul not Kinda Sorta Maybe Real But Totally Fiction When Things Get Tough Overhaul. Besides, having an offset CoM is very important for making controlled reentries. Your crew might not survive, and your pod might overheat, if you can't fly a lifting reentry.
 
 CoM Related:
 Q: How do I make a controlled, lifting reentry with the Mk1-2 Pod?
@@ -71,7 +92,7 @@ d. Install the latest copy of Realism Overhaul. There may be a good chance that 
 
 2. RE-TEST. Does what was happening still happen??? Do this 2 or 3 times at least to verify.
 
-3. GET YOUR LOGS. During your testing if the issue happens make sure you get the log. This is vital. No log, no support.
+3. GET YOUR LOGS. During your testing if the issue happens make sure you get the log. This is vital. No log, no support. Here's how to get the log we need:
 
 Cause the problem. Quit KSP (if it hasn't crashed). Upload your output log (NOT ksp.log) to dropbox or something.
 Windows: KSP_win\KSP_Data\output_log.txt OR KSP_win64\KSP_x64_DATA\output_log.txt (depending on which used)
@@ -99,22 +120,22 @@ INSTALLATION:
 ========================================
 
 Requires:
-Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.2.0)
+Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.2.1)
 ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED
 Real Solar System by NathanKell (v7.1)
-Real Fuels by NathanKell (v7.1)
+Real Fuels by NathanKell (v7.2)
 Deadly Reentry Continued by NathanKell (v5.2)
 Ferram Aerospace Research by ferram4 (v0.14.1.1)
-RealChutes by stupid_chris. (v1.2.3) NOTE: DO NOT install the MM files that are included.
-Engine Ignitor by HoneyFox. (v3.3) NOTE: DO NOT install the MM files that are included.
+RealChutes by stupid_chris. (v1.2.4) NOTE: DO NOT install the MM files that are included.
+Engine Ignitor by HoneyFox. (v3.3) NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.
 Advanced Jet Engine by camlost (v1.4) NON-OFFICIAL 0.24.* update HERE
 
 Very Highly Recommended:
-TweakScale by Biotronic (v1.33)
-TAC Life Support by TaranisElsu (v0.9 PRE-RELEASE #3)
+TweakScale by Biotronic (v1.37)
+TAC Life Support by TaranisElsu (v0.9 PRE-RELEASE #4)
 CrossFeedEnabler by NathanKell (v2.2)
 Toolbar by blizzy78 (v1.7.6)
-ModuleFixer by arsenic87
+ModuleFixer by arsenic87. Download HERE.
 PartCatalog by BlackNecro (v3.0RC5)
 TextureReplacer by Shaw (v1.6.1)
 or Active Texture Management by rbray89 (v3.3.1)
@@ -123,34 +144,36 @@ Kerbal Joint Reinforcement (v2.4.3)
 RemoteTech 2 by Remote Technologies Group (v1.4)
 
 Mods/Part Packs:
-Procedural Parts by swamp_ig (v0.9.16) (FULL SUPPORT)
-Procedural Fairings by e-dog (v3.08) (FULL SUPPORT)
-KW Rocketry by Winston & Kickasskyle (v2.6c) (FULL SUPPORT)
+Full-Complete Support
+Procedural Parts by swamp_ig (v0.9.18) - PP is experiencing major bugs at this time, fix in progress.
+Procedural Fairings by e-dog (v3.09)
+KW Rocketry by Winston & Kickasskyle (v2.6c)
+Rocketdyne F-1 by 1096bimu. Download HERE.
+Bobcat Soviet Engines by BobCat
+
+Optional:
+Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
+
+Coming Soon:
+Works in Progress or Planned Support
 Procedural Dynamics - Procedural Wing by DYJ (v0.8) (WIP)
 AIES by carmics (v1.5.1) (WIP)
 NovaPunch by Tiberion (v2.05) (WIP)
 KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
-RLA (WIP)
+RLA (WIP) Download HERE.
 ALCOR by (WIP)
 B9 (WIP)
 Fustek Station Parts (WIP)
 Near Future Technologies by Nertea (v2.*) (WIP)
 PorkWorks Inflatable Habs by Porkjet (WIP)
 FASA by Frizzank (v4.97) (WIP)
-Bobcat Soviet Engines (WIP)
 World Space by Lovad (WIP)
 KerbX by Borklund (WIP)
 LazTek SpaceX by LazurusLuan (WIP)
 Taurus HCV by jnrobinson (v1.2.1) (WIP)
 Aerojet Kerbodyne (WIP)
 OLDD Apollo/Saturn (WIP)
-Rocketdyne F-1 (WIP)
 Universal Storage by PaulKingtiger (v0.752) (WIP)
-
-Optional:
-Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
-
-Coming Soon:
 Sum Dum Heavy Industries - Service Module System by sumghai (v2.0) (NOT SUPPORTED YET WILL BE SOON)
 Lionhead ESA, Rovers, Landers, Probes, Solar Panels by 
 Component Space Shuttle maintained by Dragon01
@@ -159,9 +182,22 @@ Spaceplane Plus by Porkjet
 Kethane by Majiir
 SCANsat by technogeeky
 SkyLab by raidernick
-International Space Station
+International Space Station Group Project
+Chaka Monkey Exploration Systems by YANFRET
 
 Changelog:
+
+v6.0 ALPHA 9 \/
+*EngineIgnitor Fixes
+*Some more work on KW SRBs, ADDED GEM40, Isp fixes
+*Typographical Error Fixes
+*LazTek parachute fix
+*RLA PowerGeneration, ElectricEngines, Stockalike now fully supported!
+*Updated TweakScale stuff with latest release
+*Updated KW Fuel Tanks for RealFuels update
+*Updated RealChutes to work wih MM files now included.
+*Start AIES rework (very much a WIP)
+*Minor KW Engine fixes
 
 v6.0 ALPHA 8 \/
 *Small batteries in squad pods
@@ -314,20 +350,3 @@ v2 -- \/
 
 v1 -- \/
 Initial Release.
-
-Download
-Github
-
-FAQ:
-Q: How do I do X in Real Solar System / RO?
-A: Check the RSS Wiki, it may have an answer!
-
-Q: My engines are disappearing into my fueltank!
-A: The "going into the fueltank" thing is a trick SFJackBauer devised to get around the issue that most KSP engine models are actually engines + giant fuel tank bottom domes, basically. (Look up pictures of rocket engines. At most they have a turbopump etc at the top, or a set-of-girders thrust structure. Not a giant dome; that's the bottom of the fuel or oxidizer capsule-shaped tank.) Which is bad if you, for instance, want to use the engine on a different-sized fuel tank. Can't do anything about using an engine with a giant dome on a *smaller* tank, but for bigger tanks SFJackBauer devised this system where the unsightly dome is hidden inside the fueltank. Works great for clusters like S-II.
-
-Q: How do I make a controlled, lifting reentry with the Mk1-2 Pod?
-A: See this awesome video for a tutorial.
-
-OLD THREADS:
-Old RealismOverhaul Thread
-Old RedAV8R Realism Patch Thread
