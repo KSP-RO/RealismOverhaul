@@ -27,24 +27,14 @@ Changes:
 *Realistic use of Reaction Wheels. Very few parts have them, and those that do have realistic forces. Most vessels will require some form of Reaction/Attitude Control System.
 
 Engine Support:
-Realism Overhaul now comes integrated with the RealEngines set of engine patches (originally by SFJackBauer). It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. No action is required to use RealEngines.
+Realism Overhaul now comes integrated with the RealEngines set of engine patches (originally by SFJackBauer). It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. No action is required to use RealEngines. For ultimate realism please stick with what comes with Realism Overhaul and wait until RPL supports RealEngines, then play in Career Mode.
 
-Realism Overhaul natively supports NathanKell's Reaching for the Stars pack, which gives engines "realistic" stats with a real-world flavor without being clones. This is required when using Realistic Tech Progression Lite (RPL).
-The RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833.
+Realism Overhaul natively supports NathanKell's "Reaching for the Stars" engine pack, which gives engines "realistic" stats with a real-world flavor without being clones. If you want some small Career Mode support and have installed Realistic Tech Progression Lite (RPL), then the RftS engine pack is REQUIRED. Once installed, RftS DISABLES RealEngines. The RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833. FYI, soon RPL will work with RealEngines, at that time the RftS engine pack should be removed to gain RealEngines capability back.
 
-Realism Overhaul also natively will not interfere with "StockAlike" engine configurations.
+Realism Overhaul also natively supports "StockAlike" engine configurations. If "StockAlike" is installed then ALL RealEngines will be DISABLED. I personally do not recommend this option as it goes against everything Realism Overhaul stands for, however, the option is there.
 
 NOT Supported at this time:
 Integrated career mode. That means, no tech tree, no good cost system, contracts, the whole nine yards. It's enough work just getting things to work at all, let alone to take the time to ensure there is a good natural progression for career mode. So at this time, the only thing supported is 'sandbox' mode. If somebody else wants to take that part of the project on, please let me know. Otherwise it is the last on my list, and anything new that comes up will be placed in front of it as well. It is that low on my priorities list.
-
-Thinking out loud, some requirements for integration of career mode into RO:
-
-*The 'tech tree' for realism sake must be TIME based, not 'purchased'.
-*In addition to being time based...objects such as fuel tanks...anybody can make a tank...of any size...from the start. The question is, is it strong enough and light enough to fulfill the objective at hand. So generic fuel tanks would be required to have some sort of progression of cost/mass/strength rather than size...all the while minding the cost/strength/mass of 'RealTanks' as found on launch vehicles from other part mods. Ex. I don't want a generic tank of same characteristics as a Titan tank found in FASA to have different mass/strength/etc.
-*Cost, everything has a price. So how do we deal with inflation...to me this requires another plugin to automatically adjust cost based upon inflation at that time. Obviously there are going to be some guesses here as cost figures are likely going to be few and far between. Then there is a point, cost figures are likely going to be for a whole launcher or at least pieces as an aggregate...so balancing the cost individual small pieces as found in KSP is going to be a challenge.
-*I agree with your contracts, I honestly haven't played with 0.24 contracts so I don't know the interface they used. But having restraints on an apoapsis between two points and a periapsis between two points would be ideal. I remember playing with one older mod, (not sure if it's been updated) which did such things.
-*Wish list...RSS is designed to start in the 50's...with planets and everything in their respective places at that point in time...maybe with some help with NK and RSS, a person can choose at what point a person wishes to begin their game. Be it 50's, 60's...whatever.
-Otherwise...Lots of questions, not many answers.
 
 Q: What do I need to run Realism Overhaul?
 A: Realism Overhaul uses a set of 3rd party mods to enable certain aspects of realistic flight/performance/etc. Without these, 'realism' is going to be severely limited. Memory footprint (except RSS) is quite small so having them (you likely might already) is not going to produce a performance hit. Therefore, each one of these mods listed as REQUIRED are just that: see next question.
@@ -120,52 +110,56 @@ INSTALLATION:
 ========================================
 
 Requires:
+Advanced Jet Engine by camlost (v1.4) NON-OFFICIAL 0.24.* update HERE
+Deadly Reentry Continued by NathanKell (v5.2)
+Engine Ignitor by HoneyFox. (v3.3) [NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
+Ferram Aerospace Research by ferram4 (v0.14.1.1)
 Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.2.1)
 ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED
-Real Solar System by NathanKell (v7.1)
+RealChutes by stupid_chris. (v1.2.4)
 Real Fuels by NathanKell (v7.2)
-Deadly Reentry Continued by NathanKell (v5.2)
-Ferram Aerospace Research by ferram4 (v0.14.1.1)
-RealChutes by stupid_chris. (v1.2.4) NOTE: DO NOT install the MM files that are included.
-Engine Ignitor by HoneyFox. (v3.3) NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.
-Advanced Jet Engine by camlost (v1.4) NON-OFFICIAL 0.24.* update HERE
+Real Solar System by NathanKell (v7.1)
 
 Very Highly Recommended:
-TweakScale by Biotronic (v1.37)
+Kerbal Joint Reinforcement (v2.4.3)
+RemoteTech 2 by Remote Technologies Group (v1.4) [NOTE: If you want to send data back, you need this!]
 TAC Life Support by TaranisElsu (v0.9 PRE-RELEASE #4)
+TweakScale by Biotronic (v1.37)
+
+Recommended:
 CrossFeedEnabler by NathanKell (v2.2)
-Toolbar by blizzy78 (v1.7.6)
+MechJeb by many (v2.3.1)
 ModuleFixer by arsenic87. Download HERE.
 PartCatalog by BlackNecro (v3.0RC5)
 TextureReplacer by Shaw (v1.6.1)
 or Active Texture Management by rbray89 (v3.3.1)
-MechJeb by many (v2.3.1)
-Kerbal Joint Reinforcement (v2.4.3)
-RemoteTech 2 by Remote Technologies Group (v1.4)
+Toolbar by blizzy78 (v1.7.6)
 
-Mods/Part Packs:
-Full-Complete Support
-Procedural Parts by swamp_ig (v0.9.18) - PP is experiencing major bugs at this time, fix in progress.
+Supported Mods/Part Packs:
+6S Service Compartment Tubes by Nothke
+AIES by carmics (v1.5.1)
+ALCOR by alexustes
+Fustek Station Parts [NOTE: For X0.04-4 DEV BUILD - 5 June 2014]
+KW Rocketry by Winston & Kickasskyle (v2.6c) [NOTE: This mod removes shrouds. DO NOT install the "No Shroud" OR "Instant Power" configs.]
+PorkWorks Inflatable Habs by Porkjet (v0.4)
+Procedural Dynamics - Procedural Wing by DYJ (v0.8)
 Procedural Fairings by e-dog (v3.09)
-KW Rocketry by Winston & Kickasskyle (v2.6c)
+Procedural Parts by swamp_ig (v0.9.18)
+RLA Download HERE.
 Rocketdyne F-1 by 1096bimu. Download HERE.
-Bobcat Soviet Engines by BobCat
+Soviet Engines by BobCat
+Space Shuttle Engines & KM_Gimbal by dtobi (v2.0) [NOTE: Limited to detailed SSMEs, 1x OMS, Tanks]
+Universal Storage by PaulKingtiger (v0.75.5) [NOTE: Core and KAS packages only]
 
 Optional:
 Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
 
 Coming Soon:
-Works in Progress or Planned Support
-Procedural Dynamics - Procedural Wing by DYJ (v0.8) (WIP)
-AIES by carmics (v1.5.1) (WIP)
-NovaPunch by Tiberion (v2.05) (WIP)
-KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
-RLA (WIP) Download HERE.
-ALCOR by (WIP)
-B9 (WIP)
-Fustek Station Parts (WIP)
+Works in Progress or Future Plans - No Particular Order [NOTE: Packs in this list ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash]
 Near Future Technologies by Nertea (v2.*) (WIP)
-PorkWorks Inflatable Habs by Porkjet (WIP)
+NovaPunch by Tiberion (v2.05) (WIP)
+Spaceplane Plus by Porkjet
+B9 by bac9 (WIP)
 FASA by Frizzank (v4.97) (WIP)
 World Space by Lovad (WIP)
 KerbX by Borklund (WIP)
@@ -173,19 +167,35 @@ LazTek SpaceX by LazurusLuan (WIP)
 Taurus HCV by jnrobinson (v1.2.1) (WIP)
 Aerojet Kerbodyne (WIP)
 OLDD Apollo/Saturn (WIP)
-Universal Storage by PaulKingtiger (v0.752) (WIP)
-Sum Dum Heavy Industries - Service Module System by sumghai (v2.0) (NOT SUPPORTED YET WILL BE SOON)
-Lionhead ESA, Rovers, Landers, Probes, Solar Panels by 
-Component Space Shuttle maintained by Dragon01
-USI Kolonization Systems (MKS/OKS) by RoverDude
-Spaceplane Plus by Porkjet
-Kethane by Majiir
+Sum Dum Heavy Industries - Service Module System by sumghai (v2.0)
+KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
 SCANsat by technogeeky
+Lionhead ESA, Rovers, Landers, Probes, Solar Panels by Yogui87
+Kethane by Majiir
 SkyLab by raidernick
 International Space Station Group Project
+Component Space Shuttle maintained by Dragon01
 Chaka Monkey Exploration Systems by YANFRET
+USI Kolonization Systems (MKS/OKS) by RoverDude
+Kerbal Attachment System by Majiir
+B.Dynamics by BahamutoD
 
 Changelog:
+
+v6.0 ALPHA 10 \/
+*Small fixes to RLA, KW
+*AIES Complete
+*SRB Thrust Curves - WIP - A LOT Better
+*Some minor B9 work - still a long way to go
+*Some FASA work and bug fixes
+*TACLS and PP changes
+*Klockheed Martian update complete
+*Porkworks update complete
+*Nothke Service Module update complete
+*FusTek update complete
+*NearFuture Construction update complete
+*Merlin 1D Vac bug fix
+*NearFuture Propulsion - WIP
 
 v6.0 ALPHA 9 \/
 *EngineIgnitor Fixes
