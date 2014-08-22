@@ -117,20 +117,20 @@ Ferram Aerospace Research by ferram4 (v0.14.1.1)
 Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.2.1)
 ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED
 RealChutes by stupid_chris. (v1.2.4)
-Real Fuels by NathanKell (v7.2)
-Real Solar System by NathanKell (v7.1)
+Real Fuels by NathanKell (v7.3)
+Real Solar System by NathanKell (v7.2)
 
 Very Highly Recommended:
 Kerbal Joint Reinforcement (v2.4.3)
 RemoteTech 2 by Remote Technologies Group (v1.4) [NOTE: If you want to send data back, you need this!]
 TAC Life Support by TaranisElsu (v0.9 PRE-RELEASE #4)
-TweakScale by Biotronic (v1.37)
+TweakScale by Biotronic (v1.41)
 
 Recommended:
 CrossFeedEnabler by NathanKell (v2.2)
 MechJeb by many (v2.3.1)
 ModuleFixer by arsenic87. Download HERE.
-PartCatalog by BlackNecro (v3.0RC5)
+PartCatalog by BlackNecro (v3.0RC7)
 TextureReplacer by Shaw (v1.6.1)
 or Active Texture Management by rbray89 (v3.3.1)
 Toolbar by blizzy78 (v1.7.6)
@@ -142,7 +142,7 @@ ALCOR by alexustes
 Fustek Station Parts [NOTE: For X0.04-4 DEV BUILD - 5 June 2014]
 KW Rocketry by Winston & Kickasskyle (v2.6c) [NOTE: This mod removes shrouds. DO NOT install the "No Shroud" OR "Instant Power" configs.]
 PorkWorks Inflatable Habs by Porkjet (v0.4)
-Procedural Dynamics - Procedural Wing by DYJ (v0.8)
+Procedural Dynamics - Procedural Wing by DYJ (v0.8.1)
 Procedural Fairings by e-dog (v3.09)
 Procedural Parts by swamp_ig (v0.9.18)
 RLA Download HERE.
@@ -181,6 +181,22 @@ Kerbal Attachment System by Majiir
 B.Dynamics by BahamutoD
 
 Changelog:
+
+v6.0 ALPHA 11 \/
+*Update ModuleManager to current v2.2.2
+*MUCH better thrust curves for all but 30XL and Aerojet Atlas V SRB
+*DRE Updates, Tweaks, Fixes - All over, still much to do, but should be playable
+*FASA Apollo CSM file fix - typo rendered most of file unusable
+*FASA Saturn APS Engine Fix - Pressurized Tank to feed pressurized engine
+*FASA Gemini and Mercury fixes - Heatshield and retro rocket fixes
+*Engine Node fixes - Re-adding bottom nodes for FAR compatibility
+*Add CoM Shifter - Makes the "it's too hard" people happy
+*Fix rover wheel consumption - since ALL_VESSEL is bugged
+*NearFuture Updates (WIP) - Getting closer almost done
+*Rework Solar Panels - New info, correctly measured sizes, etc.
+*NovaPunch2 Updates (WIP) - About half done, engines need the most work, lot's of solids and curves to add.
+*File Renaming for clarity - Makes it look prettier
+*AIES and Squad Stock updates and fixes - Added default electricCharge to pods, and updated heatProduction figures that were wonky on engines
 
 v6.0 ALPHA 10 \/
 *Small fixes to RLA, KW
