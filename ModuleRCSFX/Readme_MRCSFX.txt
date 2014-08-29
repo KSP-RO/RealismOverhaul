@@ -13,14 +13,29 @@ Also there is
 useThrottle
 which, when set to true, means that RCS will fire forwards with the throttle.
 
-FX attributes, which did more harm than good, have been stripped for now.
-
 correctThrust defaults to true. Set it to false if you want stock KSP behavior regarding Isp and fuel flow.
 
-v0.4
+fullThrust defaults to false. Set it to true and RCS will always fire at full thrust (or 10% thrust in precision mode), rather than the less-than-full-thrust, dependent-on-angle they do stock.
+
+You may either use the default RCS effects, or add an EFFECTS node in your part cfg and in the MODULE assign:
+runningEffectName
+engageEffectName
+flameoutEffectName
+
 
 INSTALLATION:
 unzip to GameData
 
-License remains the ialdabaoth license (CC-BY-SA + tweaks).
-Source is https://github.com/NathanKell/ModuleRCSFX
+LICENSE remains the ialdabaoth license (CC-BY-SA + tweaks).
+SOURCE is https://github.com/NathanKell/ModuleRCSFX
+
+CHANGELOG
+v3.0
+*Fixed issues below 750m/s (thanks chicknblender!)
+*Added EFFECTS support back in
+*Added fullThrust as an option.
+
+v2.x
+*Fixed for .24
+*Added the new fields
+*Thrust correction by default.
