@@ -112,9 +112,9 @@ INSTALLATION:
 Requires:
 Advanced Jet Engine by camlost (v1.4) NON-OFFICIAL 0.24.* update HERE
 Deadly Reentry Continued by NathanKell (v5.2)
-Engine Ignitor by HoneyFox. (v3.3) [NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
+Engine Ignitor by HoneyFox. (v3.4) [NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
 Ferram Aerospace Research by ferram4 (v0.14.1.1)
-Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.2.1)
+Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.3.4)
 ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED
 RealChutes by stupid_chris. (v1.2.4)
 Real Fuels by NathanKell (v7.3)
@@ -122,9 +122,9 @@ Real Solar System by NathanKell (v7.2)
 
 Very Highly Recommended:
 Kerbal Joint Reinforcement (v2.4.3)
-RemoteTech 2 by Remote Technologies Group (v1.4) [NOTE: If you want to send data back, you need this!]
-TAC Life Support by TaranisElsu (v0.9 PRE-RELEASE #4)
-TweakScale by Biotronic (v1.41)
+RemoteTech 2 by Remote Technologies Group (v1.4.1) [NOTE: If you want to send data back, you need this!]
+TAC Life Support by TaranisElsu (v0.10)
+TweakScale by Biotronic (v1.43)
 
 Recommended:
 CrossFeedEnabler by NathanKell (v2.2)
@@ -140,7 +140,15 @@ Supported Mods/Part Packs:
 AIES by carmics (v1.5.1)
 ALCOR by alexustes
 Fustek Station Parts [NOTE: For X0.04-4 DEV BUILD - 5 June 2014]
-KW Rocketry by Winston & Kickasskyle (v2.6c) [NOTE: This mod removes shrouds. DO NOT install the "No Shroud" OR "Instant Power" configs.]
+KW Rocketry by Winston & Kickasskyle (v2.6c)
+[NOTE: (Realism Overhaul) WILL remove the engine shrouds. DO NOT install the "Extra" - "No Shroud" OR "Instant Power" configs provided in the download.]
+Near Future Technologies by Nertea (v0.2.*)
+Near Future Propulsion (v0.2.3) [NOTE: Propulsion Pack Engines NOT SUPPORTED AT THIS TIME.]
+Near Future Electrical (v0.2.2)
+Near Future Solar Panels (v0.2.2)
+Near Future Construction (v0.2.1)
+Near Future Spacecraft (v0.2.1)
+NovaPunch by Tiberion (v2.06)
 PorkWorks Inflatable Habs by Porkjet (v0.4)
 Procedural Dynamics - Procedural Wing by DYJ (v0.8.1)
 Procedural Fairings by e-dog (v3.09)
@@ -148,7 +156,7 @@ Procedural Parts by swamp_ig (v0.9.18)
 RLA Download HERE.
 Rocketdyne F-1 by 1096bimu. Download HERE.
 Soviet Engines by BobCat
-Space Shuttle Engines & KM_Gimbal by dtobi (v2.0) [NOTE: Limited to detailed SSMEs, 1x OMS, Tanks]
+Space Shuttle Engines & KM_Gimbal by dtobi (v2.1.2) [NOTE: Limited to detailed SSMEs, 1x OMS, Tanks]
 Universal Storage by PaulKingtiger (v0.75.5) [NOTE: Core and KAS packages only]
 
 Optional:
@@ -156,8 +164,6 @@ Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSE
 
 Coming Soon:
 Works in Progress or Future Plans - No Particular Order [NOTE: Packs in this list ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash]
-Near Future Technologies by Nertea (v2.*) (WIP)
-NovaPunch by Tiberion (v2.05) (WIP)
 Spaceplane Plus by Porkjet
 B9 by bac9 (WIP)
 FASA by Frizzank (v4.97) (WIP)
@@ -167,12 +173,12 @@ LazTek SpaceX by LazurusLuan (WIP)
 Taurus HCV by jnrobinson (v1.2.1) (WIP)
 Aerojet Kerbodyne (WIP)
 OLDD Apollo/Saturn (WIP)
-Sum Dum Heavy Industries - Service Module System by sumghai (v2.0)
+Sum Dum Heavy Industries - Service Module System by sumghai (v2.2)
 KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
 SCANsat by technogeeky
 Lionhead ESA, Rovers, Landers, Probes, Solar Panels by Yogui87
 Kethane by Majiir
-SkyLab by raidernick
+SkyLab by raidernick and Soviet projects!
 International Space Station Group Project
 Component Space Shuttle maintained by Dragon01
 Chaka Monkey Exploration Systems by YANFRET
@@ -181,6 +187,21 @@ Kerbal Attachment System by Majiir
 B.Dynamics by BahamutoD
 
 Changelog:
+
+v6.0 ALPHA 12 \/
+*Update ModuleManager to current v2.3.4
+*ModuleRCSFX Bug Fixes and Updates
+*Small FASA bug/consistency fixes
+*Engine Heat Fixes
+*TAC LS Updates and Fixes
+*Small LazTek bug/consistency fixes
+*Retitled some KW parts and some minor KW resizing
+*Repurposed KW SpaceShuttle SRB into SRMU to better fit whole RealEngine package
+*Minor resizing of a couple other various parts
+*Removed separate nose cone previously copied and added those sizes to existing nose cone
+*Various typos fixed
+*Consistency fixes between mods with identical parts
+*NovaPunch 2.06 Now FULL Support - Including RealEngines and SRBs
 
 v6.0 ALPHA 11 \/
 *Update ModuleManager to current v2.2.2
