@@ -1,13 +1,13 @@
+[0.24.*] Realism Overhaul: ROv6.0 Alpha 13 - Update: 30 - Sept 2014
 Realism Overhaul
 
-WARNING!!! THIS COULD AND PROBABLY WILL BREAK SAVES. THIS IS A WIP ALPHA RELEASE. THERE WILL BE BUGS. PLEASE REPORT.
+WARNING!!! EACH RELEASE OF THIS MOD COULD AND PROBABLY WILL BREAK SAVES. THIS IS A WIP ALPHA RELEASE. THERE WILL BE BUGS. PLEASE REPORT AS DIRECTED IN THE INSTRUCTIONS.
 ========
 This mod is maintained by RedAV8R and NathanKell (with contributions from many).
 
 License CC BY-SA
 
-Also included: Module Manager (by sarbian, swamp_ig, and ialdabaoth). See Module Manager thread for details and license and source.
-Module Manager is required for RO to work.
+Also included: Module Manager (by sarbian, swamp_ig, and ialdabaoth). See Module Manager thread for details and license and source. Module Manager is essentially required for RO to work.
 
 FAQ:
 
@@ -15,32 +15,37 @@ Q: What is Realism Overhaul (RO)?
 A: Realism Overhaul is a set of ModuleManager patches which transforms KSP parts (both stock and mods) into 1:1 replicas or as close to what real world would be. While totally separate, (although created by the same person - CHEERS to NathanKell), RO and RealSolarSystem (RSS) are complimentary. Neither 'requires' the other for KSP to run, but your experience is going to be severely and awkwardly changed without them together. Note that compared to a stock Kerbin universe your experience will be totally changed compared to that of what RSS and RO provides. These two combined effectively turn the 'game' of KSP, into a space simulator in which you can design and fly real missions using real numbers.
 
 Q: What should I know about Realism Overhaul?
-A: There is a lot. Whatever you have 'learned' about space travel using a stock Kerbin universe, forget it. KSP was designed around 'playability', and making things 'fun'. RSS and RO when used together makes space travel as hard as it gets. Gone are the days of lifting off straight up until your wanted apoapsis is reached then waiting, turning 90 and powering until orbital velocity is achieved...well, you can do that still, but it's time you learn more efficient flight paths or your vehicles are going to be quite large.
+A: There is a lot. Whatever you have 'learned' about space travel using a stock Kerbin universe, forget it. KSP was designed around 'playability', and making things 'fun/easy'. RSS and RO when used together makes space travel as hard as it gets. Gone are the days of lifting off straight up until your wanted apoapsis is obtained, then waiting until that point, turning 90 and powering until orbital velocity is achieved...well, you can do that still, but it's time you learn more efficient flight paths or your vehicles are going to be considerably larger than required and neccessary.
 
 Changes:
 *New generic size system: 0.5m, 1m, 1.25m, 1.5m, 2m, 2.5m, 3m, 3.5m, 3.75m, 4m, 5m, 6m, 7m, 8m, 9m, 10m - This is achieved via TweakScale.
 *Modified ElectricCharge system. 1EC/s = 1kW.
 *Realistic battery and solar panel numbers, and usage for RT2 antennae. Solar panels don't produce much, but they're light.
 *RTGs are now modeled after real counterparts.
-*DRE Heat shields now support RSS, with new heat shields added based on new size system
+*DRE Heat shields now support RSS, with new heat shields added based on new size system.
 *Stock/Generic pack masses have been tweaked for realism.
 *Realistic use of Reaction Wheels. Very few parts have them, and those that do have realistic forces. Most vessels will require some form of Reaction/Attitude Control System.
 
 Engine Support:
-Realism Overhaul now comes integrated with the RealEngines set of engine patches (originally by SFJackBauer). It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. No action is required to use RealEngines. For ultimate realism please stick with what comes with Realism Overhaul and wait until RPL supports RealEngines, then play in Career Mode.
+Realism Overhaul now comes integrated with the RealEngines set of engine patches (originally by SFJackBauer). It gives engines the stats of real-world engines that look similar, like NovaPunch K2-X -> J-2. No action is required to use RealEngines. While there are other engine modifications available. RO and the integrated RealEngines provide the the most realism.
 
-Realism Overhaul natively supports NathanKell's "Reaching for the Stars" engine pack, which gives engines "realistic" stats with a real-world flavor without being clones. If you want some small Career Mode support and have installed Realistic Tech Progression Lite (RPL), then the RftS engine pack is REQUIRED. Once installed, RftS DISABLES RealEngines. The RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833. FYI, soon RPL will work with RealEngines, at that time the RftS engine pack should be removed to gain RealEngines capability back.
+Realism Overhaul natively supports NathanKell's "Reaching for the Stars" engine pack, which gives engines "realisticish" stats with a real-world flavor without being clones. If you want some small Career Mode support and have installed Realistic Tech Progression Lite (RPL), then the RftS engine pack is REQUIRED. Once installed, RftS DISABLES RealEngines. The RftS Pack can be downloaded from the fourth post here: http://forum.kerbalspaceprogram.com/threads/57833. Soon RPL will work with RealEngines, at that time the RftS engine pack should be removed to gain RealEngines capability back.
 
 Realism Overhaul also natively supports "StockAlike" engine configurations. If "StockAlike" is installed then ALL RealEngines will be DISABLED. I personally do not recommend this option as it goes against everything Realism Overhaul stands for, however, the option is there.
 
 NOT Supported at this time:
-Integrated career mode. That means, no tech tree, no good cost system, contracts, the whole nine yards. It's enough work just getting things to work at all, let alone to take the time to ensure there is a good natural progression for career mode. So at this time, the only thing supported is 'sandbox' mode. If somebody else wants to take that part of the project on, please let me know. Otherwise it is the last on my list, and anything new that comes up will be placed in front of it as well. It is that low on my priorities list.
+
+Career mode. That means, no tech tree, no good cost system, contracts, the whole nine yards. It's enough work just getting things to work at all, let alone to take the time to ensure there is a good natural progression for career mode. So at this time, the only thing supported is 'sandbox' mode. If somebody else wants to take that part of the project on, please let me know. Otherwise it is the last on my list, and anything new that comes up will be placed in front of it as well. It is that low on my priorities list.
+
+Effects: As comprehensive as this mod is, I have not, and am not working on effects. This includes engines and any other part. This means that effects for some engines aren't going to match what they actually look like. If somebody wants to start working on them, please PM me, get a git account, and issue pull requests as you work on them.
+
+Original Mod Craft Files: Craft files (*.craft) that come with the original mod and other built by fans designed around the original mod WILL NOT WORK. This is a KSP limitation. Not a problem with RO/RSS or any of it's dependencies. The manner in which craft files are saved prevents their use when parts are changed in any way from which the craft files were originally built from. In the future RO will include new craft files made specifically for/with RO. At this time there is also a RO/RSS craft repository thread. Beware, craft files with parts that have been scaled with TweakScale will also fail to load properly.
 
 Q: What do I need to run Realism Overhaul?
 A: Realism Overhaul uses a set of 3rd party mods to enable certain aspects of realistic flight/performance/etc. Without these, 'realism' is going to be severely limited. Memory footprint (except RSS) is quite small so having them (you likely might already) is not going to produce a performance hit. Therefore, each one of these mods listed as REQUIRED are just that: see next question.
 
 Q: I don't want to install ****** (some required mod), what will happen, what should I do?
-A: The mods marked as required are just that--required. Without it, things may break unexpectedly, your game will not play in the manner intended, and your life will be more difficult than it should be. For example, if you don't install FAR, you will need about twice the rocket you would need in real life. Realism Overhaul+RealSolarSystem is designed around these dependencies. We can't offer support if you haven't installed RO and the required mods as directed.
+A: The mods marked as required are just that -- required. Without it, things may break unexpectedly, your game will not play in the manner intended, and your life will be more difficult than it should be. For example, if you don't install FAR, you will need about twice the rocket you would need in real life. Realism Overhaul+RealSolarSystem is designed around these dependencies. We can't offer support if you haven't installed RO and the required mods as directed.
 
 Q: I want to install ********, but it's not on the supported list, what happens?
 A: Don't know. If it's not on the list, then it hasn't been tested and therefore there is no guarantee if it will work or not, and there will be NO SUPPORT for any issues that it may cause. If that mod is just parts, be warned now, it's behavior will likely cause you nothing but pain and anguish simply because it's performance is not what it should be, UNLESS it was designed for the real world. Likely it was not and things were 'kerbalized' so as not to be over powered. If you really like that mod, and you want it supported, then put in a request.
@@ -49,7 +54,10 @@ Q: My Realism Overhaul installation is broken/doesn't work/etc. What do I do?
 A: First, go through these basic FAQ and see if your answer is there. If it is, great, problem solved. If not, follow the prescribed basic troubleshooting steps following the FAQ. If that doesn't fix it, THEN post your issue, following the directions for your post, otherwise be prepared to be chastised.
 
 Q: My engines don't throttle! How can I fix this?
-A: You don't, and we won't. It's working as designed. In real life, 99% of rocket engines don't throttle at all. A few throttle down to about 60-70% (like the SSME) to lower crew G forces on launch and to limit stress on the stack (especially at Max Q). Only a tiny, tiny few actually "deeply" throttle--basically just engines designed for landers. The Lunar Module Descent Engine is the largest deeply-throttling engine in RO right now, and will throttle down to about 12%. As more and more engines are added, your options will increase, but again, there aren't many engines that do throttle. Such is life. Welcome to Realism Overhaul.
+A: You don't, and we won't. It's working as designed. In real life, a majority of rocket engines don't throttle at all. A few throttle down to about 60-70% (like the SSME) to lower crew G forces on launch and to limit stress on the stack (especially at Max Q). Only a tiny, tiny few actually "deeply" throttle--basically just engines designed for landers. The Lunar Module Descent Engine is the largest deeply-throttling engine in RO right now, and will throttle down to about 12%. As more and more engines are added, your options will increase, but again, there aren't many engines that do throttle. Such is life. Welcome to Realism Overhaul.
+
+Q: What happened to nodes to hide the tank bloat on engines? Are you going to add them back?
+A: They were removed. Not planning on it.
 
 Q: This mod is unbalanced. Sizes, thrust, mass, Isp, etc just don't make sense. Part A is 2x bigger, 1/10 the thrust and 33% better Isp than part B. This has to be wrong, when will it be fixed?
 A: Well...it's not wrong. Seriously. It's not. Remember how I told you you needed unlearn or forget everything you have learned. This is just one of many examples. KSP teaches you bad things about rocket engines. What matters for a rocket engine's thrust is its *throat* diameter, not its nozzle exit diameter. The expansion ratio (exit:throat) varies greatly between different rocket engines, dependent on the altitude at which they are designed to operate. A rocket nozzle is designed to expand the exhaust gas to ambient pressure. At sea level, that's 101.325 kPa. In vacuum...that's 0. Compare the XLR11 with the RL-10, for example. There are dozens/hundreds/thousands of documents out there describing the ins and outs of rocket design. Those are now what you need to know (if you want to learn). "Well, this is how it is/how I did it in [stock] KSP before." isn't the right answer, and almost every time is going to be flat out wrong. Trust us. What you see in Realism Overhaul is how it's supposed to be.
@@ -59,6 +67,9 @@ A: The neat thing with this mod is that if you have a question about performance
 
 Q: My parts are bigger/smaller than they were?
 A: Yep, they sure are, and no, we are not going to change it back. Parts have been resized to approximate or duplicate real life. Such as this is Realism Overhaul, that is kind of the point. It's also because otherwise you may burn up or over-G on reentry; if you go about using real life masses (as Kerbal pods do) with 2/3rds the size, you'll end up with density 4x what it should be, and ballistic coefficient (ratio of surface area to mass) 1/2 what it should be. It's like the difference between reentry with a nuclear warhead, and reentry with a pod designed for crew survival.
+
+Q: Pods have been resized but the tanks don't match?
+A: Most tanks found in 'generic' part packs have had TweakScale added, however their default size remains the same. We strongly recommend using Procedural Parts as your fuel tanks. They have unlimited size capability, allowing those odd sizes that dominate the space industry, including a lot of tanks especially U.S. based using the Imperial system. Generally, tanks found as part of more replica type mods have been sized to match their real life counterpart.
 
 Q: Some parts have CoM/CG offset from the true center of the part? AND/OR My craft won't fly straight, what is happening?
 A: Some parts (even more will be soon) have had their CoM adjusted to approximate real life. Once again, no, we aren't going to change it back. Soon we will add a moving CoM to further enhance realism. Remember, this Realism Overhaul not Kinda Sorta Maybe Real But Totally Fiction When Things Get Tough Overhaul. Besides, having an offset CoM is very important for making controlled reentries. Your crew might not survive, and your pod might overheat, if you can't fly a lifting reentry.
@@ -105,45 +116,49 @@ INSTALLATION:
 1. Start with a FRESH unadulterated install of KSP.
 2. Install the required mods. Ensure you have the most up to date version and have followed their respective installation instructions. Links are provided below as well as some special installation notes/instructions for those mods.
 3. Unzip the Realism Overhaul download zip archive to your KSP/GameData folder.
-4. OPTIONAL - Those using PartCatalog may CUT and paste the folders within RealismOverhaul/RedAV8R into your KSP/GameData, there should be no overwriting necessary.
-5. Launch KSP. Enjoy.
+4. Launch KSP. Enjoy.
 ========================================
 
-Requires:
-Advanced Jet Engine by camlost (v1.4) NON-OFFICIAL 0.24.* update HERE
+Minimum Requirements:
+Advanced Jet Engine by camlost (v1.5)
 Deadly Reentry Continued by NathanKell (v5.2)
 Engine Ignitor by HoneyFox. (v3.4) [NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
 Ferram Aerospace Research by ferram4 (v0.14.1.1)
-Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.3.4)
+Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.3.5)
 ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED
+NodeResizer by Starwaster
 RealChutes by stupid_chris. (v1.2.4)
 Real Fuels by NathanKell (v7.3)
-Real Solar System by NathanKell (v7.2)
-
-Very Highly Recommended:
-Kerbal Joint Reinforcement (v2.4.3)
-RemoteTech 2 by Remote Technologies Group (v1.4.1) [NOTE: If you want to send data back, you need this!]
+Real Solar System by NathanKell (v7.3)
 TAC Life Support by TaranisElsu (v0.10)
+
+Required for best gameplay:
+Procedural Parts by swamp_ig (v0.9.18) [NOTE: Procedural Heat Shields NOT supported at this time.]
+RemoteTech 2 by Remote Technologies Group (v1.4.1) [NOTE: If you want to send data back, you need this!]
 TweakScale by Biotronic (v1.43)
 
 Recommended:
-CrossFeedEnabler by NathanKell (v2.2)
+CrossFeedEnabler by NathanKell (v3.0.1)
+Kerbal Joint Reinforcement (v2.4.3)
 MechJeb by many (v2.3.1)
 ModuleFixer by arsenic87. Download HERE.
 PartCatalog by BlackNecro (v3.0RC7)
-TextureReplacer by Shaw (v1.6.1)
-or Active Texture Management by rbray89 (v3.3.1)
+TextureReplacer by Shaw (v1.7.1)
+or Active Texture Management by rbray89 (v3.4)
 Toolbar by blizzy78 (v1.7.6)
 
 Supported Mods/Part Packs:
 6S Service Compartment Tubes by Nothke
+Aerojet Kerbodyne (v3.0.2)
 AIES by carmics (v1.5.1)
 ALCOR by alexustes
-Fustek Station Parts [NOTE: For X0.04-4 DEV BUILD - 5 June 2014]
-KW Rocketry by Winston & Kickasskyle (v2.6c)
-[NOTE: (Realism Overhaul) WILL remove the engine shrouds. DO NOT install the "Extra" - "No Shroud" OR "Instant Power" configs provided in the download.]
+Fustek Station Parts by sumghai (vX0.04-4 DEV BUILD - 5 June 2014)
+Kerbal Attachment System by KospY (v0.4.8)
+KerbX by Borklund
+Kethane by Majiir (v0.9)
+KW Rocketry by Winston & Kickasskyle (v2.6c) [NOTE: DO NOT install the "Extra" - "No Shroud" OR "Instant Power"]
 Near Future Technologies by Nertea (v0.2.*)
-Near Future Propulsion (v0.2.3) [NOTE: Propulsion Pack Engines NOT SUPPORTED AT THIS TIME.]
+Near Future Propulsion (v0.2.3) [NOTE: Propulsion Pack Engines NOT supported at this time.]
 Near Future Electrical (v0.2.2)
 Near Future Solar Panels (v0.2.2)
 Near Future Construction (v0.2.1)
@@ -152,248 +167,76 @@ NovaPunch by Tiberion (v2.06)
 PorkWorks Inflatable Habs by Porkjet (v0.4)
 Procedural Dynamics - Procedural Wing by DYJ (v0.8.1)
 Procedural Fairings by e-dog (v3.09)
-Procedural Parts by swamp_ig (v0.9.18)
-RLA Download HERE.
+RLA by hoojiwana (v11.2)
 Rocketdyne F-1 by 1096bimu. Download HERE.
+SCANsat by technogeeky (v7.0RC4)
 Soviet Engines by BobCat
-Space Shuttle Engines & KM_Gimbal by dtobi (v2.1.2) [NOTE: Limited to detailed SSMEs, 1x OMS, Tanks]
-Universal Storage by PaulKingtiger (v0.75.5) [NOTE: Core and KAS packages only]
+Spaceplane Plus by Porkjet (v1.3)
+Space Shuttle Engines & KM_Gimbal by dtobi (v2.1.2) [NOTE: Not all parts supported at this time.]
+Sum Dum Heavy Industries - Service Module System by sumghai (v2.2.1) [NOTE: Delete MM Configs found in the Parts folder]
+Taurus HCV by jnrobinson (v1.2.1)
+Universal Storage by PaulKingtiger (v0.8.4)
+Core (v0.8.4.22)
+KAS (v0.8.3.12)
+TAC (v0.8.3.4) [NOTE: ONLY install "US_TAC" folder in the TAC pack.]
 
 Optional:
 Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
 
-Coming Soon:
-Works in Progress or Future Plans - No Particular Order [NOTE: Packs in this list ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash]
-Spaceplane Plus by Porkjet
+Coming Soon: Works in Progress or Future Plans - In No Particular Order 
+[NOTE: Packs in this list, while maybe present, ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash. Any bug report will be ignored or publicly mocked, so don't try to report something.]
 B9 by bac9 (WIP)
 FASA by Frizzank (v4.97) (WIP)
-World Space by Lovad (WIP)
-KerbX by Borklund (WIP)
+World Space by Lovad [NOTE: Apollo CSM and Mercury Spacecraft NOT SUPPORTED.]
 LazTek SpaceX by LazurusLuan (WIP)
-Taurus HCV by jnrobinson (v1.2.1) (WIP)
-Aerojet Kerbodyne (WIP)
-OLDD Apollo/Saturn (WIP)
-Sum Dum Heavy Industries - Service Module System by sumghai (v2.2)
+OLDD Apollo/Saturn, N1, Proton (WIP)
 KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
-SCANsat by technogeeky
 Lionhead ESA, Rovers, Landers, Probes, Solar Panels by Yogui87
-Kethane by Majiir
-SkyLab by raidernick and Soviet projects!
+SkyLab by raidernick (v0.65)
+US Probes Pack by raidernick (v0.25)
+Salyut Stations & Soyuz by raidernick (v0.52.5)
+Soviet Probes, with Rockets! by raidernick (v0.94)
 International Space Station Group Project
 Component Space Shuttle maintained by Dragon01
 Chaka Monkey Exploration Systems by YANFRET
 USI Kolonization Systems (MKS/OKS) by RoverDude
-Kerbal Attachment System by Majiir
 B.Dynamics by BahamutoD
 
 Changelog:
 
-v6.0 ALPHA 12 \/
-*Update ModuleManager to current v2.3.4
-*ModuleRCSFX Bug Fixes and Updates
-*Small FASA bug/consistency fixes
-*Engine Heat Fixes
-*TAC LS Updates and Fixes
-*Small LazTek bug/consistency fixes
-*Retitled some KW parts and some minor KW resizing
-*Repurposed KW SpaceShuttle SRB into SRMU to better fit whole RealEngine package
-*Minor resizing of a couple other various parts
-*Removed separate nose cone previously copied and added those sizes to existing nose cone
-*Various typos fixed
-*Consistency fixes between mods with identical parts
-*NovaPunch 2.06 Now FULL Support - Including RealEngines and SRBs
+v6.0 ALPHA 13 \/
+*Added AVC Support
+*Updated MM to v2.3.5
+*Added KAS Support
+*Added Kethane Support
+*Added SpacePlane Plus Support - Will be updated as necessary with inclusion into KSP 0.25
+*Added ScanSAT Support
+*Added Romfarer Robotic Arms & Lazor Support
+*Added KerbalGPS Support
+*Added KerbX Support
+*Added RLA Support back (now v11.2)
+*Added TaurusHCV Support
+*Added SDHI Service Module Support
+*Added AerojetKerbodyne v3.* Support
+*More KlockheedMartian Update/Fixes
+*Reworked Stock Pyrios Booster
+*RCS Added to multiple crew pods
+*Deadly ReEntry Update/Fixes
+*NovaPunch2 Fixes
+*Universal Storage Fixes
+*TACLS Updates/Fixes
+*RemoteTech2 Update/Fixes
+*AIES Probe Update/Fixes
 
-v6.0 ALPHA 11 \/
-*Update ModuleManager to current v2.2.2
-*MUCH better thrust curves for all but 30XL and Aerojet Atlas V SRB
-*DRE Updates, Tweaks, Fixes - All over, still much to do, but should be playable
-*FASA Apollo CSM file fix - typo rendered most of file unusable
-*FASA Saturn APS Engine Fix - Pressurized Tank to feed pressurized engine
-*FASA Gemini and Mercury fixes - Heatshield and retro rocket fixes
-*Engine Node fixes - Re-adding bottom nodes for FAR compatibility
-*Add CoM Shifter - Makes the "it's too hard" people happy
-*Fix rover wheel consumption - since ALL_VESSEL is bugged
-*NearFuture Updates (WIP) - Getting closer almost done
-*Rework Solar Panels - New info, correctly measured sizes, etc.
-*NovaPunch2 Updates (WIP) - About half done, engines need the most work, lot's of solids and curves to add.
-*File Renaming for clarity - Makes it look prettier
-*AIES and Squad Stock updates and fixes - Added default electricCharge to pods, and updated heatProduction figures that were wonky on engines
+OLDER CHANGELOG
 
-v6.0 ALPHA 10 \/
-*Small fixes to RLA, KW
-*AIES Complete
-*SRB Thrust Curves - WIP - A LOT Better
-*Some minor B9 work - still a long way to go
-*Some FASA work and bug fixes
-*TACLS and PP changes
-*Klockheed Martian update complete
-*Porkworks update complete
-*Nothke Service Module update complete
-*FusTek update complete
-*NearFuture Construction update complete
-*Merlin 1D Vac bug fix
-*NearFuture Propulsion - WIP
+Q: How do I do X in Realism Overhaul / RSS?
+A: Check the RSS Wiki, it may have an answer!
 
-v6.0 ALPHA 9 \/
-*EngineIgnitor Fixes
-*Some more work on KW SRBs, ADDED GEM40, Isp fixes
-*Typographical Error Fixes
-*LazTek parachute fix
-*RLA PowerGeneration, ElectricEngines, Stockalike now fully supported!
-*Updated TweakScale stuff with latest release
-*Updated KW Fuel Tanks for RealFuels update
-*Updated RealChutes to work wih MM files now included.
-*Start AIES rework (very much a WIP)
-*Minor KW Engine fixes
+More reading can be found in the old RO and RedAV8R Realism Patch threads located:
+Old RealismOverhaul Thread
+Old RedAV8R Realism Patch Thread
 
-v6.0 ALPHA 8 \/
-*Small batteries in squad pods
-*FASA updates
-*RealEngine updates to Squad, RealFuels, KW, and BobCat
-*Update to ModuleRCSFX
-*TACLS Config Fix
-*Convert UA120X to UA1204
-*Mass/Thrust/Isp Fix for fairings
-*260/300" PLFs added
-*PLF Base mass fix
-*Better, not quite perfect thrust curves
-*KW Solids complete - needs better thrust curves
+Realism Overhaul is a relatively simple modification, but is made more complex by the simple fact of having so many dependencies and relying upon numerous other people in order to make everything work as it should. By clicking on the link to the Realism Overhaul download page, the user, under oath, swears to have read, understood, and agreed upon, all FAQ items. The user does solemnly swear they will follow all installation directions, and if trouble arises will follow the prescribed troubleshooting steps FIRST before posting. If the issue is not fixed, the user will post a log using a 3rd party hosting site as directed in the troubleshooting instructions, along with a detailed description of the issue and what steps are used to re-create the issue.
 
-v6.0 ALPHA 7 \/
-*Rework DRE Heatshields, more size options available now.
-*Update TAC Consumption/Production Rates
-*Add new Thoikol M55 SRM
-*Apollo Heatshield fix for FAR
-*Add J-2 option
-*Fix Generic RCS and rework with +PART
-*Add back ModuleRCSFX - NOW INCLUDED
-*Life Support adds to Stock Pods
-*Add FASA UA1207
-*Add new SRB Thrust Curves to multiple engines (still some to do)
-*New TweakScale FreeScale option for structural components
-*Fix TAC Tank Definitions
-*ModuleManager 2.2.0 - NOW INCLUDED
-*Minor Isp Fix for Aerojet SPS Engine
-*New RealEngines SRBs - Castor 120/30/30XL/UA1205
-*New RealEngines Liquid - SpaceX Merlins, Aestus II
-*New TweakScale Nose Cone for SRBs
-
-v6.0 ALPHA 6 (6.1/6.2 HOTFIX) \/
-*Fix Typos
-*Fix RealChutes
-
-v6.0 ALPHA 6 \/
-**UPDATE to KSP 0.24.* (Work In Progress folks, PLEASE report bugs, and be forgiving)
-* Now using stock gimbal module - KM_Gimbal no longer required, but optional, and can be used on some parts for more realistic operation
-* Now using stock RCS module - Squad made some good welcome realistic changes
-* More RealEngine support added, WAY more to come!!!
-
-v6.0 ALPHA 5 \/
-***NOT ready for KSP 0.24 (this update contains a warning of that).
-*Fixed MOL issues
-*Added LazTek Docking Port back
-*RCS pod updates
-*TACLS updates
-*Universal Storage updates
-*KOSMOS updates
-
-v6.0 ALPHA 4 \/
-*Fixed some deprecated parts
-*Porkworks Habitat Pack rework
-*TACLS v.9 pre-release updates
-*KOSMOS Pack work (still WIP)
-*ElectricCharge update (WIP)
-*Plugin - Version Checker
-*ADD Universal Storage compatibility
-
-v6.0 ALPHA 3 \/
-*FusTek Complete (current with X0.04-4 DEV BUILD)
-*Fix ProceduralParts LifeSupport Tank to 1U=1L standard
-*Added TweakScale support to 10m for parts that use it
-*Removed TweakScale with DRE (values not appropriate)
-*Completed ASET ALCOR pod update
-*Completed PorkWorks HabitatPack update
-*Completed Nothke Service Compartment update - Added TweakScale
-*NP2/KW/AIES RealEngine Updates
-*Added TweakScale support to AIES Fuel Tanks
-
-v6.0 ALPHA 2 \/
-*SDHI Docking Port Fix
-*Squad Inline Docking Port Fix
-*NP2 RealEngine Fixes for missing engines
-*Readme WIP
-*More FusTek Station Parts Work, still not done, closer.
-
-v6.0 ALPHA 1 \/
-*New File/Folder Organization
-*Integration of TweakScale
-*Various Realism patch updates and fixes
-
-v5.2.1 \/
-*Upgrade FASA support to the latest 4.92 release
-
-v5.2 \/
-*Converted to TAC Life Support! Now includes TACLS settings file, to overwrite existing TACLS settings for realistic consumption rates for all resources. Your window positions will reset.
-*Upgraded to Module Manager 2.1.5
-*ThorBeorn: Add support for the new version of FusTek
-*Fix RT2 patch again.
-*Update ALCOR pod name
-*Removed landing gear and control surface rescales for B9
-*Support Proc Fairings 3.0
-*RedAV8R patch updates:
-+FASA Realism Patch update to correspond with v4.91
-+OLDD Realism Patch Added (Saturn only) – (Proton and N1 TBD)
-+KerbX Realism Patch Added
-+LazTek Realism Patch Added (supports Launch Pack 3.0, Exploration 2.0, Historic 1.0)
-+AerojetKerbodyne/SDHI Service Module/Taurus HCV Realism Patch Added
-+TAC Life Support support for all Realism Patches
-+RealEngines now included – Klockheed Martian SSME (OMS coming soon), BobCat Soviet Engines, KOSMOS Engines, Hakari F-1, more coming soon (like SRBs and LES). RftS is optional, no action needed for use.
-+All Realism Patches with new ModuleManager ‘:FOR[RealismOverhaul]’ tag added
-+Coresponding changes/removal of duplicate/unneeded/unwanted configurations
-
-v5.1  \/
-*Updates to FASA patches by RedAV8R
-*Fixed heatshield tangents not being set, leading to unexpected behavior
-*Add patch for MissionController (patches fuels and engine costs to be 1k = $1000 USD 1960)
-*Update RT2 patch file, fix errors
-*Add throttling and EngineIgnitor support to BobCat Soviet Engines
-*Upgrade to ModuleManager 2.1.0
-
-v5 -- \/
-*Moved WAC Corporal and V-2 parts to RPL; added in Engine Ignitor and throttle-limiting support
-*Merged RedAV8R's FASA patches (maintained by RedAV8R)
-*Merged brooklyn666's RT2 patches
-*Updated 2.5m heatshield title for clarity
-*Fix Proc Fairing node sizes
-*Switched to ModuleRCSFX for RCS thrusters. Now supports bipropellant RCS!
-*Updated RealChute integration with new parts (thanks stupid_chris!)
-*Will automatically set correct FAR settings (0.13.2+)
-
-v4 -- \/
-*Fix typo for RTG, Stayputnik, WAC probe core, AIES
-*Add missing KW RCS
-*Remove FASA config (handled by RedAV8R)
-*Removed inbuilt support for RealEngines
-*Changed scaling method for likely-to-be-root parts
-*Add community rescales (broman [Porkworks habs], amo28 [KOSMOS Salyut], Phredward [10m heatshield, docking ports])
-
-v3 -- \/
-*Switched to SFJackBauer's RealEngines. Added partial B9, CSS, and ISS support from that pack.
-*Sum Dum Heavy Industries Service Module support
-*Added modular RCS support to KW, AIES, and RLA
-*KW battery support
-*Added rescaled KW fairings with realistic masses
-*Finished the Squad pods (lander cans, cupola)
-*Added by redde: Fustek station parts rescaling (for 0.03.5a)
-*Added by jrandom: realchutes patch, ALCOR rescale, Nothke's Service Components rescale, additional fairing rings.
-*Added by amo28: NFPP solar panel support
-*Added by SRFirefox: Hitchhiker and Lab rescale
-*Added by dlrk: 2M Clamp-O-Tron and Shielded Clamp-O-Tron
-
-v2 -- \/
-*Included missing 0.625m heatshield fix for DRE
-*Changed Solid rockets as well.
-*Merged with my new textures (and parts) for Procedural Fairings. NOTE: FOLLOW INSTALL INSTRUCTIONS ABOVE EVEN IF UPGRADING.
-
-v1 -- \/
-Initial Release.
+I accept and agree to these terms.
