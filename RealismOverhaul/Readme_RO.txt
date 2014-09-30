@@ -228,7 +228,215 @@ v6.0 ALPHA 13 \/
 *RemoteTech2 Update/Fixes
 *AIES Probe Update/Fixes
 
-OLDER CHANGELOG
+v6.0 ALPHA 12 \/
+*Update ModuleManager to current v2.3.4
+*ModuleRCSFX Bug Fixes and Updates
+*Small FASA bug/consistency fixes
+*Engine Heat Fixes
+*TAC LS Updates and Fixes
+*Small LazTek bug/consistency fixes
+*Retitled some KW parts and some minor KW resizing
+*Repurposed KW SpaceShuttle SRB into SRMU to better fit whole RealEngine package
+*Minor resizing of a couple other various parts
+*Removed separate nose cone previously copied and added those sizes to existing nose cone
+*Various typos fixed
+*Consistency fixes between mods with identical parts
+*NovaPunch 2.06 Now FULL Support - Including RealEngines and SRBs
+
+v6.0 ALPHA 11 \/
+*Update ModuleManager to current v2.2.2
+*MUCH better thrust curves for all but 30XL and Aerojet Atlas V SRB
+*DRE Updates, Tweaks, Fixes - All over, still much to do, but should be playable
+*FASA Apollo CSM file fix - typo rendered most of file unusable
+*FASA Saturn APS Engine Fix - Pressurized Tank to feed pressurized engine
+*FASA Gemini and Mercury fixes - Heatshield and retro rocket fixes
+*Engine Node fixes - Re-adding bottom nodes for FAR compatibility
+*Add CoM Shifter - Makes the "it's too hard" people happy
+*Fix rover wheel consumption - since ALL_VESSEL is bugged
+*NearFuture Updates (WIP) - Getting closer almost done
+*Rework Solar Panels - New info, correctly measured sizes, etc.
+*NovaPunch2 Updates (WIP) - About half done, engines need the most work, lot's of solids and curves to add.
+*File Renaming for clarity - Makes it look prettier
+*AIES and Squad Stock updates and fixes - Added default electricCharge to pods, and updated heatProduction figures that were wonky on engines
+
+v6.0 ALPHA 10 \/
+*Small fixes to RLA, KW
+*AIES Complete
+*SRB Thrust Curves - WIP - A LOT Better
+*Some minor B9 work - still a long way to go
+*Some FASA work and bug fixes
+*TACLS and PP changes
+*Klockheed Martian update complete
+*Porkworks update complete
+*Nothke Service Module update complete
+*FusTek update complete
+*NearFuture Construction update complete
+*Merlin 1D Vac bug fix
+*NearFuture Propulsion - WIP
+
+v6.0 ALPHA 9 \/
+*EngineIgnitor Fixes
+*Some more work on KW SRBs, ADDED GEM40, Isp fixes
+*Typographical Error Fixes
+*LazTek parachute fix
+*RLA PowerGeneration, ElectricEngines, Stockalike now fully supported!
+*Updated TweakScale stuff with latest release
+*Updated KW Fuel Tanks for RealFuels update
+*Updated RealChutes to work wih MM files now included.
+*Start AIES rework (very much a WIP)
+*Minor KW Engine fixes
+
+v6.0 ALPHA 8 \/
+*Small batteries in squad pods
+*FASA updates
+*RealEngine updates to Squad, RealFuels, KW, and BobCat
+*Update to ModuleRCSFX
+*TACLS Config Fix
+*Convert UA120X to UA1204
+*Mass/Thrust/Isp Fix for fairings
+*260/300" PLFs added
+*PLF Base mass fix
+*Better, not quite perfect thrust curves
+*KW Solids complete - needs better thrust curves
+
+v6.0 ALPHA 7 \/
+*Rework DRE Heatshields, more size options available now.
+*Update TAC Consumption/Production Rates
+*Add new Thoikol M55 SRM
+*Apollo Heatshield fix for FAR
+*Add J-2 option
+*Fix Generic RCS and rework with +PART
+*Add back ModuleRCSFX - NOW INCLUDED
+*Life Support adds to Stock Pods
+*Add FASA UA1207
+*Add new SRB Thrust Curves to multiple engines (still some to do)
+*New TweakScale FreeScale option for structural components
+*Fix TAC Tank Definitions
+*ModuleManager 2.2.0 - NOW INCLUDED
+*Minor Isp Fix for Aerojet SPS Engine
+*New RealEngines SRBs - Castor 120/30/30XL/UA1205
+*New RealEngines Liquid - SpaceX Merlins, Aestus II
+*New TweakScale Nose Cone for SRBs
+
+v6.0 ALPHA 6 (6.1/6.2 HOTFIX) \/
+*Fix Typos
+*Fix RealChutes
+
+v6.0 ALPHA 6 \/
+**UPDATE to KSP 0.24.* (Work In Progress folks, PLEASE report bugs, and be forgiving)
+* Now using stock gimbal module - KM_Gimbal no longer required, but optional, and can be used on some parts for more realistic operation
+* Now using stock RCS module - Squad made some good welcome realistic changes
+* More RealEngine support added, WAY more to come!!!
+
+v6.0 ALPHA 5 \/
+***NOT ready for KSP 0.24 (this update contains a warning of that).
+*Fixed MOL issues
+*Added LazTek Docking Port back
+*RCS pod updates
+*TACLS updates
+*Universal Storage updates
+*KOSMOS updates
+
+v6.0 ALPHA 4 \/
+*Fixed some deprecated parts
+*Porkworks Habitat Pack rework
+*TACLS v.9 pre-release updates
+*KOSMOS Pack work (still WIP)
+*ElectricCharge update (WIP)
+*Plugin - Version Checker
+*ADD Universal Storage compatibility
+
+v6.0 ALPHA 3 \/
+*FusTek Complete (current with X0.04-4 DEV BUILD)
+*Fix ProceduralParts LifeSupport Tank to 1U=1L standard
+*Added TweakScale support to 10m for parts that use it
+*Removed TweakScale with DRE (values not appropriate)
+*Completed ASET ALCOR pod update
+*Completed PorkWorks HabitatPack update
+*Completed Nothke Service Compartment update - Added TweakScale
+*NP2/KW/AIES RealEngine Updates
+*Added TweakScale support to AIES Fuel Tanks
+
+v6.0 ALPHA 2 \/
+*SDHI Docking Port Fix
+*Squad Inline Docking Port Fix
+*NP2 RealEngine Fixes for missing engines
+*Readme WIP
+*More FusTek Station Parts Work, still not done, closer.
+
+v6.0 ALPHA 1 \/
+*New File/Folder Organization
+*Integration of TweakScale
+*Various Realism patch updates and fixes
+
+v5.2.1 \/
+*Upgrade FASA support to the latest 4.92 release
+
+v5.2 \/
+*Converted to TAC Life Support! Now includes TACLS settings file, to overwrite existing TACLS settings for realistic consumption rates for all resources. Your window positions will reset.
+*Upgraded to Module Manager 2.1.5
+*ThorBeorn: Add support for the new version of FusTek
+*Fix RT2 patch again.
+*Update ALCOR pod name
+*Removed landing gear and control surface rescales for B9
+*Support Proc Fairings 3.0
+*RedAV8R patch updates:
++FASA Realism Patch update to correspond with v4.91
++OLDD Realism Patch Added (Saturn only) – (Proton and N1 TBD)
++KerbX Realism Patch Added
++LazTek Realism Patch Added (supports Launch Pack 3.0, Exploration 2.0, Historic 1.0)
++AerojetKerbodyne/SDHI Service Module/Taurus HCV Realism Patch Added
++TAC Life Support support for all Realism Patches
++RealEngines now included – Klockheed Martian SSME (OMS coming soon), BobCat Soviet Engines, KOSMOS Engines, Hakari F-1, more coming soon (like SRBs and LES). RftS is optional, no action needed for use.
++All Realism Patches with new ModuleManager ‘:FOR[RealismOverhaul]’ tag added
++Coresponding changes/removal of duplicate/unneeded/unwanted configurations
+
+v5.1  \/
+*Updates to FASA patches by RedAV8R
+*Fixed heatshield tangents not being set, leading to unexpected behavior
+*Add patch for MissionController (patches fuels and engine costs to be 1k = $1000 USD 1960)
+*Update RT2 patch file, fix errors
+*Add throttling and EngineIgnitor support to BobCat Soviet Engines
+*Upgrade to ModuleManager 2.1.0
+
+v5 -- \/
+*Moved WAC Corporal and V-2 parts to RPL; added in Engine Ignitor and throttle-limiting support
+*Merged RedAV8R's FASA patches (maintained by RedAV8R)
+*Merged brooklyn666's RT2 patches
+*Updated 2.5m heatshield title for clarity
+*Fix Proc Fairing node sizes
+*Switched to ModuleRCSFX for RCS thrusters. Now supports bipropellant RCS!
+*Updated RealChute integration with new parts (thanks stupid_chris!)
+*Will automatically set correct FAR settings (0.13.2+)
+
+v4 -- \/
+*Fix typo for RTG, Stayputnik, WAC probe core, AIES
+*Add missing KW RCS
+*Remove FASA config (handled by RedAV8R)
+*Removed inbuilt support for RealEngines
+*Changed scaling method for likely-to-be-root parts
+*Add community rescales (broman [Porkworks habs], amo28 [KOSMOS Salyut], Phredward [10m heatshield, docking ports])
+
+v3 -- \/
+*Switched to SFJackBauer's RealEngines. Added partial B9, CSS, and ISS support from that pack.
+*Sum Dum Heavy Industries Service Module support
+*Added modular RCS support to KW, AIES, and RLA
+*KW battery support
+*Added rescaled KW fairings with realistic masses
+*Finished the Squad pods (lander cans, cupola)
+*Added by redde: Fustek station parts rescaling (for 0.03.5a)
+*Added by jrandom: realchutes patch, ALCOR rescale, Nothke's Service Components rescale, additional fairing rings.
+*Added by amo28: NFPP solar panel support
+*Added by SRFirefox: Hitchhiker and Lab rescale
+*Added by dlrk: 2M Clamp-O-Tron and Shielded Clamp-O-Tron
+
+v2 -- \/
+*Included missing 0.625m heatshield fix for DRE
+*Changed Solid rockets as well.
+*Merged with my new textures (and parts) for Procedural Fairings. NOTE: FOLLOW INSTALL INSTRUCTIONS ABOVE EVEN IF UPGRADING.
+
+v1 -- \/
+Initial Release.
 
 Q: How do I do X in Realism Overhaul / RSS?
 A: Check the RSS Wiki, it may have an answer!
