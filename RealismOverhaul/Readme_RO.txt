@@ -1,4 +1,4 @@
-[0.24.*] Realism Overhaul: ROv6.0 Alpha 13 - Update: 30 - Sept 2014
+[0.24.*] Realism Overhaul: ROv6.0 Alpha 14 - Update: 5 - Oct 2014
 Realism Overhaul
 
 WARNING!!! EACH RELEASE OF THIS MOD COULD AND PROBABLY WILL BREAK SAVES. THIS IS A WIP ALPHA RELEASE. THERE WILL BE BUGS. PLEASE REPORT AS DIRECTED IN THE INSTRUCTIONS.
@@ -122,10 +122,11 @@ INSTALLATION:
 Minimum Requirements:
 Advanced Jet Engine by camlost (v1.5)
 Deadly Reentry Continued by NathanKell (v5.2)
-Engine Ignitor by HoneyFox. (v3.4) [NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
+Engine Ignitor by HoneyFox. (v3.4)
+[NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
 Ferram Aerospace Research by ferram4 (v0.14.1.1)
 Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.3.5)
-ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED
+ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED (v3.0)
 NodeResizer by Starwaster
 RealChutes by stupid_chris. (v1.2.4)
 Real Fuels by NathanKell (v7.3)
@@ -133,8 +134,10 @@ Real Solar System by NathanKell (v7.3)
 TAC Life Support by TaranisElsu (v0.10)
 
 Required for best gameplay:
-Procedural Parts by swamp_ig (v0.9.18) [NOTE: Procedural Heat Shields NOT supported at this time.]
+Procedural Parts by swamp_ig (v0.9.18)
+[NOTE: Procedural Heat Shields NOT supported at this time.]
 RemoteTech 2 by Remote Technologies Group (v1.4.1) [NOTE: If you want to send data back, you need this!]
+RT2 Settings File - Adds ground stations to launch sites. By CerberusRCAF
 TweakScale by Biotronic (v1.43)
 
 Recommended:
@@ -156,13 +159,11 @@ Fustek Station Parts by sumghai (vX0.04-4 DEV BUILD - 5 June 2014)
 Kerbal Attachment System by KospY (v0.4.8)
 KerbX by Borklund
 Kethane by Majiir (v0.9)
-KW Rocketry by Winston & Kickasskyle (v2.6c) [NOTE: DO NOT install the "Extra" - "No Shroud" OR "Instant Power"]
-Near Future Technologies by Nertea (v0.2.*)
-Near Future Propulsion (v0.2.3) [NOTE: Propulsion Pack Engines NOT supported at this time.]
-Near Future Electrical (v0.2.2)
-Near Future Solar Panels (v0.2.2)
-Near Future Construction (v0.2.1)
-Near Future Spacecraft (v0.2.1)
+KW Rocketry by Winston & Kickasskyle (v2.6c)
+[NOTE: DO NOT install the "Extra" - "No Shroud" OR "Instant Power"]
+LazTek SpaceX by LazurusLuan (Launch v3.1a, Exploration v2.1a, Historic v1.1a)
+Near Future Technologies by Nertea (v0.2.*) (Propulsion v0.2.3, Electrical v0.2.2, Solar v0.2.2, Construction v0.2.1, Spacecraft v0.2.1)
+[NOTE: Propulsion Pack Engines NOT supported at this time.]
 NovaPunch by Tiberion (v2.06)
 PorkWorks Inflatable Habs by Porkjet (v0.4)
 Procedural Dynamics - Procedural Wing by DYJ (v0.8.1)
@@ -172,23 +173,23 @@ Rocketdyne F-1 by 1096bimu. Download HERE.
 SCANsat by technogeeky (v7.0RC4)
 Soviet Engines by BobCat
 Spaceplane Plus by Porkjet (v1.3)
-Space Shuttle Engines & KM_Gimbal by dtobi (v2.1.2) [NOTE: Not all parts supported at this time.]
-Sum Dum Heavy Industries - Service Module System by sumghai (v2.2.1) [NOTE: Delete MM Configs found in the Parts folder]
+Space Shuttle Engines & KM_Gimbal by dtobi (v2.1.2)
+[NOTE: Not all parts supported at this time.]
+Sum Dum Heavy Industries - Service Module System by sumghai (v2.2.1)
+[NOTE: Delete MM Configs found in the Parts folder]
 Taurus HCV by jnrobinson (v1.2.1)
-Universal Storage by PaulKingtiger (v0.8.4)
-Core (v0.8.4.22)
-KAS (v0.8.3.12)
-TAC (v0.8.3.4) [NOTE: ONLY install "US_TAC" folder in the TAC pack.]
+Universal Storage by Daishi and PaulKingtiger (v0.8.4) (Core v0.8.4.22, KAS v0.8.3.12, TAC v0.8.3.4)
+[NOTE: ONLY install "US_TAC" folder in the TAC pack.]
+World Space by Lovad
+[NOTE: Apollo CSM and Mercury Spacecraft NOT SUPPORTED due to model incompatibilities.]
 
 Optional:
 Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
 
 Coming Soon: Works in Progress or Future Plans - In No Particular Order 
-[NOTE: Packs in this list, while maybe present, ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash. Any bug report will be ignored or publicly mocked, so don't try to report something.]
+[NOTE: Packs in this list, while maybe present, ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash. No bug reports at this time please.]
 B9 by bac9 (WIP)
 FASA by Frizzank (v4.97) (WIP)
-World Space by Lovad [NOTE: Apollo CSM and Mercury Spacecraft NOT SUPPORTED.]
-LazTek SpaceX by LazurusLuan (WIP)
 OLDD Apollo/Saturn, N1, Proton (WIP)
 KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
 Lionhead ESA, Rovers, Landers, Probes, Solar Panels by Yogui87
@@ -203,6 +204,18 @@ USI Kolonization Systems (MKS/OKS) by RoverDude
 B.Dynamics by BahamutoD
 
 Changelog:
+
+v6.0 ALPHA 14 \/
+*Added Lovad World Space Support - Apollo CSM and Mercury NOT SUPPORTED due to model incompatibilities
+*Added LazTek SpaceX Support
+*Taurus Fix - Works w/o Aerojet Kerbodyne now (sorry thought I did this)
+*Fuel Tank Fix - NASA 3.75 tank remnant when part of Pyrios
+*DRE Fix - Updated Mass and decoupler force
+*Engine Mass Fix - Repaired a few inconsistances, surely more, please report
+*Engine Isp Fix - Repaired a bad index, now Atm and Vac Isp are different - NASA 4x RS-25
+*SRB Thrust Curve Fix - A few SRBs had bad start on thrust curve, now corrected
+*CubeSat Fix - Fixed resource rate to allow control...not that CubeSats can be controlled 
+*Stock Crew Pod Mass Fix - Removed mass variable causing manned pods to have VERY little mass
 
 v6.0 ALPHA 13 \/
 *Added AVC Support
@@ -437,14 +450,3 @@ v2 -- \/
 
 v1 -- \/
 Initial Release.
-
-Q: How do I do X in Realism Overhaul / RSS?
-A: Check the RSS Wiki, it may have an answer!
-
-More reading can be found in the old RO and RedAV8R Realism Patch threads located:
-Old RealismOverhaul Thread
-Old RedAV8R Realism Patch Thread
-
-Realism Overhaul is a relatively simple modification, but is made more complex by the simple fact of having so many dependencies and relying upon numerous other people in order to make everything work as it should. By clicking on the link to the Realism Overhaul download page, the user, under oath, swears to have read, understood, and agreed upon, all FAQ items. The user does solemnly swear they will follow all installation directions, and if trouble arises will follow the prescribed troubleshooting steps FIRST before posting. If the issue is not fixed, the user will post a log using a 3rd party hosting site as directed in the troubleshooting instructions, along with a detailed description of the issue and what steps are used to re-create the issue.
-
-I accept and agree to these terms.
