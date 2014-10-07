@@ -12,7 +12,9 @@ namespace RealismOverhaul
     class CoMShifter : PartModule
     {
         [KSPField]
-        public Vector3 DescentModeCoM;
+        public Vector3 DescentModeCoM = new Vector3(0f, 0f, 0f);
+
+        protected bool loadedCoM = false;
 
         [KSPField(guiActive = true, guiName = "Descent Mode Active?", isPersistant = true)]
         public bool IsDescentMode;
@@ -47,9 +49,13 @@ namespace RealismOverhaul
         public override void OnAwake()
         {
             base.OnAwake();
+            if (!loadedCoM)
+            {
+                _defaultCoM = part.CoMOffset;
+                loadedCoM = true;
+            }
             if (!HighLogic.LoadedSceneIsFlight)
                 return;
-            _defaultCoM = part.CoMOffset;
             SetDescentMode(IsDescentMode);
         }
     }
