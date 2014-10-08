@@ -30,6 +30,9 @@ LICENSE remains the ialdabaoth license (CC-BY-SA + tweaks).
 SOURCE is https://github.com/NathanKell/ModuleRCSFX
 
 CHANGELOG
+v3.1
+*Recompile for KSP 0.25
+
 v3.0
 *Fixed issues below 750m/s (thanks chicknblender!)
 *Added EFFECTS support back in
