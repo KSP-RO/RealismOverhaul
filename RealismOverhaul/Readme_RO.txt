@@ -121,14 +121,14 @@ INSTALLATION:
 MINIMUM REQUIREMENTS:
 Advanced Jet Engine by camlost (v1.6.1)
 Deadly Reentry - Continued by Starwaster and NathanKell (v6.2.1)
-Engine Ignitor by HoneyFox. (v3.4.1)
+Engine Ignitor by HoneyFox. (v3.4.1.1)
 [NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
-Ferram Aerospace Research by ferram4 (v0.14.3)
+Ferram Aerospace Research by ferram4 (v0.14.3.1)
 Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.5.1)
 ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED (v3.1)
 RealChutes by stupid_chris. (v1.2.5.3)
-Real Fuels by NathanKell (v8.0)
-Real Solar System by NathanKell (v8.0)
+Real Fuels by NathanKell (v8.1)
+Real Solar System by NathanKell (v8.1)
 TAC Life Support by TaranisElsu (v0.10.1)
 
 REQUIRED FOR BEST GAMEPLAY:
@@ -152,8 +152,12 @@ SUPPORTED:
 Stock KSP
 Procedural Dynamics - Procedural Wing by DYJ (v0.9)
 Procedural Fairings by e-dog (v3.10)
+Rocketdyne F-1 by 1096bimu. Download HERE.
+Soviet Engines by BobCat
+Universal Storage by Daishi and PaulKingtiger (v0.9.1) (Core v0.9.0.242, KAS v0.9.0.141, TAC v0.9.0.61)
+[NOTE: ONLY install the "UniversalStorage" folder in the TAC pack.]
 
-NOT OFFICIALLY SUPPORTED WITH 0.25: Currently a WIP
+NOT OFFICIALLY SUPPORTED WITH 0.25: Currently a WIP. These will be supported in the future. Just not yet.
 6S Service Compartment Tubes by Nothke
 Aerojet Kerbodyne (v3.0.2)
 AIES by carmics (v1.5.1)
@@ -171,16 +175,13 @@ Near Future Technologies by Nertea (v0.2.*) (Propulsion v0.2.3, Electrical v0.2.
 NovaPunch by Tiberion (v2.06)
 PorkWorks Inflatable Habs by Porkjet (v0.4)
 RLA by hoojiwana (v11.2)
-Rocketdyne F-1 by 1096bimu. Download HERE.
+
 SCANsat by technogeeky (v7.0RC4)
-Soviet Engines by BobCat
 Space Shuttle Engines & KM_Gimbal by dtobi (v2.1.2)
 [NOTE: Not all parts supported at this time.]
 Sum Dum Heavy Industries - Service Module System by sumghai (v2.2.1)
 [NOTE: Delete MM Configs found in the Parts folder]
 Taurus HCV by jnrobinson (v1.2.1)
-Universal Storage by Daishi and PaulKingtiger (v0.8.4) (Core v0.8.4.22, KAS v0.8.3.12, TAC v0.8.3.4)
-[NOTE: ONLY install "US_TAC" folder in the TAC pack.]
 World Space by Lovad
 [NOTE: Apollo CSM and Mercury Spacecraft NOT SUPPORTED due to model incompatibilities.]
 
@@ -206,6 +207,16 @@ B.Dynamics by BahamutoD
 Various projects by BobCat
 
 Changelog:
+RealismOverhaul v6.1.1 \/
+*AJE Category Update
+*Random Node Fixes
+*DRE Shield Drag Fix
+*Random Mass Fixes
+*Changing Auto-Shrouds - Now moved to 'hidden' node
+*Added Support for BobCat Soviet Engines
+*Added Support for Universal Storage
+*Added Support for Hakari Rocketdyne F-1
+
 RealismOverhaul v6.1 \/
 *Official Support for KSP 0.25
 *Updated MM to v2.5.1
