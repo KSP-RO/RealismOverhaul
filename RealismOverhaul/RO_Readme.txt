@@ -1,9 +1,11 @@
 Realism Overhaul
-
 =====================
 WARNING!!!
-EACH RELEASE IS POTENTIALLY SAVE BREAKING
-SUPPORT FOR VERSIONS OF KSP OTHER THAN 0.25 IS NOW TERMINATED.
+=====================
+As this is a continual work in progress EACH release is potentially SAVE BREAKING.
+=====================
+This is the main release and bug support thread for Realism Overhaul.
+If you want to DISCUSS Realism Overhaul or how to use Realism Overhaul then go HERE.
 =====================
 This mod is maintained by RedAV8R and NathanKell (with contributions from many).
 
@@ -119,16 +121,16 @@ INSTALLATION:
 ========================================
 
 MINIMUM REQUIREMENTS:
-Advanced Jet Engine by camlost (v1.6.1)
+Advanced Jet Engine by camlost (v1.6.2)
 Deadly Reentry - Continued by Starwaster and NathanKell (v6.2.1)
 Engine Ignitor by HoneyFox. (v3.4.1.1)
 [NOTE: DO NOT install the MM files located in the "extract to use" zip files that are included.]
-Ferram Aerospace Research by ferram4 (v0.14.3.1)
+Ferram Aerospace Research by ferram4 (v0.14.3.2)
 Module Manager by sarbian, swamp_ig, and ialdabaoth - INCLUDED (v2.5.1)
 ModuleRCSFX by ialdabaoth. Updated by NathanKell - INCLUDED (v3.1)
 RealChutes by stupid_chris. (v1.2.5.3)
 Real Fuels by NathanKell (v8.1)
-Real Solar System by NathanKell (v8.1)
+Real Solar System by NathanKell (v8.2.1)
 TAC Life Support by TaranisElsu (v0.10.1)
 
 REQUIRED FOR BEST GAMEPLAY:
@@ -144,70 +146,78 @@ Kerbal Joint Reinforcement (v2.4.4)
 MechJeb by many (v2.4.0)
 ModuleFixer by arsenic87. Download HERE.
 PartCatalog by BlackNecro (v3.0RC8)
-TextureReplacer by Shaw (v1.7.3)
-or Active Texture Management by rbray89 (v3.7)
+TextureReplacer by Shaw (v1.7.4)
+or Active Texture Management by rbray89 (v3.8)
 Toolbar by blizzy78 (v1.7.7)
 
 SUPPORTED:
 Stock KSP
-Procedural Dynamics - Procedural Wing by DYJ (v0.9)
+FASA by Frizzank (v4.98)
+LazTek SpaceX by LazurusLuan (Launch v3.1a, Exploration v2.1a, Historic v1.1a)
+Near Future Technologies by Nertea (v0.3.*) (Propulsion v0.3.0, Electrical v0.3.0, Solar v0.3.0, Construction v0.3.0, Spacecraft v0.3.0)
+[NOTE: Propulsion Pack Engines NOT supported at this time.]
+[NOTE: DO NOT Install the "Hydrogen NTRs" folder in Propulsion Pack.]
+Procedural Dynamics - Procedural Wing by DYJ (v0.9.1)
 Procedural Fairings by e-dog (v3.10)
 Rocketdyne F-1 by 1096bimu. Download HERE.
 Soviet Engines by BobCat
-Universal Storage by Daishi and PaulKingtiger (v0.9.1) (Core v0.9.0.242, KAS v0.9.0.141, TAC v0.9.0.61)
+Download HERE
+Universal Storage by Daishi and PaulKingtiger (v0.9.2) (Core v0.9.0.242, KAS v0.9.0.141, TAC v0.9.2.7)
 [NOTE: ONLY install the "UniversalStorage" folder in the TAC pack.]
 
-NOT OFFICIALLY SUPPORTED WITH 0.25: Currently a WIP. These will be supported in the future. Just not yet.
+PLANNED OR WIP:
+[NOTE: Packs in this list, while may be present, ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash. No bug reports at this time please.]
 6S Service Compartment Tubes by Nothke
 Aerojet Kerbodyne (v3.0.2)
 AIES by carmics (v1.5.1)
 ALCOR by alexustes
+B9 by bac9
+B.Dynamics by BahamutoD
+Chaka Monkey Exploration Systems by YANFRET
+Component Space Shuttle maintained by Dragon01
 Fustek Station Parts by sumghai (vX0.04-4 DEV BUILD - 5 June 2014)
+International Space Station Group Project
 Kerbal Attachment System by KospY (v0.4.8)
 KerbX by Borklund
 Kethane by Majiir (v0.9)
+KOSMOS Spacecraft Design Bureau by Normak (4.7)
 KW Rocketry by Winston & Kickasskyle (v2.6c)
 [NOTE: DO NOT install the "Extra" - "No Shroud" OR "Instant Power"]
-LazTek SpaceX by LazurusLuan (Launch v3.1a, Exploration v2.1a, Historic v1.1a)
-Near Future Technologies by Nertea (v0.2.*) (Propulsion v0.2.3, Electrical v0.2.2, Solar v0.2.2, Construction v0.2.1, Spacecraft v0.2.1)
-[NOTE: Propulsion Pack Engines NOT supported at this time.]
-[NOTE: DO NOT Install the "Hydrogen NTRs" folder in Propulsion Pack.]
+Lionhead ESA, Rovers, Landers, Probes, Solar Panels by Yogui87
 NovaPunch by Tiberion (v2.06)
+OLDD Apollo/Saturn, N1, Proton by DennyTX
 PorkWorks Inflatable Habs by Porkjet (v0.4)
 RLA by hoojiwana (v11.2)
-
+Salyut Stations & Soyuz by raidernick (v0.52.5)
 SCANsat by technogeeky (v7.0RC4)
+SkyLab by raidernick (v0.65)
+Soviet Probes, with Rockets! by raidernick (v0.94)
 Space Shuttle Engines & KM_Gimbal by dtobi (v2.1.2)
 [NOTE: Not all parts supported at this time.]
 Sum Dum Heavy Industries - Service Module System by sumghai (v2.2.1)
 [NOTE: Delete MM Configs found in the Parts folder]
 Taurus HCV by jnrobinson (v1.2.1)
+USI Kolonization Systems (MKS/OKS) by RoverDude
+US Probes Pack by raidernick (v0.25)
+Various projects by BobCat
 World Space by Lovad
 [NOTE: Apollo CSM and Mercury Spacecraft NOT SUPPORTED due to model incompatibilities.]
 
 OPTIONAL:
 Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
 
-PLANNED: Future Plans or Current WIP 
-[NOTE: Packs in this list, while maybe present, ARE NOT guaranteed to work at all, and could quite possibly cause KSP to crash. No bug reports at this time please.]
-B9 by bac9 (WIP)
-FASA by Frizzank (v4.97) (WIP)
-OLDD Apollo/Saturn, N1, Proton (WIP)
-KOSMOS Spacecraft Design Bureau by Normak (4.7) (WIP)
-Lionhead ESA, Rovers, Landers, Probes, Solar Panels by Yogui87
-SkyLab by raidernick (v0.65)
-US Probes Pack by raidernick (v0.25)
-Salyut Stations & Soyuz by raidernick (v0.52.5)
-Soviet Probes, with Rockets! by raidernick (v0.94)
-International Space Station Group Project
-Component Space Shuttle maintained by Dragon01
-Chaka Monkey Exploration Systems by YANFRET
-USI Kolonization Systems (MKS/OKS) by RoverDude
-B.Dynamics by BahamutoD
-Various projects by BobCat
-
 Changelog:
-RealismOverhaul v6.1.1 \/
+
+v6.1.2 -- \/
+Added FASA Official Support
+Added LazTek Official Support
+Added NearFuture Official Support
+DRE New Decouplers for Mk1 and Mk1-2
+Fixed RemoteTech part node sizes
+Changed Stock radial to LR-101
+Update AVC-KSP
+
+v6.1.1 \/
 *AJE Category Update
 *Random Node Fixes
 *DRE Shield Drag Fix
@@ -217,7 +227,7 @@ RealismOverhaul v6.1.1 \/
 *Added Support for Universal Storage
 *Added Support for Hakari Rocketdyne F-1
 
-RealismOverhaul v6.1 \/
+v6.1 \/
 *Official Support for KSP 0.25
 *Updated MM to v2.5.1
 *Updated ModuleRCSFX to v3.1
