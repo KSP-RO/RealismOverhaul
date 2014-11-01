@@ -207,6 +207,9 @@ OPTIONAL:
 Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
 
 Changelog:
+v6.1.2c -- \/
+NearFuture Hotfix - again
+
 v6.1.2b -- \/
 NearFuture Hotfix
 
