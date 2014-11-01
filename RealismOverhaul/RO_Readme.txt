@@ -207,6 +207,8 @@ OPTIONAL:
 Realistic Tech Progression Lite tech tree by Medieval Nerd (note: requires RftSEngines)
 
 Changelog:
+v6.1.2b -- \/
+NearFuture Hotfix
 
 v6.1.2 -- \/
 Added FASA Official Support
