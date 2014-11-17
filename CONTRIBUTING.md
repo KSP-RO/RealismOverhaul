@@ -62,13 +62,11 @@ We expect all community participants (contributors, paid or otherwise; sponsors;
 
 ## 9. Contact info
 
-Paul Fenwick, Project Liason.
+Jason Rapp
 
-IRC: pjf on irc.esper.net or irc.freenode.org
+irc.esper.net / #RO
 
-Twitter: @pjf
-
-Email: paul.j.fenwick (at) gmail (dot) com
+jasrapp@gmail.com
 
 ## 10. License and attribution
 
