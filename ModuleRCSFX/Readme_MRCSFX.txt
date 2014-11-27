@@ -30,6 +30,9 @@ LICENSE remains the ialdabaoth license (CC-BY-SA + tweaks).
 SOURCE is https://github.com/NathanKell/ModuleRCSFX
 
 CHANGELOG
+v3.3
+*Remove debug spam
+
 v3.2
 *Fix more stock RCS bugs (no longer capped at min 100N thrust).
 
