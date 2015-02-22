@@ -34,6 +34,11 @@ LICENSE remains the ialdabaoth license (CC-BY-SA + tweaks).
 SOURCE is https://github.com/NathanKell/ModuleRCSFX
 
 CHANGELOG
+v3.5
+*Fix enable/disable
+*Fix non-PROPELLANT RCS
+*Change how thrust scaling works: now thrust is scaled by thrusterPower correctly (I trust), and precision mode is always "10% thrust" rather than varying based on placement.
+*Made rotatation/linear restrictions toggleable in the VAB.
 v3.4
 *Add control clamping
 *Update to 0.90
