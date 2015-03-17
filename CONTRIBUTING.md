@@ -72,4 +72,4 @@ jasrapp@gmail.com
 
 This Code of Conduct is distributed under a Creative Commons Attribution-ShareAlike license.
 
-The Realism Overhaul Code of Conducted is based upon the [Citizen Code of Conduct](http://citizencodeofconduct.org/), Revision 2.0.
+The Realism Overhaul Code of Conduct is based upon the [Citizen Code of Conduct](http://citizencodeofconduct.org/), Revision 2.0.
