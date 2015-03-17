@@ -14,7 +14,7 @@ A primary goal of the Realistic Progression Zero (RP-0) project is to be inclusi
 
 This code of conduct outlines our expectations for all those who participate in our community, as well as the consequences for unacceptable behavior.
 
-We invite all those who participate in the Comprehensive Kerbal Archive Network (CKAN) to help us create safe and positive experiences for everyone.
+We invite all those who participate in Realism Overhaul (RO) to help us create safe and positive experiences for everyone.
 
 ## 2. Open Source Citizenship
 
@@ -72,4 +72,4 @@ jasrapp@gmail.com
 
 This Code of Conduct is distributed under a Creative Commons Attribution-ShareAlike license.
 
-The CKAN Code of Conducted is based upon the [Citizen Code of Conduct](http://citizencodeofconduct.org/), Revision 2.0.
+The Realism Overhaul Code of Conducted is based upon the [Citizen Code of Conduct](http://citizencodeofconduct.org/), Revision 2.0.
