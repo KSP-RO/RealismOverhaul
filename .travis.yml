@@ -1,0 +1,28 @@
+language: python
+python:
+- '2.7'
+script:
+- make clean
+- make release
+deploy:
+  provider: releases
+  api_key:
+    secure: Gh10pHBeStPqvvwqh5FepL413K4llRmNwIvqeP/RFoKJulGsdgrrbB51P+eoVRNOq6MxrmZh0e63pGtp1vfmyQSr1ji7FyJl15w6DV1oblflpGm/z+GtwDpQ/mddM3WT4u2cZqr5MjIP04zW1AT+7NbTlPI/pmhdB3w1oAEA/RE=
+  file_glob: true    
+  file: RealismOverhaul*.zip
+  skip_cleanup: true
+  on:
+    repo: KSP-RO/RealismOverhaul
+    tags: true
+    all_branches: true
+notifications:
+  irc:
+    channels:
+      - "irc.esper.net#RO"
+    skip_join: true
+    use_notice: true
+    on_success: change
+    on_failure: change
+    template:
+      - "Build #%{build_number} - %{branch} - %{result}"
+      - "%{commit_message}"
