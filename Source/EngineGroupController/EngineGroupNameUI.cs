@@ -5,7 +5,7 @@ using System.Text;
 using UnityGUIFramework;
 using UnityGUIFramework.Controls;
 
-namespace EngineGroupContoller
+namespace EngineGroupController
 {
     public class EngineGroupNameUI : GUIWindow
     {
