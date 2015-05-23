@@ -40,7 +40,7 @@ SOURCE is https://github.com/NathanKell/ModuleRCSFX
 
 CHANGELOG
 v4.1
-* Fix bug with fuel consumption and thrust (thrusterPower wasn't being applied right)
+* Fixed bug in thrust calculation (was 2% what it should be...)
 * When in fullThrust mode, don't switch to full thrust unless thrust ratio already starts out at fullThrustMin (configurable).
 
 v4.0
