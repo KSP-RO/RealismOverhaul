@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityGUIFramework;
 
-namespace EngineGroupContoller
+namespace EngineGroupController
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     //[KSPAddon(KSPAddon.Startup.MainMenu, false)]
@@ -40,7 +40,7 @@ namespace EngineGroupContoller
                 () => { },
                 () => { },
                 ApplicationLauncher.AppScenes.FLIGHT,
-                GameDatabase.Instance.GetTexture("EngineGroupContoller/ToolbarIcon4", false)
+                GameDatabase.Instance.GetTexture("EngineGroupController/ToolbarIcon4", false)
                 );
         }
 
