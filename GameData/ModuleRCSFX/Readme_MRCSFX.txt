@@ -19,7 +19,7 @@ which, when set to true, means that RCS will fire forwards with the throttle.
 
 
 ** RCS Thrust Control **
-fullThrust defaults to false. Set it to true and RCS will always fire at full thrust (or 10% thrust in precision mode), rather than the less-than-full-thrust, dependent-on-angle they do stock.
+fullThrust defaults to false. Set it to true and if the thrust ratio is > fullThrustMin (default: 0.2) RCS will fire at full thrust (or 10% thrust in precision mode), rather than the less-than-full-thrust, dependent-on-angle they do stock.
 
 useLever defaults to false. When it's false, fine controls will make RCS fire at 10% (default) power only. When it's set to true, stock behavior returns (i.e. fine controls means lever arm compensation).
 
@@ -39,6 +39,10 @@ LICENSE remains the ialdabaoth license (CC-BY-SA + tweaks).
 SOURCE is https://github.com/NathanKell/ModuleRCSFX
 
 CHANGELOG
+v4.1
+* Fixed bug in thrust calculation (was 2% what it should be...)
+* When in fullThrust mode, don't switch to full thrust unless thrust ratio already starts out at fullThrustMin (configurable).
+
 v4.0
 * Update to KSP 1.0.
 * Speed improvements. (Death to foreach! Don't recalculate values!)
