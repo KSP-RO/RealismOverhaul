@@ -38,136 +38,211 @@ namespace RealismOverhaul
 {
     public class ShroudToggle : PartModule
     {
-        private List<ModuleJettison> jettisonModules;
+        private static readonly KSPActionParam actionParam = new KSPActionParam(
+			KSPActionGroup.None, KSPActionType.Activate);
 
-        private Dictionary<string, Transform> jettisonTransforms;
+		private List<ModuleJettison> jettisonModules;
 
-        private AttachNode bottomNode;
+		private Dictionary<string, Transform> jettisonTransforms;
+		private Dictionary<string, bool> hasJettisonedTable;
 
-        [KSPField(isPersistant = true, guiName = "Fairing", guiActive = false, guiActiveEditor = true)]
-        [UI_Toggle(enabledText = "Disabled", disabledText = "Enabled")]
-        public bool disableFairing;
+		private AttachNode bottomNode;
 
-        private bool disableState;
+		[KSPField(isPersistant = true, guiName = "Fairing", guiActive = false, guiActiveEditor = true)]
+		[UI_Toggle(enabledText = "Disabled", disabledText = "Enabled")]
+		public bool disableFairing;
 
-        private bool hadAttachedPart;
+		private bool disableState;
 
-        private bool hasAttachedPart
-        {
-            get
-            {
-                if (this.bottomNode == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    return this.bottomNode.attachedPart != null;
-                }
-            }
-        }
+		private bool hadAttachedPart;
 
-        public ShroudToggle()
-        {
-            // Seed disable flag to false to emulate stock behavior
-            this.disableFairing = false;
-            this.hadAttachedPart = false;
+		private bool hasAttachedPart
+		{
+			get
+			{
+				if (this.bottomNode == null)
+				{
+					return false;
+				}
+				else
+				{
+					return this.bottomNode.attachedPart != null;
+				}
+			}
+		}
 
-            this.jettisonModules = new List<ModuleJettison>();
-            this.jettisonTransforms = new Dictionary<string, Transform>();
-        }
+		public ShroudToggle()
+		{
+			// Seed disable flag to false to emulate stock behavior
+			this.disableFairing = false;
+			this.hadAttachedPart = false;
 
-        public override void OnStart(StartState state)
-        {
-            // Start up the base PartModule, just in case.
-            base.OnStart(state);
+			this.jettisonModules = new List<ModuleJettison>();
+			this.jettisonTransforms = new Dictionary<string, Transform>();
+			this.hasJettisonedTable = new Dictionary<string, bool>();
+		}
 
-            // Fetch all of the ModuleJettisons from the part, filling a list of modules and a dict of transforms
-            PartModule module;
-            for (int mIdx = 0; mIdx < base.part.Modules.Count; mIdx++)
-            {
-                module = base.part.Modules[mIdx];
-                if (module is ModuleJettison)
-                {
-                    ModuleJettison jettisonModule = module as ModuleJettison;
+		public override void OnStart(StartState state)
+		{
+			// Start up the base PartModule, just in case.
+			base.OnStart(state);
 
-                    if (jettisonModule == null || jettisonModule.jettisonName == string.Empty)
-                    {
-                        continue;
-                    }
+			// Fetch all of the ModuleJettisons from the part, filling a list of modules and a dict of transforms
+			PartModule module;
+			for (int mIdx = 0; mIdx < base.part.Modules.Count; mIdx++)
+			{
+				module = base.part.Modules[mIdx];
+				if (module is ModuleJettison)
+				{
+					ModuleJettison jettisonModule = module as ModuleJettison;
 
-                    if (this.bottomNode == null)
-                    {
-                        this.bottomNode = this.part.findAttachNode(jettisonModule.bottomNodeName);
-                    }
+					if (jettisonModule == null || jettisonModule.jettisonName == string.Empty)
+					{
+						Debug.Log("Skipping problematic jettisonModule");
+						continue;
+					}
 
-                    this.jettisonModules.Add(jettisonModule);
+					if (this.bottomNode == null)
+					{
+						this.bottomNode = this.part.findAttachNode(jettisonModule.bottomNodeName);
+					}
 
-                    this.jettisonTransforms[jettisonModule.jettisonName] = jettisonModule.jettisonTransform;
-                }
-            }
+					this.jettisonModules.Add(jettisonModule);
 
-            // Seed the disableState for first-run behavior.
-            if (this.disableFairing || true)
-            {
-                this.disableState = !this.disableFairing;
-            }
-        }
+					this.jettisonTransforms[jettisonModule.jettisonName] = jettisonModule.jettisonTransform;
 
-        public void LateUpdate()
-        {
-            // If nothing has changed...
-            if (this.hasAttachedPart == this.hadAttachedPart && this.disableState == this.disableFairing)
-            {
-                // ...move on with life
-                return;
-            }
-            // Otherwise...
+					// Seed the hasJettisoned table with the module's state at start up to avoid loading up a shroud
+					// when we shouldn't have one.
+					this.hasJettisonedTable[jettisonModule.jettisonName] = jettisonModule.isJettisoned;
 
+					BaseEvent moduleJettisonEvent = new BaseEvent(
+						this.Events,
+						string.Format("{0}{1}", jettisonModule.jettisonName, "jettisonEvent"),
+						(BaseEventDelegate)delegate
+						{
+							this.JettisonEvent(jettisonModule, actionParam);
+						}
+					);
 
+					moduleJettisonEvent.active = true;
+					moduleJettisonEvent.guiActive = jettisonModule.isJettisoned && !this.disableFairing;
+					moduleJettisonEvent.guiActiveEditor = false;
+					moduleJettisonEvent.guiName = "Jettison";
 
-            // ...re-seed the states
-            this.disableState = this.disableFairing;
-            this.hadAttachedPart = this.hasAttachedPart;
+					this.Events.Add(moduleJettisonEvent);
 
-            bool shouldHaveFairing = !this.disableFairing && this.hasAttachedPart;
+					Debug.Log("Added new Jettison event wrapper " + moduleJettisonEvent);
 
-            // ...loop through the jettison modules and...
-            ModuleJettison jettisonModule;
-            for (int jIdx = 0; jIdx < this.jettisonModules.Count; jIdx++)
-            {
-                jettisonModule = this.jettisonModules[jIdx];
+					jettisonModule.Events["Jettison"].active = false;
+					jettisonModule.Events["Jettison"].guiActive = false;
+					jettisonModule.Events["Jettison"].guiActiveEditor = false;
+					jettisonModule.Events["Jettison"].guiName += "(DEPRECATED)";
 
-                // ...skip the module if something is wrong with it
-                if (jettisonModule == null || jettisonModule.jettisonName == string.Empty)
-                {
-                    continue;
-                }
-                // ...otherwise...
-                // ...fetch the transform...
-                Transform jettisonTransform = this.jettisonTransforms[jettisonModule.jettisonName];
+					BaseAction moduleJettisonAction = new BaseAction(
+						this.Actions,
+						string.Format("{0}{1}", jettisonModule.jettisonName, "jettisonAction"),
+						(BaseActionDelegate)delegate(KSPActionParam param)
+						{
+							this.JettisonEvent(jettisonModule, param);
+						},
+						new KSPAction("Jettison")
+					);
 
-                // ...set the module as jettisoned (or not) as appropriate...
-                jettisonModule.isJettisoned = !shouldHaveFairing;
-                // ...set the module's jettison event as active (or not) as appropriate...
-                jettisonModule.Events["Jettison"].guiActive = !shouldHaveFairing;
+					this.Actions.Add(moduleJettisonAction);
 
-                // ...set the transform's gameObject as active (or not) as appropriate...
-                jettisonTransform.gameObject.SetActive(shouldHaveFairing);
+					Debug.Log("Added new JettisonAction action wrapper " + moduleJettisonAction);
 
-                // ...if we should have a fairing...
-                if (shouldHaveFairing)
-                {
-                    // ...Restore the transform
-                    jettisonModule.jettisonTransform = jettisonTransform;
-                }
-                else
-                {
-                    // ...otherwise, null it
-                    jettisonModule.jettisonTransform = null;
-                }
-            }
-        }
-    }
+					jettisonModule.Actions["JettisonAction"].active = false;
+					jettisonModule.Actions["JettisonAction"].guiName += "(DEPRECRATED)";
+				}
+			}
+
+			Debug.Log("Found "+ jettisonModules.Count + " ModuleJettisons.");
+
+			// Seed the disableState for first-run behavior.
+			if (this.disableFairing || true)
+			{
+				this.disableState = !this.disableFairing;
+			}
+		}
+
+		public void LateUpdate()
+		{
+			// If nothing has changed...
+			if (this.hasAttachedPart == this.hadAttachedPart && this.disableState == this.disableFairing)
+			{
+				// ...move on with life
+				return;
+			}
+			// Otherwise...
+
+			// ...re-seed the states
+			this.disableState = this.disableFairing;
+			this.hadAttachedPart = this.hasAttachedPart;
+
+			bool partMayHaveFairing = !this.disableFairing && this.hasAttachedPart;
+
+			Debug.Log("partMayHaveFairing: " + partMayHaveFairing);
+
+			// ...loop through the jettison modules and...
+			ModuleJettison jettisonModule;
+			for (int jIdx = 0; jIdx < this.jettisonModules.Count; jIdx++)
+			{
+				jettisonModule = this.jettisonModules[jIdx];
+
+				// ...skip the module if something is wrong with it
+				if (jettisonModule == null || jettisonModule.jettisonName == string.Empty)
+				{
+					Debug.Log("Skipping problematic jettisonModule");
+					continue;
+				}
+				// ...otherwise...
+				// ...fetch the transform...
+				Transform jettisonTransform = this.jettisonTransforms[jettisonModule.jettisonName];
+
+				// Disable fairings if we know to have loaded with them already jettisoned, but allow them to be 
+				// re-enabled in the editor.
+				bool moduleShouldHaveFairing =
+					partMayHaveFairing &&
+					(
+						!this.hasJettisonedTable[jettisonModule.jettisonName] ||
+						HighLogic.LoadedSceneIsEditor
+					);
+
+				Debug.Log("moduleShouldHaveFairing=" + moduleShouldHaveFairing);
+
+				// ...set the module as jettisoned (or not) as appropriate...
+				jettisonModule.isJettisoned = !moduleShouldHaveFairing;
+				// ...set the module's jettison event as active (or not) as appropriate...
+				string jettisonEventName = string.Format("{0}{1}", jettisonModule.jettisonName, "jettisonEvent");
+				this.Events[jettisonEventName].guiActive = moduleShouldHaveFairing;
+
+				// ...set the transform's gameObject as active (or not) as appropriate...
+				jettisonTransform.gameObject.SetActive(moduleShouldHaveFairing);
+
+				// ...if we should have a fairing...
+				if (moduleShouldHaveFairing)
+				{
+					// ...Restore the transform
+					jettisonModule.jettisonTransform = jettisonTransform;
+				}
+				else
+				{
+					// ...otherwise, null it
+					jettisonModule.jettisonTransform = null;
+				}
+			}
+		}
+
+		public void JettisonEvent(ModuleJettison jettisonModule, KSPActionParam param)
+		{
+			Debug.Log("JettisonEvent called for " + jettisonModule.jettisonName + " with param=" + param);
+
+			jettisonModule.JettisonAction(param);
+
+			this.hasJettisonedTable[jettisonModule.jettisonName] = true;
+
+			this.Events[string.Format("{0}{1}", jettisonModule.jettisonName, "jettisonEvent")].guiActive = false;
+		}
+	}
 }
-
