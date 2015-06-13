@@ -1,0 +1,36 @@
+//This part duplicates the MainSail to show how to add a generic plume to an
+//engine.
++PART[liquidEngine1-2]:FOR[RealismOverhaul] //Set to run before realplume
+{
+    @name = mainsail_plume_example
+    @title = Mainsail Plume Example
+
+    PLUME
+    {
+        name = Solid-Vacuum            //pre-fabbed plume you want
+        transformName = thrustTransform //which transform to attach the plume
+        localRotation = 0,0,0           //Any rotation needed
+        localPosition = 0,0,0           //Any offset needed
+        fixedScale = 1                  //Size adjustment to resize to engine
+        energy = 1                      //Adjust length of plume
+    }
+    
+    @MODULE[ModuleEngines*]
+    {
+        @name = ModuleEnginesRF
+    }
+    @MODULE[ModuleEngineConfigs]
+    {
+        %type = ModuleEnginesRF
+        @CONFIG,*
+        {
+            %powerEffectName = Solid-Vacuum
+        }
+    }
+
+    //And that's it! Everything you need to add a preconfigured plume to an
+    //engine.  You may want to go in-game and adjust the fixedScale and
+    //localPosition using the in-game SmokeScreen tools (copy it back to your
+    //engine config when you're done) to match your engine.
+
+}
