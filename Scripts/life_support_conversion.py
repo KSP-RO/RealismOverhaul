@@ -72,7 +72,7 @@ def modify_command_module(lines):
 
 def modify_rate(string):
     float_number = float(string)
-    float_number -= 0.2
+    float_number += 0.2
     if "." in string:
         accuracy = max(1, len(string.split(".")[1]))
     else:
