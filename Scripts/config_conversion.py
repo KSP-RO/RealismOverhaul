@@ -1,5 +1,6 @@
 import os 
 import sys
+import traceback
 """
 This script is used to convert engine configs from the old EngineIgnitor configuration to the new one integrated in RealFuel. This is done in the process of adapting RealismOverhaul to KSP version 1.04.
 
@@ -24,9 +25,11 @@ def convert_file(filepath, change_function):
             with open(filepath, 'w') as file:
                 for l in lines:
                     file.write(l + "\n")
-    except:
+    except Exception as e:
         #We even store exceptions. We're awesome!
         print("EXCEPTION!")
+        
+        print(traceback.format_exc())
         failed_configs.append(filepath)
                 
 def get_end_brackets(lines, start_line):
