@@ -1,25 +1,14 @@
 import os 
 import sys
+from config_conversion import *
 """
 This script is used to convert engine configs from the old EngineIgnitor configuration to the new one integrated in RealFuel. This is done in the process of adapting RealismOverhaul to KSP version 1.04.
 
 This script has only been tested on Linux (specifically, Arch). No guarantee it'll work anywhere else (the paths might break).
 """
 
-failed_configs = []
-
-def convert_file(filepath):
-    """
-    This converts a single file defined by filepath.
-    """
-    try:
-        changed = False
-        print("Converting %s" %filepath)
-        # First, we read in the file.
-        with open(filepath,'r') as file:
-            lines = read_lines(file)
-        # With the lines stored locally, we can now search for EngineIgnitor configs.
-        for i, l in enumerate(lines):
+def change_ignitor_config(lines):
+    for i, l in enumerate(lines):
             #just found a module with name.
             if "name = ModuleEngineIgnitor" == l.strip():
                 start_line = i - 2 # This is the "MODULE" line.
@@ -46,14 +35,7 @@ def convert_file(filepath):
             elif "!MODULE[ModuleEngineIgnitor]" in l.strip():
                 del lines[i]
                 changed = True
-        if changed:
-            with open(filepath, 'w') as file:
-                for l in lines:
-                    file.write(l + "\n")
-    except:
-        #We even store exceptions. We're awesome!
-        print("EXCEPTION!")
-        failed_configs.append(filepath)
+    return lines, changed
 
 def gen_new_module(module, tab_count=0):
     """
@@ -90,26 +72,6 @@ def find_module_placement(lines):
         if "@MODULE[ModuleEngines*]" in l or "@MODULE[ModuleEngines]" in l or "@[ModuleEngines*]" in l:
             return get_end_brackets(lines, len(lines)-i)
                 
-def get_end_brackets(lines, start_line):
-    """
-    Gets the end bracket for the one starting in start_line. Works with nested ones, but only with brackets alone in the line.
-    """
-    opened_brackets = 1
-    end_line = start_line+1
-    while opened_brackets > 0:
-        end_line += 1
-        if lines[end_line].strip() == "{":
-            opened_brackets += 1
-        elif lines[end_line].strip() == "}":
-            opened_brackets -= 1
-    return end_line+1
-    
-        
-def read_lines(file):
-    # returns the lines of the file (without \n at the end.)
-    lines = [line.rstrip('\n') for line in file]
-    return lines
-
 def read_in_module(lines):
     """
     Reads in an old module and returns a dict module.
@@ -143,30 +105,6 @@ def extract_ignitor_resource(lines):
     for i, l in enumerate(lines):
         list.append(l.strip())
     return list
-    
-def extract_bool(l):
-    """
-    Extracts a boolean from text.
-    """
-    if l.split("=")[1].strip().lower() == "true":
-        return True
-    else:
-        return False
-
-def convert_all_files(root_dir):
-    """
-    Walks recursively through root_dir and all subdirs, converting all files ending in ".cfg".
-    Note that there may be problems with SmokeScreen configs and stuff, which isn't really my problem. I've defined a command line interface, haven't I?
-    """
-    for root, dirs, files in os.walk(root_dir):
-        for file in files:
-            if file[-4:] == ".cfg":
-                convert_file(os.path.join(root, file))
-                
-    print("Exceptions:")
-    for e in failed_configs:
-        print(e)
-
 
 #We ignore all command line arguments except for the first one.
 if len(sys.argv) > 1:
@@ -178,6 +116,6 @@ if arg == "-h":
     print("To use, specify the filepath for a directory to convert configs in; in this and all subdirectories, all found configs will be updated. If you do not specify any, this script will continue from the current path. If the specified path ends in \".cfg\", we will only convert this single file.")
 else:
     if arg[-4:] == ".cfg":
-        convert_file(arg)
+        convert_file(arg, change_ignitor_config)
     else:
-        convert_all_files(arg)
+        convert_all_files(arg, change_ignitor_config)
