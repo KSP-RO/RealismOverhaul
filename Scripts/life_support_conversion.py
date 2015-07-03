@@ -47,14 +47,14 @@ def gen_module_generator(tabs=0):
 	}
     """
     strings = []
-    strings.append("Module")
+    strings.append("MODULE")
     strings.append("{")
     strings.append("\tname = ModuleGenerator")
     strings.append("\tisAlwaysActive = true")
     strings.append("\tOUTPUT_RESOURCE")
     strings.append("\t{")
     strings.append("\t\tname = ElectricCharge")
-    strings.append("\t\trate = -0.2")
+    strings.append("\t\trate = -0.2 //200W for life support base")
     strings.append("\t}")
     strings.append("}")
     for i, s in enumerate(strings):
@@ -67,7 +67,7 @@ def modify_command_module(lines):
             # found it, changing rate
             tabs = l.count("\t")
             rate = modify_rate(lines[i+1].strip()[7:])
-            lines[i+1] = "\t"*tabs + "rate = " + rate
+            lines[i+1] = "\t"*tabs + "rate = " + rate + "//200W for life support base"
     return lines
 
 def modify_rate(string):
