@@ -1096,7 +1096,7 @@ PART
 	sqor = -1
 	sepI = 0
 	attm = 0
-	modCost = 3.942796
+	modCost = 3.946115
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
 	link = r7.blok.bvgd.sput_4293693684
@@ -1216,17 +1216,6 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 36.797% Kerosene / 63.203% LqdOxygen
-				guiName = 36.797% Kerosene / 63.203% LqdOxygen
-				category = 36.797% Kerosene / 63.203% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -1242,8 +1231,8 @@ PART
 			temperature = 90.15
 			fillable = True
 			techRequired = 
-			amount = 56722.443390712702
-			maxAmount = 56722.443390712702
+			amount = 57437.720316166902
+			maxAmount = 57437.720316166902
 		}
 		TANK
 		{
@@ -1256,8 +1245,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 33023.9966092873
-			maxAmount = 33023.9966092873
+			amount = 32308.7196838331
+			maxAmount = 32308.7196838331
 		}
 		TANK
 		{
@@ -1917,12 +1906,96 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Food
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Water
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Oxygen
+			note = (pressurized)
+			utilization = 221.1347
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Waste
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = WasteWater
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = CarbonDioxide
+			note = (pressurized)
+			utilization = 476.2173
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
 		name = Kerosene
-		amount = 33023.9966092873
-		maxAmount = 33023.9966092873
+		amount = 32308.7196838331
+		maxAmount = 32308.7196838331
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -1931,8 +2004,8 @@ PART
 	RESOURCE
 	{
 		name = LqdOxygen
-		amount = 56722.4433907127
-		maxAmount = 56722.4433907127
+		amount = 57437.7203161669
+		maxAmount = 57437.7203161669
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -2015,8 +2088,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -2033,7 +2107,7 @@ PART
 		}
 		EVENTS
 		{
-			Activate
+			vActivate
 			{
 				active = True
 				guiActive = True
@@ -2044,7 +2118,7 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
-			Shutdown
+			vShutdown
 			{
 				active = False
 				guiActive = True
@@ -2055,21 +2129,61 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
 		}
 		ACTIONS
 		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = None
+			}
 			OnAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ShutdownAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ActivateAction
 			{
 				actionGroup = None
+				active = False
 			}
+		}
+		Ullage
+		{
 		}
 	}
 	MODULE
@@ -2169,17 +2283,6 @@ PART
 				guiIcon = 36% Kerosene / 64% LqdOxygen
 				guiName = 36% Kerosene / 64% LqdOxygen
 				category = 36% Kerosene / 64% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 36.797% Kerosene / 63.203% LqdOxygen
-				guiName = 36.797% Kerosene / 63.203% LqdOxygen
-				category = 36.797% Kerosene / 63.203% LqdOxygen
 				guiActiveUnfocused = False
 				unfocusedRange = 2
 				externalToEVAOnly = True
@@ -2870,6 +2973,90 @@ PART
 			loss_rate = 0
 			temperature = 300
 			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Food
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Water
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Oxygen
+			note = (pressurized)
+			utilization = 221.1347
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Waste
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = WasteWater
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = CarbonDioxide
+			note = (pressurized)
+			utilization = 476.2173
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
 			techRequired = 
 			amount = 0
 			maxAmount = 0
@@ -3451,10 +3638,10 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293693296
 	partName = Part
-	pos = -3.499301,1.471319,0.5469663
+	pos = -3.499301,1.471319,0.5469664
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = -2.273737E-13,1,-7.787664E-14,-4.019841E-19
+	rot = -2.273737E-13,1,-7.913272E-14,-4.019842E-19
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
@@ -3831,10 +4018,10 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293693162
 	partName = Part
-	pos = -3.499301,1.471319,-0.5433658
+	pos = -3.499301,1.471319,-0.5433659
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = -2.273737E-13,1,-7.787664E-14,-4.019841E-19
+	rot = -2.273737E-13,1,-7.913272E-14,-4.019842E-19
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
@@ -4283,8 +4470,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -4301,7 +4489,7 @@ PART
 		}
 		EVENTS
 		{
-			Activate
+			vActivate
 			{
 				active = True
 				guiActive = True
@@ -4312,7 +4500,7 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
-			Shutdown
+			vShutdown
 			{
 				active = False
 				guiActive = True
@@ -4323,21 +4511,61 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
 		}
 		ACTIONS
 		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = None
+			}
 			OnAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ShutdownAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ActivateAction
 			{
 				actionGroup = None
+				active = False
 			}
+		}
+		Ullage
+		{
 		}
 	}
 	MODULE
@@ -4437,17 +4665,6 @@ PART
 				guiIcon = 36% Kerosene / 64% LqdOxygen
 				guiName = 36% Kerosene / 64% LqdOxygen
 				category = 36% Kerosene / 64% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 36.797% Kerosene / 63.203% LqdOxygen
-				guiName = 36.797% Kerosene / 63.203% LqdOxygen
-				category = 36.797% Kerosene / 63.203% LqdOxygen
 				guiActiveUnfocused = False
 				unfocusedRange = 2
 				externalToEVAOnly = True
@@ -5142,6 +5359,90 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Food
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Water
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Oxygen
+			note = (pressurized)
+			utilization = 221.1347
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Waste
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = WasteWater
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = CarbonDioxide
+			note = (pressurized)
+			utilization = 476.2173
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -5178,7 +5479,7 @@ PART
 {
 	part = WING.R7_4293692946
 	partName = Winglet
-	pos = 1.718958E-05,2.413191,3.993351
+	pos = 1.718957E-05,2.413191,3.993351
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-5.209526E-14
 	rot = 1.136868E-13,0.7071068,1.136868E-13,0.7071068
@@ -5294,7 +5595,7 @@ PART
 {
 	part = launchClamp1_4293692898
 	partName = Part
-	pos = 1.74876E-05,1.65818,4.737595
+	pos = 1.748759E-05,1.65818,4.737596
 	attPos = 0,0,0
 	attPos0 = -3.711413,-13.80696,2.147075E-07
 	rot = -2.948354E-09,0.9995476,-0.03007781,-9.48042E-09
@@ -5463,7 +5764,7 @@ PART
 {
 	part = r7.bvgd.engine_4293692784
 	partName = Part
-	pos = 1.689155E-05,2.335939,1.44535
+	pos = 1.689154E-05,2.335939,1.44535
 	attPos = 0,0,0
 	attPos0 = -0.4191754,-13.1292,5.574172E-09
 	rot = -4.547474E-13,0,0,1
@@ -5719,7 +6020,7 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293692640
 	partName = Part
-	pos = 0.5469943,1.471319,3.499306
+	pos = 0.5469944,1.471319,3.499307
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
 	rot = 1.136868E-13,0.7071069,-1.136868E-13,-0.7071069
@@ -6099,7 +6400,7 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293692506
 	partName = Part
-	pos = -0.5433373,1.471319,3.499306
+	pos = -0.5433374,1.471319,3.499306
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
 	rot = 1.136868E-13,0.7071069,-1.136868E-13,-0.7071069
@@ -6551,8 +6852,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -6569,7 +6871,7 @@ PART
 		}
 		EVENTS
 		{
-			Activate
+			vActivate
 			{
 				active = True
 				guiActive = True
@@ -6580,7 +6882,7 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
-			Shutdown
+			vShutdown
 			{
 				active = False
 				guiActive = True
@@ -6591,21 +6893,61 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
 		}
 		ACTIONS
 		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = None
+			}
 			OnAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ShutdownAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ActivateAction
 			{
 				actionGroup = None
+				active = False
 			}
+		}
+		Ullage
+		{
 		}
 	}
 	MODULE
@@ -6705,17 +7047,6 @@ PART
 				guiIcon = 36% Kerosene / 64% LqdOxygen
 				guiName = 36% Kerosene / 64% LqdOxygen
 				category = 36% Kerosene / 64% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 36.797% Kerosene / 63.203% LqdOxygen
-				guiName = 36.797% Kerosene / 63.203% LqdOxygen
-				category = 36.797% Kerosene / 63.203% LqdOxygen
 				guiActiveUnfocused = False
 				unfocusedRange = 2
 				externalToEVAOnly = True
@@ -7410,6 +7741,90 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Food
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Water
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Oxygen
+			note = (pressurized)
+			utilization = 221.1347
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Waste
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = WasteWater
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = CarbonDioxide
+			note = (pressurized)
+			utilization = 476.2173
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -7734,7 +8149,7 @@ PART
 	pos = 1.445377,2.335939,-1.108782E-05
 	attPos = 0,0,0
 	attPos0 = -0.4191752,-13.1292,-1.265018E-08
-	rot = 1.37586E-13,0.7071068,0,0.7071068
+	rot = 1.37586E-13,0.7071068,1.136868E-13,0.7071068
 	attRot = 0,-0.7071068,0,0.7071068
 	attRot0 = 1.847176E-06,-0.7071068,1.847176E-06,0.7071068
 	mir = 1,1,1
@@ -7987,10 +8402,10 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293691984
 	partName = Part
-	pos = 3.499333,1.471319,-0.5469885
+	pos = 3.499333,1.471319,-0.5469886
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = -3.050001E-13,-4.371139E-08,4.547474E-13,-1
+	rot = -3.629745E-13,-4.371139E-08,4.547474E-13,-1
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
@@ -8367,10 +8782,10 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293691850
 	partName = Part
-	pos = 3.499333,1.471319,0.5433433
+	pos = 3.499333,1.471319,0.5433434
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = -3.050001E-13,-4.371139E-08,4.547474E-13,-1
+	rot = -3.629745E-13,-4.371139E-08,4.547474E-13,-1
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
@@ -8819,8 +9234,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -8837,7 +9253,7 @@ PART
 		}
 		EVENTS
 		{
-			Activate
+			vActivate
 			{
 				active = True
 				guiActive = True
@@ -8848,7 +9264,7 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
-			Shutdown
+			vShutdown
 			{
 				active = False
 				guiActive = True
@@ -8859,21 +9275,61 @@ PART
 				unfocusedRange = 2
 				externalToEVAOnly = True
 			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
 		}
 		ACTIONS
 		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = None
+			}
 			OnAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ShutdownAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ActivateAction
 			{
 				actionGroup = None
+				active = False
 			}
+		}
+		Ullage
+		{
 		}
 	}
 	MODULE
@@ -8973,17 +9429,6 @@ PART
 				guiIcon = 36% Kerosene / 64% LqdOxygen
 				guiName = 36% Kerosene / 64% LqdOxygen
 				category = 36% Kerosene / 64% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 36.797% Kerosene / 63.203% LqdOxygen
-				guiName = 36.797% Kerosene / 63.203% LqdOxygen
-				category = 36.797% Kerosene / 63.203% LqdOxygen
 				guiActiveUnfocused = False
 				unfocusedRange = 2
 				externalToEVAOnly = True
@@ -9678,6 +10123,90 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Food
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Water
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Oxygen
+			note = (pressurized)
+			utilization = 221.1347
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = Waste
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = WasteWater
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		TANK
+		{
+			name = CarbonDioxide
+			note = (pressurized)
+			utilization = 476.2173
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = False
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -9714,7 +10243,7 @@ PART
 {
 	part = WING.R7_4293691634
 	partName = Winglet
-	pos = 1.707037E-05,2.413191,-3.993374
+	pos = 1.707036E-05,2.413191,-3.993375
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-5.209526E-14
 	rot = 1.136868E-13,0.7071068,-1.136868E-13,-0.7071068
@@ -9830,7 +10359,7 @@ PART
 {
 	part = launchClamp1_4293691586
 	partName = Part
-	pos = 1.701076E-05,1.65818,-4.737617
+	pos = 1.701075E-05,1.65818,-4.737618
 	attPos = 0,0,0
 	attPos0 = -3.711413,-13.80696,2.147247E-07
 	rot = -0.03007781,0,0,-0.9995478
@@ -9999,7 +10528,7 @@ PART
 {
 	part = r7.bvgd.engine_4293691472
 	partName = Part
-	pos = 1.677234E-05,2.335939,-1.445371
+	pos = 1.677233E-05,2.335939,-1.445371
 	attPos = 0,0,0
 	attPos0 = -0.4191753,-13.1292,-5.574186E-09
 	rot = -2.273737E-13,1,3.410605E-13,-3.412059E-12
@@ -10255,10 +10784,10 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293691328
 	partName = Part
-	pos = -0.5469604,1.471319,-3.499328
+	pos = -0.5469605,1.471319,-3.499329
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = 2.273737E-13,-0.7071069,2.273737E-13,-0.7071069
+	rot = 2.273737E-13,-0.7071069,4.547474E-13,-0.7071069
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
@@ -10635,10 +11164,10 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4293691194
 	partName = Part
-	pos = 0.5433717,1.471319,-3.499328
+	pos = 0.5433718,1.471319,-3.499329
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = 2.273737E-13,-0.7071069,2.273737E-13,-0.7071069
+	rot = 2.273737E-13,-0.7071069,4.547474E-13,-0.7071069
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
