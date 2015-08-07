@@ -21,7 +21,7 @@ PART
 	sqor = 1
 	sepI = 0
 	attm = 0
-	modCost = 500.0829
+	modCost = 0.08247339
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
 	link = ok.hs_4294381740
@@ -38,6 +38,33 @@ PART
 	}
 	PARTDATA
 	{
+	}
+	MODULE
+	{
+		name = DescentModeModule
+		isEnabled = True
+		IsDescentMode = False
+		EVENTS
+		{
+			ToggleMode
+			{
+				active = True
+				guiActive = True
+				guiIcon = Toggle Descent Mode
+				guiName = Toggle Descent Mode
+				category = Toggle Descent Mode
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			Toggle
+			{
+				actionGroup = None
+			}
+		}
 	}
 	MODULE
 	{
@@ -343,7 +370,7 @@ PART
 				active = False
 				guiActive = False
 				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
+				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
 				category = Jettison
 				guiActiveUnfocused = False
 				unfocusedRange = 2
@@ -361,30 +388,14 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleJettison
+		name = ActivateLandingEngineModule
 		isEnabled = True
-		isJettisoned = False
+		IgnitionAltitude = 7
 		EVENTS
 		{
-			Jettison
-			{
-				active = False
-				guiActive = False
-				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
-				category = Jettison
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			JettisonAction
-			{
-				actionGroup = None
-				active = False
-			}
 		}
 	}
 	MODULE
@@ -1987,34 +1998,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Turpentine
 			note = (pressurized)
 			utilization = 1
@@ -2129,25 +2112,10 @@ PART
 				unfocusedRange = 0
 				externalToEVAOnly = False
 			}
-			OK_cablingjettisonEvent
-			{
-				active = True
-				guiActive = True
-				guiIcon = 
-				guiName = Jettison
-				category = 
-				guiActiveUnfocused = False
-				unfocusedRange = 0
-				externalToEVAOnly = False
-			}
 		}
 		ACTIONS
 		{
 			OK_vzorjettisonAction
-			{
-				actionGroup = None
-			}
-			OK_cablingjettisonAction
 			{
 				actionGroup = None
 			}
@@ -2453,6 +2421,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleJettison
+		isEnabled = True
+		isJettisoned = False
+		EVENTS
+		{
+			Jettison
+			{
+				active = False
+				guiActive = False
+				guiIcon = Jettison
+				guiName = Jettison(DEPRECATED)
+				category = Jettison
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			JettisonAction
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+	}
+	MODULE
+	{
 		name = GeometryPartModule
 		isEnabled = True
 		EVENTS
@@ -2484,6 +2480,37 @@ PART
 		{
 		}
 	}
+	MODULE
+	{
+		name = ShroudToggle
+		isEnabled = True
+		disableFairing = False
+		disableFairing_UIFlight
+		{
+			controlEnabled = True
+		}
+		EVENTS
+		{
+			OK_cablingjettisonEvent
+			{
+				active = True
+				guiActive = True
+				guiIcon = 
+				guiName = Jettison
+				category = 
+				guiActiveUnfocused = False
+				unfocusedRange = 0
+				externalToEVAOnly = False
+			}
+		}
+		ACTIONS
+		{
+			OK_cablingjettisonAction
+			{
+				actionGroup = None
+			}
+		}
+	}
 }
 PART
 {
@@ -2499,11 +2526,11 @@ PART
 	symMethod = Radial
 	istg = 5
 	dstg = 2
-	sidx = 0
+	sidx = 1
 	sqor = 5
 	sepI = 4
 	attm = 0
-	modCost = 4500.49
+	modCost = 0.4902725
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
 	link = ok.tft_4294360372
@@ -3802,34 +3829,6 @@ PART
 			note = (pressurized)
 			utilization = 1
 			mass = 6.5E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5145,34 +5144,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Turpentine
 			note = (pressurized)
 			utilization = 1
@@ -5627,7 +5598,7 @@ PART
 	sqor = 4
 	sepI = 4
 	attm = 0
-	modCost = 1003.875
+	modCost = 3.874732
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
 	link = rn.r7.les.okt_4293002670
@@ -6962,34 +6933,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Turpentine
 			note = (pressurized)
 			utilization = 1
@@ -7112,11 +7055,11 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 10
+	istg = 9
 	dstg = 1
 	sidx = 0
-	sqor = 10
-	sepI = 10
+	sqor = 9
+	sepI = 9
 	attm = 0
 	modCost = 5116.451
 	modMass = 0
@@ -7413,22 +7356,22 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 6
+	istg = 5
 	dstg = 3
 	sidx = 0
-	sqor = 6
-	sepI = 6
+	sqor = 5
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
 	link = r7.blok.i_4292732484
-	link = r7.soyuz.fairing_4292720734
-	link = r7.soyuz.fairing_4292720306
+	link = r7.soyuz.fairing_4294208230
+	link = r7.soyuz.fairing_4294207774
 	attN = top,ok.tft_4294360372
 	attN = bottom,r7.blok.i_4292732484
-	attN = 1,r7.soyuz.fairing_4292720734
-	attN = 2,r7.soyuz.fairing_4292720306
+	attN = 1,r7.soyuz.fairing_4294208230
+	attN = 2,r7.soyuz.fairing_4294207774
 	EVENTS
 	{
 	}
@@ -7519,13 +7462,13 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 4
 	sidx = 0
-	sqor = 8
-	sepI = 6
+	sqor = 7
+	sepI = 5
 	attm = 0
-	modCost = 7.26355
+	modCost = 1.01355
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
 	link = r7.vernier.blok.i.s.fg_4292732224
@@ -7660,7 +7603,7 @@ PART
 				active = False
 				guiActive = False
 				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
+				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
 				category = Jettison
 				guiActiveUnfocused = False
 				unfocusedRange = 2
@@ -7688,7 +7631,7 @@ PART
 				active = False
 				guiActive = False
 				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
+				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
 				category = Jettison
 				guiActiveUnfocused = False
 				unfocusedRange = 2
@@ -7716,7 +7659,7 @@ PART
 				active = False
 				guiActive = False
 				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
+				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
 				category = Jettison
 				guiActiveUnfocused = False
 				unfocusedRange = 2
@@ -8873,34 +8816,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Turpentine
 			note = (pressurized)
 			utilization = 1
@@ -9028,11 +8943,11 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 4
 	sidx = 1
-	sqor = 8
-	sepI = 6
+	sqor = 7
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -9181,7 +9096,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -9206,13 +9120,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -9406,11 +9313,11 @@ PART
 	attRot0 = 0,1,0,-4.371139E-08
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 4
 	sidx = 2
-	sqor = 8
-	sepI = 6
+	sqor = 7
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -9559,7 +9466,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -9584,13 +9490,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -9784,11 +9683,11 @@ PART
 	attRot0 = 0,-0.7071068,0,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 4
 	sidx = 3
-	sqor = 8
-	sepI = 6
+	sqor = 7
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -9937,7 +9836,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -9962,13 +9860,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -10162,11 +10053,11 @@ PART
 	attRot0 = 0,0.7071069,0,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 4
 	sidx = 4
-	sqor = 8
-	sepI = 6
+	sqor = 7
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -10315,7 +10206,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -10340,13 +10230,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -10540,11 +10423,11 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 7
+	istg = 6
 	dstg = 5
 	sidx = 0
-	sqor = 7
-	sepI = 7
+	sqor = 6
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -10646,7 +10529,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 7
+	sepI = 6
 	attm = 0
 	modCost = 3.890254
 	modMass = 0
@@ -11497,11 +11380,11 @@ PART
 	attRot0 = 8.038874E-14,8.42937E-08,2.612301E-06,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 7
 	sidx = 0
-	sqor = 11
-	sepI = 11
+	sqor = 10
+	sepI = 10
 	attm = 1
 	modCost = 1.670185
 	modMass = 0
@@ -12457,34 +12340,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Food
 			note = 
 			utilization = 1
@@ -12615,7 +12470,7 @@ PART
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 11
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -12727,11 +12582,11 @@ PART
 	attRot0 = 0.02126637,0.7067869,-0.02126637,0.7067869
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 12
+	istg = 11
 	dstg = 8
 	sidx = 0
-	sqor = 12
-	sepI = 12
+	sqor = 11
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -12753,8 +12608,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 0.9578641
-		height = 2.416878
+		scaleFactor = 0.9578612
+		height = 2.416874
 		towerRot = -0.02126452,-0.706787,0.02126453,0.7067869
 		EVENTS
 		{
@@ -12891,16 +12746,16 @@ PART
 	pos = -1.447576,2.336346,0.002246469
 	attPos = 0,0,0
 	attPos0 = -0.4191752,-13.1292,1.347213E-08
-	rot = 1.136868E-13,-0.7071068,4.399224E-13,0.7071068
+	rot = 1.136868E-13,-0.7071068,6.672961E-13,0.7071068
 	attRot = 0,-0.7071068,0,0.7071068
 	attRot0 = -1.847176E-06,-0.7071069,-1.847176E-06,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 0
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -13144,19 +12999,19 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292731252
 	partName = Part
-	pos = -3.501532,1.471722,0.549223
+	pos = -3.501533,1.471722,0.5492234
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = 0,1,1.046167E-12,-8.429371E-08
+	rot = 0,1,1.082495E-12,-8.429371E-08
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 1
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -13307,7 +13162,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -13332,13 +13186,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -13524,19 +13371,19 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292731118
 	partName = Part
-	pos = -3.501533,1.471722,-0.5411088
+	pos = -3.501534,1.471722,-0.5411089
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = 0,1,1.046167E-12,-8.429371E-08
+	rot = 0,1,1.082495E-12,-8.429371E-08
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 2
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -13687,7 +13534,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -13712,13 +13558,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -13912,11 +13751,11 @@ PART
 	attRot0 = 1.847176E-06,0.7071068,1.847176E-06,0.7071067
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 7
 	sidx = 1
-	sqor = 11
-	sepI = 11
+	sqor = 10
+	sepI = 10
 	attm = 1
 	modCost = 1.670185
 	modMass = 0
@@ -14872,34 +14711,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Food
 			note = 
 			utilization = 1
@@ -15018,7 +14829,7 @@ PART
 {
 	part = WING.R7_4292730892
 	partName = Winglet
-	pos = -0.001443446,2.413589,3.996377
+	pos = -0.001443446,2.413589,3.996376
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-2.794692E-13
 	rot = 3.694352E-06,0.7071068,3.694351E-06,0.7071067
@@ -15030,7 +14841,7 @@ PART
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 11
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -15134,7 +14945,7 @@ PART
 {
 	part = launchClamp1_4292730844
 	partName = Part
-	pos = -0.001443148,1.701859,4.736248
+	pos = -0.001443148,1.701859,4.736247
 	attPos = 0,0,0
 	attPos0 = -3.707051,-13.76368,2.144557E-07
 	rot = -1.708258E-09,0.9995477,-0.03007258,-7.992655E-08
@@ -15142,11 +14953,11 @@ PART
 	attRot0 = 0.02126637,0.7067869,-0.02126637,0.7067869
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 12
+	istg = 11
 	dstg = 8
 	sidx = 1
-	sqor = 12
-	sepI = 12
+	sqor = 11
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -15168,8 +14979,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 0.9578641
-		height = 2.416878
+		scaleFactor = 0.9578612
+		height = 2.416874
 		towerRot = 1.708258E-09,-0.9995477,0.03007258,-7.992655E-08
 		EVENTS
 		{
@@ -15311,11 +15122,11 @@ PART
 	attRot0 = -1.847176E-06,-0.7071068,-1.847176E-06,0.7071067
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 3
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -15559,7 +15370,7 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292730586
 	partName = Part
-	pos = 0.5455319,1.471722,3.502332
+	pos = 0.5455316,1.471722,3.502331
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
 	rot = 2.273737E-13,0.7071067,1.250555E-12,-0.7071068
@@ -15567,11 +15378,11 @@ PART
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 4
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -15722,7 +15533,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -15747,13 +15557,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -15939,7 +15742,7 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292730452
 	partName = Part
-	pos = -0.5447979,1.471722,3.502331
+	pos = -0.5447976,1.471722,3.502329
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
 	rot = 2.273737E-13,0.7071067,1.250555E-12,-0.7071068
@@ -15947,11 +15750,11 @@ PART
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 5
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -16102,7 +15905,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -16127,13 +15929,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -16327,11 +16122,11 @@ PART
 	attRot0 = 2.612301E-06,1,-1.94576E-13,-1.280051E-07
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 7
 	sidx = 2
-	sqor = 11
-	sepI = 11
+	sqor = 10
+	sepI = 10
 	attm = 1
 	modCost = 1.670185
 	modMass = 0
@@ -17287,34 +17082,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Food
 			note = 
 			utilization = 1
@@ -17445,7 +17212,7 @@ PART
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 11
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -17552,16 +17319,16 @@ PART
 	pos = 4.73256,1.701859,0.002245486
 	attPos = 0,0,0
 	attPos0 = -3.707051,-13.76368,2.144557E-07
-	rot = -0.02126453,0.706787,-0.02126452,-0.706787
+	rot = -0.02126453,0.706787,-0.02126452,-0.7067869
 	attRot = 0,0,0,1
 	attRot0 = 0.02126637,0.7067869,-0.02126637,0.7067869
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 12
+	istg = 11
 	dstg = 8
 	sidx = 2
-	sqor = 12
-	sepI = 12
+	sqor = 11
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -17583,9 +17350,9 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 0.9578641
-		height = 2.416878
-		towerRot = 0.02126453,-0.706787,0.02126452,-0.706787
+		scaleFactor = 0.9578612
+		height = 2.416874
+		towerRot = 0.02126453,-0.706787,0.02126452,-0.7067869
 		EVENTS
 		{
 			Release
@@ -17721,16 +17488,16 @@ PART
 	pos = 1.444689,2.336346,0.00224629
 	attPos = 0,0,0
 	attPos0 = -0.4191752,-13.1292,-4.75189E-09
-	rot = -1.37586E-13,0.7071068,-4.547474E-13,0.7071068
+	rot = -1.37586E-13,0.7071068,-6.82121E-13,0.7071068
 	attRot = 0,-0.7071068,0,0.7071068
 	attRot0 = -1.847176E-06,-0.7071069,-1.847176E-06,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 6
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -17974,19 +17741,19 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292729920
 	partName = Part
-	pos = 3.498644,1.471722,-0.5447307
+	pos = 3.498645,1.471722,-0.5447316
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = 1.139294E-12,-1.280051E-07,4.547474E-13,-1
+	rot = 1.242042E-12,-1.280051E-07,4.547474E-13,-1
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 7
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -18137,7 +17904,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -18162,13 +17928,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -18354,19 +18113,19 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292729786
 	partName = Part
-	pos = 3.498645,1.471722,0.545601
+	pos = 3.498646,1.471722,0.5456006
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = 1.139294E-12,-1.280051E-07,4.547474E-13,-1
+	rot = 1.242042E-12,-1.280051E-07,4.547474E-13,-1
 	attRot = 0,0.9999999,0,0
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 8
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -18517,7 +18276,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -18542,13 +18300,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -18742,11 +18493,11 @@ PART
 	attRot0 = 1.847176E-06,0.7071067,-1.847176E-06,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 7
 	sidx = 3
-	sqor = 11
-	sepI = 11
+	sqor = 10
+	sepI = 10
 	attm = 1
 	modCost = 1.670185
 	modMass = 0
@@ -19702,34 +19453,6 @@ PART
 		}
 		TANK
 		{
-			name = N2O4
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = N2H3CH3
-			note = 
-			utilization = 1
-			mass = 1.6E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
 			name = Food
 			note = 
 			utilization = 1
@@ -19848,7 +19571,7 @@ PART
 {
 	part = WING.R7_4292729560
 	partName = Winglet
-	pos = -0.001444459,2.413589,-3.991883
+	pos = -0.001444459,2.413589,-3.991882
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-2.794692E-13
 	rot = 3.694351E-06,0.7071067,-3.694352E-06,-0.7071068
@@ -19860,7 +19583,7 @@ PART
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 11
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -19964,7 +19687,7 @@ PART
 {
 	part = launchClamp1_4292729512
 	partName = Part
-	pos = -0.001445055,1.701859,-4.731756
+	pos = -0.001445055,1.701859,-4.731755
 	attPos = 0,0,0
 	attPos0 = -3.707051,-13.76368,2.144557E-07
 	rot = -0.03007258,-8.940697E-08,3.72529E-09,-0.9995477
@@ -19972,11 +19695,11 @@ PART
 	attRot0 = 0.02126637,0.7067869,-0.02126637,0.7067869
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 12
+	istg = 11
 	dstg = 8
 	sidx = 3
-	sqor = 12
-	sepI = 12
+	sqor = 11
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -19998,8 +19721,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 0.9578641
-		height = 2.416878
+		scaleFactor = 0.9578612
+		height = 2.416874
 		towerRot = 0.03007258,8.940697E-08,-3.72529E-09,-0.9995477
 		EVENTS
 		{
@@ -20141,11 +19864,11 @@ PART
 	attRot0 = -1.847176E-06,-0.7071068,-1.847176E-06,0.7071067
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 9
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -20389,7 +20112,7 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292729254
 	partName = Part
-	pos = -0.5484198,1.471722,-3.497837
+	pos = -0.5484194,1.471722,-3.497836
 	attPos = 0,0,0
 	attPos0 = 0.5469765,-0.8646209,2.053954
 	rot = 1.250555E-12,-0.7071068,-2.273737E-13,-0.7071067
@@ -20397,11 +20120,11 @@ PART
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 10
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -20552,7 +20275,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -20577,13 +20299,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -20769,7 +20484,7 @@ PART
 {
 	part = r7.vernier.engine.v.fg_4292729120
 	partName = Part
-	pos = 0.5419102,1.471722,-3.497836
+	pos = 0.54191,1.471722,-3.497834
 	attPos = 0,0,0
 	attPos0 = -0.5433541,-0.8646209,2.053954
 	rot = 1.250555E-12,-0.7071068,-2.273737E-13,-0.7071067
@@ -20777,11 +20492,11 @@ PART
 	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 8
 	sidx = 11
-	sqor = 13
-	sepI = 11
+	sqor = 12
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -20932,7 +20647,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -20957,13 +20671,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -21157,11 +20864,11 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 6
 	sidx = 12
-	sqor = 13
-	sepI = 7
+	sqor = 12
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -21414,11 +21121,11 @@ PART
 	attRot0 = 0,1,0,0
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 6
 	sidx = 13
-	sqor = 13
-	sepI = 7
+	sqor = 12
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -21567,7 +21274,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -21592,13 +21298,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -21792,11 +21491,11 @@ PART
 	attRot0 = 0,-4.371139E-08,0,-1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 6
 	sidx = 14
-	sqor = 13
-	sepI = 7
+	sqor = 12
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -21945,7 +21644,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -21970,13 +21668,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -22170,11 +21861,11 @@ PART
 	attRot0 = 0,0.7071068,0,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 6
 	sidx = 15
-	sqor = 13
-	sepI = 7
+	sqor = 12
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -22323,7 +22014,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -22348,13 +22038,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -22548,11 +22231,11 @@ PART
 	attRot0 = 0,0.7071067,0,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 13
+	istg = 12
 	dstg = 6
 	sidx = 16
-	sqor = 13
-	sepI = 7
+	sqor = 12
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -22701,7 +22384,6 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
-		gimbalConstrain = 14
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -22726,13 +22408,6 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
-		}
-		gimbalConstrain_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 14
-			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -22916,21 +22591,21 @@ PART
 }
 PART
 {
-	part = r7.soyuz.fairing_4292720734
+	part = r7.soyuz.fairing_4294208230
 	partName = Part
-	pos = -0.00144383,36.80445,0.00224638
+	pos = -0.001443863,36.80445,0.00224638
 	attPos = 0,0,0
-	attPos0 = 3.341847E-08,0.9521217,0
+	attPos0 = 1.164153E-10,0.9521217,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 9
+	istg = 8
 	dstg = 5
 	sidx = 1
-	sqor = 9
-	sepI = 9
+	sqor = 8
+	sepI = 8
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -23116,8 +22791,8 @@ PART
 	RESOURCE
 	{
 		name = SolidFuel
-		amount = 0.2
-		maxAmount = 0.2
+		amount = 1.12
+		maxAmount = 1.12
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -23126,21 +22801,21 @@ PART
 }
 PART
 {
-	part = r7.soyuz.fairing_4292720306
+	part = r7.soyuz.fairing_4294207774
 	partName = Part
-	pos = -0.001443472,36.80445,0.00224638
+	pos = -0.001443505,36.80445,0.00224638
 	attPos = 0,0,0
-	attPos0 = 3.910463E-07,0.9521217,0
+	attPos0 = 3.577443E-07,0.9521217,0
 	rot = 0,1,0,0
 	attRot = 0,0.9999999,0,0
 	attRot0 = 0,1,0,0
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 9
+	istg = 8
 	dstg = 5
 	sidx = 0
-	sqor = 9
-	sepI = 9
+	sqor = 8
+	sepI = 8
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -23326,8 +23001,8 @@ PART
 	RESOURCE
 	{
 		name = SolidFuel
-		amount = 0.2
-		maxAmount = 0.2
+		amount = 1.12
+		maxAmount = 1.12
 		flowState = True
 		isTweakable = True
 		hideFlow = False
