@@ -370,7 +370,7 @@ PART
 				active = False
 				guiActive = False
 				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
+				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)(DEPRECATED)
 				category = Jettison
 				guiActiveUnfocused = False
 				unfocusedRange = 2
@@ -2431,7 +2431,7 @@ PART
 				active = False
 				guiActive = False
 				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)
+				guiName = Jettison(DEPRECATED)(DEPRECATED)
 				category = Jettison
 				guiActiveUnfocused = False
 				unfocusedRange = 2
@@ -6428,11 +6428,11 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.blok.i_4292696186
 	link = r7.soyuz.fairing_4294282214
 	link = r7.soyuz.fairing_4294281558
+	link = r7.blok.i_4293370560
 	attN = top,ok.pao_4294344748
-	attN = bottom,r7.blok.i_4292696186
+	attN = bottom,r7.blok.i_4293370560
 	attN = 1,r7.soyuz.fairing_4294282214
 	attN = 2,r7.soyuz.fairing_4294281558
 	EVENTS
@@ -6515,9 +6515,429 @@ PART
 }
 PART
 {
-	part = r7.blok.i_4292696186
+	part = r7.soyuz.fairing_4294282214
 	partName = Part
-	pos = -0.0001166244,32.62788,8.229216E-05
+	pos = -0.0001165867,37.36377,8.229216E-05
+	attPos = 0,0,0
+	attPos0 = 3.771129E-08,0.9521217,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	istg = 8
+	dstg = 5
+	sidx = 0
+	sqor = 8
+	sepI = 8
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = (0.0, 0.0, 0.0)
+	attN = top,r7.adapter.blok.iv2_4292696248
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleDecouple
+		isEnabled = True
+		ejectionForcePercent = 100
+		isDecoupled = False
+		ejectionForcePercent_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 100
+			stepIncrement = 1
+		}
+		EVENTS
+		{
+			Decouple
+			{
+				active = True
+				guiActive = True
+				guiIcon = Decouple
+				guiName = Decouple
+				category = Decouple
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			DecoupleAction
+			{
+				actionGroup = Abort
+			}
+		}
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = -1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		thrustPercentage_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 100
+			stepIncrement = 0.5
+		}
+		EVENTS
+		{
+			vActivate
+			{
+				active = True
+				guiActive = True
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			vShutdown
+			{
+				active = False
+				guiActive = True
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = Abort
+			}
+			OnAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ActivateAction
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		Ullage
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = SolidFuel
+		amount = 1.12
+		maxAmount = 1.12
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		flowMode = Both
+	}
+}
+PART
+{
+	part = r7.soyuz.fairing_4294281558
+	partName = Part
+	pos = -0.0001162291,37.36377,8.229216E-05
+	attPos = 0,0,0
+	attPos0 = 3.953392E-07,0.9521217,0
+	rot = 0,-1,0,0
+	attRot = 0,-0.9999999,0,0
+	attRot0 = 0,-1,0,0
+	mir = 1,1,1
+	symMethod = Radial
+	istg = 8
+	dstg = 5
+	sidx = 1
+	sqor = 8
+	sepI = 8
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = (0.0, 0.0, 0.0)
+	attN = top,r7.adapter.blok.iv2_4292696248
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleDecouple
+		isEnabled = True
+		ejectionForcePercent = 100
+		isDecoupled = False
+		ejectionForcePercent_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 100
+			stepIncrement = 1
+		}
+		EVENTS
+		{
+			Decouple
+			{
+				active = True
+				guiActive = True
+				guiIcon = Decouple
+				guiName = Decouple
+				category = Decouple
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			DecoupleAction
+			{
+				actionGroup = Abort
+			}
+		}
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = -1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		thrustPercentage_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 100
+			stepIncrement = 0.5
+		}
+		EVENTS
+		{
+			vActivate
+			{
+				active = True
+				guiActive = True
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			vShutdown
+			{
+				active = False
+				guiActive = True
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = Abort
+			}
+			OnAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ActivateAction
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		Ullage
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = SolidFuel
+		amount = 1.12
+		maxAmount = 1.12
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		flowMode = Both
+	}
+}
+PART
+{
+	part = r7.blok.i_4293370560
+	partName = Part
+	pos = -0.0001166244,32.62787,8.229216E-05
 	attPos = 0,0,0
 	attPos0 = 0,-3.783779,0
 	rot = 0,0,0,1
@@ -6534,17 +6954,17 @@ PART
 	modCost = 1.01355
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.vernier.blok.i.s.fg_4292695926
-	link = r7.vernier.blok.i.s.fg_4292695848
-	link = r7.vernier.blok.i.s.fg_4292695770
-	link = r7.vernier.blok.i.s.fg_4292695692
-	link = r7.adapter.blok.e_4292695614
+	link = r7.adapter.blok.e_4293370300
+	link = r7.vernier.blok.i.s.fg_4293366552
+	link = r7.vernier.blok.i.s.fg_4293366474
+	link = r7.vernier.blok.i.s.fg_4293366396
+	link = r7.vernier.blok.i.s.fg_4293366318
 	attN = top,r7.adapter.blok.iv2_4292696248
-	attN = bottom,r7.adapter.blok.e_4292695614
-	attN = 1,r7.vernier.blok.i.s.fg_4292695926
-	attN = 2,r7.vernier.blok.i.s.fg_4292695848
-	attN = 3,r7.vernier.blok.i.s.fg_4292695692
-	attN = 4,r7.vernier.blok.i.s.fg_4292695770
+	attN = bottom,r7.adapter.blok.e_4293370300
+	attN = 1,r7.vernier.blok.i.s.fg_4293366552
+	attN = 2,r7.vernier.blok.i.s.fg_4293366474
+	attN = 3,r7.vernier.blok.i.s.fg_4293366318
+	attN = 4,r7.vernier.blok.i.s.fg_4293366396
 	EVENTS
 	{
 	}
@@ -7996,1487 +8416,7 @@ PART
 }
 PART
 {
-	part = r7.vernier.blok.i.s.fg_4292695926
-	partName = Part
-	pos = -0.935702,30.22356,8.229216E-05
-	attPos = 0,0,0
-	attPos0 = -0.935585,-2.404316,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	istg = 7
-	dstg = 4
-	sidx = 1
-	sqor = 7
-	sepI = 5
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.blok.i.s.fg_4292695848
-	attN = top,r7.blok.i_4292696186
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
-		EVENTS
-		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
-			OnAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ActivateAction
-			{
-				actionGroup = None
-				active = False
-			}
-		}
-		Ullage
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FXModuleAnimateThrottle
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = KM_Gimbal_3
-		isEnabled = True
-		gimbalTransformName = gimbal
-		yawGimbalRange = 0
-		pitchGimbalRange = 9
-		debug = True
-		trimX = 0
-		trimY = 0
-		enableTrim = True
-		enableGimbal = True
-		enableSmoothGimbal = False
-		responseSpeed = 25
-		enableRoll = True
-		autoSetRoll = True
-		hideSpeedEditing = False
-		hideRollEditing = False
-		trimX_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		trimY_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		enableTrim_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableSmoothGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		responseSpeed_UIFlight
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			stepIncrement = 1
-		}
-		EVENTS
-		{
-			dbg_run
-			{
-				active = True
-				guiActive = False
-				guiIcon = Toggle Debug
-				guiName = Toggle Debug
-				category = Toggle Debug
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			toggleRoll
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Toggle Roll
-				guiName = Deactivate Roll
-				category = Toggle Roll
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			toggleGimbal
-			{
-				actionGroup = None
-			}
-			plusTrimX
-			{
-				actionGroup = None
-			}
-			minusTrim
-			{
-				actionGroup = None
-			}
-			plus5Trim
-			{
-				actionGroup = None
-			}
-			minus5Trim
-			{
-				actionGroup = None
-			}
-			plusTrimY
-			{
-				actionGroup = None
-			}
-			minusTrimY
-			{
-				actionGroup = None
-			}
-			plus5TrimY
-			{
-				actionGroup = None
-			}
-			minus5TrimY
-			{
-				actionGroup = None
-			}
-			toggleTrim
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		EVENTS
-		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = RD 0110 Molniya Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.1
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = r7.vernier.blok.i.s.fg_4292695848
-	partName = Part
-	pos = 0.9354684,30.22356,8.229216E-05
-	attPos = 0,0,0
-	attPos0 = 0.935585,-2.404316,0
-	rot = 0,1,0,-4.371139E-08
-	attRot = 0,0,0,1
-	attRot0 = 0,1,0,-4.371139E-08
-	mir = 1,1,1
-	symMethod = Radial
-	istg = 7
-	dstg = 4
-	sidx = 2
-	sqor = 7
-	sepI = 5
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.blok.i.s.fg_4292695926
-	attN = top,r7.blok.i_4292696186
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
-		EVENTS
-		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
-			OnAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ActivateAction
-			{
-				actionGroup = None
-				active = False
-			}
-		}
-		Ullage
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FXModuleAnimateThrottle
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = KM_Gimbal_3
-		isEnabled = True
-		gimbalTransformName = gimbal
-		yawGimbalRange = 0
-		pitchGimbalRange = 9
-		debug = True
-		trimX = 0
-		trimY = 0
-		enableTrim = True
-		enableGimbal = True
-		enableSmoothGimbal = False
-		responseSpeed = 25
-		enableRoll = True
-		autoSetRoll = True
-		hideSpeedEditing = False
-		hideRollEditing = False
-		trimX_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		trimY_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		enableTrim_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableSmoothGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		responseSpeed_UIFlight
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			stepIncrement = 1
-		}
-		EVENTS
-		{
-			dbg_run
-			{
-				active = True
-				guiActive = False
-				guiIcon = Toggle Debug
-				guiName = Toggle Debug
-				category = Toggle Debug
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			toggleRoll
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Toggle Roll
-				guiName = Deactivate Roll
-				category = Toggle Roll
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			toggleGimbal
-			{
-				actionGroup = None
-			}
-			plusTrimX
-			{
-				actionGroup = None
-			}
-			minusTrim
-			{
-				actionGroup = None
-			}
-			plus5Trim
-			{
-				actionGroup = None
-			}
-			minus5Trim
-			{
-				actionGroup = None
-			}
-			plusTrimY
-			{
-				actionGroup = None
-			}
-			minusTrimY
-			{
-				actionGroup = None
-			}
-			plus5TrimY
-			{
-				actionGroup = None
-			}
-			minus5TrimY
-			{
-				actionGroup = None
-			}
-			toggleTrim
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		EVENTS
-		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = RD 0110 Molniya Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.1
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = r7.vernier.blok.i.s.fg_4292695770
-	partName = Part
-	pos = -0.0001166244,30.22356,-0.9355028
-	attPos = 0,0,0
-	attPos0 = 0,-2.404316,-0.935585
-	rot = 0,-0.7071068,0,0.7071068
-	attRot = 0,-0.7071068,0,0.7071068
-	attRot0 = 0,-0.7071068,0,0.7071068
-	mir = 1,1,1
-	symMethod = Radial
-	istg = 7
-	dstg = 4
-	sidx = 3
-	sqor = 7
-	sepI = 5
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.blok.i.s.fg_4292695692
-	attN = top,r7.blok.i_4292696186
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
-		EVENTS
-		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
-			OnAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ActivateAction
-			{
-				actionGroup = None
-				active = False
-			}
-		}
-		Ullage
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FXModuleAnimateThrottle
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = KM_Gimbal_3
-		isEnabled = True
-		gimbalTransformName = gimbal
-		yawGimbalRange = 0
-		pitchGimbalRange = 9
-		debug = True
-		trimX = 0
-		trimY = 0
-		enableTrim = True
-		enableGimbal = True
-		enableSmoothGimbal = False
-		responseSpeed = 25
-		enableRoll = True
-		autoSetRoll = True
-		hideSpeedEditing = False
-		hideRollEditing = False
-		trimX_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		trimY_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		enableTrim_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableSmoothGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		responseSpeed_UIFlight
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			stepIncrement = 1
-		}
-		EVENTS
-		{
-			dbg_run
-			{
-				active = True
-				guiActive = False
-				guiIcon = Toggle Debug
-				guiName = Toggle Debug
-				category = Toggle Debug
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			toggleRoll
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Toggle Roll
-				guiName = Deactivate Roll
-				category = Toggle Roll
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			toggleGimbal
-			{
-				actionGroup = None
-			}
-			plusTrimX
-			{
-				actionGroup = None
-			}
-			minusTrim
-			{
-				actionGroup = None
-			}
-			plus5Trim
-			{
-				actionGroup = None
-			}
-			minus5Trim
-			{
-				actionGroup = None
-			}
-			plusTrimY
-			{
-				actionGroup = None
-			}
-			minusTrimY
-			{
-				actionGroup = None
-			}
-			plus5TrimY
-			{
-				actionGroup = None
-			}
-			minus5TrimY
-			{
-				actionGroup = None
-			}
-			toggleTrim
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		EVENTS
-		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = RD 0110 Molniya Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.1
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = r7.vernier.blok.i.s.fg_4292695692
-	partName = Part
-	pos = -0.0001166244,30.22356,0.9356676
-	attPos = 0,0,0
-	attPos0 = 0,-2.404316,0.935585
-	rot = 0,0.7071068,0,0.7071068
-	attRot = 0,-0.7071068,0,0.7071068
-	attRot0 = 0,0.7071069,0,0.7071068
-	mir = 1,1,1
-	symMethod = Radial
-	istg = 7
-	dstg = 4
-	sidx = 4
-	sqor = 7
-	sepI = 5
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.blok.i.s.fg_4292695770
-	attN = top,r7.blok.i_4292696186
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
-		EVENTS
-		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
-			OnAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ActivateAction
-			{
-				actionGroup = None
-				active = False
-			}
-		}
-		Ullage
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FXModuleAnimateThrottle
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = KM_Gimbal_3
-		isEnabled = True
-		gimbalTransformName = gimbal
-		yawGimbalRange = 0
-		pitchGimbalRange = 9
-		debug = True
-		trimX = 0
-		trimY = 0
-		enableTrim = True
-		enableGimbal = True
-		enableSmoothGimbal = False
-		responseSpeed = 25
-		enableRoll = True
-		autoSetRoll = True
-		hideSpeedEditing = False
-		hideRollEditing = False
-		trimX_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		trimY_UIFlight
-		{
-			controlEnabled = True
-			minValue = -14
-			maxValue = 14
-			stepIncrement = 1
-		}
-		enableTrim_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableSmoothGimbal_UIFlight
-		{
-			controlEnabled = True
-		}
-		responseSpeed_UIFlight
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			stepIncrement = 1
-		}
-		EVENTS
-		{
-			dbg_run
-			{
-				active = True
-				guiActive = False
-				guiIcon = Toggle Debug
-				guiName = Toggle Debug
-				category = Toggle Debug
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			toggleRoll
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Toggle Roll
-				guiName = Deactivate Roll
-				category = Toggle Roll
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			toggleGimbal
-			{
-				actionGroup = None
-			}
-			plusTrimX
-			{
-				actionGroup = None
-			}
-			minusTrim
-			{
-				actionGroup = None
-			}
-			plus5Trim
-			{
-				actionGroup = None
-			}
-			minus5Trim
-			{
-				actionGroup = None
-			}
-			plusTrimY
-			{
-				actionGroup = None
-			}
-			minusTrimY
-			{
-				actionGroup = None
-			}
-			plus5TrimY
-			{
-				actionGroup = None
-			}
-			minus5TrimY
-			{
-				actionGroup = None
-			}
-			toggleTrim
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		EVENTS
-		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = RD 0110 Molniya Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.1
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = r7.adapter.blok.e_4292695614
+	part = r7.adapter.blok.e_4293370300
 	partName = Part
 	pos = -0.0001166244,28.79513,8.229216E-05
 	attPos = 0,0,0
@@ -9495,9 +8435,9 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.blok.a.soyuz_4292695546
-	attN = top,r7.blok.i_4292696186
-	attN = bottom,r7.blok.a.soyuz_4292695546
+	link = r7.blok.a.soyuz_4293370232
+	attN = top,r7.blok.i_4293370560
+	attN = bottom,r7.blok.a.soyuz_4293370232
 	EVENTS
 	{
 	}
@@ -9578,9 +8518,9 @@ PART
 }
 PART
 {
-	part = r7.blok.a.soyuz_4292695546
+	part = r7.blok.a.soyuz_4293370232
 	partName = Part
-	pos = -0.0001166244,13.93367,8.229216E-05
+	pos = -0.0001166244,13.93366,8.229216E-05
 	attPos = 0,0,0
 	attPos0 = 0,-14.86146,0
 	rot = 0,0,0,1
@@ -9597,13 +8537,13 @@ PART
 	modCost = 3.890254
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.blok.bvgd.s_4292695352
-	link = r7.blok.bvgd.s_4292694686
-	link = r7.blok.bvgd.s_4292694020
-	link = r7.blok.bvgd.s_4292693354
-	link = r7.blok.a.engine_4292692688
-	attN = top,r7.adapter.blok.e_4292695614
-	attN = bottom,r7.blok.a.engine_4292692688
+	link = r7.blok.bvgd.s_4293370038
+	link = r7.blok.bvgd.s_4293369370
+	link = r7.blok.bvgd.s_4293368702
+	link = r7.blok.bvgd.s_4293368034
+	link = r7.blok.a.engine_4293367366
+	attN = top,r7.adapter.blok.e_4293370300
+	attN = bottom,r7.blok.a.engine_4293367366
 	EVENTS
 	{
 	}
@@ -10433,9 +9373,9 @@ PART
 }
 PART
 {
-	part = r7.blok.bvgd.s_4292695352
+	part = r7.blok.bvgd.s_4293370038
 	partName = Part
-	pos = -1.027143,16.02487,8.229216E-05
+	pos = -1.027143,16.02486,8.229216E-05
 	attPos = 0,0,0
 	attPos0 = -1.027026,2.091202,6.121536E-08
 	rot = 8.038874E-14,8.42937E-08,2.612301E-06,1
@@ -10452,15 +9392,15 @@ PART
 	modCost = 1.670185
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = WING.R7_4292695260
-	link = launchClamp1_4292695212
-	link = r7.bvgd.engine_4292695098
-	sym = r7.blok.bvgd.s_4292694686
-	sym = r7.blok.bvgd.s_4292694020
-	sym = r7.blok.bvgd.s_4292693354
-	srfN = srfAttach,r7.blok.a.soyuz_4292695546
-	attN = top,r7.bvgd.engine_4292695098
-	attN = wing,WING.R7_4292695260
+	link = WING.R7_4293369944
+	link = launchClamp1_4293369896
+	link = r7.bvgd.engine_4293369782
+	sym = r7.blok.bvgd.s_4293369370
+	sym = r7.blok.bvgd.s_4293368702
+	sym = r7.blok.bvgd.s_4293368034
+	srfN = srfAttach,r7.blok.a.soyuz_4293370232
+	attN = top,r7.bvgd.engine_4293369782
+	attN = wing,WING.R7_4293369944
 	EVENTS
 	{
 	}
@@ -11519,9 +10459,9 @@ PART
 }
 PART
 {
-	part = WING.R7_4292695260
+	part = WING.R7_4293369944
 	partName = Winglet
-	pos = -3.99425,2.972916,8.348425E-05
+	pos = -3.994249,2.972912,8.336504E-05
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-2.794692E-13
 	rot = 3.80978E-13,8.42937E-08,5.224602E-06,1
@@ -11538,10 +10478,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = WING.R7_4292694594
-	sym = WING.R7_4292693928
-	sym = WING.R7_4292693262
-	attN = top,r7.blok.bvgd.s_4292695352
+	sym = WING.R7_4293369276
+	sym = WING.R7_4293368608
+	sym = WING.R7_4293367940
+	attN = top,r7.blok.bvgd.s_4293370038
 	EVENTS
 	{
 	}
@@ -11635,9 +10575,9 @@ PART
 }
 PART
 {
-	part = launchClamp1_4292695212
+	part = launchClamp1_4293369896
 	partName = Part
-	pos = -4.734121,2.261185,8.348425E-05
+	pos = -4.734122,2.261181,8.336504E-05
 	attPos = 0,0,0
 	attPos0 = -3.707051,-13.76368,2.144557E-07
 	rot = 0.02126452,0.706787,-0.02126453,0.7067869
@@ -11654,10 +10594,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = launchClamp1_4292694546
-	sym = launchClamp1_4292693880
-	sym = launchClamp1_4292693214
-	srfN = srfAttach,r7.blok.bvgd.s_4292695352
+	sym = launchClamp1_4293369228
+	sym = launchClamp1_4293368560
+	sym = launchClamp1_4293367892
+	srfN = srfAttach,r7.blok.bvgd.s_4293370038
 	EVENTS
 	{
 	}
@@ -11671,8 +10611,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.179538
-		height = 2.976204
+		scaleFactor = 1.179533
+		height = 2.976196
 		towerRot = -0.02126452,-0.706787,0.02126453,0.7067869
 		EVENTS
 		{
@@ -11804,12 +10744,12 @@ PART
 }
 PART
 {
-	part = r7.bvgd.engine_4292695098
+	part = r7.bvgd.engine_4293369782
 	partName = Part
-	pos = -1.446249,2.895672,8.238156E-05
+	pos = -1.446249,2.895668,8.235176E-05
 	attPos = 0,0,0
 	attPos0 = -0.4191752,-13.1292,1.347213E-08
-	rot = 1.136868E-13,-0.7071068,7.809829E-13,0.7071068
+	rot = 1.136868E-13,-0.7071068,4.399224E-13,0.7071068
 	attRot = 0,-0.7071068,0,0.7071068
 	attRot0 = -1.847176E-06,-0.7071069,-1.847176E-06,0.7071068
 	mir = 1,1,1
@@ -11823,14 +10763,14 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.vernier.engine.v.fg_4292694954
-	link = r7.vernier.engine.v.fg_4292694820
-	sym = r7.bvgd.engine_4292694432
-	sym = r7.bvgd.engine_4292693766
-	sym = r7.bvgd.engine_4292693100
-	attN = top,r7.blok.bvgd.s_4292695352
-	attN = 1,r7.vernier.engine.v.fg_4292694954
-	attN = 2,r7.vernier.engine.v.fg_4292694820
+	link = r7.vernier.engine.v.fg_4293369638
+	link = r7.vernier.engine.v.fg_4293369504
+	sym = r7.bvgd.engine_4293369114
+	sym = r7.bvgd.engine_4293368446
+	sym = r7.bvgd.engine_4293367778
+	attN = top,r7.blok.bvgd.s_4293370038
+	attN = 1,r7.vernier.engine.v.fg_4293369638
+	attN = 2,r7.vernier.engine.v.fg_4293369504
 	EVENTS
 	{
 	}
@@ -12060,14 +11000,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292694954
+	part = r7.vernier.engine.v.fg_4293369638
 	partName = Part
-	pos = -3.500206,2.031048,0.5470595
+	pos = -3.500205,2.031048,0.5470586
 	attPos = 0,0,0
-	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = 0,1,1.089392E-12,-8.429371E-08
+	attPos0 = 0.5469765,-0.8646195,2.053954
+	rot = 0,1,1.722212E-13,3.491558E-08
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136868E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -12079,10 +11019,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694288
-	sym = r7.vernier.engine.v.fg_4292693622
-	sym = r7.vernier.engine.v.fg_4292692956
-	attN = top,r7.bvgd.engine_4292695098
+	sym = r7.vernier.engine.v.fg_4293368970
+	sym = r7.vernier.engine.v.fg_4293368302
+	sym = r7.vernier.engine.v.fg_4293367634
+	attN = top,r7.bvgd.engine_4293369782
 	EVENTS
 	{
 	}
@@ -12225,6 +11165,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -12249,6 +11190,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -12432,14 +11380,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292694820
+	part = r7.vernier.engine.v.fg_4293369504
 	partName = Part
-	pos = -3.500207,2.031048,-0.543273
+	pos = -3.500203,2.031048,-0.5432723
 	attPos = 0,0,0
-	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = 0,1,1.089392E-12,-8.429371E-08
+	attPos0 = -0.5433541,-0.8646195,2.053954
+	rot = 0,1,1.722212E-13,3.491558E-08
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136868E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -12451,10 +11399,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694154
-	sym = r7.vernier.engine.v.fg_4292693488
-	sym = r7.vernier.engine.v.fg_4292692822
-	attN = top,r7.bvgd.engine_4292695098
+	sym = r7.vernier.engine.v.fg_4293368836
+	sym = r7.vernier.engine.v.fg_4293368168
+	sym = r7.vernier.engine.v.fg_4293367500
+	attN = top,r7.bvgd.engine_4293369782
 	EVENTS
 	{
 	}
@@ -12597,6 +11545,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -12621,6 +11570,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -12804,9 +11760,9 @@ PART
 }
 PART
 {
-	part = r7.blok.bvgd.s_4292694686
+	part = r7.blok.bvgd.s_4293369370
 	partName = Part
-	pos = -0.0001166244,16.02487,1.027109
+	pos = -0.0001166244,16.02486,1.027108
 	attPos = 0,0,0
 	attPos0 = 0,2.091202,1.027026
 	rot = 1.847176E-06,0.7071068,1.847176E-06,0.7071067
@@ -12823,15 +11779,15 @@ PART
 	modCost = 1.670185
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = WING.R7_4292694594
-	link = launchClamp1_4292694546
-	link = r7.bvgd.engine_4292694432
-	sym = r7.blok.bvgd.s_4292695352
-	sym = r7.blok.bvgd.s_4292694020
-	sym = r7.blok.bvgd.s_4292693354
-	srfN = srfAttach,r7.blok.a.soyuz_4292695546
-	attN = top,r7.bvgd.engine_4292694432
-	attN = wing,WING.R7_4292694594
+	link = WING.R7_4293369276
+	link = launchClamp1_4293369228
+	link = r7.bvgd.engine_4293369114
+	sym = r7.blok.bvgd.s_4293370038
+	sym = r7.blok.bvgd.s_4293368702
+	sym = r7.blok.bvgd.s_4293368034
+	srfN = srfAttach,r7.blok.a.soyuz_4293370232
+	attN = top,r7.bvgd.engine_4293369114
+	attN = wing,WING.R7_4293369276
 	EVENTS
 	{
 	}
@@ -13890,9 +12846,9 @@ PART
 }
 PART
 {
-	part = WING.R7_4292694594
+	part = WING.R7_4293369276
 	partName = Winglet
-	pos = -0.0001162072,2.972916,3.994211
+	pos = -0.0001162668,2.972912,3.994212
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-2.794692E-13
 	rot = 3.694352E-06,0.7071068,3.694351E-06,0.7071067
@@ -13909,10 +12865,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = WING.R7_4292695260
-	sym = WING.R7_4292693928
-	sym = WING.R7_4292693262
-	attN = top,r7.blok.bvgd.s_4292694686
+	sym = WING.R7_4293369944
+	sym = WING.R7_4293368608
+	sym = WING.R7_4293367940
+	attN = top,r7.blok.bvgd.s_4293369370
 	EVENTS
 	{
 	}
@@ -14006,9 +12962,9 @@ PART
 }
 PART
 {
-	part = launchClamp1_4292694546
+	part = launchClamp1_4293369228
 	partName = Part
-	pos = -0.0001159092,2.261185,4.734083
+	pos = -0.0001159688,2.261181,4.734084
 	attPos = 0,0,0
 	attPos0 = -3.707051,-13.76368,2.144557E-07
 	rot = -1.708258E-09,0.9995477,-0.03007258,-7.992655E-08
@@ -14025,10 +12981,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = launchClamp1_4292695212
-	sym = launchClamp1_4292693880
-	sym = launchClamp1_4292693214
-	srfN = srfAttach,r7.blok.bvgd.s_4292694686
+	sym = launchClamp1_4293369896
+	sym = launchClamp1_4293368560
+	sym = launchClamp1_4293367892
+	srfN = srfAttach,r7.blok.bvgd.s_4293369370
 	EVENTS
 	{
 	}
@@ -14042,8 +12998,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.179538
-		height = 2.976204
+		scaleFactor = 1.179533
+		height = 2.976196
 		towerRot = 1.708258E-09,-0.9995477,0.03007258,-7.992655E-08
 		EVENTS
 		{
@@ -14175,9 +13131,9 @@ PART
 }
 PART
 {
-	part = r7.bvgd.engine_4292694432
+	part = r7.bvgd.engine_4293369114
 	partName = Part
-	pos = -0.0001166244,2.895672,1.446214
+	pos = -0.0001166244,2.895668,1.446214
 	attPos = 0,0,0
 	attPos0 = -0.4191752,-13.1292,5.577284E-09
 	rot = 4.547474E-13,0,0,1
@@ -14194,14 +13150,14 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.vernier.engine.v.fg_4292694288
-	link = r7.vernier.engine.v.fg_4292694154
-	sym = r7.bvgd.engine_4292695098
-	sym = r7.bvgd.engine_4292693766
-	sym = r7.bvgd.engine_4292693100
-	attN = top,r7.blok.bvgd.s_4292694686
-	attN = 1,r7.vernier.engine.v.fg_4292694288
-	attN = 2,r7.vernier.engine.v.fg_4292694154
+	link = r7.vernier.engine.v.fg_4293368970
+	link = r7.vernier.engine.v.fg_4293368836
+	sym = r7.bvgd.engine_4293369782
+	sym = r7.bvgd.engine_4293368446
+	sym = r7.bvgd.engine_4293367778
+	attN = top,r7.blok.bvgd.s_4293369370
+	attN = 1,r7.vernier.engine.v.fg_4293368970
+	attN = 2,r7.vernier.engine.v.fg_4293368836
 	EVENTS
 	{
 	}
@@ -14431,14 +13387,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292694288
+	part = r7.vernier.engine.v.fg_4293368970
 	partName = Part
-	pos = 0.5468587,2.031048,3.500166
+	pos = 0.5468593,2.031048,3.500167
 	attPos = 0,0,0
-	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = 2.273737E-13,0.7071067,1.250555E-12,-0.7071068
+	attPos0 = 0.5469762,-0.8646195,2.053953
+	rot = 2.273737E-13,0.7071068,-2.273737E-13,-0.7071068
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136868E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -14450,10 +13406,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694954
-	sym = r7.vernier.engine.v.fg_4292693622
-	sym = r7.vernier.engine.v.fg_4292692956
-	attN = top,r7.bvgd.engine_4292694432
+	sym = r7.vernier.engine.v.fg_4293369638
+	sym = r7.vernier.engine.v.fg_4293368302
+	sym = r7.vernier.engine.v.fg_4293367634
+	attN = top,r7.bvgd.engine_4293369114
 	EVENTS
 	{
 	}
@@ -14596,6 +13552,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -14620,6 +13577,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -14803,14 +13767,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292694154
+	part = r7.vernier.engine.v.fg_4293368836
 	partName = Part
-	pos = -0.5434703,2.031048,3.500164
+	pos = -0.54347,2.031048,3.500166
 	attPos = 0,0,0
-	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = 2.273737E-13,0.7071067,1.250555E-12,-0.7071068
+	attPos0 = -0.5433538,-0.8646195,2.053953
+	rot = 2.273737E-13,0.7071068,-2.273737E-13,-0.7071068
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136868E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -14822,10 +13786,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694820
-	sym = r7.vernier.engine.v.fg_4292693488
-	sym = r7.vernier.engine.v.fg_4292692822
-	attN = top,r7.bvgd.engine_4292694432
+	sym = r7.vernier.engine.v.fg_4293369504
+	sym = r7.vernier.engine.v.fg_4293368168
+	sym = r7.vernier.engine.v.fg_4293367500
+	attN = top,r7.bvgd.engine_4293369114
 	EVENTS
 	{
 	}
@@ -14968,6 +13932,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -14992,6 +13957,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -15175,9 +14147,9 @@ PART
 }
 PART
 {
-	part = r7.blok.bvgd.s_4292694020
+	part = r7.blok.bvgd.s_4293368702
 	partName = Part
-	pos = 1.026909,16.02487,8.229216E-05
+	pos = 1.026909,16.02486,8.229216E-05
 	attPos = 0,0,0
 	attPos0 = 1.027026,2.091202,-1.510007E-07
 	rot = 2.612301E-06,1,-1.94576E-13,-1.280051E-07
@@ -15194,15 +14166,15 @@ PART
 	modCost = 1.670185
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = WING.R7_4292693928
-	link = launchClamp1_4292693880
-	link = r7.bvgd.engine_4292693766
-	sym = r7.blok.bvgd.s_4292695352
-	sym = r7.blok.bvgd.s_4292694686
-	sym = r7.blok.bvgd.s_4292693354
-	srfN = srfAttach,r7.blok.a.soyuz_4292695546
-	attN = top,r7.bvgd.engine_4292693766
-	attN = wing,WING.R7_4292693928
+	link = WING.R7_4293368608
+	link = launchClamp1_4293368560
+	link = r7.bvgd.engine_4293368446
+	sym = r7.blok.bvgd.s_4293370038
+	sym = r7.blok.bvgd.s_4293369370
+	sym = r7.blok.bvgd.s_4293368034
+	srfN = srfAttach,r7.blok.a.soyuz_4293370232
+	attN = top,r7.bvgd.engine_4293368446
+	attN = wing,WING.R7_4293368608
 	EVENTS
 	{
 	}
@@ -16261,9 +15233,9 @@ PART
 }
 PART
 {
-	part = WING.R7_4292693928
+	part = WING.R7_4293368608
 	partName = Winglet
-	pos = 3.994016,2.972916,8.139809E-05
+	pos = 3.994017,2.972912,8.139809E-05
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-2.794692E-13
 	rot = 5.224602E-06,1,-6.093526E-13,-1.280051E-07
@@ -16280,10 +15252,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = WING.R7_4292695260
-	sym = WING.R7_4292694594
-	sym = WING.R7_4292693262
-	attN = top,r7.blok.bvgd.s_4292694020
+	sym = WING.R7_4293369944
+	sym = WING.R7_4293369276
+	sym = WING.R7_4293367940
+	attN = top,r7.blok.bvgd.s_4293368702
 	EVENTS
 	{
 	}
@@ -16377,12 +15349,12 @@ PART
 }
 PART
 {
-	part = launchClamp1_4292693880
+	part = launchClamp1_4293368560
 	partName = Part
-	pos = 4.733887,2.261185,8.139809E-05
+	pos = 4.733887,2.261181,8.139809E-05
 	attPos = 0,0,0
 	attPos0 = -3.707051,-13.76368,2.144557E-07
-	rot = -0.02126453,0.7067871,-0.02126452,-0.7067869
+	rot = -0.02126453,0.7067869,-0.02126452,-0.706787
 	attRot = 0,0,0,1
 	attRot0 = 0.02126637,0.7067869,-0.02126637,0.7067869
 	mir = 1,1,1
@@ -16396,10 +15368,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = launchClamp1_4292695212
-	sym = launchClamp1_4292694546
-	sym = launchClamp1_4292693214
-	srfN = srfAttach,r7.blok.bvgd.s_4292694020
+	sym = launchClamp1_4293369896
+	sym = launchClamp1_4293369228
+	sym = launchClamp1_4293367892
+	srfN = srfAttach,r7.blok.bvgd.s_4293368702
 	EVENTS
 	{
 	}
@@ -16413,9 +15385,9 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.179538
-		height = 2.976204
-		towerRot = 0.02126453,-0.7067871,0.02126452,-0.7067869
+		scaleFactor = 1.179533
+		height = 2.976196
+		towerRot = 0.02126453,-0.7067869,0.02126452,-0.706787
 		EVENTS
 		{
 			Release
@@ -16546,12 +15518,12 @@ PART
 }
 PART
 {
-	part = r7.bvgd.engine_4292693766
+	part = r7.bvgd.engine_4293368446
 	partName = Part
-	pos = 1.446016,2.895672,8.220275E-05
+	pos = 1.446016,2.895668,8.205374E-05
 	attPos = 0,0,0
 	attPos0 = -0.4191752,-13.1292,-4.75189E-09
-	rot = -1.37586E-13,0.7071068,-7.958079E-13,0.7071068
+	rot = -1.37586E-13,0.7071068,-4.547474E-13,0.7071068
 	attRot = 0,-0.7071068,0,0.7071068
 	attRot0 = -1.847176E-06,-0.7071069,-1.847176E-06,0.7071068
 	mir = 1,1,1
@@ -16565,14 +15537,14 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.vernier.engine.v.fg_4292693622
-	link = r7.vernier.engine.v.fg_4292693488
-	sym = r7.bvgd.engine_4292695098
-	sym = r7.bvgd.engine_4292694432
-	sym = r7.bvgd.engine_4292693100
-	attN = top,r7.blok.bvgd.s_4292694020
-	attN = 1,r7.vernier.engine.v.fg_4292693622
-	attN = 2,r7.vernier.engine.v.fg_4292693488
+	link = r7.vernier.engine.v.fg_4293368302
+	link = r7.vernier.engine.v.fg_4293368168
+	sym = r7.bvgd.engine_4293369782
+	sym = r7.bvgd.engine_4293369114
+	sym = r7.bvgd.engine_4293367778
+	attN = top,r7.blok.bvgd.s_4293368702
+	attN = 1,r7.vernier.engine.v.fg_4293368302
+	attN = 2,r7.vernier.engine.v.fg_4293368168
 	EVENTS
 	{
 	}
@@ -16802,14 +15774,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292693622
+	part = r7.vernier.engine.v.fg_4293368302
 	partName = Part
-	pos = 3.499973,2.031048,-0.5468965
+	pos = 3.499972,2.031048,-0.5468941
 	attPos = 0,0,0
-	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = 1.298886E-12,-1.280051E-07,4.547474E-13,-1
+	attPos0 = 0.5469765,-0.8646195,2.053954
+	rot = 4.194241E-13,1.104135E-07,-4.547474E-13,-1
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136869E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -16821,10 +15793,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694954
-	sym = r7.vernier.engine.v.fg_4292694288
-	sym = r7.vernier.engine.v.fg_4292692956
-	attN = top,r7.bvgd.engine_4292693766
+	sym = r7.vernier.engine.v.fg_4293369638
+	sym = r7.vernier.engine.v.fg_4293368970
+	sym = r7.vernier.engine.v.fg_4293367634
+	attN = top,r7.bvgd.engine_4293368446
 	EVENTS
 	{
 	}
@@ -16967,6 +15939,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -16991,6 +15964,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -17174,14 +16154,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292693488
+	part = r7.vernier.engine.v.fg_4293368168
 	partName = Part
-	pos = 3.499974,2.031048,0.5434359
+	pos = 3.499972,2.031048,0.5434366
 	attPos = 0,0,0
-	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = 1.298886E-12,-1.280051E-07,4.547474E-13,-1
+	attPos0 = -0.5433541,-0.8646195,2.053954
+	rot = 4.194241E-13,1.104135E-07,-4.547474E-13,-1
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136869E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -17193,10 +16173,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694820
-	sym = r7.vernier.engine.v.fg_4292694154
-	sym = r7.vernier.engine.v.fg_4292692822
-	attN = top,r7.bvgd.engine_4292693766
+	sym = r7.vernier.engine.v.fg_4293369504
+	sym = r7.vernier.engine.v.fg_4293368836
+	sym = r7.vernier.engine.v.fg_4293367500
+	attN = top,r7.bvgd.engine_4293368446
 	EVENTS
 	{
 	}
@@ -17339,6 +16319,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -17363,6 +16344,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -17546,9 +16534,9 @@ PART
 }
 PART
 {
-	part = r7.blok.bvgd.s_4292693354
+	part = r7.blok.bvgd.s_4293368034
 	partName = Part
-	pos = -0.000116684,16.02487,-1.026942
+	pos = -0.0001166244,16.02486,-1.026942
 	attPos = 0,0,0
 	attPos0 = -1.224307E-07,2.091202,-1.027026
 	rot = 1.847176E-06,0.7071067,-1.847176E-06,-0.7071068
@@ -17565,15 +16553,15 @@ PART
 	modCost = 1.670185
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = WING.R7_4292693262
-	link = launchClamp1_4292693214
-	link = r7.bvgd.engine_4292693100
-	sym = r7.blok.bvgd.s_4292695352
-	sym = r7.blok.bvgd.s_4292694686
-	sym = r7.blok.bvgd.s_4292694020
-	srfN = srfAttach,r7.blok.a.soyuz_4292695546
-	attN = top,r7.bvgd.engine_4292693100
-	attN = wing,WING.R7_4292693262
+	link = WING.R7_4293367940
+	link = launchClamp1_4293367892
+	link = r7.bvgd.engine_4293367778
+	sym = r7.blok.bvgd.s_4293370038
+	sym = r7.blok.bvgd.s_4293369370
+	sym = r7.blok.bvgd.s_4293368702
+	srfN = srfAttach,r7.blok.a.soyuz_4293370232
+	attN = top,r7.bvgd.engine_4293367778
+	attN = wing,WING.R7_4293367940
 	EVENTS
 	{
 	}
@@ -18632,9 +17620,9 @@ PART
 }
 PART
 {
-	part = WING.R7_4292693262
+	part = WING.R7_4293367940
 	partName = Winglet
-	pos = -0.0001172205,2.972916,-3.994046
+	pos = -0.0001172204,2.972912,-3.994047
 	attPos = 0,0,0
 	attPos0 = -2.967176,-13.05195,-2.794692E-13
 	rot = 3.694351E-06,0.7071067,-3.694352E-06,-0.7071068
@@ -18651,10 +17639,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = WING.R7_4292695260
-	sym = WING.R7_4292694594
-	sym = WING.R7_4292693928
-	attN = top,r7.blok.bvgd.s_4292693354
+	sym = WING.R7_4293369944
+	sym = WING.R7_4293369276
+	sym = WING.R7_4293368608
+	attN = top,r7.blok.bvgd.s_4293368034
 	EVENTS
 	{
 	}
@@ -18748,12 +17736,12 @@ PART
 }
 PART
 {
-	part = launchClamp1_4292693214
+	part = launchClamp1_4293367892
 	partName = Part
-	pos = -0.0001178165,2.261185,-4.73392
+	pos = -0.0001178165,2.261181,-4.73392
 	attPos = 0,0,0
 	attPos0 = -3.707051,-13.76368,2.144557E-07
-	rot = -0.03007259,-8.940695E-08,6.519258E-09,-0.9995477
+	rot = -0.03007258,-8.940697E-08,3.72529E-09,-0.9995477
 	attRot = 0,0,0,1
 	attRot0 = 0.02126637,0.7067869,-0.02126637,0.7067869
 	mir = 1,1,1
@@ -18767,10 +17755,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = launchClamp1_4292695212
-	sym = launchClamp1_4292694546
-	sym = launchClamp1_4292693880
-	srfN = srfAttach,r7.blok.bvgd.s_4292693354
+	sym = launchClamp1_4293369896
+	sym = launchClamp1_4293369228
+	sym = launchClamp1_4293368560
+	srfN = srfAttach,r7.blok.bvgd.s_4293368034
 	EVENTS
 	{
 	}
@@ -18784,9 +17772,9 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.179538
-		height = 2.976204
-		towerRot = 0.03007259,8.940695E-08,-6.519258E-09,-0.9995477
+		scaleFactor = 1.179533
+		height = 2.976196
+		towerRot = 0.03007258,8.940697E-08,-3.72529E-09,-0.9995477
 		EVENTS
 		{
 			Release
@@ -18917,9 +17905,9 @@ PART
 }
 PART
 {
-	part = r7.bvgd.engine_4292693100
+	part = r7.bvgd.engine_4293367778
 	partName = Part
-	pos = -0.0001169225,2.895672,-1.446049
+	pos = -0.0001169224,2.895668,-1.446049
 	attPos = 0,0,0
 	attPos0 = -0.4191752,-13.1292,8.372211E-09
 	rot = 0,1,-4.547474E-13,-3.412059E-12
@@ -18936,14 +17924,14 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.vernier.engine.v.fg_4292692956
-	link = r7.vernier.engine.v.fg_4292692822
-	sym = r7.bvgd.engine_4292695098
-	sym = r7.bvgd.engine_4292694432
-	sym = r7.bvgd.engine_4292693766
-	attN = top,r7.blok.bvgd.s_4292693354
-	attN = 1,r7.vernier.engine.v.fg_4292692956
-	attN = 2,r7.vernier.engine.v.fg_4292692822
+	link = r7.vernier.engine.v.fg_4293367634
+	link = r7.vernier.engine.v.fg_4293367500
+	sym = r7.bvgd.engine_4293369782
+	sym = r7.bvgd.engine_4293369114
+	sym = r7.bvgd.engine_4293368446
+	attN = top,r7.blok.bvgd.s_4293368034
+	attN = 1,r7.vernier.engine.v.fg_4293367634
+	attN = 2,r7.vernier.engine.v.fg_4293367500
 	EVENTS
 	{
 	}
@@ -19173,14 +18161,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292692956
+	part = r7.vernier.engine.v.fg_4293367634
 	partName = Part
-	pos = -0.547092,2.031048,-3.5
+	pos = -0.547093,2.031048,-3.500002
 	attPos = 0,0,0
-	attPos0 = 0.5469765,-0.8646209,2.053954
-	rot = 1.250555E-12,-0.7071068,-2.273737E-13,-0.7071067
+	attPos0 = 0.5469762,-0.8646195,2.053953
+	rot = -3.410605E-13,-0.7071068,-3.410605E-13,-0.7071068
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136868E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -19192,10 +18180,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694954
-	sym = r7.vernier.engine.v.fg_4292694288
-	sym = r7.vernier.engine.v.fg_4292693622
-	attN = top,r7.bvgd.engine_4292693100
+	sym = r7.vernier.engine.v.fg_4293369638
+	sym = r7.vernier.engine.v.fg_4293368970
+	sym = r7.vernier.engine.v.fg_4293368302
+	attN = top,r7.bvgd.engine_4293367778
 	EVENTS
 	{
 	}
@@ -19338,6 +18326,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -19362,6 +18351,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -19545,14 +18541,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292692822
+	part = r7.vernier.engine.v.fg_4293367500
 	partName = Part
-	pos = 0.5432372,2.031048,-3.499998
+	pos = 0.5432365,2.031048,-3.500001
 	attPos = 0,0,0
-	attPos0 = -0.5433541,-0.8646209,2.053954
-	rot = 1.250555E-12,-0.7071068,-2.273737E-13,-0.7071067
+	attPos0 = -0.5433538,-0.8646195,2.053953
+	rot = -3.410605E-13,-0.7071068,-3.410605E-13,-0.7071068
 	attRot = 0,0.9999999,0,0
-	attRot0 = 5.684342E-14,0.7071068,0,-0.7071068
+	attRot0 = 3.262355E-13,0.7071068,-1.136868E-13,-0.7071068
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -19564,10 +18560,10 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292694820
-	sym = r7.vernier.engine.v.fg_4292694154
-	sym = r7.vernier.engine.v.fg_4292693488
-	attN = top,r7.bvgd.engine_4292693100
+	sym = r7.vernier.engine.v.fg_4293369504
+	sym = r7.vernier.engine.v.fg_4293368836
+	sym = r7.vernier.engine.v.fg_4293368168
+	attN = top,r7.bvgd.engine_4293367778
 	EVENTS
 	{
 	}
@@ -19710,6 +18706,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -19734,6 +18731,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -19917,9 +18921,9 @@ PART
 }
 PART
 {
-	part = r7.blok.a.engine_4292692688
+	part = r7.blok.a.engine_4293367366
 	partName = Part
-	pos = -0.0001166244,2.605095,8.229216E-05
+	pos = -0.0001166244,2.605091,8.229216E-05
 	attPos = 0,0,0
 	attPos0 = 0,-11.32858,0
 	rot = 0,0,0,1
@@ -19936,15 +18940,15 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = r7.vernier.engine.v.fg_4292692410
-	link = r7.vernier.engine.v.fg_4292692276
-	link = r7.vernier.engine.v.fg_4292692142
-	link = r7.vernier.engine.v.fg_4292692008
-	attN = top,r7.blok.a.soyuz_4292695546
-	attN = 1,r7.vernier.engine.v.fg_4292692276
-	attN = 2,r7.vernier.engine.v.fg_4292692410
-	attN = 3,r7.vernier.engine.v.fg_4292692142
-	attN = 4,r7.vernier.engine.v.fg_4292692008
+	link = r7.vernier.engine.v.fg_4293367088
+	link = r7.vernier.engine.v.fg_4293366954
+	link = r7.vernier.engine.v.fg_4293366820
+	link = r7.vernier.engine.v.fg_4293366686
+	attN = top,r7.blok.a.soyuz_4293370232
+	attN = 1,r7.vernier.engine.v.fg_4293367088
+	attN = 2,r7.vernier.engine.v.fg_4293366954
+	attN = 3,r7.vernier.engine.v.fg_4293366820
+	attN = 4,r7.vernier.engine.v.fg_4293366686
 	EVENTS
 	{
 	}
@@ -20174,14 +19178,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292692410
+	part = r7.vernier.engine.v.fg_4293367088
 	partName = Part
-	pos = -1.101396,2.035439,8.229216E-05
+	pos = 1.101162,2.035427,8.229216E-05
 	attPos = 0,0,0
-	attPos0 = -1.101279,-0.5696602,0
-	rot = 0,1,0,0
-	attRot = 0,0.9999999,0,0
-	attRot0 = 0,1,0,0
+	attPos0 = 1.101279,-0.569664,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -20193,8 +19197,8 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292692276
-	attN = top,r7.blok.a.engine_4292692688
+	sym = r7.vernier.engine.v.fg_4293366954
+	attN = top,r7.blok.a.engine_4293367366
 	EVENTS
 	{
 	}
@@ -20337,6 +19341,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -20361,6 +19366,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -20544,14 +19556,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292692276
+	part = r7.vernier.engine.v.fg_4293366954
 	partName = Part
-	pos = 1.101163,2.035439,8.229216E-05
+	pos = -1.101396,2.035427,8.229216E-05
 	attPos = 0,0,0
-	attPos0 = 1.101279,-0.5696602,0
-	rot = 0,-4.371139E-08,0,-1
-	attRot = 0,0.9999999,0,0
-	attRot0 = 0,-4.371139E-08,0,-1
+	attPos0 = -1.101279,-0.569664,0
+	rot = 0,1,0,-4.371139E-08
+	attRot = 0,0,0,1
+	attRot0 = 0,1,0,-4.371139E-08
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -20563,8 +19575,8 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292692410
-	attN = top,r7.blok.a.engine_4292692688
+	sym = r7.vernier.engine.v.fg_4293367088
+	attN = top,r7.blok.a.engine_4293367366
 	EVENTS
 	{
 	}
@@ -20707,6 +19719,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -20731,6 +19744,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -20914,13 +19934,13 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292692142
+	part = r7.vernier.engine.v.fg_4293366820
 	partName = Part
-	pos = -0.0001166244,2.035439,-1.101197
+	pos = -0.0001166244,2.035427,-1.101197
 	attPos = 0,0,0
-	attPos0 = 0,-0.5696602,-1.101279
+	attPos0 = 0,-0.569664,-1.101279
 	rot = 0,0.7071068,0,0.7071068
-	attRot = 0,0.7071067,0,0.7071067
+	attRot = 0,0.7071068,0,0.7071068
 	attRot0 = 0,0.7071068,0,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
@@ -20933,8 +19953,8 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292692008
-	attN = top,r7.blok.a.engine_4292692688
+	sym = r7.vernier.engine.v.fg_4293366686
+	attN = top,r7.blok.a.engine_4293367366
 	EVENTS
 	{
 	}
@@ -21077,6 +20097,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -21101,6 +20122,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -21284,14 +20312,14 @@ PART
 }
 PART
 {
-	part = r7.vernier.engine.v.fg_4292692008
+	part = r7.vernier.engine.v.fg_4293366686
 	partName = Part
-	pos = -0.0001166244,2.035439,1.101361
+	pos = -0.0001166244,2.035427,1.101362
 	attPos = 0,0,0
-	attPos0 = 0,-0.5696602,1.101279
-	rot = 0,0.7071067,0,-0.7071068
-	attRot = 0,0.7071067,0,0.7071067
-	attRot0 = 0,0.7071067,0,-0.7071068
+	attPos0 = 0,-0.569664,1.101279
+	rot = 0,0.7071068,0,-0.7071068
+	attRot = 0,0.7071068,0,0.7071068
+	attRot0 = 0,0.7071068,0,-0.7071069
 	mir = 1,1,1
 	symMethod = Radial
 	istg = 12
@@ -21303,8 +20331,8 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	sym = r7.vernier.engine.v.fg_4292692142
-	attN = top,r7.blok.a.engine_4292692688
+	sym = r7.vernier.engine.v.fg_4293366820
+	attN = top,r7.blok.a.engine_4293367366
 	EVENTS
 	{
 	}
@@ -21447,6 +20475,7 @@ PART
 		trimX = 0
 		trimY = 0
 		enableTrim = True
+		gimbalConstrain = 20
 		enableGimbal = True
 		enableSmoothGimbal = False
 		responseSpeed = 25
@@ -21471,6 +20500,13 @@ PART
 		enableTrim_UIFlight
 		{
 			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
 		}
 		enableGimbal_UIFlight
 		{
@@ -21654,26 +20690,27 @@ PART
 }
 PART
 {
-	part = r7.soyuz.fairing_4294282214
+	part = r7.vernier.blok.i.s.fg_4293366552
 	partName = Part
-	pos = -0.0001165867,37.36377,8.229216E-05
+	pos = -0.9357021,30.22355,8.229216E-05
 	attPos = 0,0,0
-	attPos0 = 3.771129E-08,0.9521217,0
+	attPos0 = -0.935585,-2.40432,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
-	dstg = 5
+	istg = 7
+	dstg = 4
 	sidx = 1
-	sqor = 8
-	sepI = 8
+	sqor = 7
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	attN = top,r7.adapter.blok.iv2_4292696248
+	sym = r7.vernier.blok.i.s.fg_4293366474
+	attN = top,r7.blok.i_4293370560
 	EVENTS
 	{
 	}
@@ -21685,44 +20722,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleDecouple
-		isEnabled = True
-		ejectionForcePercent = 100
-		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
-		EVENTS
-		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			DecoupleAction
-			{
-				actionGroup = Abort
-			}
-		}
-	}
-	MODULE
-	{
 		name = ModuleEnginesRF
 		isEnabled = True
-		ignitions = -1
+		ignitions = 1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -21796,7 +20798,7 @@ PART
 			}
 			vActivateAction
 			{
-				actionGroup = Abort
+				actionGroup = None
 			}
 			OnAction
 			{
@@ -21815,6 +20817,193 @@ PART
 			}
 		}
 		Ullage
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FXModuleAnimateThrottle
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = KM_Gimbal_3
+		isEnabled = True
+		gimbalTransformName = gimbal
+		yawGimbalRange = 0
+		pitchGimbalRange = 9
+		debug = True
+		trimX = 0
+		trimY = 0
+		enableTrim = True
+		gimbalConstrain = 9
+		enableGimbal = True
+		enableSmoothGimbal = False
+		responseSpeed = 25
+		enableRoll = True
+		autoSetRoll = True
+		hideSpeedEditing = False
+		hideRollEditing = False
+		trimX_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		trimY_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableTrim_UIFlight
+		{
+			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		enableSmoothGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		responseSpeed_UIFlight
+		{
+			controlEnabled = True
+			minValue = 1
+			maxValue = 100
+			stepIncrement = 1
+		}
+		EVENTS
+		{
+			dbg_run
+			{
+				active = True
+				guiActive = False
+				guiIcon = Toggle Debug
+				guiName = Toggle Debug
+				category = Toggle Debug
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			toggleRoll
+			{
+				active = True
+				guiActive = True
+				guiActiveEditor = True
+				guiIcon = Toggle Roll
+				guiName = Deactivate Roll
+				category = Toggle Roll
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			toggleGimbal
+			{
+				actionGroup = None
+			}
+			plusTrimX
+			{
+				actionGroup = None
+			}
+			minusTrim
+			{
+				actionGroup = None
+			}
+			plus5Trim
+			{
+				actionGroup = None
+			}
+			minus5Trim
+			{
+				actionGroup = None
+			}
+			plusTrimY
+			{
+				actionGroup = None
+			}
+			minusTrimY
+			{
+				actionGroup = None
+			}
+			plus5TrimY
+			{
+				actionGroup = None
+			}
+			minus5TrimY
+			{
+				actionGroup = None
+			}
+			toggleTrim
+			{
+				actionGroup = None
+			}
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		EVENTS
+		{
+			AssignGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Assign Group ID
+				guiName = Assign Group ID
+				category = Assign Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			ClearGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Clear Group ID
+				guiName = Clear Group ID
+				category = Clear Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
 		{
 		}
 	}
@@ -21851,39 +21040,55 @@ PART
 		{
 		}
 	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD 0110 Molniya Verniers
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
 	RESOURCE
 	{
-		name = SolidFuel
-		amount = 1.12
-		maxAmount = 1.12
+		name = ElectricCharge
+		amount = 0
+		maxAmount = 0.1
 		flowState = True
-		isTweakable = True
-		hideFlow = False
+		isTweakable = False
+		hideFlow = True
 		flowMode = Both
 	}
 }
 PART
 {
-	part = r7.soyuz.fairing_4294281558
+	part = r7.vernier.blok.i.s.fg_4293366474
 	partName = Part
-	pos = -0.0001162291,37.36377,8.229216E-05
+	pos = 0.9354684,30.22355,8.229216E-05
 	attPos = 0,0,0
-	attPos0 = 3.953392E-07,0.9521217,0
-	rot = 0,-1,0,0
-	attRot = 0,-0.9999999,0,0
-	attRot0 = 0,-1,0,0
+	attPos0 = 0.935585,-2.40432,0
+	rot = 0,1,0,-4.371139E-08
+	attRot = 0,0,0,1
+	attRot0 = 0,1,0,-4.371139E-08
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
-	dstg = 5
-	sidx = 0
-	sqor = 8
-	sepI = 8
+	istg = 7
+	dstg = 4
+	sidx = 2
+	sqor = 7
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	attN = top,r7.adapter.blok.iv2_4292696248
+	sym = r7.vernier.blok.i.s.fg_4293366552
+	attN = top,r7.blok.i_4293370560
 	EVENTS
 	{
 	}
@@ -21895,44 +21100,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleDecouple
-		isEnabled = True
-		ejectionForcePercent = 100
-		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
-		EVENTS
-		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			DecoupleAction
-			{
-				actionGroup = Abort
-			}
-		}
-	}
-	MODULE
-	{
 		name = ModuleEnginesRF
 		isEnabled = True
-		ignitions = -1
+		ignitions = 1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -22006,7 +21176,7 @@ PART
 			}
 			vActivateAction
 			{
-				actionGroup = Abort
+				actionGroup = None
 			}
 			OnAction
 			{
@@ -22025,6 +21195,193 @@ PART
 			}
 		}
 		Ullage
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FXModuleAnimateThrottle
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = KM_Gimbal_3
+		isEnabled = True
+		gimbalTransformName = gimbal
+		yawGimbalRange = 0
+		pitchGimbalRange = 9
+		debug = True
+		trimX = 0
+		trimY = 0
+		enableTrim = True
+		gimbalConstrain = 9
+		enableGimbal = True
+		enableSmoothGimbal = False
+		responseSpeed = 25
+		enableRoll = True
+		autoSetRoll = True
+		hideSpeedEditing = False
+		hideRollEditing = False
+		trimX_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		trimY_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableTrim_UIFlight
+		{
+			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		enableSmoothGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		responseSpeed_UIFlight
+		{
+			controlEnabled = True
+			minValue = 1
+			maxValue = 100
+			stepIncrement = 1
+		}
+		EVENTS
+		{
+			dbg_run
+			{
+				active = True
+				guiActive = False
+				guiIcon = Toggle Debug
+				guiName = Toggle Debug
+				category = Toggle Debug
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			toggleRoll
+			{
+				active = True
+				guiActive = True
+				guiActiveEditor = True
+				guiIcon = Toggle Roll
+				guiName = Deactivate Roll
+				category = Toggle Roll
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			toggleGimbal
+			{
+				actionGroup = None
+			}
+			plusTrimX
+			{
+				actionGroup = None
+			}
+			minusTrim
+			{
+				actionGroup = None
+			}
+			plus5Trim
+			{
+				actionGroup = None
+			}
+			minus5Trim
+			{
+				actionGroup = None
+			}
+			plusTrimY
+			{
+				actionGroup = None
+			}
+			minusTrimY
+			{
+				actionGroup = None
+			}
+			plus5TrimY
+			{
+				actionGroup = None
+			}
+			minus5TrimY
+			{
+				actionGroup = None
+			}
+			toggleTrim
+			{
+				actionGroup = None
+			}
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		EVENTS
+		{
+			AssignGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Assign Group ID
+				guiName = Assign Group ID
+				category = Assign Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			ClearGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Clear Group ID
+				guiName = Clear Group ID
+				category = Clear Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
 		{
 		}
 	}
@@ -22061,14 +21418,785 @@ PART
 		{
 		}
 	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD 0110 Molniya Verniers
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
 	RESOURCE
 	{
-		name = SolidFuel
-		amount = 1.12
-		maxAmount = 1.12
+		name = ElectricCharge
+		amount = 0
+		maxAmount = 0.1
 		flowState = True
-		isTweakable = True
-		hideFlow = False
+		isTweakable = False
+		hideFlow = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = r7.vernier.blok.i.s.fg_4293366396
+	partName = Part
+	pos = -0.0001166244,30.22355,-0.9355028
+	attPos = 0,0,0
+	attPos0 = 0,-2.40432,-0.935585
+	rot = 0,-0.7071068,0,0.7071068
+	attRot = 0,-0.7071068,0,0.7071068
+	attRot0 = 0,-0.7071068,0,0.7071068
+	mir = 1,1,1
+	symMethod = Radial
+	istg = 7
+	dstg = 4
+	sidx = 3
+	sqor = 7
+	sepI = 5
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = (0.0, 0.0, 0.0)
+	sym = r7.vernier.blok.i.s.fg_4293366318
+	attN = top,r7.blok.i_4293370560
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = 1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		thrustPercentage_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 100
+			stepIncrement = 0.5
+		}
+		EVENTS
+		{
+			vActivate
+			{
+				active = True
+				guiActive = True
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			vShutdown
+			{
+				active = False
+				guiActive = True
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = None
+			}
+			OnAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ActivateAction
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		Ullage
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FXModuleAnimateThrottle
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = KM_Gimbal_3
+		isEnabled = True
+		gimbalTransformName = gimbal
+		yawGimbalRange = 0
+		pitchGimbalRange = 9
+		debug = True
+		trimX = 0
+		trimY = 0
+		enableTrim = True
+		gimbalConstrain = 9
+		enableGimbal = True
+		enableSmoothGimbal = False
+		responseSpeed = 25
+		enableRoll = True
+		autoSetRoll = True
+		hideSpeedEditing = False
+		hideRollEditing = False
+		trimX_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		trimY_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableTrim_UIFlight
+		{
+			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		enableSmoothGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		responseSpeed_UIFlight
+		{
+			controlEnabled = True
+			minValue = 1
+			maxValue = 100
+			stepIncrement = 1
+		}
+		EVENTS
+		{
+			dbg_run
+			{
+				active = True
+				guiActive = False
+				guiIcon = Toggle Debug
+				guiName = Toggle Debug
+				category = Toggle Debug
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			toggleRoll
+			{
+				active = True
+				guiActive = True
+				guiActiveEditor = True
+				guiIcon = Toggle Roll
+				guiName = Deactivate Roll
+				category = Toggle Roll
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			toggleGimbal
+			{
+				actionGroup = None
+			}
+			plusTrimX
+			{
+				actionGroup = None
+			}
+			minusTrim
+			{
+				actionGroup = None
+			}
+			plus5Trim
+			{
+				actionGroup = None
+			}
+			minus5Trim
+			{
+				actionGroup = None
+			}
+			plusTrimY
+			{
+				actionGroup = None
+			}
+			minusTrimY
+			{
+				actionGroup = None
+			}
+			plus5TrimY
+			{
+				actionGroup = None
+			}
+			minus5TrimY
+			{
+				actionGroup = None
+			}
+			toggleTrim
+			{
+				actionGroup = None
+			}
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		EVENTS
+		{
+			AssignGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Assign Group ID
+				guiName = Assign Group ID
+				category = Assign Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			ClearGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Clear Group ID
+				guiName = Clear Group ID
+				category = Clear Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD 0110 Molniya Verniers
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = ElectricCharge
+		amount = 0
+		maxAmount = 0.1
+		flowState = True
+		isTweakable = False
+		hideFlow = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = r7.vernier.blok.i.s.fg_4293366318
+	partName = Part
+	pos = -0.0001166244,30.22355,0.9356675
+	attPos = 0,0,0
+	attPos0 = 0,-2.40432,0.935585
+	rot = 0,0.7071068,0,0.7071068
+	attRot = 0,-0.7071068,0,0.7071068
+	attRot0 = 0,0.7071069,0,0.7071068
+	mir = 1,1,1
+	symMethod = Radial
+	istg = 7
+	dstg = 4
+	sidx = 4
+	sqor = 7
+	sepI = 5
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = (0.0, 0.0, 0.0)
+	sym = r7.vernier.blok.i.s.fg_4293366396
+	attN = top,r7.blok.i_4293370560
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = 1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		thrustPercentage_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 100
+			stepIncrement = 0.5
+		}
+		EVENTS
+		{
+			vActivate
+			{
+				active = True
+				guiActive = True
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			vShutdown
+			{
+				active = False
+				guiActive = True
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Activate
+			{
+				active = False
+				guiActive = False
+				guiIcon = Activate Engine
+				guiName = Activate Engine
+				category = Activate Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			Shutdown
+			{
+				active = False
+				guiActive = False
+				guiIcon = Shutdown Engine
+				guiName = Shutdown Engine
+				category = Shutdown Engine
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			vOnAction
+			{
+				actionGroup = None
+			}
+			vShutdownAction
+			{
+				actionGroup = None
+			}
+			vActivateAction
+			{
+				actionGroup = None
+			}
+			OnAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+				active = False
+			}
+			ActivateAction
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		Ullage
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FXModuleAnimateThrottle
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = KM_Gimbal_3
+		isEnabled = True
+		gimbalTransformName = gimbal
+		yawGimbalRange = 0
+		pitchGimbalRange = 9
+		debug = True
+		trimX = 0
+		trimY = 0
+		enableTrim = True
+		gimbalConstrain = 9
+		enableGimbal = True
+		enableSmoothGimbal = False
+		responseSpeed = 25
+		enableRoll = True
+		autoSetRoll = True
+		hideSpeedEditing = False
+		hideRollEditing = False
+		trimX_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		trimY_UIFlight
+		{
+			controlEnabled = True
+			minValue = -14
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableTrim_UIFlight
+		{
+			controlEnabled = True
+		}
+		gimbalConstrain_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0
+			maxValue = 14
+			stepIncrement = 1
+		}
+		enableGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		enableSmoothGimbal_UIFlight
+		{
+			controlEnabled = True
+		}
+		responseSpeed_UIFlight
+		{
+			controlEnabled = True
+			minValue = 1
+			maxValue = 100
+			stepIncrement = 1
+		}
+		EVENTS
+		{
+			dbg_run
+			{
+				active = True
+				guiActive = False
+				guiIcon = Toggle Debug
+				guiName = Toggle Debug
+				category = Toggle Debug
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			toggleRoll
+			{
+				active = True
+				guiActive = True
+				guiActiveEditor = True
+				guiIcon = Toggle Roll
+				guiName = Deactivate Roll
+				category = Toggle Roll
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			toggleGimbal
+			{
+				actionGroup = None
+			}
+			plusTrimX
+			{
+				actionGroup = None
+			}
+			minusTrim
+			{
+				actionGroup = None
+			}
+			plus5Trim
+			{
+				actionGroup = None
+			}
+			minus5Trim
+			{
+				actionGroup = None
+			}
+			plusTrimY
+			{
+				actionGroup = None
+			}
+			minusTrimY
+			{
+				actionGroup = None
+			}
+			plus5TrimY
+			{
+				actionGroup = None
+			}
+			minus5TrimY
+			{
+				actionGroup = None
+			}
+			toggleTrim
+			{
+				actionGroup = None
+			}
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		EVENTS
+		{
+			AssignGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Assign Group ID
+				guiName = Assign Group ID
+				category = Assign Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			ClearGroupId
+			{
+				active = True
+				guiActive = False
+				guiActiveEditor = True
+				guiIcon = Clear Group ID
+				guiName = Clear Group ID
+				category = Clear Group ID
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD 0110 Molniya Verniers
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = ElectricCharge
+		amount = 0
+		maxAmount = 0.1
+		flowState = True
+		isTweakable = False
+		hideFlow = True
 		flowMode = Both
 	}
 }
