@@ -39,6 +39,10 @@ LICENSE remains the ialdabaoth license (CC-BY-SA + tweaks).
 SOURCE is https://github.com/NathanKell/ModuleRCSFX
 
 CHANGELOG
+v4.2
+* Fixed bug where inputs were being improperly normalized (thanks Starwaster!)
+* Fixed a bug in applying useThrottle (was being done in global Y not local Y; ditto).
+
 v4.1
 * Fixed bug in thrust calculation (was 2% what it should be...)
 * When in fullThrust mode, don't switch to full thrust unless thrust ratio already starts out at fullThrustMin (configurable).
