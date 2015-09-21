@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EngineGroupController
+namespace EngineGroupContoller
 {
     public class EngineGroup
     {

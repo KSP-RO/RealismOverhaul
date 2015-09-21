@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EngineGroupController;
+using System.Text;
 using UnityEngine;
 using UnityGUIFramework;
 
-namespace EngineGroupController
+namespace EngineGroupContoller
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     //[KSPAddon(KSPAddon.Startup.MainMenu, false)]
@@ -29,24 +29,19 @@ namespace EngineGroupController
             GameEvents.onVesselWasModified.Add(OnVesselWasModified);
             _gui.StartPostDisplay(1);
             GameEvents.onGUIApplicationLauncherReady.Add(OnGUIAppLauncherReady);
-            OnGUIAppLauncherReady();
         }
 
         private void OnGUIAppLauncherReady()
         {
-            DebugHelper.Debug("EngineFlightControl:OnGUIAppLauncherReady");
-            if (ApplicationLauncher.Ready && _appLauncherButton == null)
-            {
-                _appLauncherButton = ApplicationLauncher.Instance.AddModApplication(() => _displayGUI = true,
-                    () => _displayGUI = false,
-                    () => { },
-                    () => { },
-                    () => { },
-                    () => { },
-                    ApplicationLauncher.AppScenes.FLIGHT,
-                    GameDatabase.Instance.GetTexture("EngineGroupController/ToolbarIcon4", false)
-                    );
-            }
+            _appLauncherButton = ApplicationLauncher.Instance.AddModApplication(() => _displayGUI = true,
+                () => _displayGUI = false,
+                () => { },
+                () => { },
+                () => { },
+                () => { },
+                ApplicationLauncher.AppScenes.FLIGHT,
+                GameDatabase.Instance.GetTexture("EngineGroupContoller/ToolbarIcon4", false)
+                );
         }
 
         private void OnVesselWasModified(Vessel data)
