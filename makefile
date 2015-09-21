@@ -13,15 +13,15 @@ release: zip
 ifdef TRAVIS_TAG
 meta:
 	python makeMeta.py $(TRAVIS_TAG)
-	cp RO.version RealismOverhaul/RO.version
+	cp RO.version GameData/RealismOverhaul/RO.version
 else
 meta:
 endif
 
 zip: meta
-	zip -r $(ZIPFILE) RealismOverhaul EngineGroupController KAS ModuleRCSFX RemoteTech ThunderAerospace
+	zip -r $(ZIPFILE) GameData Ships README.md 
 
 clean:
 	-rm *.zip
-	-rm RealismOverhaul/*.version
+	-rm GameData/RealismOverhaul/*.version
 	-rm *.version
