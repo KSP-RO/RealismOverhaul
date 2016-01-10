@@ -29,19 +29,23 @@ namespace EngineGroupController
             GameEvents.onVesselWasModified.Add(OnVesselWasModified);
             _gui.StartPostDisplay(1);
             GameEvents.onGUIApplicationLauncherReady.Add(OnGUIAppLauncherReady);
+            OnGUIAppLauncherReady();
         }
 
         private void OnGUIAppLauncherReady()
         {
-            _appLauncherButton = ApplicationLauncher.Instance.AddModApplication(() => _displayGUI = true,
-                () => _displayGUI = false,
-                () => { },
-                () => { },
-                () => { },
-                () => { },
-                ApplicationLauncher.AppScenes.FLIGHT,
-                GameDatabase.Instance.GetTexture("EngineGroupController/ToolbarIcon4", false)
-                );
+            if (ApplicationLauncher.Ready && _appLauncherButton == null)
+            {
+                _appLauncherButton = ApplicationLauncher.Instance.AddModApplication(() => _displayGUI = true,
+                    () => _displayGUI = false,
+                    () => { },
+                    () => { },
+                    () => { },
+                    () => { },
+                    ApplicationLauncher.AppScenes.FLIGHT,
+                    GameDatabase.Instance.GetTexture("EngineGroupController/ToolbarIcon4", false)
+                    );
+            }
         }
 
         private void OnVesselWasModified(Vessel data)
