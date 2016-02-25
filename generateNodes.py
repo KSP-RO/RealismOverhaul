@@ -1,18 +1,14 @@
 #!/usr/bin/env python
 import os
 import re
-#import sys
 import fnmatch
 import argparse
 
 parser = argparse.ArgumentParser(description='Generate Rescaled Attach Nodes.')
 
 parser.add_argument("-p", "--path", help="KSP or Gamedata Directory. (Defaults to Current Directory)", default=".")
-parser.add_argument("cfgfile", help="File to Write the New Scaled Nodes Into.", default="ROMiniNodes.cfg")
+parser.add_argument("cfgfile", nargs='?', help="File to Write the New Scaled Nodes Into.")
 args = parser.parse_args()
-
-
-#~ print "****" * 20
 
 def getnodes(path):
     """Function to get cfg file list"""
@@ -24,10 +20,6 @@ def getnodes(path):
                         if re.match("^node*", line):
                             node = line.split(' ',1)[0]
                             yield node
-#~ print "****" *20
-#~ uniq = sorted(list(set(getnodes(dir))))
-#~ print "****" *20
-
 
 def writenodecfg(path):
 	cfg = header
@@ -35,11 +27,6 @@ def writenodecfg(path):
 		for i in sorted(list(set(getnodes(path)))):
 			cfg += body.format(i)
 		out.write(cfg)
-		#~ print "{}".format(args.cfgfile)
-	
-
-
-#~ print "****" *20
 
 header = """RESCALEFACTOR
 {
@@ -69,6 +56,8 @@ nza = #${0}[2]$
 !n*a = DEL
 }}
 """
-
-if args.path:
+if args.cfgfile:
 	writenodecfg(args.path)
+	print("Sucess! {} written!").format(args.cfgfile)
+else:
+	parser.print_help()
