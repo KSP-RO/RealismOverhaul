@@ -35,7 +35,7 @@ header = """RESCALEFACTOR
 """
 
 body = """
-@PART[*]:HAS[@MODEL,#{0}[*],!MODULE[ProceduralFairing*],!MODULE[KzThrustPlateResizer]]:FOR[zROMini]:NEEDS[!RealismOverhaul]
+@PART[*]:HAS[@MODEL,#{0}[*],!MODULE[ProceduralFairing*],!MODULE[KzThrustPlateResizer]]:FOR[zzzzzzROMini]:NEEDS[!RealismOverhaul]
 {{
 //         0    1    2    3     4    5    6
 //$node = 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1
@@ -58,6 +58,6 @@ nza = #${0}[2]$
 """
 if args.cfgfile:
 	writenodecfg(args.path)
-	print("Sucess! {} written!").format(args.cfgfile)
+	print(("Sucess! {} written!").format(args.cfgfile))
 else:
 	parser.print_help()
