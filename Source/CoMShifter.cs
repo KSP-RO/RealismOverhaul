@@ -24,7 +24,7 @@ namespace RealismOverhaul
 
         protected Vector3 _defaultCoM;
 
-        [KSPEvent(guiName = "Turn Descent Mode On", guiActive = true)]
+        [KSPEvent(guiName = "Turn Descent Mode On", guiActive = true, guiActiveEditor = true)]
         public void ToggleMode()
         {
             IsDescentMode = !IsDescentMode;
@@ -61,9 +61,6 @@ namespace RealismOverhaul
                 _defaultCoM = part.CoMOffset;
                 loadedCoM = true;
             }
-            if (!HighLogic.LoadedSceneIsFlight)
-                return;
-            SetDescentMode(IsDescentMode);
         }
 
         public override void OnStart(StartState state)
