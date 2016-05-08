@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityGUIFramework;
+using KSP.UI.Screens;
 
 namespace EngineGroupController
 {
