@@ -81,4 +81,4 @@ Edit Source/KSPPath.inc <KSPPath> to point at a KSP directory.  Its suggested yo
 For example if you use steam: 
 * mkdir "%UserProfile%\KSP"
 * xcopy /s "%ProgramFiles(x86)%\Steam\SteamApps\common\Kerbal Space Program" "%UserProfile%\KSP"
-* Then set KSPPath.inc <KSPPath>$(UserProfile)\KSP</KSPPath>
+* Then set KSPPath.inc \<KSPPath\>$(UserProfile)\KSP\</KSPPath\>
