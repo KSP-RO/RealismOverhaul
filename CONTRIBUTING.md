@@ -79,6 +79,6 @@ The Realism Overhaul Code of Conduct is based upon the [Citizen Code of Conduct]
 Edit Source/KSPPath.inc <KSPPath> to point at a KSP directory.  Its suggested you copy your installed directory and create a developer directory for testing.
 
 For example if you use steam: 
-mkdir "%UserProfile%\KSP"
-xcopy /s "%ProgramFiles(x86)%\Steam\SteamApps\common\Kerbal Space Program" "%UserProfile%\KSP"
-Then set KSPPath.inc <KSPPath>$(UserProfile)\KSP</KSPPath>
+* mkdir "%UserProfile%\KSP"
+* xcopy /s "%ProgramFiles(x86)%\Steam\SteamApps\common\Kerbal Space Program" "%UserProfile%\KSP"
+* Then set KSPPath.inc <KSPPath>$(UserProfile)\KSP</KSPPath>
