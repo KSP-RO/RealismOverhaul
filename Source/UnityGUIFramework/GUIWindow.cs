@@ -15,7 +15,6 @@ namespace UnityGUIFramework
     {
         private readonly int _windowId;
         private Rect _windowRect;
-        private int _queuePriority;
 
         /// <summary>
         /// Window title.
@@ -48,9 +47,9 @@ namespace UnityGUIFramework
         public Color TextColor { get; set; }
 
         /// <summary>
-        /// Returns true if render is enabled (via call of <seealso cref="StartPostDisplay"/>).
+        /// Used to control rendering of UI
         /// </summary>
-        public bool RenderEnabled { get; private set; }
+        public bool RenderEnabled { get; set; }
 
         /// <summary>
         /// Delegate used to determine whether to display window or not (provided that <seealso cref="StartPostDisplay"/> is called).
@@ -137,30 +136,6 @@ namespace UnityGUIFramework
             GUI.skin = oldSkin;
         }
 
-        /// <summary>
-        /// Queues windows rendering to the post-draw queue.
-        /// </summary>
-        /// <param name="queuePriority">Post-draw queue priority</param>
-        public void StartPostDisplay(int queuePriority)
-        {
-            if (RenderEnabled)
-                return;
-            _queuePriority = queuePriority;
-            RenderingManager.AddToPostDrawQueue(_queuePriority, Show);
-            RenderEnabled = true;
-        }
-
-        /// <summary>
-        /// De-queues windows rendering from the post-draw queue.
-        /// </summary>
-        public void EndPostDisplay()
-        {
-            if (!RenderEnabled)
-                return;
-            RenderingManager.RemoveFromPostDrawQueue(_queuePriority, Show);
-            RenderEnabled = false;
-        }
-
         private void Render(int winId)
         {
             var oldEnabled = GUI.enabled;
@@ -174,8 +149,7 @@ namespace UnityGUIFramework
 
         ~GUIWindow()
         {
-            if (RenderEnabled)
-                EndPostDisplay();
+            RenderEnabled = false;
         }
     }
 }

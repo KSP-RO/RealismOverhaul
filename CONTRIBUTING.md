@@ -73,3 +73,12 @@ jasrapp@gmail.com
 This Code of Conduct is distributed under a Creative Commons Attribution-ShareAlike license.
 
 The Realism Overhaul Code of Conduct is based upon the [Citizen Code of Conduct](http://citizencodeofconduct.org/), Revision 2.0.
+
+## 11. Setting up dev environment
+
+Edit Source/KSPPath.inc <KSPPath> to point at a KSP directory.  Its suggested you copy your installed directory and create a developer directory for testing.
+
+For example if you use steam: 
+* mkdir "%UserProfile%\KSP"
+* xcopy /s "%ProgramFiles(x86)%\Steam\SteamApps\common\Kerbal Space Program" "%UserProfile%\KSP"
+* Then set KSPPath.inc \<KSPPath\>$(UserProfile)\KSP\</KSPPath\>

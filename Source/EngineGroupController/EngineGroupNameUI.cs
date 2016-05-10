@@ -33,14 +33,14 @@ namespace EngineGroupController
 
         private void BtnAcceptOnButtonPressed()
         {
-            EndPostDisplay();
+            RenderEnabled = false;
             _resultFunc(_tbName.Text, true);
             InputLockManager.RemoveControlLock("EGN_LOCK");
         }
 
         private void BtnCancelOnButtonPressed()
         {
-            EndPostDisplay();
+            RenderEnabled = false;
             _resultFunc(string.Empty, false);
             InputLockManager.RemoveControlLock("EGN_LOCK");
         }
@@ -49,7 +49,7 @@ namespace EngineGroupController
         {
             _resultFunc = resultFunc;
             _tbName.Text = string.Empty;
-            StartPostDisplay(1);
+            RenderEnabled = true;
             InputLockManager.SetControlLock(
                 ControlTypes.EDITOR_LOCK | ControlTypes.EDITOR_NEW | ControlTypes.EDITOR_LAUNCH |
                 ControlTypes.EDITOR_EDIT_STAGES, "EGN_LOCK");
@@ -57,13 +57,14 @@ namespace EngineGroupController
 
         private static EngineGroupNameUI _gui;
 
-        public static void Show(Action<string, bool> resultFunc)
+        public static EngineGroupNameUI Show(Action<string, bool> resultFunc)
         {
             if (_gui == null)
             {
                 _gui = new EngineGroupNameUI("Engine Group Id", new GUIFramework());
             }
             _gui.DoModal(resultFunc);
+            return _gui;
         }
     }
 }
