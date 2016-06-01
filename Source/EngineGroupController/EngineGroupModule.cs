@@ -8,6 +8,8 @@ namespace EngineGroupController
 {
     public class EngineGroupModule : PartModule
     {
+        EngineGroupNameUI _gui = null;
+
         [KSPField(isPersistant = true)] 
         public string EngineGroupId;
 
@@ -19,7 +21,7 @@ namespace EngineGroupController
         [KSPEvent(guiActiveEditor = true, guiName = "Assign Group ID")]
         public void AssignGroupId()
         {
-            EngineGroupNameUI.Show((s, accepted) =>
+            _gui = EngineGroupNameUI.Show((s, accepted) =>
             {
                 if (!accepted)
                     return;
@@ -57,6 +59,14 @@ namespace EngineGroupController
             else
             {
                 DebugHelper.Warning("No engine module was found!");
+            }
+        }
+
+        private void OnGUI()
+        {
+            if (_gui != null && _gui.RenderEnabled)
+            {
+                _gui.Show();
             }
         }
     }

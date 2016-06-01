@@ -45,8 +45,8 @@ avc = {
 	"KSP_VERSION" :
 	{
 		"MAJOR" : 1,
-		"MINOR" : 0,
-		"PATCH" : 5
+		"MINOR" : 1,
+		"PATCH" : 2
 	}
 }
 with open("RO.version", "w") as f:
