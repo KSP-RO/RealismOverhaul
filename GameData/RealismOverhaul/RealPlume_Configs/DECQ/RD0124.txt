@@ -1,0 +1,72 @@
+//  ==================================================
+//  RD-0124 engine plume configuration.
+//  ==================================================
+
+@PART[RD0124]:FOR[RealPlume]:NEEDS[SmokeScreen]
+{
+    PLUME
+    {
+        name = Kerolox-Upper
+        transformName = thrustTransform
+        localRotation = 0.0, 0.0, 0.0
+        localPosition = 0.0, 0.0, 0.0
+        fixedScale = 1.0
+        energy = 1.0
+        speed = 1.0
+        emissionMult = 0.5
+    }
+
+    @MODULE[ModuleEngines*]
+    {
+        %powerEffectName = Kerolox-Upper
+        !runningEffectName = NULL
+        !fxOffset = NULL
+    }
+
+    @MODULE[ModuleEngineConfigs]
+    {
+        @CONFIG,*
+        {
+            %powerEffectName = Kerolox-Upper
+        }
+    }
+}
+
+//  ==================================================
+//  RD-0124 engine flare configuration.
+//  ==================================================
+
+@PART[RD0124]:FOR[zzRealPlume]:NEEDS[SmokeScreen]
+{
+    @EFFECTS
+    {
+        @Kerolox-Upper
+        {
+            @MODEL_MULTI_PARTICLE_PERSIST[flare]
+            {
+                @localPosition = 0.0, 0.0, 0.0
+                @fixedScale = 1.0
+            }
+        }
+    }
+}
+
+//  ==================================================
+//  RD-0124 engine smoke configuration.
+//  ==================================================
+
+@PART[RD0124]:FOR[zzRealPlume]:NEEDS[SmokeScreen]
+{
+    @EFFECTS
+    {
+        @Kerolox-Upper
+        {
+            @MODEL_MULTI_PARTICLE_PERSIST[plumeboundary]
+            {
+                @localPosition = 0.0, 0.0, 0.0
+                @fixedScale = 1.0
+                @emissionMult = 0.5
+            }
+        }
+    }
+}
