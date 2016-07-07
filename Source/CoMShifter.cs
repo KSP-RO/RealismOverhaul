@@ -14,14 +14,17 @@ namespace RealismOverhaul
         [KSPField]
         public Vector3 DescentModeCoM = new Vector3(0f, 0f, 0f);
 
+        [KSPField]
+        public string comString;
+
         protected bool loadedCoM = false;
 
-        [KSPField(guiActive = true, guiName = "Descent Mode Active?", isPersistant = true)]
+        [KSPField(isPersistant = true)]
         public bool IsDescentMode;
 
-        private Vector3 _defaultCoM;
+        protected Vector3 _defaultCoM;
 
-        [KSPEvent(guiName = "Toggle Descent Mode", guiActive = true)]
+        [KSPEvent(guiName = "Turn Descent Mode On", guiActive = true, guiActiveEditor = true)]
         public void ToggleMode()
         {
             IsDescentMode = !IsDescentMode;
@@ -33,11 +36,15 @@ namespace RealismOverhaul
             if (isOn)
             {
                 part.CoMOffset = DescentModeCoM + _defaultCoM;
+                Events["ToggleMode"].guiName = "Turn Descent Mode Off";
             }
             else
             {
                 part.CoMOffset = _defaultCoM;
+                Events["ToggleMode"].guiName = "Turn Descent Mode On";
             }
+            Fields["comString"].guiActive = PhysicsGlobals.ThermalDataDisplay;
+            comString = part.CoMOffset.x.ToString("N3") + "," + part.CoMOffset.y.ToString("N3") + "," + part.CoMOffset.z.ToString("N3");
         }
 
         [KSPAction("Toggle Descent Mode")]
@@ -54,6 +61,11 @@ namespace RealismOverhaul
                 _defaultCoM = part.CoMOffset;
                 loadedCoM = true;
             }
+        }
+
+        public override void OnStart(StartState state)
+        {
+            base.OnStart(state);
             if (!HighLogic.LoadedSceneIsFlight)
                 return;
             SetDescentMode(IsDescentMode);
