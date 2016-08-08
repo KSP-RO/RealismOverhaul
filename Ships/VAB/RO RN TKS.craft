@@ -1,6 +1,6 @@
 ship = RO RN TKS
-version = 1.1.2
-description = Raidernick's TKS for RO¨AG1 - Deploy antennae¨AG2 - Decouple descent module and cables¨AG3 - Decouple rcs and les tower, use ONLY during an abort¨AG9 - Deploy parachute¨AG10 - Activate retro motor
+version = 1.1.3
+description = Raidernick's TKS for RO¨AG1 - Deploy antennae¨AG3 - Decouple rcs and les tower, use ONLY during an abort¨AG9 - Deploy parachute¨AG10 - Activate retro motor
 type = VAB
 size = 12.59855,63.87431,11.06289
 PART
@@ -25,12 +25,12 @@ PART
 	modMass = 0.3
 	modSize = (0.0, 0.0, 0.0)
 	link = rn.zond.asas_4293720436
-	link = rn.va.para_4293717982
 	link = rn.va.dec_4293706256
 	link = rn.tks.va.rcs_4293693542
+	link = rn.va.para_4292403294
 	attN = top,rn.tks.va.rcs_4293693542
 	attN = bottom,rn.va.dec_4293706256
-	attN = para,rn.va.para_4293717982
+	attN = para,rn.va.para_4292403294
 	EVENTS
 	{
 	}
@@ -721,26 +721,6 @@ PART
 					_val = 0.5
 					_text = 0.5
 				}
-				minThrust
-				{
-					_val = 0.0001
-					_text = 0.0001
-				}
-				decelerationEndAltitude
-				{
-					_val = 500
-					_text = 500
-				}
-				CorrectionBeforeDeceleration
-				{
-					_val = 1000
-					_text = 1000
-				}
-				safityThrustLimit
-				{
-					_val = 0.9
-					_text = 0.9
-				}
 				limitGearsStage
 				{
 					val = 0
@@ -824,6 +804,11 @@ PART
 			{
 				unlockParts = 
 				unlockTechs = start
+			}
+			MechJebModuleScript
+			{
+				unlockParts = 
+				unlockTechs = 
 			}
 			MechJebModuleSettings
 			{
@@ -943,6 +928,9 @@ PART
 			{
 				unlockParts = 
 				unlockTechs = 
+			}
+			MechJebModuleCustomInfoWindow
+			{
 			}
 			MechJebModuleCustomInfoWindow
 			{
@@ -1109,7 +1097,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -2193,6 +2181,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 8.1E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	MODULE
 	{
@@ -2749,383 +2751,6 @@ PART
 }
 PART
 {
-	part = rn.va.para_4293717982
-	partName = Part
-	pos = 6.711761E-06,53.34188,-5.170193E-07
-	attPos = 0,0,0
-	attPos0 = 0,0.8549995,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	istg = 1
-	dstg = 3
-	sidx = 0
-	sqor = 1
-	sepI = 0
-	attm = 0
-	modCost = 45.4
-	modMass = 0.05092925
-	modSize = (0.0, 0.0, 0.0)
-	attN = para,rn.va.capsule_4293722578
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = RealChuteFAR
-		isEnabled = True
-		minAirPressureToOpen = 0.1
-		deployAltitude = 700
-		preDeployedDiameter = 2.7
-		deployedDiameter = 13
-		caseMass = 0.1684
-		time = 0
-		armed = False
-		staged = False
-		initiated = True
-		chuteCount = 5
-		depState = STOWED
-		currentArea = 0
-		chuteTemperature = 300
-		currentTemp = 20
-		stagingEnabled = True
-		minAirPressureToOpen_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0.01
-			maxValue = 0.5
-			stepIncrement = 0.01
-		}
-		deployAltitude_UIFlight
-		{
-			controlEnabled = True
-			minValue = 50
-			maxValue = 5000
-			stepIncrement = 50
-		}
-		EVENTS
-		{
-			GUIDeploy
-			{
-				active = True
-				guiActive = True
-				guiActiveUncommand = False
-				guiIcon = Deploy Chute
-				guiName = Deploy Chute
-				category = Deploy Chute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUICut
-			{
-				active = True
-				guiActive = True
-				guiActiveUncommand = False
-				guiIcon = Cut chute
-				guiName = Cut chute
-				category = Cut chute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUIDisarm
-			{
-				active = True
-				guiActive = True
-				guiActiveUncommand = False
-				guiIcon = Disarm chute
-				guiName = Disarm chute
-				category = Disarm chute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUIRepack
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Repack chute
-				guiName = Repack chute
-				category = Repack chute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUIToggleWindow
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiActiveUncommand = False
-				guiIcon = Toggle info
-				guiName = Toggle info
-				category = Toggle info
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ToggleStaging
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Disable Staging
-				guiName = Disable Staging
-				category = Disable Staging
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			ActionDeploy
-			{
-				actionGroup = None
-			}
-			ActionCut
-			{
-				actionGroup = None
-			}
-			ActionDisarm
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-			ToggleStaging
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Disable Staging
-				guiName = Disable Staging
-				category = Disable Staging
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-			ToggleStaging
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Disable Staging
-				guiName = Disable Staging
-				category = Disable Staging
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-			ToggleStaging
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Disable Staging
-				guiName = Disable Staging
-				category = Disable Staging
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = RealChuteModule
-		isEnabled = True
-		caseMass = 0.0931
-		cutSpeed = 0.5
-		timer = 0
-		mustGoDown = True
-		deployOnGround = False
-		spareChutes = 1
-		initiated = True
-		wait = True
-		armed = False
-		oneWasDeployed = False
-		staged = False
-		launched = False
-		chuteCount = 1
-		stagingEnabled = True
-		EVENTS
-		{
-			GUIDeploy
-			{
-				active = True
-				guiActive = True
-				guiActiveUncommand = False
-				guiIcon = Deploy Chute
-				guiName = Deploy Chute
-				category = Deploy Chute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUICut
-			{
-				active = True
-				guiActive = True
-				guiActiveUncommand = False
-				guiIcon = Cut main chute
-				guiName = Cut chute
-				category = Cut main chute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUIArm
-			{
-				active = True
-				guiActive = True
-				guiActiveUncommand = False
-				guiIcon = Arm parachute
-				guiName = Arm parachute
-				category = Arm parachute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUIDisarm
-			{
-				active = True
-				guiActive = True
-				guiActiveUncommand = False
-				guiIcon = Disarm parachute
-				guiName = Disarm parachute
-				category = Disarm parachute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUIRepack
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Repack chute
-				guiName = Repack chute
-				category = Repack chute
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			GUIToggleWindow
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiActiveUncommand = False
-				guiIcon = Toggle info
-				guiName = Toggle info
-				category = Toggle info
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ToggleStaging
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Disable Staging
-				guiName = Disable Staging
-				category = Disable Staging
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			ActionDeploy
-			{
-				actionGroup = None
-			}
-			ActionCut
-			{
-				actionGroup = None
-			}
-			ActionArm
-			{
-				actionGroup = None
-			}
-			ActionDisarm
-			{
-				actionGroup = None
-			}
-		}
-		PARACHUTE
-		{
-			material = Kevlar
-			preDeployedDiameter = 5
-			deployedDiameter = 23.74
-			minIsPressure = True
-			capOff = False
-			minDeployment = 25000
-			minPressure = 0.25
-			deploymentAlt = 3000
-			cutAlt = -1
-			preDeploymentSpeed = 2
-			deploymentSpeed = 6
-			time = 0
-			parachuteName = canopy
-			baseParachuteName = canopy
-			capName = cap
-			preDeploymentAnimation = semi
-			deploymentAnimation = full
-			forcedOrientation = 0
-			depState = STOWED
-		}
-	}
-}
-PART
-{
 	part = rn.va.dec_4293706256
 	partName = Part
 	pos = 6.711761E-06,51.89839,-5.170193E-07
@@ -3140,7 +2765,7 @@ PART
 	dstg = 3
 	sidx = 0
 	sqor = 4
-	sepI = 4
+	sepI = 3
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -3159,8 +2784,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleDecouple
+		name = ModuleAnimatedDecoupler
 		isEnabled = True
+		animationComplete = False
 		ejectionForcePercent = 100
 		isDecoupled = False
 		stagingEnabled = True
@@ -3203,54 +2829,7 @@ PART
 		{
 			DecoupleAction
 			{
-				actionGroup = Abort, Custom02
-			}
-		}
-	}
-	MODULE
-	{
-		name = FSanimateGeneric
-		isEnabled = True
-		startDeployed = False
-		isAnimating = False
-		animTime = 0
-		reverseAnimation = False
-		animSpeed = -1
-		hasBeenInitialized = True
-		stagingEnabled = True
-		EVENTS
-		{
-			toggleEvent
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiActiveUncommand = False
-				guiIcon = Deploy
-				guiName = Detach Cables
-				category = Deploy
-				guiActiveUnfocused = False
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
-			ToggleStaging
-			{
-				active = True
-				guiActive = False
-				guiActiveUncommand = False
-				guiIcon = Disable Staging
-				guiName = Disable Staging
-				category = Disable Staging
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			toggleAction
-			{
-				actionGroup = Abort, Custom02
+				actionGroup = Abort
 			}
 		}
 	}
@@ -3343,7 +2922,7 @@ PART
 	dstg = 5
 	sidx = 0
 	sqor = 5
-	sepI = 4
+	sepI = 3
 	attm = 0
 	modCost = 11.38935
 	modMass = 0
@@ -4230,7 +3809,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -5314,6 +4893,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 8.1E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	MODULE
 	{
@@ -5521,7 +5114,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 4
+	sepI = 3
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -5694,7 +5287,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 4
+	sepI = 3
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -5867,7 +5460,7 @@ PART
 	dstg = 3
 	sidx = 0
 	sqor = 2
-	sepI = 2
+	sepI = 1
 	attm = 0
 	modCost = 0.333825
 	modMass = 0
@@ -6174,7 +5767,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -7252,6 +6845,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 8.1E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -7292,7 +6899,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 5
+	sepI = 4
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -7668,7 +7275,7 @@ PART
 	dstg = 5
 	sidx = 0
 	sqor = 3
-	sepI = 3
+	sepI = 2
 	attm = 0
 	modCost = 2.4
 	modMass = 0
@@ -7964,7 +7571,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -8047,7 +7654,7 @@ PART
 	dstg = 7
 	sidx = 0
 	sqor = 11
-	sepI = 11
+	sepI = 10
 	attm = 0
 	modCost = 82.59
 	modMass = 0
@@ -8341,7 +7948,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -8424,7 +8031,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 4
+	sepI = 3
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -8646,7 +8253,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 4
+	sepI = 3
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -8868,7 +8475,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 4
+	sepI = 3
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -9090,7 +8697,7 @@ PART
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 4
+	sepI = 3
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -9312,7 +8919,7 @@ PART
 	dstg = 7
 	sidx = 0
 	sqor = 6
-	sepI = 6
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -9472,7 +9079,7 @@ PART
 	dstg = 9
 	sidx = 1
 	sqor = 6
-	sepI = 6
+	sepI = 5
 	attm = 0
 	modCost = 18.78747
 	modMass = 0
@@ -9728,7 +9335,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -10514,6 +10121,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 1.6E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -10565,7 +10186,7 @@ PART
 	dstg = 11
 	sidx = 0
 	sqor = 7
-	sepI = 6
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -10834,7 +10455,7 @@ PART
 	dstg = 11
 	sidx = 0
 	sqor = 9
-	sepI = 6
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -11171,7 +10792,7 @@ PART
 	dstg = 11
 	sidx = 0
 	sqor = 9
-	sepI = 6
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -11508,7 +11129,7 @@ PART
 	dstg = 11
 	sidx = 1
 	sqor = 9
-	sepI = 6
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -11845,7 +11466,7 @@ PART
 	dstg = 11
 	sidx = 1
 	sqor = 9
-	sepI = 6
+	sepI = 5
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -12182,7 +11803,7 @@ PART
 	dstg = 11
 	sidx = 0
 	sqor = 8
-	sepI = 8
+	sepI = 7
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -12455,7 +12076,7 @@ PART
 	dstg = 12
 	sidx = -1
 	sqor = -1
-	sepI = 8
+	sepI = 7
 	attm = 0
 	modCost = 62.54091
 	modMass = 0
@@ -12603,7 +12224,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -13389,6 +13010,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 1.6E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -13429,7 +13064,7 @@ PART
 	dstg = 13
 	sidx = 0
 	sqor = 13
-	sepI = 8
+	sepI = 7
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -13790,7 +13425,7 @@ PART
 	dstg = 13
 	sidx = 0
 	sqor = 13
-	sepI = 8
+	sepI = 7
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -14151,7 +13786,7 @@ PART
 	dstg = 13
 	sidx = 1
 	sqor = 13
-	sepI = 8
+	sepI = 7
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -14512,7 +14147,7 @@ PART
 	dstg = 13
 	sidx = 1
 	sqor = 13
-	sepI = 8
+	sepI = 7
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -14873,7 +14508,7 @@ PART
 	dstg = 12
 	sidx = -1
 	sqor = -1
-	sepI = 8
+	sepI = 7
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -14979,7 +14614,7 @@ PART
 	dstg = 13
 	sidx = 0
 	sqor = 12
-	sepI = 12
+	sepI = 11
 	attm = 0
 	modCost = 160.0565
 	modMass = 0
@@ -15185,7 +14820,7 @@ PART
 			}
 			ShowUI
 			{
-				active = True
+				active = False
 				guiActive = False
 				guiActiveEditor = True
 				guiActiveUncommand = False
@@ -15971,6 +15606,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 1.6E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -16011,7 +15660,7 @@ PART
 	dstg = 15
 	sidx = 0
 	sqor = 15
-	sepI = 12
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -16337,7 +15986,7 @@ PART
 	dstg = 15
 	sidx = 0
 	sqor = 15
-	sepI = 12
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -16663,7 +16312,7 @@ PART
 	dstg = 15
 	sidx = 1
 	sqor = 15
-	sepI = 12
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -16989,7 +16638,7 @@ PART
 	dstg = 15
 	sidx = 1
 	sqor = 15
-	sepI = 12
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -17315,7 +16964,7 @@ PART
 	dstg = 15
 	sidx = 2
 	sqor = 15
-	sepI = 12
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -17641,7 +17290,7 @@ PART
 	dstg = 15
 	sidx = 2
 	sqor = 15
-	sepI = 12
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -17967,7 +17616,7 @@ PART
 	dstg = 14
 	sidx = 0
 	sqor = 14
-	sepI = 14
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -17991,8 +17640,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.183865
-		height = 2.987122
+		scaleFactor = 1.183866
+		height = 2.987123
 		stagingEnabled = True
 		towerRot = -2.655695E-07,0.2588191,7.115916E-08,-0.9659258
 		EVENTS
@@ -18208,7 +17857,7 @@ PART
 	dstg = 14
 	sidx = 0
 	sqor = 14
-	sepI = 14
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -18232,8 +17881,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.183865
-		height = 2.987122
+		scaleFactor = 1.183866
+		height = 2.987123
 		stagingEnabled = True
 		towerRot = -1.944104E-07,0.7071068,1.944104E-07,-0.7071067
 		EVENTS
@@ -18449,7 +18098,7 @@ PART
 	dstg = 14
 	sidx = 0
 	sqor = 14
-	sepI = 14
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -18473,8 +18122,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.183865
-		height = 2.987122
+		scaleFactor = 1.183866
+		height = 2.987123
 		stagingEnabled = True
 		towerRot = -7.115911E-08,0.9659259,2.655696E-07,-0.258819
 		EVENTS
@@ -18690,7 +18339,7 @@ PART
 	dstg = 14
 	sidx = 0
 	sqor = 14
-	sepI = 14
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -18714,8 +18363,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.183865
-		height = 2.987122
+		scaleFactor = 1.183866
+		height = 2.987123
 		stagingEnabled = True
 		towerRot = 7.115917E-08,0.9659258,2.655695E-07,0.2588191
 		EVENTS
@@ -18931,7 +18580,7 @@ PART
 	dstg = 14
 	sidx = 0
 	sqor = 14
-	sepI = 14
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -18955,8 +18604,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.183865
-		height = 2.987122
+		scaleFactor = 1.183866
+		height = 2.987123
 		stagingEnabled = True
 		towerRot = 1.944104E-07,0.7071067,1.944104E-07,0.7071069
 		EVENTS
@@ -19172,7 +18821,7 @@ PART
 	dstg = 14
 	sidx = 0
 	sqor = 14
-	sepI = 14
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -19196,8 +18845,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.183865
-		height = 2.987122
+		scaleFactor = 1.183866
+		height = 2.987123
 		stagingEnabled = True
 		towerRot = 2.655695E-07,0.258819,7.115914E-08,0.9659259
 		EVENTS
@@ -19413,7 +19062,7 @@ PART
 	dstg = 9
 	sidx = 0
 	sqor = 10
-	sepI = 10
+	sepI = 9
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -19657,7 +19306,7 @@ PART
 	dstg = 9
 	sidx = 0
 	sqor = 10
-	sepI = 10
+	sepI = 9
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -19883,5 +19532,382 @@ PART
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
+	}
+}
+PART
+{
+	part = rn.va.para_4292403294
+	partName = Part
+	pos = 6.711761E-06,53.34188,-5.170193E-07
+	attPos = 0,0,0
+	attPos0 = 0,0.8549995,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	istg = 1
+	dstg = 3
+	sidx = 0
+	sqor = 1
+	sepI = 0
+	attm = 0
+	modCost = 45.4
+	modMass = 0.05092925
+	modSize = (0.0, 0.0, 0.0)
+	attN = para,rn.va.capsule_4293722578
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = RealChuteFAR
+		isEnabled = True
+		minAirPressureToOpen = 0.1
+		deployAltitude = 700
+		preDeployedDiameter = 2.7
+		deployedDiameter = 13
+		caseMass = 0.1684
+		time = 0
+		armed = False
+		staged = False
+		initiated = True
+		chuteCount = 5
+		depState = STOWED
+		currentArea = 0
+		chuteTemperature = 300
+		currentTemp = 20
+		stagingEnabled = True
+		minAirPressureToOpen_UIFlight
+		{
+			controlEnabled = True
+			minValue = 0.01
+			maxValue = 0.5
+			stepIncrement = 0.01
+		}
+		deployAltitude_UIFlight
+		{
+			controlEnabled = True
+			minValue = 50
+			maxValue = 5000
+			stepIncrement = 50
+		}
+		EVENTS
+		{
+			GUIDeploy
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = False
+				guiIcon = Deploy Chute
+				guiName = Deploy Chute
+				category = Deploy Chute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUICut
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = False
+				guiIcon = Cut chute
+				guiName = Cut chute
+				category = Cut chute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUIDisarm
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = False
+				guiIcon = Disarm chute
+				guiName = Disarm chute
+				category = Disarm chute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUIRepack
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Repack chute
+				guiName = Repack chute
+				category = Repack chute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUIToggleWindow
+			{
+				active = True
+				guiActive = True
+				guiActiveEditor = True
+				guiActiveUncommand = False
+				guiIcon = Toggle info
+				guiName = Toggle info
+				category = Toggle info
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			ToggleStaging
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Disable Staging
+				guiName = Disable Staging
+				category = Disable Staging
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			ActionDeploy
+			{
+				actionGroup = Custom09
+			}
+			ActionCut
+			{
+				actionGroup = None
+			}
+			ActionDisarm
+			{
+				actionGroup = None
+			}
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+			ToggleStaging
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Disable Staging
+				guiName = Disable Staging
+				category = Disable Staging
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+			ToggleStaging
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Disable Staging
+				guiName = Disable Staging
+				category = Disable Staging
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+			ToggleStaging
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Disable Staging
+				guiName = Disable Staging
+				category = Disable Staging
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+		}
+	}
+	MODULE
+	{
+		name = RealChuteModule
+		isEnabled = True
+		caseMass = 0.0931
+		cutSpeed = 0.5
+		timer = 0
+		mustGoDown = True
+		deployOnGround = False
+		spareChutes = 1
+		initiated = True
+		wait = True
+		armed = False
+		oneWasDeployed = False
+		staged = False
+		launched = False
+		chuteCount = 1
+		stagingEnabled = True
+		EVENTS
+		{
+			GUIDeploy
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = False
+				guiIcon = Deploy Chute
+				guiName = Deploy Chute
+				category = Deploy Chute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUICut
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = False
+				guiIcon = Cut main chute
+				guiName = Cut chute
+				category = Cut main chute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUIArm
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = False
+				guiIcon = Arm parachute
+				guiName = Arm parachute
+				category = Arm parachute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUIDisarm
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = False
+				guiIcon = Disarm parachute
+				guiName = Disarm parachute
+				category = Disarm parachute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUIRepack
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Repack chute
+				guiName = Repack chute
+				category = Repack chute
+				guiActiveUnfocused = True
+				unfocusedRange = 5
+				externalToEVAOnly = True
+			}
+			GUIToggleWindow
+			{
+				active = True
+				guiActive = True
+				guiActiveEditor = True
+				guiActiveUncommand = False
+				guiIcon = Toggle info
+				guiName = Toggle info
+				category = Toggle info
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			ToggleStaging
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Disable Staging
+				guiName = Disable Staging
+				category = Disable Staging
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
+			ActionDeploy
+			{
+				actionGroup = None
+			}
+			ActionCut
+			{
+				actionGroup = None
+			}
+			ActionArm
+			{
+				actionGroup = None
+			}
+			ActionDisarm
+			{
+				actionGroup = None
+			}
+		}
+		PARACHUTE
+		{
+			material = Kevlar
+			preDeployedDiameter = 5
+			deployedDiameter = 23.74
+			minIsPressure = True
+			capOff = False
+			minDeployment = 25000
+			minPressure = 0.25
+			deploymentAlt = 3000
+			cutAlt = -1
+			preDeploymentSpeed = 2
+			deploymentSpeed = 6
+			time = 0
+			parachuteName = canopy
+			baseParachuteName = canopy
+			capName = cap
+			preDeploymentAnimation = semi
+			deploymentAnimation = full
+			forcedOrientation = 0
+			depState = STOWED
+		}
 	}
 }
