@@ -17,8 +17,8 @@ PART
 	symMethod = Radial
 	istg = 0
 	dstg = 0
-	sidx = 0
-	sqor = 0
+	sidx = 1
+	sqor = 1
 	sepI = 0
 	attm = 0
 	modCost = 4.25
@@ -270,6 +270,7 @@ PART
 			{
 				active = True
 				guiActive = False
+				guiActiveEditor = True
 				guiActiveUncommand = False
 				guiIcon = Disable Staging
 				guiName = RCS: Disable Staging
@@ -362,6 +363,30 @@ PART
 			}
 		}
 		Ullage
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+			ToggleStaging
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Disable Staging
+				guiName = Disable Staging
+				category = Disable Staging
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
 		{
 		}
 	}
@@ -808,7 +833,7 @@ PART
 				guiActive = True
 				guiActiveUncommand = False
 				guiIcon = Toggle Transmit Incomplete
-				guiName = Toggle Transmit Incomplete
+				guiName = Require Complete
 				category = Toggle Transmit Incomplete
 				guiActiveUnfocused = False
 				unfocusedRange = 2
@@ -909,6 +934,55 @@ PART
 			{
 				actionGroup = None
 			}
+		}
+	}
+	MODULE
+	{
+		name = ProbeLowPower
+		isEnabled = True
+		lowPowerMode = False
+		stagingEnabled = True
+		EVENTS
+		{
+			activateLPM
+			{
+				active = True
+				guiActive = True
+				guiActiveUncommand = True
+				guiIcon = Low Power Mode: Disabled
+				guiName = Low Power Mode: Disabled
+				category = Low Power Mode: Disabled
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			deactivateLPM
+			{
+				active = False
+				guiActive = True
+				guiActiveUncommand = True
+				guiIcon = Low Power Mode: Enabled
+				guiName = Low Power Mode: Enabled
+				category = Low Power Mode: Enabled
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+			ToggleStaging
+			{
+				active = True
+				guiActive = False
+				guiActiveUncommand = False
+				guiIcon = Disable Staging
+				guiName = Disable Staging
+				category = Disable Staging
+				guiActiveUnfocused = False
+				unfocusedRange = 2
+				externalToEVAOnly = True
+			}
+		}
+		ACTIONS
+		{
 		}
 	}
 	MODULE
@@ -1672,8 +1746,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 22050.000003301575
-			maxAmount = 22050.000003301575
+			amount = 22050.0000033016
+			maxAmount = 22050.0000033016
 		}
 		TANK
 		{
@@ -1764,7 +1838,7 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 1
+	istg = 0
 	dstg = 1
 	sidx = 0
 	sqor = 1
@@ -1935,6 +2009,7 @@ PART
 			{
 				active = True
 				guiActive = False
+				guiActiveEditor = True
 				guiActiveUncommand = False
 				guiIcon = Disable Staging
 				guiName = RCS: Disable Staging
@@ -2084,7 +2159,7 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 2
+	istg = 1
 	dstg = 2
 	sidx = 0
 	sqor = 2
@@ -2497,7 +2572,7 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 3
+	istg = 2
 	dstg = 2
 	sidx = 0
 	sqor = 3
@@ -2742,16 +2817,16 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 2
+	istg = 4
 	dstg = 2
-	sidx = -1
-	sqor = -1
+	sidx = 0
+	sqor = 5
 	sepI = 3
 	attm = 0
 	modCost = 3.755372
 	modMass = 0
 	modSize = (0.0, 0.0, 0.0)
-	link = KK.ULA.AJ-62-118K_4293019618
+	link = KK.ULA.AJ-10-118K_4293019618
 	link = KK.ULA.XELTT.Interstage_4293019548
 	link = KK.ULA.fairingMedium_4292800984
 	link = KK.ULA.fairingMedium_4292799866
@@ -2759,7 +2834,7 @@ PART
 	attN = middle,KK.ULA.XELTT.Interstage_4293019548
 	attN = fairing01,KK.ULA.fairingMedium_4292800984
 	attN = fairing02,KK.ULA.fairingMedium_4292799866
-	attN = bottom,KK.ULA.AJ-62-118K_4293019618
+	attN = bottom,KK.ULA.AJ-10-118K_4293019618
 	EVENTS
 	{
 	}
@@ -2869,6 +2944,7 @@ PART
 			{
 				active = True
 				guiActive = False
+				guiActiveEditor = True
 				guiActiveUncommand = False
 				guiIcon = Disable Staging
 				guiName = RCS: Disable Staging
@@ -4237,6 +4313,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 8.1E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -4285,7 +4375,7 @@ PART
 }
 PART
 {
-	part = KK.ULA.AJ-62-118K_4293019618
+	part = KK.ULA.AJ-10-118K_4293019618
 	partName = Part
 	pos = -0.01661587,28.79688,0.0007459778
 	attPos = 0,0,0
@@ -4295,7 +4385,7 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 4
+	istg = 3
 	dstg = 2
 	sidx = 0
 	sqor = 4
@@ -4680,9 +4770,9 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 5
+	istg = 4
 	dstg = 3
-	sidx = 0
+	sidx = 1
 	sqor = 5
 	sepI = 5
 	attm = 0
@@ -5789,6 +5879,20 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 1.6E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
 	}
 	RESOURCE
 	{
@@ -5825,7 +5929,7 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 12
+	istg = 11
 	dstg = 4
 	sidx = 1
 	sqor = 12
@@ -6161,7 +6265,7 @@ PART
 	attRot0 = -8.42937E-08,1.38609E-07,1.38609E-07,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 12
+	istg = 11
 	dstg = 4
 	sidx = 0
 	sqor = 12
@@ -6463,7 +6567,7 @@ PART
 	attRot0 = 1.38609E-07,1,8.42937E-08,-1.823204E-07
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 12
+	istg = 11
 	dstg = 4
 	sidx = 0
 	sqor = 12
@@ -6765,11 +6869,11 @@ PART
 	attRot0 = -1.529697E-08,0.5555711,-2.289349E-08,0.8314691
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 7
+	istg = 6
 	dstg = 5
 	sidx = 0
 	sqor = 7
-	sepI = 6
+	sepI = 7
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -7092,16 +7196,16 @@ PART
 	pos = -0.748435,7.692671,1.749404
 	attPos = -0.1175203,0,4.202852E-08
 	attPos0 = -0.5685207,4.968708,1.194999E-07
-	rot = -2.313624E-07,-0.1950893,-4.602057E-08,0.9807856
+	rot = -2.313624E-07,-0.1950893,-4.602055E-08,0.9807856
 	attRot = 0,0,0,1
 	attRot0 = -1.473337E-07,-0.7071068,-1.473337E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 6
 	sidx = 0
 	sqor = 8
-	sepI = 6
+	sepI = 7
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -7518,11 +7622,11 @@ PART
 	attRot0 = -7.105427E-15,1,4.952419E-08,7.450581E-08
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 0
 	sqor = 11
-	sepI = 10
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -7543,8 +7647,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.471206
-		height = 3.712143
+		scaleFactor = 1.471207
+		height = 3.712139
 		stagingEnabled = True
 		towerRot = -3.635892E-08,-0.9807855,1.827898E-07,0.1950893
 		EVENTS
@@ -7756,11 +7860,11 @@ PART
 	attRot0 = -2.747483E-08,0.9978589,1.800826E-09,-0.06540423
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 7
+	istg = 6
 	dstg = 5
 	sidx = 0
 	sqor = 7
-	sepI = 6
+	sepI = 7
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -8088,11 +8192,11 @@ PART
 	attRot0 = -1.473337E-07,-0.7071068,-1.473337E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 6
 	sidx = 0
 	sqor = 8
-	sepI = 6
+	sepI = 7
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -8509,11 +8613,11 @@ PART
 	attRot0 = 1.421085E-14,1,4.952418E-08,8.940694E-08
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 0
 	sqor = 11
-	sepI = 10
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -8534,8 +8638,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.471206
-		height = 3.712143
+		scaleFactor = 1.471207
+		height = 3.712139
 		stagingEnabled = True
 		towerRot = 1.401212E-07,-0.6593451,1.228827E-07,-0.7518405
 		EVENTS
@@ -8747,11 +8851,11 @@ PART
 	attRot0 = -1.217785E-08,0.4422877,2.469431E-08,-0.8968732
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 7
+	istg = 6
 	dstg = 5
 	sidx = 0
 	sqor = 7
-	sepI = 6
+	sepI = 7
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -9074,16 +9178,16 @@ PART
 	pos = -1.165095,7.692671,-1.507356
 	attPos = -0.1175203,0,4.202852E-08
 	attPos0 = -0.5685207,4.968708,1.194999E-07
-	rot = 7.582625E-08,0.9469299,2.23376E-07,-0.3214405
+	rot = 7.582626E-08,0.9469299,2.23376E-07,-0.3214405
 	attRot = 0,0,0,1
 	attRot0 = -1.473337E-07,-0.7071068,-1.473337E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 8
+	istg = 7
 	dstg = 6
 	sidx = 0
 	sqor = 8
-	sepI = 6
+	sepI = 7
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -9492,19 +9596,19 @@ PART
 {
 	part = launchClamp1_4293018304
 	partName = Part
-	pos = -2.007766,3.051991,-2.605549
+	pos = -2.007766,3.051991,-2.60555
 	attPos = 0,0,0
 	attPos0 = -3.541417E-07,-4.640679,1.384242
-	rot = -1.764801E-07,-0.3214405,5.990719E-08,-0.9469299
+	rot = -1.764801E-07,-0.3214405,5.990718E-08,-0.9469299
 	attRot = 0,0,0,1
 	attRot0 = -1.421085E-14,1,4.952417E-08,5.960465E-08
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 0
 	sqor = 11
-	sepI = 10
+	sepI = 11
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -9525,10 +9629,10 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.471206
-		height = 3.712143
+		scaleFactor = 1.471207
+		height = 3.712139
 		stagingEnabled = True
-		towerRot = 1.764801E-07,0.3214405,-5.990719E-08,-0.9469298
+		towerRot = 1.764801E-07,0.3214405,-5.990717E-08,-0.9469298
 		EVENTS
 		{
 			Release
@@ -9738,11 +9842,11 @@ PART
 	attRot0 = -2.353894E-08,0.8064442,-1.42838E-08,0.5913103
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 10
+	istg = 9
 	dstg = 5
 	sidx = 0
 	sqor = 10
-	sepI = 9
+	sepI = 10
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -10070,11 +10174,11 @@ PART
 	attRot0 = -1.055474E-07,-0.7071068,-1.055474E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 1
 	sqor = 11
-	sepI = 9
+	sepI = 10
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -10490,11 +10594,11 @@ PART
 	attRot0 = -2.41396E-08,0.9153118,1.324342E-08,-0.402746
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 10
+	istg = 9
 	dstg = 5
 	sidx = 0
 	sqor = 10
-	sepI = 9
+	sepI = 10
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -10822,11 +10926,11 @@ PART
 	attRot0 = -1.055474E-07,-0.7071068,-1.055474E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 1
 	sqor = 11
-	sepI = 9
+	sepI = 10
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -11242,11 +11346,11 @@ PART
 	attRot0 = -6.006647E-10,0.1088676,2.752722E-08,-0.9940563
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 10
+	istg = 9
 	dstg = 5
 	sidx = 0
 	sqor = 10
-	sepI = 9
+	sepI = 10
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -11574,11 +11678,11 @@ PART
 	attRot0 = -1.055474E-07,-0.7071068,-1.055474E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 1
 	sqor = 11
-	sepI = 9
+	sepI = 10
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -11989,16 +12093,16 @@ PART
 	pos = 1.002753,2.72945,0.6591969
 	attPos = 0,0,0
 	attPos0 = 1.019373,-10.62171,0.6584511
-	rot = -1.690897E-08,0.9600497,-6.575548E-09,0.2798294
+	rot = -1.690897E-08,0.9600497,-6.575549E-09,0.2798294
 	attRot = 0,0.04361939,0,0.9990482
 	attRot0 = -1.690897E-08,0.9600497,-6.575547E-09,0.2798294
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 9
+	istg = 8
 	dstg = 5
 	sidx = 0
 	sqor = 9
-	sepI = 8
+	sepI = 9
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -12321,16 +12425,16 @@ PART
 	pos = 1.574985,7.706869,1.027475
 	attPos = -0.111825,-0.0598526,-0.003141478
 	attPos0 = -0.5686668,5.037266,-5.568313E-08
-	rot = -1.474721E-07,0.4809885,7.910233E-08,0.876727
+	rot = -1.474721E-07,0.4809885,7.910232E-08,0.876727
 	attRot = 0,0,0,1
 	attRot0 = -1.055474E-07,-0.7071068,-1.055474E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 2
 	sqor = 11
-	sepI = 8
+	sepI = 9
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -12746,11 +12850,11 @@ PART
 	attRot0 = -1.414908E-08,0.7223642,1.135583E-08,-0.6915128
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 9
+	istg = 8
 	dstg = 5
 	sidx = 0
 	sqor = 9
-	sepI = 8
+	sepI = 9
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -13073,16 +13177,16 @@ PART
 	pos = 0.07675457,7.706869,-1.890989
 	attPos = -0.111825,-0.0598526,-0.003141478
 	attPos0 = -0.5686668,5.037266,-5.568313E-08
-	rot = -5.231408E-09,0.9997621,1.672657E-07,0.02181527
+	rot = -5.231422E-09,0.9997621,1.672657E-07,0.02181527
 	attRot = 0,0,0,1
 	attRot0 = -1.055474E-07,-0.7071068,-1.055474E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 2
 	sqor = 11
-	sepI = 8
+	sepI = 9
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -13498,11 +13602,11 @@ PART
 	attRot0 = 2.759897E-09,-0.2376856,1.793137E-08,-0.9713421
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 9
+	istg = 8
 	dstg = 5
 	sidx = 0
 	sqor = 9
-	sepI = 8
+	sepI = 9
 	attm = 1
 	modCost = 0
 	modMass = 0
@@ -13825,16 +13929,16 @@ PART
 	pos = -1.701595,7.706869,0.8657519
 	attPos = -0.111825,-0.0598526,-0.003141478
 	attPos0 = -0.5686668,5.037266,-5.568313E-08
-	rot = 1.422407E-07,0.5187736,8.816339E-08,-0.8549117
+	rot = 1.422407E-07,0.5187737,8.81634E-08,-0.8549117
 	attRot = 0,0,0,1
 	attRot0 = -1.055474E-07,-0.7071068,-1.055474E-07,0.7071068
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 11
+	istg = 10
 	dstg = 6
 	sidx = 2
 	sqor = 11
-	sepI = 8
+	sepI = 9
 	attm = 1
 	modCost = 288.3051
 	modMass = 0
@@ -14250,11 +14354,11 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 6
+	istg = 5
 	dstg = 3
-	sidx = 1
+	sidx = 0
 	sqor = 6
-	sepI = 3
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
@@ -14493,11 +14597,11 @@ PART
 	attRot0 = 0,1,0,0
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 6
+	istg = 5
 	dstg = 3
-	sidx = 0
+	sidx = 1
 	sqor = 6
-	sepI = 3
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
