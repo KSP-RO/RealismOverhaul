@@ -1,6 +1,5 @@
-﻿
-/**
- * Copyright (c) 2014, Majiir
+﻿/**
+ * Copyright (c) 2016, Majiir, ferram4
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -58,14 +57,14 @@ namespace RealismOverhaul
             // If you want to disable some behavior when incompatible, other parts of the plugin
             // should query this method:
             //
-            //    if (!CompatibilityChecker.IsAllCompatible()) {
+            //    if (!CompatibilityChecker.IsCompatible()) {
             //        ...disable some features...
             //    }
             //
             // Even if you don't lock down functionality, you should return true if your users
             // can expect a future update to be available.
             //
-            return Versioning.version_major == 1 && Versioning.version_minor == 0;
+            return Versioning.version_minor == 1 && Versioning.version_major == 1;
 
             /*-----------------------------------------------*\
             | IMPLEMENTERS SHOULD NOT EDIT BEYOND THIS POINT! |
@@ -80,7 +79,6 @@ namespace RealismOverhaul
 
             // TODO: Implement your own Unity compatibility check.
             //
-            // not going to care about the fact that KSP .25 OSX uses a different Unity...
             return true;
 
             /*-----------------------------------------------*\
@@ -89,18 +87,18 @@ namespace RealismOverhaul
         }
 
         // Version of the compatibility checker itself.
-        private static int _version = 4;
+        private static int _version = 5;
 
         public void Start()
         {
             // Checkers are identified by the type name and version field name.
             FieldInfo[] fields =
                 getAllTypes()
-                .Where(t => t.Name == "CompatibilityChecker")
-                .Select(t => t.GetField("_version", BindingFlags.Static | BindingFlags.NonPublic))
-                .Where(f => f != null)
-                .Where(f => f.FieldType == typeof(int))
-                .ToArray();
+                    .Where(t => t.Name == "CompatibilityChecker")
+                    .Select(t => t.GetField("_version", BindingFlags.Static | BindingFlags.NonPublic))
+                    .Where(f => f != null)
+                    .Where(f => f.FieldType == typeof(int))
+                    .ToArray();
 
             // Let the latest version of the checker execute.
             if (_version != fields.Max(f => (int)f.GetValue(null))) { return; }
@@ -114,57 +112,52 @@ namespace RealismOverhaul
             // A mod is incompatible if its compatibility checker has an IsCompatible method which returns false.
             String[] incompatible =
                 fields
-                .Select(f => f.DeclaringType.GetMethod("IsCompatible", Type.EmptyTypes))
-                .Where(m => m.IsStatic)
-                .Where(m => m.ReturnType == typeof(bool))
-                .Where(m =>
-                {
-                    try
+                    .Select(f => f.DeclaringType.GetMethod("IsCompatible", Type.EmptyTypes))
+                    .Where(m => m.IsStatic)
+                    .Where(m => m.ReturnType == typeof(bool))
+                    .Where(m =>
                     {
-                        return !(bool)m.Invoke(null, new object[0]);
-                    }
-                    catch (Exception e)
-                    {
-                        // If a mod throws an exception from IsCompatible, it's not compatible.
-                        Debug.LogWarning(String.Format("[CompatibilityChecker] Exception while invoking IsCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
-                        return true;
-                    }
-                })
-                .Select(m => m.DeclaringType.Assembly.GetName().Name)
-                .ToArray();
+                        try
+                        {
+                            return !(bool)m.Invoke(null, new object[0]);
+                        }
+                        catch (Exception e)
+                        {
+                            // If a mod throws an exception from IsCompatible, it's not compatible.
+                            Debug.LogWarning(String.Format("[CompatibilityChecker] Exception while invoking IsCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
+                            return true;
+                        }
+                    })
+                    .Select(m => m.DeclaringType.Assembly.GetName().Name)
+                    .ToArray();
 
             // A mod is incompatible with Unity if its compatibility checker has an IsUnityCompatible method which returns false.
             String[] incompatibleUnity =
                 fields
-                .Select(f => f.DeclaringType.GetMethod("IsUnityCompatible", Type.EmptyTypes))
-                .Where(m => m != null)  // Mods without IsUnityCompatible() are assumed to be compatible.
-                .Where(m => m.IsStatic)
-                .Where(m => m.ReturnType == typeof(bool))
-                .Where(m =>
-                {
-                    try
+                    .Select(f => f.DeclaringType.GetMethod("IsUnityCompatible", Type.EmptyTypes))
+                    .Where(m => m != null)  // Mods without IsUnityCompatible() are assumed to be compatible.
+                    .Where(m => m.IsStatic)
+                    .Where(m => m.ReturnType == typeof(bool))
+                    .Where(m =>
                     {
-                        return !(bool)m.Invoke(null, new object[0]);
-                    }
-                    catch (Exception e)
-                    {
-                        // If a mod throws an exception from IsUnityCompatible, it's not compatible.
-                        Debug.LogWarning(String.Format("[CompatibilityChecker] Exception while invoking IsUnityCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
-                        return true;
-                    }
-                })
-                .Select(m => m.DeclaringType.Assembly.GetName().Name)
-                .ToArray();
+                        try
+                        {
+                            return !(bool)m.Invoke(null, new object[0]);
+                        }
+                        catch (Exception e)
+                        {
+                            // If a mod throws an exception from IsUnityCompatible, it's not compatible.
+                            Debug.LogWarning(String.Format("[CompatibilityChecker] Exception while invoking IsUnityCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
+                            return true;
+                        }
+                    })
+                    .Select(m => m.DeclaringType.Assembly.GetName().Name)
+                    .ToArray();
 
             Array.Sort(incompatible);
             Array.Sort(incompatibleUnity);
 
             String message = String.Empty;
-
-            if (IsWin64())
-            {
-                message += "WARNING: You are using 64-bit KSP on Windows. This version of KSP is known to cause crashes. It's highly recommended that you use either 32-bit KSP on Windows or switch to Linux.";
-            }
 
             if ((incompatible.Length > 0) || (incompatibleUnity.Length > 0))
             {
@@ -185,9 +178,9 @@ namespace RealismOverhaul
                 }
             }
 
-            if ((incompatible.Length > 0) || (incompatibleUnity.Length > 0) || IsWin64())
+            if ((incompatible.Length > 0) || (incompatibleUnity.Length > 0))
             {
-                PopupDialog.SpawnPopupDialog("Incompatible Mods Detected", message, "OK", true, HighLogic.Skin);
+                PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "Incompatible Mods Detected", message, "OK", true, HighLogic.UISkin);
             }
         }
 
@@ -198,7 +191,7 @@ namespace RealismOverhaul
 
         public static bool IsAllCompatible()
         {
-            return IsCompatible() && IsUnityCompatible() && !IsWin64();
+            return IsCompatible() && IsUnityCompatible();
         }
 
         private static IEnumerable<Type> getAllTypes()
