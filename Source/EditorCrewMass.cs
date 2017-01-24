@@ -20,7 +20,7 @@ namespace RealismOverhaul
                 VesselCrewManifest man = CrewAssignmentDialog.Instance.GetManifest();
                 if (man != null && part != null)
                 {
-                    foreach (PartCrewManifest pcm in man)
+                    foreach (PartCrewManifest pcm in man.GetCrewableParts())
                     {
                         if (pcm.PartID == this.part.craftID)
                         {
