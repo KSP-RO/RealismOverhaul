@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace UnityGUIFramework.Controls
+﻿namespace UnityGUIFramework.Controls
 {
     /// <summary>
     /// This class represents layout control

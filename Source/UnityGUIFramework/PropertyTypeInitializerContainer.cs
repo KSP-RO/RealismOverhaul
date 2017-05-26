@@ -7,10 +7,9 @@ namespace UnityGUIFramework
 {
     public class PropertyTypeInitializerContainer
     {
-        private readonly GUIFramework _framework;
+        readonly GUIFramework _framework;
 
-        private readonly IDictionary<Type, Func<string, Type, object>> _propertyTypeInitializators
-            = new Dictionary<Type, Func<string, Type, object>>();
+        readonly IDictionary<Type, Func<string, Type, object>> _propertyTypeInitializators = new Dictionary<Type, Func<string, Type, object>>();
 
         public PropertyTypeInitializerContainer(GUIFramework framework)
         {

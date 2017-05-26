@@ -6,7 +6,7 @@ namespace UnityGUIFramework
 {
     public class ObservableList<T> : IList<T>
     {
-        private readonly IList<T> _storage = new List<T>();
+        readonly IList<T> _storage = new List<T>();
 
         public event Action<T> Added;
 

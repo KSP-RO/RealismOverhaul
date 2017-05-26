@@ -66,11 +66,11 @@ namespace UnityGUIFramework.Controls
         protected IList<GUILayoutOption> GetOptions()
         {
             var options = new List<GUILayoutOption>();
-            if (Width != 0)
+            if (System.Math.Abs (Width) > double.Epsilon)
             {
                 options.Add(GUILayout.Width(Width));
             }
-            if (Height != 0)
+            if (System.Math.Abs (Height) > double.Epsilon)
             {
                 options.Add(GUILayout.Height(Height));
             }
