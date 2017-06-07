@@ -20,9 +20,9 @@ namespace UnityGUIFramework
     {
         public const string StandardControlsNamespace = "http://www.asmitech.com/UnityGUIFramework/StandardControls";
 
-        private readonly IDictionary<string, string> _namespaces = new Dictionary<string, string>();
-        private readonly IDictionary<string, Func<GUIControl>> _controlFactories = new Dictionary<string, Func<GUIControl>>();
-        private readonly PropertyTypeInitializerContainer _propertyTypeInitContainer;
+        readonly IDictionary<string, string> _namespaces = new Dictionary<string, string>();
+        readonly IDictionary<string, Func<GUIControl>> _controlFactories = new Dictionary<string, Func<GUIControl>>();
+        readonly PropertyTypeInitializerContainer _propertyTypeInitContainer;
         public bool DisplayDebugMessages;
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace UnityGUIFramework
             AddDefaultInitializers();
         }
 
-        private void AddDefaultInitializers()
+        void AddDefaultInitializers()
         {
             AddPropertyTypeInitializator(s => s);
             AddPropertyTypeInitializator(int.Parse);
@@ -64,17 +64,17 @@ namespace UnityGUIFramework
                 DebugHelper.Debug(msg, args);
         }
 
-        private static readonly Regex ColorCodeRegex = new Regex("0x([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})",
+        static readonly Regex ColorCodeRegex = new Regex("0x([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})",
             RegexOptions.IgnoreCase);
 
-        private static float ParseColor(string str)
+        static float ParseColor(string str)
         {
             var val = byte.Parse(str, NumberStyles.HexNumber);
             const byte maxValue = 0xff;
             return ((float) val) / maxValue;
         }
 
-        private static Color ColorInitializer(string text)
+        static Color ColorInitializer(string text)
         {
             var match = ColorCodeRegex.Match(text);
             if (match.Success)
@@ -94,17 +94,17 @@ namespace UnityGUIFramework
             return (Color)propInfo.GetValue(null, null);
         }
 
-        private static IList<string> ListOfStringsInitializer(string input)
+        static IList<string> ListOfStringsInitializer(string input)
         {
             var parts = input.Split(new[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
             return parts.ToList();
         }
 
-        private Texture TexturePropertyTypeInitializer(string s)
+        Texture TexturePropertyTypeInitializer(string s)
         {
             //format is protocol://path/to/file.png
             var result = new Texture2D(32, 32);
-            if (s.StartsWith("resource://"))
+            if (s.StartsWith ("resource://", StringComparison.Ordinal))
             {
                 //resource://Namespace.Type,Assembly;Resourcename.xml
                 var parts = s.Replace("resource://", string.Empty).Split(';');
@@ -117,7 +117,7 @@ namespace UnityGUIFramework
                 DebugPrint("image: {0}x{1}", result.width, result.height);
                 return result;
             }
-            if (s.StartsWith("file:///"))
+            if (s.StartsWith ("file:///", StringComparison.Ordinal))
             {
                 s = "file://" + KSPUtil.ApplicationRootPath.Replace("\\", "/") + s.Replace("file:///", string.Empty);
             }
@@ -187,7 +187,7 @@ namespace UnityGUIFramework
         #endregion
 
 
-        private string GetResource(Type type, string resourceName)
+        string GetResource(Type type, string resourceName)
         {
             DebugPrint("Loading resource {0}, {1}", type, resourceName);
             using (var stream = type.Assembly.GetManifestResourceStream(type, resourceName))
@@ -205,7 +205,7 @@ namespace UnityGUIFramework
         }
 
 
-        private byte[] GetResourceData(Type type, string resourceName)
+        byte[] GetResourceData(Type type, string resourceName)
         {
             DebugPrint("Loading resource data {0}, {1}", type, resourceName);
             using (var stream = type.Assembly.GetManifestResourceStream(type, resourceName))
@@ -283,7 +283,7 @@ namespace UnityGUIFramework
             CreateChildControls(window.Children, winNode.ChildNodes);
         }
 
-        private void CreateChildControls(ICollection<GUIControl> controlsCollection, XmlNodeList nodeList)
+        void CreateChildControls(ICollection<GUIControl> controlsCollection, XmlNodeList nodeList)
         {
             foreach (XmlElement childNode in nodeList)
             {
@@ -299,7 +299,7 @@ namespace UnityGUIFramework
             }
         }
 
-        private Func<GUIControl> GetFactory(string fullControlName)
+        Func<GUIControl> GetFactory(string fullControlName)
         {
             if (!_controlFactories.ContainsKey(fullControlName))
             {
@@ -345,7 +345,7 @@ namespace UnityGUIFramework
             }
         }
 
-        private GUIControl CreateControl(XmlElement node)
+        GUIControl CreateControl(XmlElement node)
         {
             DebugPrint("Attempting to init control {0}/{1}...", node.NamespaceURI, node.LocalName);
             if (!_namespaces.ContainsKey(node.NamespaceURI))

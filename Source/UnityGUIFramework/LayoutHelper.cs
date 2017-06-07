@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace UnityGUIFramework
 {
-    internal class LayoutHelper : IDisposable
+    class LayoutHelper : IDisposable
     {
-        private readonly LayoutDirection _direction;
+        readonly LayoutDirection _direction;
 
         public LayoutHelper(LayoutDirection direction)
         {

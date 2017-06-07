@@ -34,7 +34,6 @@ using UnityEngine;
 \*-----------------------------------------*/
 namespace RealismOverhaul
 {
-
     /**
      * This utility displays a warning with a list of mods that determine themselves
      * to be incompatible with the current running version of Kerbal Space Program.
@@ -44,7 +43,8 @@ namespace RealismOverhaul
      */
 
     [KSPAddon(KSPAddon.Startup.Instantly, true)]
-    internal class CompatibilityChecker : MonoBehaviour
+
+    class CompatibilityChecker : MonoBehaviour
     {
         public static bool IsCompatible()
         {
@@ -52,7 +52,6 @@ namespace RealismOverhaul
             |    BEGIN IMPLEMENTATION-SPECIFIC EDITS HERE.    |
             \*-----------------------------------------------*/
 
-            // TODO: Implement your own compatibility check.
             //
             // If you want to disable some behavior when incompatible, other parts of the plugin
             // should query this method:
@@ -64,7 +63,7 @@ namespace RealismOverhaul
             // Even if you don't lock down functionality, you should return true if your users
             // can expect a future update to be available.
             //
-            return Versioning.version_minor == 2 && Versioning.version_major == 1;
+            return Versioning.version_minor == 3 && Versioning.version_major == 1;
 
             /*-----------------------------------------------*\
             | IMPLEMENTERS SHOULD NOT EDIT BEYOND THIS POINT! |
@@ -77,8 +76,6 @@ namespace RealismOverhaul
             |    BEGIN IMPLEMENTATION-SPECIFIC EDITS HERE.    |
             \*-----------------------------------------------*/
 
-            // TODO: Implement your own Unity compatibility check.
-            //
             return true;
 
             /*-----------------------------------------------*\
@@ -87,7 +84,7 @@ namespace RealismOverhaul
         }
 
         // Version of the compatibility checker itself.
-        private static int _version = 5;
+        static int _version = 5;
 
         public void Start()
         {
@@ -103,14 +100,14 @@ namespace RealismOverhaul
             // Let the latest version of the checker execute.
             if (_version != fields.Max(f => (int)f.GetValue(null))) { return; }
 
-            Debug.Log(String.Format("[CompatibilityChecker] Running checker version {0} from '{1}'", _version, Assembly.GetExecutingAssembly().GetName().Name));
+            Debug.Log(string.Format("[CompatibilityChecker] Running checker version {0} from '{1}'", _version, Assembly.GetExecutingAssembly().GetName().Name));
 
             // Other checkers will see this version and not run.
             // This accomplishes the same as an explicit "ran" flag with fewer moving parts.
             _version = int.MaxValue;
 
             // A mod is incompatible if its compatibility checker has an IsCompatible method which returns false.
-            String[] incompatible =
+            string[] incompatible =
                 fields
                     .Select(f => f.DeclaringType.GetMethod("IsCompatible", Type.EmptyTypes))
                     .Where(m => m.IsStatic)
@@ -124,7 +121,7 @@ namespace RealismOverhaul
                         catch (Exception e)
                         {
                             // If a mod throws an exception from IsCompatible, it's not compatible.
-                            Debug.LogWarning(String.Format("[CompatibilityChecker] Exception while invoking IsCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
+                            Debug.LogWarning(string.Format("[CompatibilityChecker] Exception while invoking IsCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
                             return true;
                         }
                     })
@@ -132,7 +129,7 @@ namespace RealismOverhaul
                     .ToArray();
 
             // A mod is incompatible with Unity if its compatibility checker has an IsUnityCompatible method which returns false.
-            String[] incompatibleUnity =
+            string[] incompatibleUnity =
                 fields
                     .Select(f => f.DeclaringType.GetMethod("IsUnityCompatible", Type.EmptyTypes))
                     .Where(m => m != null)  // Mods without IsUnityCompatible() are assumed to be compatible.
@@ -147,7 +144,7 @@ namespace RealismOverhaul
                         catch (Exception e)
                         {
                             // If a mod throws an exception from IsUnityCompatible, it's not compatible.
-                            Debug.LogWarning(String.Format("[CompatibilityChecker] Exception while invoking IsUnityCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
+                            Debug.LogWarning(string.Format("[CompatibilityChecker] Exception while invoking IsUnityCompatible() from '{0}':\n\n{1}", m.DeclaringType.Assembly.GetName().Name, e));
                             return true;
                         }
                     })
@@ -157,30 +154,30 @@ namespace RealismOverhaul
             Array.Sort(incompatible);
             Array.Sort(incompatibleUnity);
 
-            String message = String.Empty;
+            string message = string.Empty;
 
             if ((incompatible.Length > 0) || (incompatibleUnity.Length > 0))
             {
-                message += ((message == String.Empty) ? "Some" : "\n\nAdditionally, some") + " installed mods may be incompatible with this version of Kerbal Space Program. Features may be broken or disabled. Please check for updates to the listed mods.";
+                message += ((message == string.Empty) ? "Some" : "\n\nAdditionally, some") + " installed mods may be incompatible with this version of Kerbal Space Program. Features may be broken or disabled. Please check for updates to the listed mods.";
 
                 if (incompatible.Length > 0)
                 {
-                    Debug.LogWarning("[CompatibilityChecker] Incompatible mods detected: " + String.Join(", ", incompatible));
-                    message += String.Format("\n\nThese mods are incompatible with KSP {0}.{1}.{2}:\n\n", Versioning.version_major, Versioning.version_minor, Versioning.Revision);
-                    message += String.Join("\n", incompatible);
+                    Debug.LogWarning("[CompatibilityChecker] Incompatible mods detected: " + string.Join(", ", incompatible));
+                    message += string.Format("\n\nThese mods are incompatible with KSP {0}.{1}.{2}:\n\n", Versioning.version_major, Versioning.version_minor, Versioning.Revision);
+                    message += string.Join("\n", incompatible);
                 }
 
                 if (incompatibleUnity.Length > 0)
                 {
-                    Debug.LogWarning("[CompatibilityChecker] Incompatible mods (Unity) detected: " + String.Join(", ", incompatibleUnity));
-                    message += String.Format("\n\nThese mods are incompatible with Unity {0}:\n\n", Application.unityVersion);
-                    message += String.Join("\n", incompatibleUnity);
+                    Debug.LogWarning("[CompatibilityChecker] Incompatible mods (Unity) detected: " + string.Join(", ", incompatibleUnity));
+                    message += string.Format("\n\nThese mods are incompatible with Unity {0}:\n\n", Application.unityVersion);
+                    message += string.Join("\n", incompatibleUnity);
                 }
             }
 
             if ((incompatible.Length > 0) || (incompatibleUnity.Length > 0))
             {
-                PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "Incompatible Mods Detected", message, "OK", true, HighLogic.UISkin);
+                PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "CompatibilityChecker", "Incompatible Mods Detected", message, "OK", true, HighLogic.UISkin, true, string.Empty);
             }
         }
 
@@ -194,7 +191,7 @@ namespace RealismOverhaul
             return IsCompatible() && IsUnityCompatible();
         }
 
-        private static IEnumerable<Type> getAllTypes()
+        static IEnumerable<Type> getAllTypes()
         {
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {

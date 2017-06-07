@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityGUIFramework;
 using UnityGUIFramework.Controls;
 
@@ -10,11 +7,11 @@ namespace EngineGroupController
     public class EngineFlightUI : GUIWindow
     {
 #pragma warning disable 649
-        private ScrollAreaControl _saTable;
+        ScrollAreaControl _saTable;
 #pragma warning restore 649
 
-        private readonly IDictionary<EngineGroup, LayoutControl> _groupControls = new Dictionary<EngineGroup, LayoutControl>();
-        private readonly LayoutControl _root;
+        readonly IDictionary<EngineGroup, LayoutControl> _groupControls = new Dictionary<EngineGroup, LayoutControl>();
+        readonly LayoutControl _root;
 
         public EngineFlightUI(string title, GUIFramework framework)
             : base(title, framework, typeof (EngineFlightUI), "EngineFlightUI.xml")
@@ -34,21 +31,21 @@ namespace EngineGroupController
             _groupControls.Add(group, ctrl);
             _root.Children.Add(ctrl);
 
-            this.Height = 30.0f + 30.0f*_groupControls.Count;
+            Height = 30.0f + 30.0f*_groupControls.Count;
         }
 
         public void ClearGroups()
         {
             _groupControls.Clear();
             _root.Children.Clear();
-            this.Height = 30.0f + 30.0f * _groupControls.Count;
+            Height = 30.0f + 30.0f * _groupControls.Count;
         }
 
         public void RemoveGroup(EngineGroup group)
         {
             _root.Children.Remove(_groupControls[group]);
             _groupControls.Remove(group);
-            this.Height = 30.0f + 30.0f * _groupControls.Count;
+            Height = 30.0f + 30.0f * _groupControls.Count;
         }
 
         public void DisplayNoGroupsMessage()
@@ -56,7 +53,7 @@ namespace EngineGroupController
             _root.Children.Add(new LabelControl { Text = "No engine groups defined."});
         }
 
-        private LayoutControl BuildEngineGroupControls(EngineGroup group)
+        LayoutControl BuildEngineGroupControls(EngineGroup group)
         {
             var root = new LayoutControl {Direction = LayoutDirection.Horizontal};
             //root.Children.Add(new LabelControl { Text = group.GroupId, Width = 100.0f});
@@ -73,7 +70,7 @@ namespace EngineGroupController
                 Width = 140.0f, 
                 Height = 10.0f, 
                 Value = group.Throttle,
-                Enabled = group.IsEnabled,
+                Enabled = group.IsEnabled
             };
             slider.ValueChanged += x => 
             { 

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace UnityGUIFramework
+﻿namespace UnityGUIFramework
 {
     /// <summary>
     /// This is utility class that wraps logging functions
