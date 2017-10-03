@@ -25,7 +25,7 @@ namespace RealismOverhaul
         protected Vector3 _defaultCoM;
 
         [KSPEvent(guiName = "Turn Descent Mode On", guiActive = true, guiActiveEditor = true)]
-        public void ToggleMode()
+        public virtual void ToggleMode()
         {
             IsDescentMode = !IsDescentMode;
             SetDescentMode(IsDescentMode);
