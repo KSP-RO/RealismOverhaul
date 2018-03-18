@@ -64,7 +64,7 @@ namespace RealismOverhaul
             // Even if you don't lock down functionality, you should return true if your users
             // can expect a future update to be available.
             //
-            return Versioning.version_minor == 2 && Versioning.version_major == 1;
+            return Versioning.version_minor == 3 && Versioning.version_major == 1;
 
             /*-----------------------------------------------*\
             | IMPLEMENTERS SHOULD NOT EDIT BEYOND THIS POINT! |
@@ -180,7 +180,7 @@ namespace RealismOverhaul
 
             if ((incompatible.Length > 0) || (incompatibleUnity.Length > 0))
             {
-                PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "Incompatible Mods Detected", message, "OK", true, HighLogic.UISkin);
+                PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "IncompatibilityNotification", "Incompatible Mods Detected", message, "OK", true, HighLogic.UISkin);
             }
         }
 
