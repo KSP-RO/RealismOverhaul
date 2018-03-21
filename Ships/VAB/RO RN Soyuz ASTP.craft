@@ -1,8 +1,8 @@
 ship = RO RN Soyuz ASTP
-version = 1.2.2
+version = 1.3.1
 description = Raidernick's Soyuz-ASTP for RO¨AG1 - Deploy antennae¨AG2 - Toggle "burn" state on descent module¨AG9 - Deploy parachute and decouple heatshield¨AG10 - Decouple orbital module only, for use during abort only
 type = VAB
-size = 10.2002649,49.9299469,10.2002716
+size = 10.2002668,49.9299469,10.2002754
 PART
 {
 	part = ok.sa_4291683220
@@ -135,6 +135,10 @@ PART
 		}
 		ACTIONS
 		{
+			MakeReferenceToggle
+			{
+				actionGroup = None
+			}
 			HibernateToggle
 			{
 				actionGroup = None
@@ -297,25 +301,6 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = DM
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
 		stagingEnabled = True
 		EVENTS
 		{
@@ -1323,34 +1308,6 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
-		TANK
-		{
-			name = ComSatBus
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = WeatherSatBus
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
 		UPGRADESAPPLIED
 		{
 		}
@@ -1476,6 +1433,10 @@ PART
 			{
 				actionGroup = None
 			}
+			OnAscentAPToggleAction
+			{
+				actionGroup = None
+			}
 		}
 		MechJebLocalSettings
 		{
@@ -1484,7 +1445,37 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
+			MechJebModuleAirplaneAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAirplaneGuidance
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
 			MechJebModuleAscentAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentClassic
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentClassicMenu
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentGT
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentGTMenu
 			{
 				unlockParts = 
 				unlockTechs = 
@@ -1499,7 +1490,12 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
-			MechJebModuleAscentPathEditor
+			MechJebModuleAscentPEG
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentPEGMenu
 			{
 				unlockParts = 
 				unlockTechs = 
@@ -1642,6 +1638,7 @@ PART
 			{
 				minifiedGUI = False
 				selectedSlot = 0
+				selectedMemorySlotType = 0
 				activeSavepoint = -1
 				unlockParts = 
 				unlockTechs = 
@@ -1705,8 +1702,29 @@ PART
 			}
 			MechJebModuleSpaceplaneAutopilot
 			{
+				bBreakAsSoonAsLanded = False
 				unlockParts = 
 				unlockTechs = 
+				glideslope
+				{
+					_val = 3
+					_text = 3
+				}
+				approachSpeed
+				{
+					_val = 80
+					_text = 80
+				}
+				touchdownSpeed
+				{
+					_val = 60
+					_text = 60
+				}
+				maximumSafeBankAngle
+				{
+					_val = 25
+					_text = 25
+				}
 			}
 			MechJebModuleSpaceplaneGuidance
 			{
@@ -1782,9 +1800,15 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
+			MechJebModuleDeployableAntennaController
+			{
+				prev_shouldDeploy = False
+				unlockParts = 
+				unlockTechs = 
+			}
 			MechJebModuleSolarPanelController
 			{
-				prev_ShouldOpenSolarPanels = False
+				prev_shouldDeploy = False
 				unlockParts = 
 				unlockTechs = 
 			}
@@ -1850,6 +1874,15 @@ PART
 			{
 				unlockParts = 
 				unlockTechs = 
+				MJAttitudeController
+				{
+				}
+				KosAttitudeController
+				{
+				}
+				HybridController
+				{
+				}
 			}
 			MechJebModuleStagingController
 			{
@@ -1934,6 +1967,17 @@ PART
 		UPGRADESAPPLIED
 		{
 		}
+	}
+	RESOURCE
+	{
+		name = SolidFuel
+		amount = 0.625
+		maxAmount = 0.625
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
 	}
 	RESOURCE
 	{
@@ -2216,7 +2260,7 @@ PART
 	istg = 3
 	resPri = 0
 	dstg = 1
-	sidx = 1
+	sidx = 0
 	sqor = 3
 	sepI = 3
 	attm = 0
@@ -3556,34 +3600,6 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
-		TANK
-		{
-			name = ComSatBus
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = WeatherSatBus
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
 		UPGRADESAPPLIED
 		{
 		}
@@ -3738,7 +3754,7 @@ PART
 	istg = 3
 	resPri = 0
 	dstg = 0
-	sidx = 0
+	sidx = 1
 	sqor = 3
 	sepI = 3
 	attm = 0
@@ -4912,34 +4928,6 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
-		TANK
-		{
-			name = ComSatBus
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = WeatherSatBus
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
 		UPGRADESAPPLIED
 		{
 		}
@@ -5108,7 +5096,7 @@ PART
 	sepI = -1
 	attm = 0
 	modCost = 74.1999969
-	modMass = 0
+	modMass = 1.86264515E-09
 	modSize = 0,0,0
 	attN = para,ok.sa_4291683220
 	EVENTS
@@ -5309,6 +5297,10 @@ PART
 			{
 				actionGroup = None
 			}
+			MakeReferenceToggle
+			{
+				actionGroup = None
+			}
 			EnableXFeedAction
 			{
 				actionGroup = None
@@ -5346,6 +5338,24 @@ PART
 			{
 				actionGroup = Custom01
 			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleDockingNodeNamed
+		isEnabled = True
+		portName = APAS-75 Docking Port
+		initialized = True
+		controlTransformName = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -5452,8 +5462,11 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleDeployableSolarPanel
+		name = KopernicusSolarPanel
 		isEnabled = True
+		trackingBodyName = The Sun
+		manualTracking = False
+		relativeSunAOA = False
 		efficiencyMult = 1
 		launchUT = -1
 		currentRotation = (0.707106829, 9.41569667E-08, 0.707106829, -9.41569667E-08)
@@ -5584,8 +5597,11 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleDeployableSolarPanel
+		name = KopernicusSolarPanel
 		isEnabled = True
+		trackingBodyName = The Sun
+		manualTracking = False
+		relativeSunAOA = False
 		efficiencyMult = 1
 		launchUT = -1
 		currentRotation = (0.707106829, 9.41569667E-08, 0.707106829, -9.41569667E-08)
@@ -7307,34 +7323,6 @@ PART
 			note = 
 			utilization = 1
 			mass = 8.09999983E-05
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = ComSatBus
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = WeatherSatBus
-			note = 
-			utilization = 1
-			mass = 0
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -9606,6 +9594,21 @@ PART
 	MODULE
 	{
 		name = ModuleSurfaceFX
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ReflectiveShaderModule
 		isEnabled = True
 		stagingEnabled = True
 		EVENTS
@@ -12159,6 +12162,21 @@ PART
 	}
 	MODULE
 	{
+		name = ReflectiveShaderModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
@@ -12272,10 +12290,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292767418
 	partName = Part
-	pos = -3.49765015,1.22210693,0.546978474
+	pos = -3.49765015,1.22210693,0.546978712
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.864620328,2.05395389
-	rot = 3.26839115E-13,-1.19209275E-07,-1.59161551E-12,1
+	rot = 2.1315229E-13,-1.19209275E-07,-1.59161551E-12,1
 	attRot = 0,0,0,1
 	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
 	mir = 1,1,1
@@ -12534,10 +12552,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292767280
 	partName = Part
-	pos = -3.49764919,1.22210693,-0.543353319
+	pos = -3.49764967,1.22210693,-0.543353438
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.864620328,2.05395389
-	rot = 3.26839115E-13,-1.19209275E-07,-1.59161551E-12,1
+	rot = 2.1315229E-13,-1.19209275E-07,-1.59161551E-12,1
 	attRot = 0,0,0,1
 	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
 	mir = 1,1,1
@@ -13779,10 +13797,10 @@ PART
 {
 	part = rn.WING.R7_4292766404
 	partName = Part
-	pos = 7.58096576E-06,2.16399384,3.99170804
+	pos = 7.58096576E-06,2.16399384,3.99170876
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.00499199E-10
-	rot = -3.65620781E-06,0.707106769,-3.65620667E-06,0.707106888
+	rot = -3.65620804E-06,0.707106769,-3.6562069E-06,0.707106888
 	attRot = 0,0,0,1
 	attRot0 = -8.03887393E-14,-8.42937027E-08,-2.58536306E-06,1
 	mir = 1,1,1
@@ -13917,10 +13935,10 @@ PART
 {
 	part = launchClamp1_4292766354
 	partName = Part
-	pos = -0.911918879,1.85495758,4.42788601
+	pos = -0.911919117,1.85495758,4.42788744
 	attPos = 0,0,0
 	attPos0 = -3.40334892,-13.3609896,-0.911924183
-	rot = 0.00307472912,0.991169691,-0.0233600084,0.130489916
+	rot = 0.00307472912,0.991169691,-0.0233600046,0.130489945
 	attRot = 0,0,0,1
 	attRot0 = 0.0186906103,0.60859251,-0.0143418098,0.79313308
 	mir = 1,1,1
@@ -13957,7 +13975,7 @@ PART
 		scaleFactor = 1.01398718
 		height = 2.55849028
 		stagingEnabled = True
-		towerRot = -0.00307472912,-0.991169691,0.0233600084,0.130489916
+		towerRot = -0.00307472912,-0.991169691,0.0233600046,0.130489945
 		EVENTS
 		{
 		}
@@ -14075,7 +14093,7 @@ PART
 {
 	part = rn.r7.bvgd.engine_4292095826
 	partName = Part
-	pos = 7.6405704E-06,2.08673096,1.44370246
+	pos = 7.6405704E-06,2.08673096,1.44371152
 	attPos = 0,0,0
 	attPos0 = -0.419175386,-13.1292,5.57425794E-09
 	rot = -3.41060486E-13,0,-1.13686824E-13,1
@@ -14168,6 +14186,21 @@ PART
 	MODULE
 	{
 		name = ModuleSurfaceFX
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ReflectiveShaderModule
 		isEnabled = True
 		stagingEnabled = True
 		EVENTS
@@ -14295,10 +14328,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292095632
 	partName = Part
-	pos = 0.546983957,1.22210693,3.49766064
+	pos = 0.546984434,1.22210693,3.49767065
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.864620328,2.05395389
-	rot = -4.54747297E-13,0.707106769,-1.37369142E-12,0.707106888
+	rot = -3.41060486E-13,0.707106769,-1.26000469E-12,0.707106888
 	attRot = 0,0,0,1
 	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
 	mir = 1,1,1
@@ -14557,10 +14590,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292095490
 	partName = Part
-	pos = -0.543347836,1.22210693,3.49765778
+	pos = -0.543348074,1.22210693,3.49766803
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.864620328,2.05395389
-	rot = -4.54747297E-13,0.707106769,-1.37369142E-12,0.707106888
+	rot = -3.41060486E-13,0.707106769,-1.26000469E-12,0.707106888
 	attRot = 0,0,0,1
 	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
 	mir = 1,1,1
@@ -16205,6 +16238,21 @@ PART
 	}
 	MODULE
 	{
+		name = ReflectiveShaderModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
@@ -16318,7 +16366,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292095154
 	partName = Part
-	pos = 3.49766374,1.22210693,-0.546974421
+	pos = 3.49766421,1.22210693,-0.546974421
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.864620328,2.05395389
 	rot = -1.13686827E-12,1,-5.50443046E-13,1.64904847E-07
@@ -16580,7 +16628,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292095012
 	partName = Part
-	pos = 3.49766159,1.22210693,0.543357015
+	pos = 3.49766207,1.22210693,0.543357134
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.864620328,2.05395389
 	rot = -1.13686827E-12,1,-5.50443046E-13,1.64904847E-07
@@ -17825,10 +17873,10 @@ PART
 {
 	part = rn.WING.R7_4292764928
 	partName = Part
-	pos = 7.58096576E-06,2.16399384,-3.99170232
+	pos = 7.58096576E-06,2.16399384,-3.99170303
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.00499199E-10
-	rot = -3.65620645E-06,0.707106888,3.65620781E-06,-0.707106769
+	rot = -3.65620622E-06,0.707106888,3.65620758E-06,-0.707106769
 	attRot = 0,0,0,1
 	attRot0 = -8.03887393E-14,-8.42937027E-08,-2.58536306E-06,1
 	mir = 1,1,1
@@ -17963,10 +18011,10 @@ PART
 {
 	part = launchClamp1_4292764878
 	partName = Part
-	pos = 0.911934495,1.85495758,-4.42788553
+	pos = 0.911934972,1.85495758,-4.42788649
 	attPos = 0,0,0
 	attPos0 = -3.40334892,-13.3609896,-0.911924183
-	rot = -0.0233599786,0.130489886,-0.00307472865,-0.991169691
+	rot = -0.0233599767,0.130489886,-0.00307472772,-0.991169691
 	attRot = 0,0,0,1
 	attRot0 = 0.0186906103,0.60859251,-0.0143418098,0.79313308
 	mir = 1,1,1
@@ -18003,7 +18051,7 @@ PART
 		scaleFactor = 1.01398718
 		height = 2.55849028
 		stagingEnabled = True
-		towerRot = 0.0233599786,-0.130489886,0.00307472865,-0.991169691
+		towerRot = 0.0233599767,-0.130489886,0.00307472772,-0.991169691
 		EVENTS
 		{
 		}
@@ -18121,7 +18169,7 @@ PART
 {
 	part = rn.r7.bvgd.engine_4292094870
 	partName = Part
-	pos = 7.6405704E-06,2.08673096,-1.44369876
+	pos = 7.6405704E-06,2.08673096,-1.44370782
 	attPos = 0,0,0
 	attPos0 = -0.419175386,-13.1292,-5.57425794E-09
 	rot = 3.41060486E-13,1,0,0
@@ -18214,6 +18262,21 @@ PART
 	MODULE
 	{
 		name = ModuleSurfaceFX
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ReflectiveShaderModule
 		isEnabled = True
 		stagingEnabled = True
 		EVENTS
@@ -18341,10 +18404,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292094676
 	partName = Part
-	pos = -0.546968818,1.22210693,-3.49765587
+	pos = -0.546969056,1.22210693,-3.49766612
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.864620328,2.05395389
-	rot = -1.36424194E-12,0.707106888,2.17924095E-13,-0.707106769
+	rot = -1.13686827E-12,0.707106888,4.45297743E-13,-0.707106769
 	attRot = 0,0,0,1
 	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
 	mir = 1,1,1
@@ -18603,10 +18666,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4292094534
 	partName = Part
-	pos = 0.543362975,1.22210693,-3.49765372
+	pos = 0.543363214,1.22210693,-3.49766397
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.864620328,2.05395389
-	rot = -1.36424194E-12,0.707106888,2.17924095E-13,-0.707106769
+	rot = -1.13686827E-12,0.707106888,4.45297743E-13,-0.707106769
 	attRot = 0,0,0,1
 	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
 	mir = 1,1,1
@@ -18910,7 +18973,7 @@ PART
 		{
 			DecoupleAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 		}
 		UPGRADESAPPLIED
@@ -18945,7 +19008,7 @@ PART
 			}
 			ActivateAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 		}
 		Ullage
@@ -19098,7 +19161,7 @@ PART
 		{
 			DecoupleAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 		}
 		UPGRADESAPPLIED
@@ -19133,7 +19196,7 @@ PART
 			}
 			ActivateAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 		}
 		Ullage
