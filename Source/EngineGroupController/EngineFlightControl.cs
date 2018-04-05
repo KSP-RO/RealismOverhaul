@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityGUIFramework;
+using KSP.UI.Screens;
 
 namespace EngineGroupController
 {
@@ -27,7 +28,7 @@ namespace EngineGroupController
             OnVesselWasModified(FlightGlobals.ActiveVessel);
             //GameEvents.onVesselChange.Add(OnVesselWasModified);
             GameEvents.onVesselWasModified.Add(OnVesselWasModified);
-            _gui.StartPostDisplay(1);
+            _gui.RenderEnabled = true;
             GameEvents.onGUIApplicationLauncherReady.Add(OnGUIAppLauncherReady);
             OnGUIAppLauncherReady();
         }
@@ -126,7 +127,7 @@ namespace EngineGroupController
             ApplicationLauncher.Instance.RemoveModApplication(_appLauncherButton);
             //GameEvents.onVesselChange.Remove(OnVesselWasModified);
             GameEvents.onVesselWasModified.Remove(OnVesselWasModified);
-            _gui.EndPostDisplay();
+            _gui.RenderEnabled = false;
             Instance = null;
             _gui = null;
             _framework = null;
@@ -134,11 +135,15 @@ namespace EngineGroupController
 
         public void Update()
         {
-            
+
         }
 
         public void OnGUI()
         {
+            if (_gui != null && _gui.RenderEnabled)
+            {
+                _gui.Show();
+            }
         }
 
         public void FixedUpdate()
