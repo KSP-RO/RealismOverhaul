@@ -1,8 +1,8 @@
 ship = RO RN Voskhod 2
-version = 1.2.2
+version = 1.3.1
 description = Raidernick's Voskhod-2 for RO¨AG1 - Deploy antennae¨AG9 - Inflate/Deflate airlock¨AG10 - Activate backup retro module
 type = VAB
-size = 10.2053537,43.9766541,10.2053623
+size = 10.2053547,43.9766541,10.2053642
 PART
 {
 	part = rn.voskhod.sc_4292888302
@@ -30,10 +30,10 @@ PART
 	link = rn.vostok.dec_4292884354
 	link = rn.voskhod.retro.dec_4293915954
 	link = rn.voskhod.airlock_4293489788
-	link = rn.voskhod.para_4291226278
+	link = rn.voskhod.para_4293431222
 	attN = bottom,rn.vostok.dec_4292884354
 	attN = top,rn.voskhod.retro.dec_4293915954
-	attN = para,rn.voskhod.para_4291226278
+	attN = para,rn.voskhod.para_4293431222
 	attN = airlock,rn.voskhod.airlock_4293489788
 	EVENTS
 	{
@@ -137,26 +137,15 @@ PART
 		}
 		ACTIONS
 		{
+			MakeReferenceToggle
+			{
+				actionGroup = None
+			}
 			HibernateToggle
 			{
 				actionGroup = None
 				active = False
 			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = TRReflection
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -1325,6 +1314,10 @@ PART
 			{
 				actionGroup = None
 			}
+			OnAscentAPToggleAction
+			{
+				actionGroup = None
+			}
 		}
 		MechJebLocalSettings
 		{
@@ -1333,7 +1326,37 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
+			MechJebModuleAirplaneAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAirplaneGuidance
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
 			MechJebModuleAscentAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentClassic
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentClassicMenu
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentGT
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentGTMenu
 			{
 				unlockParts = 
 				unlockTechs = 
@@ -1348,7 +1371,12 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
-			MechJebModuleAscentPathEditor
+			MechJebModuleAscentPEG
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentPEGMenu
 			{
 				unlockParts = 
 				unlockTechs = 
@@ -1491,6 +1519,7 @@ PART
 			{
 				minifiedGUI = False
 				selectedSlot = 0
+				selectedMemorySlotType = 0
 				activeSavepoint = -1
 				unlockParts = 
 				unlockTechs = 
@@ -1554,8 +1583,29 @@ PART
 			}
 			MechJebModuleSpaceplaneAutopilot
 			{
+				bBreakAsSoonAsLanded = False
 				unlockParts = 
 				unlockTechs = 
+				glideslope
+				{
+					_val = 3
+					_text = 3
+				}
+				approachSpeed
+				{
+					_val = 80
+					_text = 80
+				}
+				touchdownSpeed
+				{
+					_val = 60
+					_text = 60
+				}
+				maximumSafeBankAngle
+				{
+					_val = 25
+					_text = 25
+				}
 			}
 			MechJebModuleSpaceplaneGuidance
 			{
@@ -1631,9 +1681,15 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
+			MechJebModuleDeployableAntennaController
+			{
+				prev_shouldDeploy = False
+				unlockParts = 
+				unlockTechs = 
+			}
 			MechJebModuleSolarPanelController
 			{
-				prev_ShouldOpenSolarPanels = False
+				prev_shouldDeploy = False
 				unlockParts = 
 				unlockTechs = 
 			}
@@ -1699,6 +1755,15 @@ PART
 			{
 				unlockParts = 
 				unlockTechs = 
+				MJAttitudeController
+				{
+				}
+				KosAttitudeController
+				{
+				}
+				HybridController
+				{
+				}
 			}
 			MechJebModuleStagingController
 			{
@@ -1944,21 +2009,6 @@ PART
 	}
 	MODULE
 	{
-		name = TRReflection
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
 		name = GeometryPartModule
 		isEnabled = True
 		stagingEnabled = True
@@ -2156,21 +2206,6 @@ PART
 			{
 				actionGroup = Custom01
 			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = TRReflection
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -3801,21 +3836,6 @@ PART
 			{
 				actionGroup = Custom09
 			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = TRReflection
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -10254,7 +10274,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291758780
 	partName = Part
-	pos = -3.50221133,1.36685181,0.548276544
+	pos = -3.50221181,1.36685181,0.548276544
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.86462009,2.05395508
 	rot = -4.70906815E-14,1.21743357E-19,2.27373675E-13,1.00000012
@@ -10516,7 +10536,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291758642
 	partName = Part
-	pos = -3.50221157,1.36685181,-0.542055964
+	pos = -3.50221205,1.36685181,-0.542056084
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.86462009,2.05395389
 	rot = -4.70906815E-14,1.21743357E-19,2.27373675E-13,1.00000012
@@ -11761,7 +11781,7 @@ PART
 {
 	part = rn.WING.R7_4291758280
 	partName = Part
-	pos = -0.00198841095,2.30873108,3.9955585
+	pos = -0.00198841095,2.30873108,3.99555898
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.04191002E-13
 	rot = 5.68434189E-13,0.707106829,5.68434189E-13,0.707106829
@@ -11899,7 +11919,7 @@ PART
 {
 	part = launchClamp1_4291757766
 	partName = Part
-	pos = -0.942775428,1.91180038,4.53943443
+	pos = -0.942775667,1.91180038,4.53943586
 	attPos = 0,0,0
 	attPos0 = -3.51104498,-13.4488897,-0.940781415
 	rot = 0.00375397829,0.991034687,-0.0285194032,0.130472183
@@ -12057,7 +12077,7 @@ PART
 {
 	part = rn.r7.bvgd.engine_4291901624
 	partName = Part
-	pos = -0.00198835135,2.23147202,1.44755507
+	pos = -0.00198835135,2.23147202,1.44755518
 	attPos = 0,0,0
 	attPos0 = -0.419175297,-13.1292,5.57359003E-09
 	rot = -3.41060513E-13,0,-1.13686838E-13,1.00000012
@@ -12277,7 +12297,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291901430
 	partName = Part
-	pos = 0.544989884,1.36685181,3.50151992
+	pos = 0.544990361,1.36685181,3.50152087
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.86462009,2.05395508
 	rot = 0,0.707106888,-2.27373675E-13,0.707106888
@@ -12539,7 +12559,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291901288
 	partName = Part
-	pos = -0.545343101,1.36685181,3.50151944
+	pos = -0.545343339,1.36685181,3.50152087
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.86462009,2.05395389
 	rot = 0,0.707106888,-2.27373675E-13,0.707106888
@@ -14300,7 +14320,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291900952
 	partName = Part
-	pos = 3.49823046,1.36685181,-0.545679212
+	pos = 3.49823093,1.36685181,-0.545679212
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.86462009,2.05395508
 	rot = 2.27373675E-13,1.00000012,4.70906408E-14,-4.37113918E-08
@@ -14562,7 +14582,7 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291900810
 	partName = Part
-	pos = 3.49823046,1.36685181,0.544652939
+	pos = 3.49823093,1.36685181,0.544653058
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.86462009,2.05395389
 	rot = 2.27373675E-13,1.00000012,4.70906408E-14,-4.37113918E-08
@@ -15807,7 +15827,7 @@ PART
 {
 	part = rn.WING.R7_4291756804
 	partName = Part
-	pos = -0.00198841095,2.30873108,-3.99295974
+	pos = -0.00198841095,2.30873108,-3.99296045
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.04191002E-13
 	rot = 5.68434189E-13,0.707106829,-5.68434189E-13,-0.707106829
@@ -15945,7 +15965,7 @@ PART
 {
 	part = launchClamp1_4291756290
 	partName = Part
-	pos = 0.938794792,1.91180038,-4.53683662
+	pos = 0.938795269,1.91180038,-4.53683758
 	attPos = 0,0,0
 	attPos0 = -3.51104498,-13.4488897,-0.940781415
 	rot = -0.0285193902,0.130472124,-0.00375397317,-0.991034687
@@ -16103,7 +16123,7 @@ PART
 {
 	part = rn.r7.bvgd.engine_4291900668
 	partName = Part
-	pos = -0.00198835135,2.23147202,-1.44495714
+	pos = -0.00198835135,2.23147202,-1.44495726
 	attPos = 0,0,0
 	attPos0 = -0.419175386,-13.1292,-5.57357493E-09
 	rot = 3.41060513E-13,1.00000012,0,0
@@ -16323,10 +16343,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291900474
 	partName = Part
-	pos = -0.548966467,1.36685181,-3.49892116
+	pos = -0.548966706,1.36685181,-3.49892259
 	attPos = 0,0,0
 	attPos0 = 0.546976507,-0.86462009,2.05395508
-	rot = 1.13686838E-13,0.707106888,-3.41060513E-13,-0.707106888
+	rot = 0,0.707106888,-4.54747351E-13,-0.707106888
 	attRot = 0,0,0,1
 	attRot0 = 0,0.707106829,0,0.707106829
 	mir = 1,1,1
@@ -16585,10 +16605,10 @@ PART
 {
 	part = rn.r7.vernier.engine.v.fg_4291900332
 	partName = Part
-	pos = 0.541366279,1.36685181,-3.49892116
+	pos = 0.541366518,1.36685181,-3.49892235
 	attPos = 0,0,0
 	attPos0 = -0.543354094,-0.86462009,2.05395389
-	rot = 1.13686838E-13,0.707106888,-3.41060513E-13,-0.707106888
+	rot = 0,0.707106888,-4.54747351E-13,-0.707106888
 	attRot = 0,0,0,1
 	attRot0 = 0,0.707106829,0,0.707106829
 	mir = 1,1,1
@@ -17219,7 +17239,7 @@ PART
 }
 PART
 {
-	part = rn.voskhod.para_4291226278
+	part = rn.voskhod.para_4293431222
 	partName = Part
 	pos = -0.00198841095,39.5018005,0.00129878498
 	attPos = 0,0,0
@@ -17238,7 +17258,7 @@ PART
 	sqor = 1
 	sepI = -1
 	attm = 0
-	modCost = 26.2999992
+	modCost = 52
 	modMass = 0
 	modSize = 0,0,0
 	attN = para,rn.voskhod.sc_4292888302
@@ -17250,21 +17270,6 @@ PART
 	}
 	PARTDATA
 	{
-	}
-	MODULE
-	{
-		name = TRReflection
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
 	}
 	MODULE
 	{
@@ -17315,19 +17320,19 @@ PART
 	{
 		name = RealChuteModule
 		isEnabled = True
-		caseMass = 0.0299999993
+		caseMass = 0.0500000007
 		cutSpeed = 0.5
 		timer = 0
-		mustGoDown = True
+		mustGoDown = False
 		deployOnGround = False
-		spareChutes = 2
+		spareChutes = 0
 		initiated = True
 		wait = True
 		armed = False
 		oneWasDeployed = False
 		staged = False
 		launched = False
-		chuteCount = 2
+		chuteCount = 0
 		stagingEnabled = True
 		EVENTS
 		{
@@ -17354,33 +17359,77 @@ PART
 		PARACHUTE
 		{
 			material = Nylon
-			preDeployedDiameter = 1.20000005
-			deployedDiameter = 2.4000001
-			minIsPressure = False
+			preDeployedDiameter = 2
+			deployedDiameter = 21
+			minIsPressure = True
 			capOff = False
-			minDeployment = 4000
+			minDeployment = 25000
 			minPressure = 0.00999999978
-			deploymentAlt = 3000
-			cutAlt = 2500
-			preDeploymentSpeed = 1
-			deploymentSpeed = 3
+			deploymentAlt = 2000
+			cutAlt = -1
+			preDeploymentSpeed = 2
+			deploymentSpeed = 6
 			time = 0
-			parachuteName = RC_canopy2
-			baseParachuteName = RC_canopy2
+			parachuteName = canopy
+			baseParachuteName = canopy
 			capName = cap
-			preDeploymentAnimation = RC_chute2_semi_deploy
-			deploymentAnimation = RC_chute2_full_deploy
+			preDeploymentAnimation = semi
+			deploymentAnimation = full
 			forcedOrientation = 0
 			depState = STOWED
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = RealChuteModule
+		isEnabled = True
+		caseMass = 0.0500000007
+		cutSpeed = 0.5
+		timer = 0
+		mustGoDown = False
+		deployOnGround = False
+		spareChutes = 0
+		initiated = True
+		wait = True
+		armed = False
+		oneWasDeployed = False
+		staged = False
+		launched = False
+		chuteCount = 0
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ActionDeploy
+			{
+				actionGroup = None
+			}
+			ActionCut
+			{
+				actionGroup = None
+			}
+			ActionArm
+			{
+				actionGroup = None
+			}
+			ActionDisarm
+			{
+				actionGroup = None
+			}
 		}
 		PARACHUTE
 		{
 			material = Nylon
 			preDeployedDiameter = 2
 			deployedDiameter = 21
-			minIsPressure = False
+			minIsPressure = True
 			capOff = False
-			minDeployment = 2500
+			minDeployment = 25000
 			minPressure = 0.00999999978
 			deploymentAlt = 2000
 			cutAlt = -1
