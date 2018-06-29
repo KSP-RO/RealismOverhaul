@@ -1,0 +1,176 @@
+//http://neverworld.net/truax/Sea_Dragon_Concept_Volume_1.pdf
+
+@PART[RSSDengineStage1]:FOR[RealismOverhaul]
+{
+	@node_stack_bottom = 0.0, -27, 0.0, 0.0, -1.0, 0.0, 8
+	%RSSROConfig = True
+	%mass = 465.1
+	@MODULE[ModuleEngines*]
+	{
+		@atmosphereCurve
+		{
+			@key,0 = 0 260 //guess, correct value for 121s burn and ~1700m/s velocity at staging
+			@key,1 = 1 242 //rated sl isp
+		}
+		@PROPELLANT[LiquidFuel]    //oxidizer:fuel = 2.3:1
+		{
+			%name = Kerosene
+			%ratio = 0.375
+		}
+		@PROPELLANT[Oxidizer]
+		{
+			%name = LqdOxygen
+			%ratio = 0.625
+		}
+	}
+}
+@PART[RSSDengineStage2]:FOR[RealismOverhaul]
+{
+	%RSSROConfig = True
+	%mass = 108.6
+	@MODULE[ModuleEngines*]
+	{
+		@atmosphereCurve
+		{
+			@key,0 = 0 409 //rated vac isp
+			@key,1 = 1 242
+		}
+		@PROPELLANT[LiquidFuel] //oxidizer:fuel = 5:1
+		{
+			%name = LqdHydrogen
+			%ratio = 76.3
+		}
+		@PROPELLANT[Oxidizer]
+		{
+			%name = LqdOxygen
+			%ratio = 23.7
+		}
+	}
+}
+@PART[RSSDengineTVC]:FOR[RealismOverhaul]
+{
+	%RSSROConfig = True
+	%mass = 0.601
+	@MODULE[ModuleEngines*]
+	{
+		%maxThrust = 236.6
+		%minThrust = 236.6
+		@atmosphereCurve
+		{
+			@key,0 = 0 409
+			@key,1 = 1 242
+		}
+		@PROPELLANT[LiquidFuel]
+		{
+			%name = LqdHydrogen
+			%ratio = 76.3
+		}
+		@PROPELLANT[Oxidizer]
+		{
+			%name = LqdOxygen
+			%ratio = 23.7
+		}
+	}
+	
+	@MODULE[ModuleGimball]
+	{
+		gimbalRange = 8
+	}
+	
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		type = ModuleEnginesFX
+		modded = false
+		configuration = x1 thrust
+		CONFIG
+		{
+			name = x1 thrust
+			minThrust = 236.6
+			maxThrust = 236.6
+		}
+		CONFIG
+		{
+			name = x3 thrust
+			minThrust = 709.8
+			maxThrust = 709.8
+		}
+		CONFIG
+		{
+			name = x5 thrust
+			minThrust = 1183
+			maxThrust = 1183
+		}
+	}
+	
+	
+}
+
+
+//tanks
+@PART[RSSDtankStage1]:FOR[RealismOverhaul] //2,5277,380lbs or 11.47kT kerolox
+{
+	%RSSROConfig = True
+	%mass = 868.4
+	!RESOURCE[LiquidFuel]
+	{
+	}
+	!RESOURCE[Oxidizer]
+	{
+	}
+	MODULE
+	{
+		name = ModuleFuelTanks
+		volume = 11234681
+		basemass = -1
+		type = Default
+	}
+}
+@PART[RSSDtankStage2]:FOR[RealismOverhaul] //9,606,064lbs or 4.357kT hydrolox
+{
+	%RSSROConfig = True
+	%mass = 344.3
+	!RESOURCE[LiquidFuel]
+	{
+	}
+	!RESOURCE[Oxidizer]
+	{
+	}
+	MODULE
+	{
+		name = ModuleFuelTanks
+		volume = 13429930
+		basemass = -1
+		type = Cryogenic
+	}
+}
+@PART[RSSDtankStage3]:FOR[RealismOverhaul] 
+{
+	%mass = 171.8
+	%RSSROConfig = True
+	!RESOURCE[LiquidFuel]
+	{
+	}
+	!RESOURCE[Oxidizer]
+	{
+	}
+	MODULE
+	{
+		name = ModuleFuelTanks
+		volume = 6700000
+		basemass = -1
+		type = Cryogenic
+	}
+}
+
+
+//misc
+@PART[RSSDfairing23m]:FOR[RealismOverhaul]
+{
+	%RSSROConfig = True
+	%mass = 5
+}
+@PART[RSSDtankBallast]:FOR[RealismOverhaul]
+{
+	%RSSROConfig = True
+}
