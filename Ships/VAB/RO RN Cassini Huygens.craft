@@ -1,8 +1,8 @@
 ship = RO RN Cassini Huygens
-version = 1.1.3
+version = 1.3.1
 description = RN Cassini for RSS/RO¨AG1 - Deploy Cassini Antenna¨AG2 - Deploy Huygens parachute and cords¨AG3 - Deploy Huygens antennae
 type = VAB
-size = 10.7029762,59.2781906,8.68759441
+size = 10.7029762,59.2781792,8.68759537
 PART
 {
 	part = rn.cassini_4292860704
@@ -531,6 +531,7 @@ PART
 		type = ServiceModule
 		utilization = 86
 		mass = 2.1500001
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 2738.6912000000002
@@ -1883,7 +1884,6 @@ PART
 			}
 			MechJebModuleSpaceplaneAutopilot
 			{
-				bBreakAsSoonAsLanded = False
 				unlockParts = 
 				unlockTechs = 
 				glideslope
@@ -1895,11 +1895,6 @@ PART
 				{
 					_val = 80
 					_text = 80
-				}
-				touchdownSpeed
-				{
-					_val = 60
-					_text = 60
 				}
 				maximumSafeBankAngle
 				{
@@ -1981,15 +1976,9 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
-			MechJebModuleDeployableAntennaController
-			{
-				prev_shouldDeploy = False
-				unlockParts = 
-				unlockTechs = 
-			}
 			MechJebModuleSolarPanelController
 			{
-				prev_shouldDeploy = False
+				prev_ShouldOpenSolarPanels = False
 				unlockParts = 
 				unlockTechs = 
 			}
@@ -2429,6 +2418,7 @@ PART
 		type = ServiceModule
 		utilization = 86
 		mass = 0.135000005
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 99.590000000000003
@@ -3504,6 +3494,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -3556,7 +3574,7 @@ PART
 {
 	part = rn.huygens.chute_4292855228
 	partName = Part
-	pos = 1.172194,49.2997894,0.0139182797
+	pos = 1.17219377,49.2997894,0.0139182797
 	attPos = 0,0,0
 	attPos0 = 3.16309894E-08,0.26534,0
 	rot = 0,0,0.707106829,0.707106829
@@ -3721,7 +3739,7 @@ PART
 {
 	part = rn.huygen.hs.top_4292854380
 	partName = Part
-	pos = 1.25788403,49.2997894,0.0139182797
+	pos = 1.25788391,49.2997894,0.0139182797
 	attPos = 0,0,0
 	attPos0 = 2.14159392E-08,0.179649994,0
 	rot = 0,0,0.707106829,0.707106829
@@ -3741,8 +3759,8 @@ PART
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.huygen.hs.chute_4292847536
-	attN = topchute,rn.huygen.hs.chute_4292847536
+	link = rn.huygen.hs.chute_4293275968
+	attN = topchute,rn.huygen.hs.chute_4293275968
 	attN = top,rn.huygens_4292856268
 	EVENTS
 	{
@@ -3814,6 +3832,34 @@ PART
 		}
 		ACTIONS
 		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -3957,6 +4003,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -3984,171 +4058,6 @@ PART
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.huygen.hs.chute_4292847536
-	partName = Part
-	pos = 0.948602676,49.2997894,0.0139182797
-	attPos = 0,0,0
-	attPos0 = 3.68690714E-08,0.309280187,0
-	rot = 0,0,0.707106829,0.707106829
-	attRot = 0,0,0.707106829,0.707106829
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 3
-	resPri = 0
-	dstg = 0
-	sidx = 0
-	sqor = 3
-	sepI = 1
-	attm = 0
-	modCost = 0.200000003
-	modMass = 1.60071068E-10
-	modSize = 0,0,0
-	attN = bottom,rn.huygen.hs.top_4292854380
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = RealChuteModule
-		isEnabled = True
-		caseMass = 0.00999999978
-		cutSpeed = 0.5
-		timer = 0
-		mustGoDown = False
-		deployOnGround = False
-		spareChutes = 0
-		initiated = True
-		wait = True
-		armed = False
-		oneWasDeployed = False
-		staged = False
-		launched = False
-		chuteCount = 0
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ActionDeploy
-			{
-				actionGroup = None
-			}
-			ActionCut
-			{
-				actionGroup = None
-			}
-			ActionArm
-			{
-				actionGroup = None
-			}
-			ActionDisarm
-			{
-				actionGroup = None
-			}
-		}
-		PARACHUTE
-		{
-			material = Nylon
-			preDeployedDiameter = 0.800000012
-			deployedDiameter = 2
-			minIsPressure = True
-			capOff = False
-			minDeployment = 25000
-			minPressure = 0.00999999978
-			deploymentAlt = 700
-			cutAlt = -1
-			preDeploymentSpeed = 2
-			deploymentSpeed = 6
-			time = 0
-			parachuteName = canopy
-			baseParachuteName = canopy
-			capName = cap
-			preDeploymentAnimation = semiDeploySmall
-			deploymentAnimation = fullyDeploySmall
-			forcedOrientation = 0
-			depState = STOWED
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
 	}
 }
 PART
@@ -4306,6 +4215,7 @@ PART
 		type = ServiceModule
 		utilization = 86
 		mass = 0.100000001
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 50
@@ -5381,6 +5291,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -5445,7 +5383,7 @@ PART
 	rigidAttachment = False
 	istg = 8
 	resPri = 0
-	dstg = 2
+	dstg = 3
 	sidx = 0
 	sqor = 8
 	sepI = 6
@@ -5494,21 +5432,6 @@ PART
 			{
 				actionGroup = None
 			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ReflectiveShaderModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -5566,6 +5489,7 @@ PART
 		type = BalloonCryo
 		utilization = 86
 		mass = 2.58100009
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 64324.981500000002
@@ -6348,7 +6272,7 @@ PART
 	rigidAttachment = False
 	istg = 7
 	resPri = 0
-	dstg = 3
+	dstg = 5
 	sidx = 0
 	sqor = 7
 	sepI = 6
@@ -6581,7 +6505,7 @@ PART
 	rigidAttachment = False
 	istg = 7
 	resPri = 0
-	dstg = 3
+	dstg = 5
 	sidx = 1
 	sqor = 7
 	sepI = 6
@@ -6814,7 +6738,7 @@ PART
 	rigidAttachment = False
 	istg = 8
 	resPri = 0
-	dstg = 3
+	dstg = 5
 	sidx = 1
 	sqor = 8
 	sepI = 8
@@ -6902,6 +6826,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -6936,7 +6888,7 @@ PART
 	rigidAttachment = False
 	istg = 8
 	resPri = 0
-	dstg = 4
+	dstg = 6
 	sidx = -1
 	sqor = -1
 	sepI = 8
@@ -7015,7 +6967,8 @@ PART
 		isEnabled = True
 		type = Default
 		utilization = 86
-		mass = 3.30999994
+		mass = 3.68000007
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 29172.7444
@@ -7787,7 +7740,7 @@ PART
 	rigidAttachment = False
 	istg = 10
 	resPri = 0
-	dstg = 4
+	dstg = 6
 	sidx = 0
 	sqor = 10
 	sepI = 8
@@ -8022,7 +7975,7 @@ PART
 	rigidAttachment = False
 	istg = 10
 	resPri = 0
-	dstg = 4
+	dstg = 6
 	sidx = 1
 	sqor = 10
 	sepI = 8
@@ -8270,7 +8223,7 @@ PART
 	rigidAttachment = False
 	istg = 9
 	resPri = 0
-	dstg = 5
+	dstg = 7
 	sidx = 0
 	sqor = 9
 	sepI = 9
@@ -8358,6 +8311,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -8392,7 +8373,7 @@ PART
 	rigidAttachment = False
 	istg = 9
 	resPri = 0
-	dstg = 6
+	dstg = 8
 	sidx = -1
 	sqor = -1
 	sepI = 9
@@ -8466,6 +8447,7 @@ PART
 		type = Default
 		utilization = 86
 		mass = 6.07200003
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 129193.58199999999
@@ -9237,7 +9219,7 @@ PART
 	rigidAttachment = False
 	istg = 13
 	resPri = 0
-	dstg = 6
+	dstg = 8
 	sidx = 0
 	sqor = 13
 	sepI = 9
@@ -9470,7 +9452,7 @@ PART
 	rigidAttachment = False
 	istg = 12
 	resPri = 0
-	dstg = 7
+	dstg = 9
 	sidx = 0
 	sqor = 12
 	sepI = 12
@@ -9621,7 +9603,7 @@ PART
 	rigidAttachment = False
 	istg = 14
 	resPri = 0
-	dstg = 8
+	dstg = 10
 	sidx = 0
 	sqor = 14
 	sepI = 12
@@ -9795,6 +9777,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 36.2145004
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 178214.9045
@@ -9888,7 +9871,7 @@ PART
 	rigidAttachment = False
 	istg = 12
 	resPri = 0
-	dstg = 8
+	dstg = 10
 	sidx = 1
 	sqor = 12
 	sepI = 12
@@ -10037,7 +10020,7 @@ PART
 	rigidAttachment = False
 	istg = 12
 	resPri = 0
-	dstg = 7
+	dstg = 9
 	sidx = 0
 	sqor = 12
 	sepI = 12
@@ -10188,7 +10171,7 @@ PART
 	rigidAttachment = False
 	istg = 14
 	resPri = 0
-	dstg = 8
+	dstg = 10
 	sidx = 0
 	sqor = 14
 	sepI = 12
@@ -10363,6 +10346,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 36.2145004
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 178214.9045
@@ -10456,7 +10440,7 @@ PART
 	rigidAttachment = False
 	istg = 12
 	resPri = 0
-	dstg = 8
+	dstg = 10
 	sidx = 1
 	sqor = 12
 	sepI = 12
@@ -10605,7 +10589,7 @@ PART
 	rigidAttachment = False
 	istg = 11
 	resPri = 0
-	dstg = 5
+	dstg = 7
 	sidx = 0
 	sqor = 11
 	sepI = 11
@@ -10724,6 +10708,34 @@ PART
 		}
 		ACTIONS
 		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -10776,7 +10788,7 @@ PART
 	rigidAttachment = False
 	istg = 11
 	resPri = 0
-	dstg = 5
+	dstg = 7
 	sidx = 0
 	sqor = 11
 	sepI = 11
@@ -10902,6 +10914,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -10947,7 +10987,7 @@ PART
 	rigidAttachment = False
 	istg = 11
 	resPri = 0
-	dstg = 5
+	dstg = 7
 	sidx = 0
 	sqor = 11
 	sepI = 11
@@ -11073,6 +11113,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -11118,7 +11186,7 @@ PART
 	rigidAttachment = False
 	istg = 14
 	resPri = 0
-	dstg = 8
+	dstg = 10
 	sidx = 1
 	sqor = 14
 	sepI = 14
@@ -11141,10 +11209,10 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 0.344172388
-		height = 0.548813581
+		scaleFactor = 0.344171941
+		height = 0.548812866
 		stagingEnabled = True
-		towerRot = 0,0,3.87740943E-26,1
+		towerRot = 0,0,-3.87740943E-26,1
 		EVENTS
 		{
 		}
@@ -11210,7 +11278,7 @@ PART
 	rigidAttachment = False
 	istg = 14
 	resPri = 0
-	dstg = 8
+	dstg = 10
 	sidx = 1
 	sqor = 14
 	sepI = 14
@@ -11233,10 +11301,10 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 0.344172388
-		height = 0.548813581
+		scaleFactor = 0.344171941
+		height = 0.548812866
 		stagingEnabled = True
-		towerRot = 0,-1,-6.46234854E-27,-4.37113954E-08
+		towerRot = -4.21252155E-26,-1,0,-4.37113954E-08
 		EVENTS
 		{
 		}
@@ -11290,7 +11358,7 @@ PART
 {
 	part = rn.tiv.tower_4293352388
 	partName = Part
-	pos = 9.90509605,3.79225159,5.43210602
+	pos = 9.90509605,3.79225159,5.43210554
 	attPos = 0,0,0
 	attPos0 = -6.80077124,-16.0592098,-5.41819
 	rot = -1.24257902E-08,0.707106829,-1.24257804E-08,-0.707106829
@@ -11302,7 +11370,7 @@ PART
 	rigidAttachment = False
 	istg = 14
 	resPri = 0
-	dstg = 8
+	dstg = 10
 	sidx = 2
 	sqor = 14
 	sepI = 14
@@ -11324,8 +11392,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 8.94650269
-		height = 4.26947165
+		scaleFactor = 8.94650745
+		height = 4.26947403
 		stagingEnabled = True
 		towerRot = 1.24257902E-08,-0.707106829,1.24257804E-08,-0.707106829
 		EVENTS
@@ -11391,6 +11459,171 @@ PART
 		}
 		ACTIONS
 		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAeroReentry
+		isEnabled = True
+		dead = False
+		crashTolerance = 8
+		internalDamage = 0
+		stagingEnabled = True
+		damageCube = 0, 0, 0, 0, 0, 0
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = rn.huygen.hs.chute_4293275968
+	partName = Part
+	pos = 0.939880252,49.2997894,0.0139182797
+	attPos = 0,0,0
+	attPos0 = 4.47034765E-08,0.318003178,0
+	rot = 0,0,0.707106829,0.707106829
+	attRot = 0,0,0.707106709,0.707106709
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 3
+	resPri = 0
+	dstg = 0
+	sidx = 0
+	sqor = 3
+	sepI = 1
+	attm = 0
+	modCost = 0.200000003
+	modMass = 0
+	modSize = 0,0,0
+	attN = bottom,rn.huygen.hs.top_4292854380
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = RealChuteModule
+		isEnabled = True
+		caseMass = 0.00999999978
+		cutSpeed = 0.5
+		timer = 0
+		mustGoDown = False
+		deployOnGround = False
+		spareChutes = 0
+		initiated = True
+		wait = True
+		armed = False
+		oneWasDeployed = False
+		staged = False
+		launched = False
+		chuteCount = 0
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ActionDeploy
+			{
+				actionGroup = None
+			}
+			ActionCut
+			{
+				actionGroup = None
+			}
+			ActionArm
+			{
+				actionGroup = None
+			}
+			ActionDisarm
+			{
+				actionGroup = None
+			}
+		}
+		PARACHUTE
+		{
+			material = Nylon
+			preDeployedDiameter = 1.79999995
+			deployedDiameter = 2
+			minIsPressure = False
+			capOff = False
+			minDeployment = 25000
+			minPressure = 0.00999999978
+			deploymentAlt = 1000
+			cutAlt = -1
+			preDeploymentSpeed = 2
+			deploymentSpeed = 6
+			time = 0
+			parachuteName = canopy
+			baseParachuteName = canopy
+			capName = cap
+			preDeploymentAnimation = semiDeploySmall
+			deploymentAnimation = fullyDeploySmall
+			forcedOrientation = 0
+			depState = STOWED
 		}
 		UPGRADESAPPLIED
 		{
