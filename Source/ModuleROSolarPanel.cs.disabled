@@ -1,0 +1,235 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using KSP;
+using UnityEngine;
+using Kopernicus.Components;
+
+namespace RealismOverhaul
+{
+    public class ModuleROSolarPanel : KopernicusSolarPanel
+    {
+        private double currentOrbit = 0;
+        private List<string> bodyOptions = new List<string>();
+
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = true, guiName = "<b>SOLAR CELL DEGRADATION AT</b>")]
+        public string spCalc = String.Empty;
+
+        [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = true, guiName = "Assumes Orbit Stays the Same")]
+        public string orbCalc = String.Empty;
+
+        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = true, guiName = "Days Elapsed"),
+            UI_FloatEdit(minValue = 1, maxValue = 36500, incrementLarge = 100.0f, incrementSmall = 10.0f, incrementSlide = 1.0f, requireFullControl = false, suppressEditorShipModified = true, sigFigs = 0)]
+        public float daysElapsed = 1f;
+
+        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = true, guiName = "Efficiency", guiFormat = "F0", guiUnits = "%")]
+        public float solarEfficiency = 100.0f;
+
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Celestial Body"),
+            UI_ChooseOption(suppressEditorShipModified = true, options = new[] { "None" })]
+        public string celestialBody = "Earth";
+
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Pe")]
+        public string solarOutputPe = "";
+
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Ap")]
+        public string solarOutputAp = "";
+
+        [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = true, guiName = "Expected Output", guiFormat = "F2")]
+        public string futureOutput = "";
+
+        public override void OnStart(StartState state)
+        {
+            base.OnStart(state);
+            GameEvents.onVesselSOIChanged.Add(OnVesselSOIChanged);
+            GameEvents.onVesselSituationChange.Add(OnVesselSituationChange);
+
+            GetPlanets();
+
+            BaseField field = Fields[nameof(celestialBody)];
+            UI_ChooseOption choose = (UI_ChooseOption)field.uiControlEditor;
+            choose.options = bodyOptions.ToArray();
+
+            UIElements();
+        }
+
+        public void OnDestroy()
+        {
+            GameEvents.onVesselSOIChanged.Remove(OnVesselSOIChanged);
+            GameEvents.onVesselSituationChange.Remove(OnVesselSituationChange);
+        }
+
+        public struct Bodies
+        {
+            public double Periapsis, Apoapsis;
+        }
+
+
+
+
+        public class BodyDictionary : Dictionary<string, Bodies>
+        {
+            public void Add(string key, double PeA, double ApA)
+            {
+                Bodies cb;
+                cb.Periapsis = PeA;
+                cb.Apoapsis = ApA;
+                this.Add(key, cb);
+            }
+        }
+
+        private static BodyDictionary cbDiddct = new BodyDictionary()
+        {
+            { "Earth", 0.9839, 1.0161 },
+            { "Mercury", 0.3075, 0.4667 },
+            { "Venus", 0.7184, 0.7283 },
+            { "Mars", 1.3816, 1.6659 },
+            { "Vesta", 2.1489, 2.5750 },
+            { "Ceres", 2.5462, 2.9852 },
+            { "Jupiter", 4.9484, 5.4553 },
+            { "Saturn", 9.0152, 10.0337 }
+        };
+
+        public void PlanetWalk()
+        {
+            CelestialBody newBody = new CelestialBody();
+            MemberInfo[] myMemberinfo;
+
+            // Get the type of the class
+            Type myType = newBody.GetType();
+
+            myMemberinfo = myType.GetMembers();
+
+            MonoBehaviour
+            
+        }
+
+        private void GetPlanets()
+        {
+            Dictionary<string, Bodies>.KeyCollection keyColl = cbDict.Keys;
+
+            foreach (string s in keyColl)
+            {
+                bodyOptions.Add(s);
+            }
+        }
+
+        private void UIElements()
+        {
+            BaseField theField = Fields[nameof(daysElapsed)];
+            theField.uiControlEditor.onFieldChanged = (a, b) =>
+            {
+                CalculateRates();
+            };
+            Fields[nameof(celestialBody)].uiControlEditor.onFieldChanged = (a, b) =>
+            {
+                CalculateRates();
+            };
+            theField.uiControlFlight.onFieldChanged = OnFieldChanged;
+        }
+
+        private void CalculateRates()
+        {
+            double currentPe, currentAp, theOrbit = 0.0;
+
+            float timeEfficEvaluated = this.timeEfficCurve.Evaluate(daysElapsed);
+            solarEfficiency = timeEfficEvaluated * 100;
+            double currentOutput = this.resHandler.UpdateModuleResourceOutputs(1, 0.0) * timeEfficEvaluated;
+
+            if (HighLogic.LoadedSceneIsEditor)
+            {
+                /*
+                switch (celestialBody)
+                {
+                    case "Mercury":
+                        planetPe = GetModifier(0.3075);
+                        planetAp = GetModifier(0.4667);
+                        break;
+                    case "Venus":
+                        planetPe = GetModifier(0.7184);
+                        planetAp = GetModifier(0.7283);
+                        break;
+                    case "Mars":
+                        planetPe = GetModifier(1.3816);
+                        planetAp = GetModifier(1.6659);
+                        break;
+                    case "Vesta":
+                        planetPe = GetModifier(2.1489);
+                        planetAp = GetModifier(2.5750);
+                        break;
+                    case "Ceres":
+                        planetPe = GetModifier(2.5462);
+                        planetAp = GetModifier(2.9852);
+                        break;
+                    case "Jupiter":
+                        planetPe = GetModifier(4.9484);
+                        planetAp = GetModifier(5.4553);
+                        break;
+                    case "Saturn":
+                        planetPe = GetModifier(9.0152);
+                        planetAp = GetModifier(10.0337);
+                        break;
+                    default:
+                        planetPe = GetModifier(0.9839);
+                        planetAp = GetModifier(1.0161);
+                        break;
+                }
+                */
+                currentPe = Math.Round(cbDict[celestialBody].Periapsis * currentOutput * 1000, 2);
+                currentAp = Math.Round(cbDict[celestialBody].Apoapsis * currentOutput * 1000, 2);
+                solarOutputPe = currentPe.ToString() + " Watts";
+                solarOutputAp = currentAp.ToString() + " Watts";
+            }
+
+            if (HighLogic.LoadedSceneIsFlight)
+            {
+                double mod = GetModifier(currentOrbit);
+                theOrbit = Math.Round(mod * currentOutput * 1000, 2);
+                futureOutput = theOrbit.ToString() + " Watts";
+            }
+        }
+
+        private double GetModifier(double AU)
+        {
+            return (1 / Math.Pow(AU, 2));
+        }
+
+        public void UpdateData()
+        {
+            if (HighLogic.LoadedSceneIsFlight)
+            {
+                int currentMETdays = (int)vessel.missionTime / 86400;
+                BaseField field = Fields["daysElapsed"];
+                field.guiActiveEditor = false;
+                daysElapsed = currentMETdays;
+                UI_FloatEdit edit = (UI_FloatEdit)field.uiControlFlight;
+                if (edit != null)
+                {
+                    edit.minValue = currentMETdays;
+                }
+                CelestialBody cb = vessel.mainBody;
+                while (cb.referenceBody != Planetarium.fetch.Sun)
+                {
+                    cb = cb.referenceBody;
+                }
+                currentOrbit = (cb.orbit.altitude / 149597870700);
+                CalculateRates();
+            }
+        }
+
+        public void OnVesselSOIChanged(GameEvents.HostedFromToAction<Vessel, CelestialBody> evt)
+        {
+            UpdateData();
+        }
+
+        public void OnVesselSituationChange(GameEvents.HostedFromToAction<Vessel, Vessel.Situations> evt)
+        {
+            UpdateData();
+        }
+
+        public void OnFieldChanged(BaseField field, object obj)
+        {
+            CalculateRates();
+        }
+    }
+}
