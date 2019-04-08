@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using KSP;
 using UnityEngine;
-using Kopernicus.Components;
 
 namespace RealismOverhaul
 {
-    public class ModuleROSolarPanel : KopernicusSolarPanel
+    public class ModuleROSolarPanel : PartModule
     {
         private double currentOrbit = 0;
-        private List<string> bodyOptions = new List<string>();
+        private static HashSet<string> cbOptions = new HashSet<string>();
 
         [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = true, guiName = "<b>SOLAR CELL DEGRADATION AT</b>")]
         public string spCalc = String.Empty;
@@ -26,8 +25,11 @@ namespace RealismOverhaul
         public float solarEfficiency = 100.0f;
 
         [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Celestial Body"),
-            UI_ChooseOption(suppressEditorShipModified = true, options = new[] { "None" })]
-        public string celestialBody = "Earth";
+            UI_ChooseOption(suppressEditorShipModified = true, options = new[] { "Choose One" })]
+        public string selectedBody = "Choose One";
+
+        [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = true, guiName = "Current AU")]
+        public string currentAU = "";
 
         [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Pe")]
         public string solarOutputPe = "";
@@ -38,80 +40,48 @@ namespace RealismOverhaul
         [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = true, guiName = "Expected Output", guiFormat = "F2")]
         public string futureOutput = "";
 
+        public override void OnAwake()
+        {
+            base.OnAwake();
+        }
         public override void OnStart(StartState state)
         {
             base.OnStart(state);
             GameEvents.onVesselSOIChanged.Add(OnVesselSOIChanged);
             GameEvents.onVesselSituationChange.Add(OnVesselSituationChange);
 
-            GetPlanets();
-
-            BaseField field = Fields[nameof(celestialBody)];
+            BaseField field = Fields[nameof(selectedBody)];
             UI_ChooseOption choose = (UI_ChooseOption)field.uiControlEditor;
-            choose.options = bodyOptions.ToArray();
+            choose.options = PlanetWalk();
 
             UIElements();
         }
 
-        public void OnDestroy()
+        public override void OnDestroy()
         {
             GameEvents.onVesselSOIChanged.Remove(OnVesselSOIChanged);
             GameEvents.onVesselSituationChange.Remove(OnVesselSituationChange);
         }
 
-        public struct Bodies
+        /// <summary>
+        /// Get all CB's from the game and add the planets to the bodyOptions List
+        /// </summary>
+        public String[] PlanetWalk()
         {
-            public double Periapsis, Apoapsis;
-        }
-
-
-
-
-        public class BodyDictionary : Dictionary<string, Bodies>
-        {
-            public void Add(string key, double PeA, double ApA)
+            if (cbOptions.Count < 1)
             {
-                Bodies cb;
-                cb.Periapsis = PeA;
-                cb.Apoapsis = ApA;
-                this.Add(key, cb);
+                CelestialBody theSun = Planetarium.fetch.Sun;
+                foreach (CelestialBody body in FlightGlobals.Bodies)
+                {
+                    if (body.referenceBody == theSun && body != theSun)
+                    {
+                        cbOptions.Add(body.name);
+                    }
+                }
             }
-        }
-
-        private static BodyDictionary cbDiddct = new BodyDictionary()
-        {
-            { "Earth", 0.9839, 1.0161 },
-            { "Mercury", 0.3075, 0.4667 },
-            { "Venus", 0.7184, 0.7283 },
-            { "Mars", 1.3816, 1.6659 },
-            { "Vesta", 2.1489, 2.5750 },
-            { "Ceres", 2.5462, 2.9852 },
-            { "Jupiter", 4.9484, 5.4553 },
-            { "Saturn", 9.0152, 10.0337 }
-        };
-
-        public void PlanetWalk()
-        {
-            CelestialBody newBody = new CelestialBody();
-            MemberInfo[] myMemberinfo;
-
-            // Get the type of the class
-            Type myType = newBody.GetType();
-
-            myMemberinfo = myType.GetMembers();
-
-            MonoBehaviour
-            
-        }
-
-        private void GetPlanets()
-        {
-            Dictionary<string, Bodies>.KeyCollection keyColl = cbDict.Keys;
-
-            foreach (string s in keyColl)
-            {
-                bodyOptions.Add(s);
-            }
+            String[] bodyOptions = new string[cbOptions.Count];
+            cbOptions.CopyTo(bodyOptions);
+            return bodyOptions;
         }
 
         private void UIElements()
@@ -121,7 +91,7 @@ namespace RealismOverhaul
             {
                 CalculateRates();
             };
-            Fields[nameof(celestialBody)].uiControlEditor.onFieldChanged = (a, b) =>
+            Fields[nameof(selectedBody)].uiControlEditor.onFieldChanged = (a, b) =>
             {
                 CalculateRates();
             };
@@ -130,68 +100,40 @@ namespace RealismOverhaul
 
         private void CalculateRates()
         {
-            double currentPe, currentAp, theOrbit = 0.0;
+            double currentPeMeters, currentApMeters, theOrbit = 0.0;
 
-            float timeEfficEvaluated = this.timeEfficCurve.Evaluate(daysElapsed);
+            ModuleDeployableSolarPanel pm = part.Modules.GetModule<ModuleDeployableSolarPanel>();
+            float timeEfficEvaluated = pm.timeEfficCurve.Evaluate(daysElapsed);
             solarEfficiency = timeEfficEvaluated * 100;
-            double currentOutput = this.resHandler.UpdateModuleResourceOutputs(1, 0.0) * timeEfficEvaluated;
+            double currentOutput = pm.chargeRate * timeEfficEvaluated;
 
             if (HighLogic.LoadedSceneIsEditor)
             {
-                /*
-                switch (celestialBody)
-                {
-                    case "Mercury":
-                        planetPe = GetModifier(0.3075);
-                        planetAp = GetModifier(0.4667);
-                        break;
-                    case "Venus":
-                        planetPe = GetModifier(0.7184);
-                        planetAp = GetModifier(0.7283);
-                        break;
-                    case "Mars":
-                        planetPe = GetModifier(1.3816);
-                        planetAp = GetModifier(1.6659);
-                        break;
-                    case "Vesta":
-                        planetPe = GetModifier(2.1489);
-                        planetAp = GetModifier(2.5750);
-                        break;
-                    case "Ceres":
-                        planetPe = GetModifier(2.5462);
-                        planetAp = GetModifier(2.9852);
-                        break;
-                    case "Jupiter":
-                        planetPe = GetModifier(4.9484);
-                        planetAp = GetModifier(5.4553);
-                        break;
-                    case "Saturn":
-                        planetPe = GetModifier(9.0152);
-                        planetAp = GetModifier(10.0337);
-                        break;
-                    default:
-                        planetPe = GetModifier(0.9839);
-                        planetAp = GetModifier(1.0161);
-                        break;
-                }
-                */
-                currentPe = Math.Round(cbDict[celestialBody].Periapsis * currentOutput * 1000, 2);
-                currentAp = Math.Round(cbDict[celestialBody].Apoapsis * currentOutput * 1000, 2);
-                solarOutputPe = currentPe.ToString() + " Watts";
-                solarOutputAp = currentAp.ToString() + " Watts";
+                currentPeMeters = _getAU(FlightGlobals.GetBodyByName(selectedBody).orbit.PeA);
+                currentApMeters = _getAU(FlightGlobals.GetBodyByName(selectedBody).orbit.ApA);
+                solarOutputPe = Math.Round(_getModifier(currentPeMeters) * currentOutput * 1000, 2).ToString() + " Watts";
+                solarOutputAp = Math.Round(_getModifier(currentApMeters) * currentOutput * 1000, 2).ToString() + " Watts";
+
+                //solarOutputPe = currentPe.ToString() + " Watts";
+                //solarOutputAp = currentAp.ToString() + " Watts";
             }
 
             if (HighLogic.LoadedSceneIsFlight)
             {
-                double mod = GetModifier(currentOrbit);
+                double mod = _getModifier(currentOrbit);
                 theOrbit = Math.Round(mod * currentOutput * 1000, 2);
                 futureOutput = theOrbit.ToString() + " Watts";
             }
         }
 
-        private double GetModifier(double AU)
+        private double _getModifier(double AU)
         {
             return (1 / Math.Pow(AU, 2));
+        }
+
+        private double _getAU(double orbitParam)
+        {
+            return orbitParam / FlightGlobals.GetHomeBody().orbit.semiMajorAxis;
         }
 
         public void UpdateData()
@@ -212,7 +154,8 @@ namespace RealismOverhaul
                 {
                     cb = cb.referenceBody;
                 }
-                currentOrbit = (cb.orbit.altitude / 149597870700);
+                currentOrbit = cb.orbit.altitude / FlightGlobals.GetHomeBody().orbit.semiMajorAxis;
+                currentAU = Math.Round(currentOrbit, 3).ToString();
                 CalculateRates();
             }
         }
@@ -229,7 +172,7 @@ namespace RealismOverhaul
 
         public void OnFieldChanged(BaseField field, object obj)
         {
-            CalculateRates();
+            UpdateData();
         }
     }
 }
