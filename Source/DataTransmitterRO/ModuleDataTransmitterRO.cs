@@ -7,8 +7,8 @@ namespace RealismOverhaul.DataTransmitterRO
     class ModuleDataTransmitterRO : ModuleDataTransmitter, IPartMassModifier
     {
         private const double BASE_POWER = 84610911.3771648;
-        private const float MAX_RATE_MULTIPLIER = 1000f;
-        private readonly float DATA_RATE_EXPONENT_RANGE = 12;
+        private const int MAX_RATE_EXPONENT = 20;
+        private const float MAX_RATE_MULTIPLIER = 1 << MAX_RATE_EXPONENT;
 
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
         public string TxPowerString;
@@ -16,11 +16,14 @@ namespace RealismOverhaul.DataTransmitterRO
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Total Power")]
         public string TotalPowerString;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Min Data Rate")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Min. Data Rate")]
         public string MinDataRateString;
 
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Range to DSN")]
-        public string RangeString;
+        public string RangeDsnString;
+
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Range to Self")]
+        public string RangeSelfString;
 
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Electronics Mass")]
         public string ElectronicsMassString;
@@ -28,13 +31,14 @@ namespace RealismOverhaul.DataTransmitterRO
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Total Mass")]
         public string TotalMassString;
 
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Data Rate (Exponent)", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Editor)]
+        [KSPField(isPersistant = true, guiActiveEditor = false, guiName = "Data Rate (Exponent)", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Flight)]
         public float DataRateExponent = 0;
-        private UI_FloatRange DataRateExponentEdit => (UI_FloatRange)Fields[nameof(DataRateExponent)].uiControlEditor;
+        private UI_FloatRange DataRateExponentEdit => (UI_FloatRange)Fields[nameof(DataRateExponent)].uiControlFlight;
 
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tx Power (dBW)", guiUnits = "dBW", guiFormat = "F0"), UI_FloatRange(minValue = -12, stepIncrement = 1, scene = UI_Scene.Editor)]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Tx Power (dBW)", guiUnits = "dBW", guiFormat = "F0"), UI_FloatRange(minValue = -12, stepIncrement = 1, scene = UI_Scene.All)]
         public float TxPowerDbw = 0;
         private UI_FloatRange TxPowerDbwEdit => (UI_FloatRange)Fields[nameof(TxPowerDbw)].uiControlEditor;
+        private UI_FloatRange TxPowerDbwEditFlight => (UI_FloatRange)Fields[nameof(TxPowerDbw)].uiControlFlight;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tech Level", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Editor)]
         public float TechLevel = 99;
@@ -65,22 +69,56 @@ namespace RealismOverhaul.DataTransmitterRO
 
         public override void OnStart(StartState state)
         {
+            Debug.Log("[MDTRO] ONSTART");
+            _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
             SetupRangeCurve();
             SetMaxTechLevel();
             SetAntennaShape();
             UpdateConfiguration();
-            SetupChangeListeners();
             base.OnStart(state);
+            SetupPaw();
+        }
+
+        private void SetupPaw()
+        {
+            SetupChangeListeners();
+            SetupEditors();
+        }
+
+        private void SetupEditors()
+        {
             Fields[nameof(powerText)].guiActiveEditor = false;
             Fields[nameof(powerText)].guiActive = false;
-            _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
+
+            Fields[nameof(DataRateExponent)].guiActive = !_isKerbalismLoaded;
+            DataRateExponentEdit.scene = _isKerbalismLoaded ? UI_Scene.None : UI_Scene.Flight;
+        }
+
+        public override void OnAwake()
+        {
+            Debug.Log("[MDTRO] ONAWAKE");
+            base.OnAwake();
+        }
+
+        public override void OnInitialize()
+        {
+            Debug.Log("[MDTRO] ONINITIALIZE");
+            base.OnInitialize();
+        }
+
+        public override void OnLoad(ConfigNode node)
+        {
+            Debug.Log("[MDTRO] ONLOAD");
+            base.OnLoad(node);
         }
 
         private void SetupChangeListeners()
         {
-            DataRateExponentEdit.onFieldChanged += OnFieldChanged;
-            TxPowerDbwEdit.onFieldChanged += OnFieldChanged;
-            TechLevelEdit.onFieldChanged += OnFieldChanged;
+            Debug.Log("[MDTRO] SETUP CL");
+            DataRateExponentEdit.onFieldChanged = OnFieldChanged;
+            TxPowerDbwEdit.onFieldChanged = OnFieldChanged;
+            TechLevelEdit.onFieldChanged = OnFieldChanged;
+            TxPowerDbwEditFlight.onFieldChanged = OnFieldChanged;
         }
 
         private void SetAntennaShape()
@@ -96,15 +134,22 @@ namespace RealismOverhaul.DataTransmitterRO
             rangeCurve = new DoubleCurve();
             var key = 1 / Math.Sqrt(MAX_RATE_MULTIPLIER);
             rangeCurve.Add(1 - key, 1, 0, 0);
-            var steps = 20;
+            var steps = 50;
             var factor = Math.Pow(MAX_RATE_MULTIPLIER, 0.5 / steps);
-            for(int i = 0; i < 19; ++i)
+            for (int i = 0; i < steps - 1; ++i)
             {
                 key = key * factor;
                 var value = 1 / (key * key) / MAX_RATE_MULTIPLIER;
                 rangeCurve.Add(1 - key, value);
             }
             rangeCurve.Add(0, 1 / MAX_RATE_MULTIPLIER);
+        }
+
+        private void LogRangeCurve()
+        {
+            var cn = new ConfigNode();
+            rangeCurve.Save(cn);
+            Debug.Log("[MDTRO]\n" + cn.ToString());
         }
 
         private void UpdateConfiguration()
@@ -120,11 +165,13 @@ namespace RealismOverhaul.DataTransmitterRO
             TxPowerString = Format(TxPower, "W");
             TotalPowerString = Format(TotalPower, "W");
             MinDataRateString = Format(MinDataRate, "b/s", 1024);
-            var range = (float)Math.Sqrt(antennaPower * DsnRange);
-            RangeString = Format(range, "m");
+            RangeDsnString = Format(GetRange(antennaPower, DsnRange), "m");
+            RangeSelfString = Format(GetRange(antennaPower, antennaPower), "m");
             ElectronicsMassString = Format(ElectronicsMass * 1000000, "g");
             TotalMassString = Format(TotalMass * 1000000, "g");
         }
+
+        private float GetRange(double a, double b) => (float)Math.Sqrt(a * b);
 
         private string Format(float value, string unit, int logBase = 1000)
         {
@@ -139,13 +186,14 @@ namespace RealismOverhaul.DataTransmitterRO
         {
             var maxTxPowerDbw = ToDB(TechLevelInstance.MaxPower);
             TxPowerDbwEdit.maxValue = maxTxPowerDbw;
+            TxPowerDbwEditFlight.maxValue = maxTxPowerDbw;
             TxPowerDbw = Mathf.Clamp(TxPowerDbw, -13, maxTxPowerDbw);
         }
 
         private void SetDataRateLimits()
         {
             var minRateExponent = ToLog2(TechLevelInstance.MinDataRate);
-            var maxRateExponent = minRateExponent + DATA_RATE_EXPONENT_RANGE;
+            var maxRateExponent = minRateExponent + MAX_RATE_EXPONENT;
             DataRateExponentEdit.minValue = minRateExponent;
             DataRateExponentEdit.maxValue = maxRateExponent;
             DataRateExponent = Mathf.Clamp(DataRateExponent, minRateExponent, maxRateExponent);
@@ -171,6 +219,7 @@ namespace RealismOverhaul.DataTransmitterRO
             packetSize = MinDataRate * (_isKerbalismLoaded ? MAX_RATE_MULTIPLIER : 1) / 1024 / 1024;
             packetResourceCost = TotalPower / 1000;
             antennaType = AntennaType.RELAY;
+            antennaCombinableExponent = antennaShape == AntennaShape.Dish ? 2f : 1f;
 
             Debug.Log($"[MDTRO] mass: {(TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000}");
         }
