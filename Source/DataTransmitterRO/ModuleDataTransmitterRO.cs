@@ -31,14 +31,13 @@ namespace RealismOverhaul.DataTransmitterRO
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Total Mass")]
         public string TotalMassString;
 
-        [KSPField(isPersistant = true, guiActiveEditor = false, guiName = "Data Rate (Exponent)", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Flight)]
-        public float DataRateExponent = 0;
-        private UI_FloatRange DataRateExponentEdit => (UI_FloatRange)Fields[nameof(DataRateExponent)].uiControlFlight;
+        [KSPField(isPersistant = true, guiActiveEditor = false, guiName = "Data Rate"), UI_ChooseOption(scene = UI_Scene.Flight)]
+        public int DataRateExponent = 0;
+        private UI_ChooseOption DataRateExponentEdit => (UI_ChooseOption)Fields[nameof(DataRateExponent)].uiControlFlight;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Tx Power (dBW)", guiUnits = "dBW", guiFormat = "F0"), UI_FloatRange(minValue = -12, stepIncrement = 1, scene = UI_Scene.All)]
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tx Power (dBW)", guiUnits = "dBW", guiFormat = "F0"), UI_FloatRange(minValue = -12, stepIncrement = 1, scene = UI_Scene.Editor)]
         public float TxPowerDbw = 0;
         private UI_FloatRange TxPowerDbwEdit => (UI_FloatRange)Fields[nameof(TxPowerDbw)].uiControlEditor;
-        private UI_FloatRange TxPowerDbwEditFlight => (UI_FloatRange)Fields[nameof(TxPowerDbw)].uiControlFlight;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tech Level", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Editor)]
         public float TechLevel = 99;
@@ -62,7 +61,7 @@ namespace RealismOverhaul.DataTransmitterRO
 
         private float TxPower => FromDB(TxPowerDbw);
         private float TotalPower => TxPower / TechLevelInstance.Efficiency + TechLevelInstance.BasePower;
-        private float MinDataRate => FromLog2(DataRateExponent);
+        private float MinDataRate => TechLevelInstance.MinDataRate * FromLog2(DataRateExponent);
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
         private float TotalMass => part.prefabMass + ElectronicsMass;
@@ -92,6 +91,17 @@ namespace RealismOverhaul.DataTransmitterRO
 
             Fields[nameof(DataRateExponent)].guiActive = !_isKerbalismLoaded;
             DataRateExponentEdit.scene = _isKerbalismLoaded ? UI_Scene.None : UI_Scene.Flight;
+            DataRateExponentEdit.options = CreateDataRateOptions();
+        }
+
+        private string[] CreateDataRateOptions()
+        {
+            var result = new string[MAX_RATE_EXPONENT + 1];
+            for(int i = 0; i <= MAX_RATE_EXPONENT; ++i)
+            {
+                result[i] = Format(MinDataRate * (1 << i), "b/s", 1024);
+            }
+            return result;
         }
 
         public override void OnAwake()
@@ -118,7 +128,6 @@ namespace RealismOverhaul.DataTransmitterRO
             DataRateExponentEdit.onFieldChanged = OnFieldChanged;
             TxPowerDbwEdit.onFieldChanged = OnFieldChanged;
             TechLevelEdit.onFieldChanged = OnFieldChanged;
-            TxPowerDbwEditFlight.onFieldChanged = OnFieldChanged;
         }
 
         private void SetAntennaShape()
@@ -155,7 +164,6 @@ namespace RealismOverhaul.DataTransmitterRO
         private void UpdateConfiguration()
         {
             SetMaxTxPower();
-            SetDataRateLimits();
             SetupBaseFields();
             UpdatePawFields();
         }
@@ -186,17 +194,7 @@ namespace RealismOverhaul.DataTransmitterRO
         {
             var maxTxPowerDbw = ToDB(TechLevelInstance.MaxPower);
             TxPowerDbwEdit.maxValue = maxTxPowerDbw;
-            TxPowerDbwEditFlight.maxValue = maxTxPowerDbw;
             TxPowerDbw = Mathf.Clamp(TxPowerDbw, -13, maxTxPowerDbw);
-        }
-
-        private void SetDataRateLimits()
-        {
-            var minRateExponent = ToLog2(TechLevelInstance.MinDataRate);
-            var maxRateExponent = minRateExponent + MAX_RATE_EXPONENT;
-            DataRateExponentEdit.minValue = minRateExponent;
-            DataRateExponentEdit.maxValue = maxRateExponent;
-            DataRateExponent = Mathf.Clamp(DataRateExponent, minRateExponent, maxRateExponent);
         }
 
         private void OnFieldChanged(BaseField field, object oldValueObj)
