@@ -2,9 +2,9 @@
 using System.Linq;
 using UnityEngine;
 
-namespace RealismOverhaul.DataTransmitterRO
+namespace RealismOverhaul.Communications
 {
-    class ModuleDataTransmitterRO : ModuleDataTransmitter, IPartMassModifier
+    class ModuleAntennaRO : ModuleDataTransmitter, IPartMassModifier
     {
         private const double BASE_POWER = 84610911.3771648;
         private const int MAX_RATE_EXPONENT = 20;
@@ -57,7 +57,7 @@ namespace RealismOverhaul.DataTransmitterRO
 
         private bool _isKerbalismLoaded;
 
-        private TechLevel TechLevelInstance => DataTransmitterRO.TechLevel.GetTechLevel((int)TechLevel);
+        private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
 
         private float TxPower => FromDB(TxPowerDbw);
         private float TotalPower => TxPower / TechLevelInstance.Efficiency + TechLevelInstance.BasePower;

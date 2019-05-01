@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RealismOverhaul.DataTransmitterRO
+namespace RealismOverhaul.Communications
 {
     public class TechLevel
     {

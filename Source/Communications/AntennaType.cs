@@ -1,4 +1,4 @@
-﻿namespace RealismOverhaul.DataTransmitterRO
+﻿namespace RealismOverhaul.Communications
 {
     public enum AntennaShape
     {
