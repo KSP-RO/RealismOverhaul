@@ -9,6 +9,8 @@ namespace RealismOverhaul.Communications
         private const double BASE_POWER = 84610911.3771648;
         private const int MAX_RATE_EXPONENT = 20;
         private const float MAX_RATE_MULTIPLIER = 1 << MAX_RATE_EXPONENT;
+        private const int HALF_SCALE_STEPS = 8;
+        private const float ANTENNA_MASS_SCALING_EXPONENT = 2.0f;
 
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
         public string TxPowerString;
@@ -43,6 +45,11 @@ namespace RealismOverhaul.Communications
         public float TechLevel = 99;
         private UI_FloatRange TechLevelEdit => (UI_FloatRange)Fields[nameof(TechLevel)].uiControlEditor;
 
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Scale"), UI_ChooseOption(scene = UI_Scene.Editor)]
+        public int ScaleIndex = HALF_SCALE_STEPS;
+        private UI_ChooseOption ScaleEdit => (UI_ChooseOption)Fields[nameof(ScaleIndex)].uiControlEditor;
+        public float Scale => GetScaleFromIndex(ScaleIndex);
+
         [KSPField]
         public int maxTechLevel = 0;
 
@@ -56,6 +63,7 @@ namespace RealismOverhaul.Communications
         public AntennaShape antennaShape = AntennaShape.Auto;
 
         private bool _isKerbalismLoaded;
+        private Vector3 defaultTransformScale = new Vector3(0f, 0f, 0f);
 
         private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
 
@@ -64,18 +72,32 @@ namespace RealismOverhaul.Communications
         private float MinDataRate => TechLevelInstance.MinDataRate * FromLog2(DataRateExponent);
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
-        private float TotalMass => part.prefabMass + ElectronicsMass;
+        private float AntennaMass => part.prefabMass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
+        private float TotalMass => AntennaMass + ElectronicsMass;
+
+        private Part PartPrefab => part.partInfo.partPrefab;
+
+
+        public void Start()
+        {
+            Debug.Log("[MARO] Start");
+            _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
+            SetupInitialState();
+            UpdateConfiguration();
+            SetupPaw();
+        }
+
+        private void SetupInitialState()
+        {
+            SetupRangeCurve();
+            SetAntennaShape();
+            SetMaxTechLevel();
+        }
 
         public override void OnStart(StartState state)
         {
             Debug.Log("[MARO] ONSTART");
-            _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
-            SetupRangeCurve();
-            SetMaxTechLevel();
-            SetAntennaShape();
-            UpdateConfiguration();
             base.OnStart(state);
-            SetupPaw();
         }
 
         private void SetupPaw()
@@ -92,17 +114,32 @@ namespace RealismOverhaul.Communications
             Fields[nameof(DataRateExponent)].guiActive = !_isKerbalismLoaded;
             DataRateExponentEdit.scene = _isKerbalismLoaded ? UI_Scene.None : UI_Scene.Flight;
             DataRateExponentEdit.options = CreateDataRateOptions();
+
+            ScaleEdit.options = CreateScaleOptions();
         }
 
         private string[] CreateDataRateOptions()
         {
             var result = new string[MAX_RATE_EXPONENT + 1];
-            for(int i = 0; i <= MAX_RATE_EXPONENT; ++i)
+            for (int i = 0; i <= MAX_RATE_EXPONENT; ++i)
             {
                 result[i] = Format(MinDataRate * (1 << i), "b/s", 1024);
             }
             return result;
         }
+
+        private string[] CreateScaleOptions()
+        {
+            var stepCount = HALF_SCALE_STEPS * 2 + 1;
+            var result = new string[stepCount];
+            for (int i = 0; i < stepCount; ++i)
+            {
+                result[i] = Format(GetScaleFromIndex(i) * 100, "%");
+            }
+            return result;
+        }
+
+        private float GetScaleFromIndex(int i) => Mathf.Pow(2, ((float) i / HALF_SCALE_STEPS - 1) / 2);
 
         public override void OnAwake()
         {
@@ -131,11 +168,13 @@ namespace RealismOverhaul.Communications
             TxPowerDbwEdit.onSymmetryFieldChanged = OnFieldChanged;
             TechLevelEdit.onFieldChanged = OnFieldChanged;
             TechLevelEdit.onSymmetryFieldChanged = OnFieldChanged;
+            ScaleEdit.onFieldChanged = OnFieldChanged;
+            ScaleEdit.onSymmetryFieldChanged = OnFieldChanged;
         }
 
         private void SetAntennaShape()
         {
-            if(antennaShape == AntennaShape.Auto)
+            if (antennaShape == AntennaShape.Auto)
             {
                 antennaShape = referenceGain > 8 ? AntennaShape.Dish : AntennaShape.Omni;
             }
@@ -166,10 +205,34 @@ namespace RealismOverhaul.Communications
 
         private void UpdateConfiguration()
         {
+            ReScale(Scale);
             SetMaxTxPower();
             SetupBaseFields();
             UpdatePawFields();
         }
+
+        private void ReScale(float scale)
+        {
+            Debug.Log($"[MARO] Changing partScale to: {scale}");
+            Debug.Log($"[MARO] prefab rescaleFactor: {part.partInfo.partPrefab.rescaleFactor}");
+            part.scaleFactor = PartPrefab.scaleFactor * scale;
+            var modelTransform = GetModelTransform(part);
+            if (modelTransform != null)
+            {
+                Debug.Log($"[MARO] Old Scale: {modelTransform.localScale}");
+                if (defaultTransformScale.x == 0.0f)
+                {
+                    defaultTransformScale = GetModelTransform(PartPrefab).localScale;
+                    Debug.Log($"[MARO] Setting def transform: {defaultTransformScale}");
+                }
+                Debug.Log($"[MARO] Setting transform: to {scale * defaultTransformScale}");
+                modelTransform.localScale = scale * defaultTransformScale;
+                modelTransform.hasChanged = true;
+                part.partTransform.hasChanged = true;
+            }
+        }
+
+        private static Transform GetModelTransform(Part p) => p.partTransform.Find("model");
 
         private void UpdatePawFields()
         {
@@ -227,7 +290,7 @@ namespace RealismOverhaul.Communications
 
         private double GetMdtAntennaPower(TechLevel tl)
         {
-            return BASE_POWER * FromDB(referenceGain + tl.Gain) * TxPower / MinDataRate * GetFrequencyFactor(tl);
+            return BASE_POWER * FromDB(referenceGain + tl.Gain) * Scale * Scale * TxPower / MinDataRate * GetFrequencyFactor(tl);
         }
 
         private double GetFrequencyFactor(TechLevel tl)
@@ -237,7 +300,7 @@ namespace RealismOverhaul.Communications
 
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit)
         {
-            return ElectronicsMass;
+            return TotalMass - defaultMass;
         }
 
         public ModifierChangeWhen GetModuleMassChangeWhen() => ModifierChangeWhen.FIXED;
