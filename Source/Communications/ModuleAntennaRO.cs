@@ -68,7 +68,7 @@ namespace RealismOverhaul.Communications
 
         public override void OnStart(StartState state)
         {
-            Debug.Log("[MDTRO] ONSTART");
+            Debug.Log("[MARO] ONSTART");
             _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
             SetupRangeCurve();
             SetMaxTechLevel();
@@ -106,28 +106,31 @@ namespace RealismOverhaul.Communications
 
         public override void OnAwake()
         {
-            Debug.Log("[MDTRO] ONAWAKE");
+            Debug.Log("[MARO] ONAWAKE");
             base.OnAwake();
         }
 
         public override void OnInitialize()
         {
-            Debug.Log("[MDTRO] ONINITIALIZE");
+            Debug.Log("[MARO] ONINITIALIZE");
             base.OnInitialize();
         }
 
         public override void OnLoad(ConfigNode node)
         {
-            Debug.Log("[MDTRO] ONLOAD");
+            Debug.Log("[MARO] ONLOAD");
             base.OnLoad(node);
         }
 
         private void SetupChangeListeners()
         {
-            Debug.Log("[MDTRO] SETUP CL");
+            Debug.Log("[MARO] SETUP CL");
             DataRateExponentEdit.onFieldChanged = OnFieldChanged;
+            DataRateExponentEdit.onSymmetryFieldChanged = OnFieldChanged;
             TxPowerDbwEdit.onFieldChanged = OnFieldChanged;
+            TxPowerDbwEdit.onSymmetryFieldChanged = OnFieldChanged;
             TechLevelEdit.onFieldChanged = OnFieldChanged;
+            TechLevelEdit.onSymmetryFieldChanged = OnFieldChanged;
         }
 
         private void SetAntennaShape()
@@ -158,7 +161,7 @@ namespace RealismOverhaul.Communications
         {
             var cn = new ConfigNode();
             rangeCurve.Save(cn);
-            Debug.Log("[MDTRO]\n" + cn.ToString());
+            Debug.Log("[MARO]\n" + cn.ToString());
         }
 
         private void UpdateConfiguration()
@@ -199,13 +202,13 @@ namespace RealismOverhaul.Communications
 
         private void OnFieldChanged(BaseField field, object oldValueObj)
         {
-            Debug.Log($"[MDTRO] Field changed");
+            Debug.Log($"[MARO] Field changed");
             UpdateConfiguration();
         }
 
         private void SetMaxTechLevel()
         {
-            Debug.Log($"[MDTRO] max tl: {maxTechLevel}");
+            Debug.Log($"[MARO] max tl: {maxTechLevel}");
             TechLevelEdit.maxValue = maxTechLevel;
             TechLevel = Mathf.Clamp(TechLevel, 0f, maxTechLevel);
         }
@@ -219,7 +222,7 @@ namespace RealismOverhaul.Communications
             antennaType = AntennaType.RELAY;
             antennaCombinableExponent = antennaShape == AntennaShape.Dish ? 2f : 1f;
 
-            Debug.Log($"[MDTRO] mass: {(TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000}");
+            Debug.Log($"[MARO] mass: {(TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000}");
         }
 
         private double GetMdtAntennaPower(TechLevel tl)
