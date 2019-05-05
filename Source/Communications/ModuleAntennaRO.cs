@@ -157,6 +157,13 @@ namespace RealismOverhaul.Communications
         {
             Debug.Log("[MARO] ONLOAD");
             base.OnLoad(node);
+            SetupUnloadedVessels();
+        }
+
+        private void SetupUnloadedVessels()
+        {
+            SetupInitialState();
+            SetupBaseFields();
         }
 
         private void SetupChangeListeners()
