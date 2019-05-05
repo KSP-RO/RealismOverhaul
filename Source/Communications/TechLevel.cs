@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace RealismOverhaul.Communications
 {
@@ -30,6 +31,10 @@ namespace RealismOverhaul.Communications
 
         public static TechLevel GetTechLevel(int i)
         {
+            if (i > _techLevels.Count)
+            {
+                i = 0;
+            }
             return _techLevels[i];
         }
 
