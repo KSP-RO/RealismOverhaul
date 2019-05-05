@@ -12,25 +12,25 @@ namespace RealismOverhaul.Communications
         private const int HALF_SCALE_STEPS = 8;
         private const float ANTENNA_MASS_SCALING_EXPONENT = 2.0f;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
+        [KSPField( guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
         public string TxPowerString;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Total Power")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Total Power")]
         public string TotalPowerString;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Min. Data Rate")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Min. Data Rate")]
         public string MinDataRateString;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Range to DSN")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Range to DSN")]
         public string RangeDsnString;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Range to Self")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Range to Self")]
         public string RangeSelfString;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Electronics Mass")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Electronics Mass")]
         public string ElectronicsMassString;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Total Mass")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Total Mass")]
         public string TotalMassString;
 
         [KSPField(isPersistant = true, guiActiveEditor = false, guiName = "Data Rate"), UI_ChooseOption(scene = UI_Scene.Flight)]
