@@ -115,7 +115,15 @@ namespace RealismOverhaul.Communications
             DataRateExponentEdit.scene = _isKerbalismLoaded ? UI_Scene.None : UI_Scene.Flight;
             DataRateExponentEdit.options = CreateDataRateOptions();
 
-            ScaleEdit.options = CreateScaleOptions();
+            if (antennaShape != AntennaShape.Omni)
+            {
+                ScaleEdit.options = CreateScaleOptions();
+            }
+            else
+            {
+                Fields[nameof(ScaleIndex)].guiActiveEditor = false;
+                ScaleEdit.scene = UI_Scene.None;
+            }
         }
 
         private string[] CreateDataRateOptions()
