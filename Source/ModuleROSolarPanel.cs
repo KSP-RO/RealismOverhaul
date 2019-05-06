@@ -57,11 +57,13 @@ namespace RealismOverhaul
             UIElements();
         }
 
+        /*
         public override void OnDestroy()
         {
             GameEvents.onVesselSOIChanged.Remove(OnVesselSOIChanged);
             GameEvents.onVesselSituationChange.Remove(OnVesselSituationChange);
         }
+        */
 
         /// <summary>
         /// Get all CB's from the game and add the planets to the bodyOptions List

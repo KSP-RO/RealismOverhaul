@@ -1,3 +1,16 @@
++INTERNAL[mk1CockpitInternal]:FOR[RealismOverhaul]:NEEDS[VenStockRevamp]
+{
+	@name = RO-Mk1CockpitInternal-1.25
+	%RSSROConfig = True
+	%scaleAll = 1.25, 1.25, 1.25
+	@MODULE[InternalSeat],*
+	{
+		%kerbalScale = 1.25, 1.25, 1.25
+		%kerbalOffset = 0.0, 0.0, 0.0
+		%kerbalEyeOffset = 0.0, 0.0, 0.0
+	}
+}
+
 @PART[mk2_1m_Bicoupler]:FOR[RealismOverhaul]
 {
 	%RSSROConfig = True
@@ -195,16 +208,11 @@
 			rate = 0.7//200W for life support base
 		}
 	}
-	!RESOURCE[ElectricCharge]
-	{
-	}
-	!MODULE[ModuleReactionWheel]
-	{
-	}
-	!RESOURCE[MonoPropellant]
-	{
-	}
+	!RESOURCE[ElectricCharge] {}
+	!RESOURCE[MonoPropellant] {}
+	!MODULE[ModuleReactionWheel] {}
 	!MODULE[ModuleFuelTanks] {}
+
 	MODULE
 	{
 		name = ModuleFuelTanks
@@ -264,30 +272,62 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 2.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 }
-@PART[mk2Cockpit_Inline]:NEEDS[RemoteTech]:FOR[RealismOverhaul]
+
+@INTERNAL[mk2CockpitStandardInternals|mk2CockpitStandardInternalsRPM|MK2_CrewCab_Int]:FOR[RealismOverhaul]
 {
-    %MODULE[ModuleSPU] {}
-
-    %MODULE[ModuleRTAntennaPassive]
-    {
-        
-        %TechRequired = start
-
-        %OmniRange = 1200000
-
-        %TRANSMITTER
-        {
-            %PacketInterval = 0.1
-            %PacketSize = 0.27
-            %PacketResourceCost = 0.005
-        }
-    }
+	%scaleAll = 1.722222, 1.722222, 1.722222
+	@MODULE[InternalSeat],*
+	{
+		%kerbalScale = 1.722222, 1.722222, 1.722222
+		%kerbalOffset = 0.0, 0.0, 0.0
+		%kerbalEyeOffset = 0.0, 0.0, 0.0
+	}
 }
+
 @PART[mk2Cockpit_Standard]:FOR[RealismOverhaul]
 {
 	%RSSROConfig = True
@@ -382,29 +422,49 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 2.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
-}
-@PART[mk2Cockpit_Standard]:NEEDS[RemoteTech]:FOR[RealismOverhaul]
-{
-    %MODULE[ModuleSPU] {}
-
-    %MODULE[ModuleRTAntennaPassive]
-    {
-        
-        %TechRequired = start
-
-        %OmniRange = 1200000
-
-        %TRANSMITTER
-        {
-            %PacketInterval = 0.1
-            %PacketSize = 0.27
-            %PacketResourceCost = 0.005
-        }
-    }
 }
 @PART[mk2CrewCabin]:FOR[RealismOverhaul]
 {
@@ -484,11 +544,51 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 4.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 }
+
 @PART[mk2DockingPort]:FOR[RealismOverhaul]
 {
 	%RSSROConfig = True
@@ -584,25 +684,22 @@
 			maxAmount = 43200
 		}
 	}
-}
-@PART[mk2DroneCore]:NEEDS[RemoteTech]:FOR[RealismOverhaul]
-{
-    %MODULE[ModuleSPU] {}
-
-    %MODULE[ModuleRTAntennaPassive]
-    {
-        
-        %TechRequired = start
-
-        %OmniRange = 1000000
-
-        %TRANSMITTER
-        {
-            %PacketInterval = 0.1
-            %PacketSize = 0.27
-            %PacketResourceCost = 0.005
-        }
-    }
+	MODULE
+	{
+		name = ModuleSPU
+		IsRTCommandStation = false
+	}
+	MODULE
+	{
+		name = ModuleRTAntennaPassive
+		OmniRange = 3000
+		TRANSMITTER
+		{
+			PacketInterval = 0.3
+			PacketSize = 2
+			PacketResourceCost = 0.5
+		}
+	}
 }
 @PART[mk2Fuselage]:FOR[RealismOverhaul]
 {
@@ -763,16 +860,10 @@
 			rate = 0.5
 		}
 	}
-	!RESOURCE[ElectricCharge]
-	{
-	}
-	!MODULE[ModuleReactionWheel]
-	{
-	}
-	!RESOURCE[MonoPropellant]
-	{
-	}
+	!RESOURCE[ElectricCharge] {}
+	!RESOURCE[MonoPropellant] {}
 	!MODULE[ModuleFuelTanks] {}
+
 	MODULE
 	{
 		name = ModuleFuelTanks
@@ -832,29 +923,60 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 4.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 }
-@PART[mk3Cockpit_Shuttle]:NEEDS[RemoteTech]:FOR[RealismOverhaul]
+
+@INTERNAL[MK3_Cockpit_Int|MK3_CrewCab_Int]:FOR[RealismOverhaul]
 {
-    %MODULE[ModuleSPU] {}
-
-    %MODULE[ModuleRTAntennaPassive]
-    {
-        
-        %TechRequired = start
-
-        %OmniRange = 2500000
-
-        %TRANSMITTER
-        {
-            %PacketInterval = 0.1
-            %PacketSize = 0.5
-            %PacketResourceCost = 0.005
-        }
-    }
+	%scaleAll = 1.722222, 1.722222, 1.722222
+	@MODULE[InternalSeat],*
+	{
+		%kerbalScale = 1.722222, 1.722222, 1.722222
+		%kerbalOffset = 0.0, 0.0, 0.0
+		%kerbalEyeOffset = 0.0, 0.0, 0.0
+	}
 }
 @PART[mk3CrewCabin]:FOR[RealismOverhaul]
 {
@@ -934,9 +1056,48 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 16.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 }
 @PART[mk3CargoBayS|mk3CargoBayM|mk3CargoBayL]:FOR[RealismOverhaul]
@@ -1504,15 +1665,18 @@
 	%RSSROConfig = True
 	@title = 1.25m Cockpit
 	@description = One-person spaceplane cockpit. Rated for suborbital, or very gentle LEO reentries. X-15 class.
-	%maxTemp = 800
+	%maxTemp = 1000
 	%skinMaxTemp = 1800
-	%emissiveConstant = 0.8
+	%emissiveConstant = 0.875
 	@mass = 0.8
 	
 	%rescaleFactor = 1
 	%scale = 1
 	@node_stack_bottom = 0.0, -0.175, 0.0, 0.0, -1.0, 0.0, 1
-	
+
+	!RESOURCE[ElectricCharge] {}
+	!RESOURCE[MonoPropellant] {}
+
 	!MODULE[ModuleAnimateGeneric],0:NEEDS[VenStockRevamp] {}
 	
 	@MODULE[ModuleCommand]
@@ -1524,18 +1688,8 @@
 		}
 	}
 	
-	!MODULE[TweakScale]
-	{
-	}
-	!RESOURCE[ElectricCharge]
-	{
-	}
-	!MODULE[ModuleReactionWheel]
-	{
-	}
-	!RESOURCE[MonoPropellant]
-	{
-	}
+	!MODULE[TweakScale] {}
+	!MODULE[ModuleReactionWheel] {}
 	!MODULE[ModuleFuelTanks] {}
 	MODULE
 	{
@@ -1596,9 +1750,48 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 1.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 	// Ejection
 	MODULE
@@ -1620,45 +1813,15 @@
 		}
 	}
 }
-@PART[Mark1Cockpit|Mark2Cockpit]:NEEDS[RemoteTech]:FOR[RealismOverhaul]
-{
-    %MODULE[ModuleSPU] {}
 
-    //%MODULE[ModuleRTAntennaPassive]
-    //{
-        //%TechRequired = start
-
-        //%OmniRange = 500000
-
-        //%TRANSMITTER
-        //{
-            //%PacketInterval = 0.4
-            //%PacketSize = 0.27
-            //%PacketResourceCost = 0.01
-        //}
-    //}
-	MODULE
-	{
-		name = ModuleRTAntenna
-		Mode0OmniRange = 1000000
-		Mode1OmniRange = 16000000
-		EnergyCost = 0.0015
-		TRANSMITTER
-		{
-			PacketInterval = 0.4
-			PacketSize = 0.5
-			PacketResourceCost = 0.004
-		}
-	}
-}
 @PART[Mark2Cockpit]:FOR[RealismOverhaul]
 {
 	%RSSROConfig = True
 	@title = 1.25m Inline Cockpit
 	@description = One-person inline spaceplane cockpit. Rated for suborbital, or very gentle LEO reentries. X-15 class.
-	%maxTemp = 800
+	%maxTemp = 1000
 	%skinMaxTemp = 1800
-	%emissiveConstant = 0.8
+	%emissiveConstant = 0.875
 	@mass = 0.7
 	
 	%rescaleFactor = 1
@@ -1747,9 +1910,48 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 1.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 	// Ejection
 	MODULE
@@ -1771,6 +1973,19 @@
 		}
 	}
 }
+
+@PART[Mark1Cockpit]:BEFORE[RealismOverhaul]
+{
+	//undoes DRE stock patches that conflict with RO
+	!MODULE[PartStatsUpgradeModule],* {}
+	@MODULE[ModuleAeroReentry]
+	{
+		!maxOperationalTemp = dummy
+		!skinMaxOperationalTemp = dummy
+		!UPGRADES,* {}
+	}
+}
+
 
 // Resized parts.
 // because why not, and 1.25m is too narrow a diameter for crewed spaceplanes
@@ -1868,9 +2083,48 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 2.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 }
 +PART[Mark2Cockpit]:FOR[RealismOverhaul]
@@ -1970,11 +2224,51 @@
 	{
 		name = TacGenericConverter
 		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
 		conversionRate = 2.0	// # of people - Figures based on per/person
-		inputResources = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 }
+
 // Use alt VSR graphics for 1.25s if available
 @PART[Mark1Cockpit]:FOR[RealismOverhaul]:NEEDS[VenStockRevamp]
 {
@@ -1985,6 +2279,12 @@
 	}
 	@node_stack_bottom = 0.0, -0.1858, 0.0, 0.0, -1.0, 0.0, 1
 	
+	@INTERNAL
+	{
+		@name = RO-Mk1CockpitInternal-1.25
+		%offset = 0.0, 0.2, 0.0
+	}
+
 	@MODULE[ModuleAnimateGeneric]
 	{
 		%animationName = MK1Light
@@ -1994,25 +2294,7 @@
 		@textureQuadName = flagTransform
 	}
 }
-@PART[RO-Mk1Cockpit|RO-Mk1CockpitInline]:NEEDS[RemoteTech]:FOR[RealismOverhaul]
-{
-    %MODULE[ModuleSPU] {}
 
-    %MODULE[ModuleRTAntennaPassive]
-    {
-        
-        %TechRequired = start
-
-        %OmniRange = 1000000
-
-        %TRANSMITTER
-        {
-            %PacketInterval = 0.1
-            %PacketSize = 0.2
-            %PacketResourceCost = 0.01
-        }
-    }
-}
 
 //	==================================================
 //	MK1 Crew Cabin.
@@ -2133,10 +2415,49 @@
 
 	MODULE
 	{
-		name		    = TacGenericConverter
-		converterName   = CO2 Scrubber
-		conversionRate  = 4.000
-		inputResources  = CarbonDioxide, 0.0058912100, ElectricCharge, 0.010, LithiumHydroxide, 0.0000085683
-		outputResources = Water, 0.0032924498, true, Waste, 0.0000257297, false
+		name = TacGenericConverter
+		converterName = CO2 Scrubber
+		StartActionName = Start CO2 Scrubber
+		StopActionName = Stop CO2 Scrubber
+		tag = Life Support
+		GeneratesHeat = False
+		UseSpecialistBonus = True
+		SpecialistEfficiencyFactor = 0.2
+		SpecialistBonusBase = 0.05
+		ExperienceEffect = ConverterSkill
+		EfficiencyBonus = 1
+		conversionRate = 4.000
+
+		INPUT_RESOURCE
+		{
+			ResourceName = CarbonDioxide
+			Ratio = 0.00589121
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = ElectricCharge
+			Ratio = 0.01
+		}
+
+		INPUT_RESOURCE
+		{
+			ResourceName = LithiumHydroxide
+			Ratio = 0.0000085683
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = WasteWater
+			Ratio = 0.0000046828
+			DumpExcess = True
+		}
+
+		OUTPUT_RESOURCE
+		{
+			ResourceName = Waste
+			Ratio = 0.0000257297
+			DumpExcess = False
+		}
 	}
 }
