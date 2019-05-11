@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RealismOverhaul.Communications
 {
-    class ModuleAntennaRO : ModuleDataTransmitter, IPartMassModifier
+    class ModuleAntennaRO : ModuleDataTransmitter, IPartMassModifier, IPartCostModifier
     {
         private const double BASE_POWER = 84610911.3771648;
         private const int MAX_RATE_EXPONENT = 20;
@@ -303,22 +303,23 @@ namespace RealismOverhaul.Communications
             Debug.Log($"[MARO] mass: {(TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000}");
         }
 
-        private double GetMdtAntennaPower(TechLevel tl)
-        {
-            return BASE_POWER * FromDB(referenceGain + tl.Gain) * Scale * Scale * TxPower / MinDataRate * GetFrequencyFactor(tl);
-        }
+        private double GetMdtAntennaPower(TechLevel tl) => BASE_POWER * FromDB(referenceGain + tl.Gain) * Scale * Scale * TxPower / MinDataRate * GetFrequencyFactor(tl);
 
-        private double GetFrequencyFactor(TechLevel tl)
-        {
-            return antennaShape == AntennaShape.Omni ? 1 : Math.Pow(tl.Frequency / referenceFrequency, 2);
-        }
+        private double GetFrequencyFactor(TechLevel tl) => antennaShape == AntennaShape.Omni ? 1 : Math.Pow(tl.Frequency / referenceFrequency, 2);
 
-        public float GetModuleMass(float defaultMass, ModifierStagingSituation sit)
+        public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => TotalMass - defaultMass;
+        public float GetModuleCost(float defaultCost, ModifierStagingSituation sit)
         {
-            return TotalMass - defaultMass;
+            //Debug.Log($"[MARO] def cost: {defaultCost}, cost mod: {TechLevelInstance.BaseCost} + {TechLevelInstance.CostPerWatt * TxPower} + {defaultCost * (Scale * Scale - 1)}");
+            Debug.Log($"[MARO] tx power: {TxPower}, TxDbw: {TxPowerDbw}, TechLevel: {TechLevel}");
+            return TechLevelInstance.BaseCost + TechLevelInstance.CostPerWatt * TxPower + defaultCost * (Scale * Scale - 1);
         }
 
         public ModifierChangeWhen GetModuleMassChangeWhen() => ModifierChangeWhen.FIXED;
+        public ModifierChangeWhen GetModuleCostChangeWhen() => ModifierChangeWhen.FIXED;
+
+        public override string GetModuleDisplayName() => "Configurable Antenna";
+        public override string GetInfo() => string.Empty;
 
         private float ToLog2(float value) => Mathf.Log(value) / Mathf.Log(2);
         private float FromLog2(float value) => Mathf.Pow(2, value);
