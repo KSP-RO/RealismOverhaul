@@ -47,7 +47,8 @@ namespace RealismOverhaul.Communications
             new TechLevel(1/6f, 0f, 8, 10, 0.86f, 17.2f, 20.5f, 8415f, 80, 2.5f),
             new TechLevel(1/4.5f, 3.2f, 16, 20, 0.75f, 21, 21, 8415f, 120, 2),
             new TechLevel(1/4f, 6f, 16, 20, 11.6f/18, 30.7f, 21.4f, 8415f, 175, 1.7f),
-            new TechLevel(20/53.7f, 7f, 16, 40, 10.8f/20, 21.3f, 18.3f, 8415f, 75, 0.5f)
+            new TechLevel(20/53.7f, 7f, 16, 40, 10.8f/20, 21.3f, 18.3f, 8415f, 75, 0.5f),
+            new TechLevel(41.6f/94.6f, 7f, 16, 100, 5.9f/41.6f, 7.5f, 11.7f, 32050f, 50, 0.4f)
         };
     }
 }
