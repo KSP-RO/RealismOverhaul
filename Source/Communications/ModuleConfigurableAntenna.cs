@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RealismOverhaul.Communications
 {
-    class ModuleAntennaRO : ModuleDataTransmitter, IPartMassModifier, IPartCostModifier
+    class ModuleConfigurableAntenna : ModuleDataTransmitter, IPartMassModifier, IPartCostModifier
     {
         private const double BASE_POWER = 84610911.3771648;
         private const int MAX_RATE_EXPONENT = 20;
