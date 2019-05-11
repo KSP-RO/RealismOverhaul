@@ -63,7 +63,7 @@ namespace RealismOverhaul.Communications
         public AntennaShape antennaShape = AntennaShape.Auto;
 
         private bool _isKerbalismLoaded;
-        private Vector3 defaultTransformScale = new Vector3(0f, 0f, 0f);
+        private Vector3 _defaultTransformScale = new Vector3(0f, 0f, 0f);
 
         private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
 
@@ -83,6 +83,7 @@ namespace RealismOverhaul.Communications
             Debug.Log("[MARO] Start");
             _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
             SetupInitialState();
+            ReScale(false);
             UpdateConfiguration();
             SetupPaw();
         }
@@ -183,8 +184,8 @@ namespace RealismOverhaul.Communications
             TxPowerDbwEdit.onSymmetryFieldChanged = OnFieldChanged;
             TechLevelEdit.onFieldChanged = OnFieldChanged;
             TechLevelEdit.onSymmetryFieldChanged = OnFieldChanged;
-            ScaleEdit.onFieldChanged = OnFieldChanged;
-            ScaleEdit.onSymmetryFieldChanged = OnFieldChanged;
+            ScaleEdit.onFieldChanged = OnScaleChanged;
+            ScaleEdit.onSymmetryFieldChanged = OnScaleChanged;
         }
 
         private void SetAntennaShape()
@@ -218,33 +219,51 @@ namespace RealismOverhaul.Communications
             Debug.Log("[MARO]\n" + cn.ToString());
         }
 
+        private void OnScaleChanged(BaseField arg1, object arg2) => ReScale(true);
+
         private void UpdateConfiguration()
         {
-            ReScale(Scale);
             SetMaxTxPower();
             SetupBaseFields();
             UpdatePawFields();
         }
 
-        private void ReScale(float scale)
+        private void ReScale(bool translateParts)
         {
-            Debug.Log($"[MARO] Changing partScale to: {scale}");
-            Debug.Log($"[MARO] prefab rescaleFactor: {part.partInfo.partPrefab.rescaleFactor}");
+            ScaleTransform(Scale);
+            ScaleAttachNodes(Scale, translateParts);
+        }
+
+        private void ScaleAttachNodes(float scale, bool translateParts)
+        {
+            for (int i = 0; i < part.attachNodes.Count; ++i)
+            {
+                TranslateNode(scale, part.attachNodes[i], PartPrefab.attachNodes[i], translateParts);
+            }
+            TranslateNode(scale, part.srfAttachNode, PartPrefab.srfAttachNode, translateParts);
+        }
+
+        private void TranslateNode(float scale, AttachNode node, AttachNode baseNode, bool translateParts)
+        {
+            var oldPosition = node.position;
+            node.position = baseNode.position * scale;
+            if (node.attachedPart == part.parent && translateParts)
+            {
+                part.transform.Translate(oldPosition - node.position);
+            }
+        }
+
+        private void ScaleTransform(float scale)
+        {
             part.scaleFactor = PartPrefab.scaleFactor * scale;
             var modelTransform = GetModelTransform(part);
-            if (modelTransform != null)
+            if (_defaultTransformScale.x == 0.0f)
             {
-                Debug.Log($"[MARO] Old Scale: {modelTransform.localScale}");
-                if (defaultTransformScale.x == 0.0f)
-                {
-                    defaultTransformScale = GetModelTransform(PartPrefab).localScale;
-                    Debug.Log($"[MARO] Setting def transform: {defaultTransformScale}");
-                }
-                Debug.Log($"[MARO] Setting transform: to {scale * defaultTransformScale}");
-                modelTransform.localScale = scale * defaultTransformScale;
-                modelTransform.hasChanged = true;
-                part.partTransform.hasChanged = true;
+                _defaultTransformScale = GetModelTransform(PartPrefab).localScale;
             }
+            modelTransform.localScale = scale * _defaultTransformScale;
+            modelTransform.hasChanged = true;
+            part.partTransform.hasChanged = true;
         }
 
         private static Transform GetModelTransform(Part p) => p.partTransform.Find("model");
@@ -280,7 +299,6 @@ namespace RealismOverhaul.Communications
 
         private void OnFieldChanged(BaseField field, object oldValueObj)
         {
-            Debug.Log($"[MARO] Field changed");
             UpdateConfiguration();
         }
 
