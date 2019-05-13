@@ -2,7 +2,7 @@ ship = RO RN KK Aqua
 version = 1.1.3
 description = RN Aqua for RSS/RO¨AG1 - Deploy Solar Panels
 type = VAB
-size = 5.24619198,40.2060852,5.18432236
+size = 5.24619293,40.2060852,5.18432236
 PART
 {
 	part = eos.aqua_4293817866
@@ -317,14 +317,11 @@ PART
 	}
 	MODULE
 	{
-		name = KopernicusSolarPanel
+		name = ModuleDeployableSolarPanel
 		isEnabled = True
-		trackingBodyName = The Sun
-		manualTracking = False
-		relativeSunAOA = False
 		efficiencyMult = 1
 		launchUT = -1
-		currentRotation = (0.500000179, -0.499999821, -0.500000179, -0.499999821)
+		currentRotation = (0, 0, -0.707106829, 0.707106829)
 		storedAnimationTime = 0
 		storedAnimationSpeed = 1
 		deployState = RETRACTED
@@ -345,6 +342,31 @@ PART
 			RetractAction
 			{
 				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = BDFSanimateGeneric
+		isEnabled = True
+		startDeployed = False
+		isAnimating = False
+		animTime = 0
+		reverseAnimation = False
+		animSpeed = -1
+		hasBeenInitialized = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			toggleAction
+			{
+				actionGroup = Custom01
 			}
 		}
 		UPGRADESAPPLIED
@@ -398,11 +420,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleROSolarPanel
+		isEnabled = True
+		spCalc = 
+		orbCalc = 
+		selectedBody = Choose One
+		currentAU = 
+		solarOutputPe = 
+		solarOutputAp = 
+		futureOutput = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleFuelTanks
 		isEnabled = True
 		type = ServiceModule
 		utilization = 86
 		mass = 2.83200002
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 111.81
@@ -1766,7 +1811,6 @@ PART
 			}
 			MechJebModuleSpaceplaneAutopilot
 			{
-				bBreakAsSoonAsLanded = False
 				unlockParts = 
 				unlockTechs = 
 				glideslope
@@ -1778,11 +1822,6 @@ PART
 				{
 					_val = 80
 					_text = 80
-				}
-				touchdownSpeed
-				{
-					_val = 60
-					_text = 60
 				}
 				maximumSafeBankAngle
 				{
@@ -1864,15 +1903,9 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
-			MechJebModuleDeployableAntennaController
-			{
-				prev_shouldDeploy = False
-				unlockParts = 
-				unlockTechs = 
-			}
 			MechJebModuleSolarPanelController
 			{
-				prev_shouldDeploy = False
+				prev_ShouldOpenSolarPanels = False
 				unlockParts = 
 				unlockTechs = 
 			}
@@ -2159,6 +2192,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -2382,6 +2443,7 @@ PART
 		type = Fuselage
 		utilization = 86
 		mass = 0.801999986
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 5256.0213000000003
@@ -3920,6 +3982,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -4037,6 +4127,7 @@ PART
 		type = Default
 		utilization = 86
 		mass = 3.58899999
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 91474.124400000001
@@ -4814,7 +4905,7 @@ PART
 	sepI = 3
 	attm = 0
 	modCost = 0
-	modMass = 0.06397295
+	modMass = 0.0629370213
 	modSize = 0,0,0
 	attN = middle,KK.ULA.XELTT_4293753978
 	EVENTS
@@ -5157,6 +5248,24 @@ PART
 	}
 	MODULE
 	{
+		name = BDFStextureSwitch2
+		isEnabled = True
+		selectedTexture = 0
+		selectedTextureURL = RN_US_Rockets/Thor/KK_LR-101
+		selectedMapURL = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
@@ -5369,6 +5478,24 @@ PART
 			{
 				actionGroup = None
 			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = BDFStextureSwitch2
+		isEnabled = True
+		selectedTexture = 0
+		selectedTextureURL = RN_US_Rockets/Thor/KK_LR-101
+		selectedMapURL = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -5860,6 +5987,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.09599996
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -6156,7 +6284,7 @@ PART
 {
 	part = KK.GEM-40.GL_4293753304
 	partName = Part
-	pos = 1.23403633,3.52535248,-1.33983123
+	pos = 1.23403656,3.52535248,-1.33983159
 	attPos = 0,0,0
 	attPos0 = -0.618516922,1.14199603,-7.06415193E-09
 	rot = -1.42436321E-07,0.915311813,5.74299008E-08,-0.402746111
@@ -6323,6 +6451,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.09599996
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -6786,6 +6915,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.09599996
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -7082,10 +7212,10 @@ PART
 {
 	part = KK.GEM-40.GL_4293752992
 	partName = Part
-	pos = 1.52536869,3.53098297,0.999857724
+	pos = 1.52536893,3.53098297,0.999857962
 	attPos = 0,0,0
 	attPos0 = -0.618516922,1.14199603,-7.06415193E-09
-	rot = -1.66219237E-07,0.960049808,-4.51545006E-08,0.279829413
+	rot = -1.66219223E-07,0.960049808,-4.51545077E-08,0.279829413
 	attRot = 0,0,0,1
 	attRot0 = 1.06581402E-14,2.11758199E-22,-2.083613E-07,1
 	mir = 1,1,1
@@ -7249,6 +7379,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.09599996
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -7545,7 +7676,7 @@ PART
 {
 	part = KK.GEM-40.GL_4293752836
 	partName = Part
-	pos = 0.0801862031,3.53098297,-1.82432413
+	pos = 0.0801861435,3.53098297,-1.82432413
 	attPos = 0,0,0
 	attPos0 = -0.618516922,1.14199603,-7.06415193E-09
 	rot = -1.22214615E-07,0.722364187,1.21372921E-07,-0.691512823
@@ -7712,6 +7843,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.09599996
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -8175,6 +8307,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.09599996
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -8471,7 +8604,7 @@ PART
 {
 	part = KK.GEM-40.AL_4293752524
 	partName = Part
-	pos = -0.726240039,3.51522255,1.68812931
+	pos = -0.726240098,3.51522255,1.68812931
 	attPos = 0,0,0
 	attPos0 = -0.618628204,1.12113595,4.48486803E-09
 	rot = -3.53520093E-08,0.555571079,-5.29078612E-08,0.831469119
@@ -8639,6 +8772,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.10773587
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -8720,7 +8854,7 @@ PART
 {
 	part = launchClamp1_4293752440
 	partName = Part
-	pos = -1.23245823,1.80090332,2.91026163
+	pos = -1.23245835,1.80090332,2.91026187
 	attPos = 0,0,0
 	attPos0 = -1.322824,-1.71432495,-6.40895124E-08
 	rot = 2.96072811E-09,0.980785489,-1.48843995E-08,0.195089251
@@ -9092,7 +9226,7 @@ PART
 {
 	part = KK.GEM-40.AL_4293752254
 	partName = Part
-	pos = 1.80205238,3.51522255,-0.218514249
+	pos = 1.80205262,3.51522255,-0.218514279
 	attPos = 0,0,0
 	attPos0 = -0.618628204,1.12113595,4.48486803E-09
 	rot = -6.34955697E-08,0.997858882,4.16179002E-09,-0.0654042289
@@ -9260,6 +9394,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.10773587
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -9341,10 +9476,10 @@ PART
 {
 	part = launchClamp1_4293752170
 	partName = Part
-	pos = 3.11356235,1.80090332,-0.39118135
+	pos = 3.11356306,1.80090332,-0.391181469
 	attPos = 0,0,0
 	attPos0 = -1.322824,-1.71432495,5.51197807E-08
-	rot = -1.14099166E-08,0.659344971,-1.0006211E-08,-0.751840591
+	rot = -1.14099237E-08,0.659344971,-1.00062181E-08,-0.751840591
 	attRot = 0,0,0,1
 	attRot0 = -3.42634614E-08,0.707106829,3.42634614E-08,0.707106829
 	mir = 1,1,1
@@ -9380,7 +9515,7 @@ PART
 		scaleFactor = 0.975371301
 		height = 2.46105433
 		stagingEnabled = True
-		towerRot = 1.14099166E-08,-0.659344971,1.0006211E-08,-0.751840591
+		towerRot = 1.14099237E-08,-0.659344971,1.00062181E-08,-0.751840591
 		EVENTS
 		{
 		}
@@ -9716,7 +9851,7 @@ PART
 	pos = -1.11329615,3.51522255,-1.45475709
 	attPos = 0,0,0
 	attPos0 = -0.618628204,1.12113595,4.48486803E-09
-	rot = -2.8143635E-08,0.442287743,5.70698013E-08,-0.896873236
+	rot = -2.81436314E-08,0.442287743,5.70698013E-08,-0.896873236
 	attRot = 0,0,0,1
 	attRot0 = 0,0,-1.18699298E-07,1
 	mir = 1,1,1
@@ -9881,6 +10016,7 @@ PART
 		type = HTPB
 		utilization = 86
 		mass = 1.10773587
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 6647.4575999999997
@@ -9965,7 +10101,7 @@ PART
 	pos = -1.91858566,1.80090332,-2.50422335
 	attPos = 0,0,0
 	attPos0 = -1.322824,-1.71432495,-6.40895124E-08
-	rot = -1.43705776E-08,-0.321440786,4.87820806E-09,-0.946929753
+	rot = -1.43705776E-08,-0.321440786,4.87821161E-09,-0.946929753
 	attRot = 0,0,0,1
 	attRot0 = -3.42634507E-08,0.707106888,3.42634507E-08,0.707106709
 	mir = 1,1,1
@@ -10001,7 +10137,7 @@ PART
 		scaleFactor = 0.975371301
 		height = 2.46105433
 		stagingEnabled = True
-		towerRot = 1.43705776E-08,0.321440786,-4.87820806E-09,-0.946929753
+		towerRot = 1.43705776E-08,0.321440786,-4.87821161E-09,-0.946929753
 		EVENTS
 		{
 		}
@@ -10256,6 +10392,34 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleAeroReentry
 		isEnabled = True
 		dead = False
@@ -10419,6 +10583,34 @@ PART
 		}
 		Ullage
 		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
