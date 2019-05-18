@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RealismOverhaul.Communications
 {
-    class ModuleConfigurableAntenna : ModuleDataTransmitter, IPartMassModifier, IPartCostModifier
+    class ModuleConfigurableAntenna : ModuleDataTransmitter, IPartMassModifier, IPartCostModifier, ICommAntenna
     {
         private const double BASE_POWER = 84610911.3771648;
         private const int MAX_RATE_EXPONENT = 20;
@@ -84,6 +84,7 @@ namespace RealismOverhaul.Communications
             _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
             SetupInitialState();
             ReScale(false);
+            SetMaxTechLevel();
             UpdateConfiguration();
             SetupPaw();
         }
@@ -92,7 +93,21 @@ namespace RealismOverhaul.Communications
         {
             SetupRangeCurve();
             SetAntennaShape();
-            SetMaxTechLevel();
+        }
+
+        double ICommAntenna.CommPowerUnloaded(ProtoPartModuleSnapshot mSnap)
+        {
+            var techLevel = 0;
+            var scaleIndex = 0;
+            var dataRateExponent = 0;
+            var txPowerDbw = -10f;
+            mSnap.moduleValues.TryGetValue(nameof(TechLevel), ref techLevel);
+            mSnap.moduleValues.TryGetValue(nameof(ScaleIndex), ref scaleIndex);
+            mSnap.moduleValues.TryGetValue(nameof(DataRateExponent), ref dataRateExponent);
+            mSnap.moduleValues.TryGetValue(nameof(TxPowerDbw), ref txPowerDbw);
+            var tl = Communications.TechLevel.GetTechLevel(techLevel);
+            var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
+            return GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), FromDB(txPowerDbw), FromLog2(dataRateExponent) * tl.MinDataRate, frequencyFactor);
         }
 
         public override void OnStart(StartState state)
@@ -325,9 +340,9 @@ namespace RealismOverhaul.Communications
             Debug.Log($"[MARO] mass: {(TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000}");
         }
 
-        private double GetMdtAntennaPower(TechLevel tl) => BASE_POWER * FromDB(referenceGain + tl.Gain) * Scale * Scale * TxPower / MinDataRate * GetFrequencyFactor(tl);
-
-        private double GetFrequencyFactor(TechLevel tl) => antennaShape == AntennaShape.Omni ? 1 : Math.Pow(tl.Frequency / referenceFrequency, 2);
+        private double GetMdtAntennaPower(TechLevel tl) => GetMdtAntennaPower(referenceGain, tl.Gain, Scale, TxPower, MinDataRate, GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency));
+        private double GetMdtAntennaPower(float refGain, float gain, float scale, float txPower, float minDataRate, float frequencyFactor) => BASE_POWER * FromDB(refGain + gain) * scale * scale * txPower / minDataRate * frequencyFactor;
+        private float GetFrequencyFactor(float frequency, AntennaShape antennaShape, float refFreq) => antennaShape == AntennaShape.Omni ? 1 : Mathf.Pow(frequency / refFreq, 2);
 
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => TotalMass - defaultMass;
         public float GetModuleCost(float defaultCost, ModifierStagingSituation sit)
@@ -343,10 +358,10 @@ namespace RealismOverhaul.Communications
         public override string GetModuleDisplayName() => "Configurable Antenna";
         public override string GetInfo() => string.Empty;
 
-        private float ToLog2(float value) => Mathf.Log(value) / Mathf.Log(2);
-        private float FromLog2(float value) => Mathf.Pow(2, value);
+        private static float ToLog2(float value) => Mathf.Log(value) / Mathf.Log(2);
+        private static float FromLog2(float value) => Mathf.Pow(2, value);
 
-        private float ToDB(float value) => Mathf.Log10(value) * 10;
-        private float FromDB(float value) => Mathf.Pow(10, value / 10f);
+        private static float ToDB(float value) => Mathf.Log10(value) * 10;
+        private static float FromDB(float value) => Mathf.Pow(10, value / 10f);
     }
 }
