@@ -312,7 +312,7 @@ namespace RealismOverhaul.Communications
 
         private string Format(float value, string unit, int logBase = 1000)
         {
-            var prefixes = new[] { "m", "", "k", "M", "G", "T" };
+            var prefixes = new[] { "m", "", "k", "M", "G", "T", "P", "E" };
             var prefixNumber = (int)Mathf.Floor(Mathf.Log(value) / Mathf.Log(logBase));
             value /= Mathf.Pow(logBase, prefixNumber);
             var digits = (int)Mathf.Log10(value);
