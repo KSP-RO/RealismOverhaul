@@ -10,6 +10,7 @@ namespace RealismOverhaul.Communications
         private const int MAX_RATE_EXPONENT = 20;
         private const float MAX_RATE_MULTIPLIER = 1 << MAX_RATE_EXPONENT;
         private const int HALF_SCALE_STEPS = 8;
+        private const int SCALE_RANGE = 2;
         private const float ANTENNA_MASS_SCALING_EXPONENT = 2.0f;
 
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
@@ -75,6 +76,8 @@ namespace RealismOverhaul.Communications
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
         private float AntennaMass => part.prefabMass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
         private float TotalMass => AntennaMass + ElectronicsMass;
+        private bool IsScalable => antennaShape != AntennaShape.Omni;
+        private float MaxScale => IsScalable ? Mathf.Pow(SCALE_RANGE, 0.5f) : 1;
 
         public override void OnLoad(ConfigNode node)
         {
@@ -138,7 +141,7 @@ namespace RealismOverhaul.Communications
             DataRateExponentEdit.scene = _isKerbalismLoaded ? UI_Scene.None : UI_Scene.Flight;
             DataRateExponentEdit.options = CreateDataRateOptions();
 
-            if (antennaShape != AntennaShape.Omni)
+            if (IsScalable)
             {
                 ScaleEdit.options = CreateScaleOptions();
             }
@@ -170,7 +173,7 @@ namespace RealismOverhaul.Communications
             return result;
         }
 
-        private float GetScaleFromIndex(int i) => Mathf.Pow(2, ((float)i / HALF_SCALE_STEPS - 1) / 2);
+        private float GetScaleFromIndex(int i) => Mathf.Pow(SCALE_RANGE, ((float)i / HALF_SCALE_STEPS - 1) / 2);
 
         private void SetupChangeListeners()
         {
@@ -318,7 +321,8 @@ namespace RealismOverhaul.Communications
             antennaCombinableExponent = antennaShape == AntennaShape.Dish ? 2f : 1f;
         }
 
-        private double GetMdtAntennaPower(TechLevel tl) => GetMdtAntennaPower(referenceGain, tl.Gain, Scale, TxPower, MinDataRate, GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency));
+        private double GetMdtAntennaPower(TechLevel tl) => GetMdtAntennaPower(tl, Scale);
+        private double GetMdtAntennaPower(TechLevel tl, float scale) => GetMdtAntennaPower(referenceGain, tl.Gain, scale, TxPower, MinDataRate, GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency));
         private double GetMdtAntennaPower(float refGain, float gain, float scale, float txPower, float minDataRate, float frequencyFactor) => BASE_POWER * FromDB(refGain + gain) * scale * scale * txPower / minDataRate * frequencyFactor;
         private float GetFrequencyFactor(float frequency, AntennaShape antennaShape, float refFreq) => antennaShape == AntennaShape.Omni ? 1 : Mathf.Pow(frequency / refFreq, 2);
 
@@ -329,7 +333,13 @@ namespace RealismOverhaul.Communications
         public ModifierChangeWhen GetModuleCostChangeWhen() => ModifierChangeWhen.FIXED;
 
         public override string GetModuleDisplayName() => "Configurable Antenna";
-        public override string GetInfo() => string.Empty;
+
+        public override string GetInfo()
+        {
+            var mdtPower = GetMdtAntennaPower(TechLevelInstance, MaxScale);
+            return $"Max Range to DSN: <pos=66%><b><color=green>{Format(GetRange(mdtPower, DsnRange), "m")}</color></b>\n" +
+                $"Max Range to self: <pos=66%><b><color=green>{Format(GetRange(mdtPower, mdtPower), "m")}</color></b>\n";
+        }
 
         private static float ToLog2(float value) => Mathf.Log(value) / Mathf.Log(2);
         private static float FromLog2(float value) => Mathf.Pow(2, value);
