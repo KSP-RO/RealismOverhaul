@@ -12,6 +12,8 @@ namespace RealismOverhaul.Communications
         private const int HALF_SCALE_STEPS = 8;
         private const int SCALE_RANGE = 2;
         private const float ANTENNA_MASS_SCALING_EXPONENT = 2.0f;
+        private const float ANTENNA_EFFICIENCY = 0.636f;
+        private const float SPEED_OF_LIGHT = 299_792_458;
 
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
         public string TxPowerString;
@@ -53,6 +55,9 @@ namespace RealismOverhaul.Communications
 
         [KSPField]
         public int maxTechLevel = -1;
+
+        [KSPField]
+        public float diameter = 0f;
 
         [KSPField]
         public float referenceGain = 0f;
@@ -97,9 +102,18 @@ namespace RealismOverhaul.Communications
         private void SetupLoadedState()
         {
             SetupRangeCurve();
+            SetGain();
             SetAntennaShape();
             ApplyUpgrades();
             SetupBaseFields();
+        }
+
+        private void SetGain()
+        {
+            if (diameter > 0)
+            {
+                referenceGain = ToDB(ANTENNA_EFFICIENCY * Mathf.Pow(Mathf.PI * referenceFrequency * 1e6f / SPEED_OF_LIGHT * diameter, 2));
+            }
         }
 
         private void ApplyUpgrades()
@@ -191,7 +205,7 @@ namespace RealismOverhaul.Communications
         {
             if (antennaShape == AntennaShape.Auto)
             {
-                antennaShape = referenceGain > 8 ? AntennaShape.Dish : AntennaShape.Omni;
+                antennaShape = diameter > 0 || referenceGain > 8 ? AntennaShape.Dish : AntennaShape.Omni;
             }
         }
 
