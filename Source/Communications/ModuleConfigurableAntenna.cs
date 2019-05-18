@@ -12,7 +12,7 @@ namespace RealismOverhaul.Communications
         private const int HALF_SCALE_STEPS = 8;
         private const float ANTENNA_MASS_SCALING_EXPONENT = 2.0f;
 
-        [KSPField( guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Tx Power")]
         public string TxPowerString;
 
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Total Power")]
@@ -66,6 +66,7 @@ namespace RealismOverhaul.Communications
         private Vector3 _defaultTransformScale = new Vector3(0f, 0f, 0f);
 
         private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
+        private Part PartPrefab => part.partInfo.partPrefab;
 
         private float TxPower => FromDB(TxPowerDbw);
         private float TotalPower => TxPower / TechLevelInstance.Efficiency + TechLevelInstance.BasePower;
@@ -75,25 +76,27 @@ namespace RealismOverhaul.Communications
         private float AntennaMass => part.prefabMass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
         private float TotalMass => AntennaMass + ElectronicsMass;
 
-        private Part PartPrefab => part.partInfo.partPrefab;
-
+        public override void OnLoad(ConfigNode node)
+        {
+            base.OnLoad(node);
+            SetupLoadedState();
+        }
 
         public void Start()
         {
-            Debug.Log("[MARO] Start");
             _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
-            SetupInitialState();
             ReScale(false);
             SetMaxTechLevel();
             UpdateConfiguration();
             SetupPaw();
         }
 
-        private void SetupInitialState()
+        private void SetupLoadedState()
         {
             SetupRangeCurve();
             SetAntennaShape();
             ApplyUpgrades();
+            SetupBaseFields();
         }
 
         private void ApplyUpgrades()
@@ -118,12 +121,6 @@ namespace RealismOverhaul.Communications
             var tl = Communications.TechLevel.GetTechLevel(techLevel);
             var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
             return GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), FromDB(txPowerDbw), FromLog2(dataRateExponent) * tl.MinDataRate, frequencyFactor);
-        }
-
-        public override void OnStart(StartState state)
-        {
-            Debug.Log("[MARO] ONSTART");
-            base.OnStart(state);
         }
 
         private void SetupPaw()
@@ -175,34 +172,8 @@ namespace RealismOverhaul.Communications
 
         private float GetScaleFromIndex(int i) => Mathf.Pow(2, ((float)i / HALF_SCALE_STEPS - 1) / 2);
 
-        public override void OnAwake()
-        {
-            Debug.Log("[MARO] ONAWAKE");
-            base.OnAwake();
-        }
-
-        public override void OnInitialize()
-        {
-            Debug.Log("[MARO] ONINITIALIZE");
-            base.OnInitialize();
-        }
-
-        public override void OnLoad(ConfigNode node)
-        {
-            Debug.Log("[MARO] ONLOAD");
-            base.OnLoad(node);
-            SetupUnloadedVessels();
-        }
-
-        private void SetupUnloadedVessels()
-        {
-            SetupInitialState();
-            SetupBaseFields();
-        }
-
         private void SetupChangeListeners()
         {
-            Debug.Log("[MARO] SETUP CL");
             DataRateExponentEdit.onFieldChanged = OnFieldChanged;
             DataRateExponentEdit.onSymmetryFieldChanged = OnFieldChanged;
             TxPowerDbwEdit.onFieldChanged = OnFieldChanged;
@@ -322,8 +293,8 @@ namespace RealismOverhaul.Communications
         private void SetMaxTxPower()
         {
             var maxTxPowerDbw = ToDB(TechLevelInstance.MaxPower);
-            TxPowerDbwEdit.maxValue = maxTxPowerDbw;
             TxPowerDbw = Mathf.Clamp(TxPowerDbw, -13, maxTxPowerDbw);
+            TxPowerDbwEdit.maxValue = maxTxPowerDbw;
         }
 
         private void OnFieldChanged(BaseField field, object oldValueObj)
@@ -333,9 +304,8 @@ namespace RealismOverhaul.Communications
 
         private void SetMaxTechLevel()
         {
-            Debug.Log($"[MARO] max tl: {maxTechLevel}");
-            TechLevelEdit.maxValue = maxTechLevel;
             TechLevel = Mathf.Clamp(TechLevel, 0f, maxTechLevel);
+            TechLevelEdit.maxValue = maxTechLevel;
         }
 
         private void SetupBaseFields()
@@ -346,8 +316,6 @@ namespace RealismOverhaul.Communications
             packetResourceCost = TotalPower / 1000;
             antennaType = AntennaType.RELAY;
             antennaCombinableExponent = antennaShape == AntennaShape.Dish ? 2f : 1f;
-
-            Debug.Log($"[MARO] mass: {(TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000}");
         }
 
         private double GetMdtAntennaPower(TechLevel tl) => GetMdtAntennaPower(referenceGain, tl.Gain, Scale, TxPower, MinDataRate, GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency));
@@ -355,12 +323,7 @@ namespace RealismOverhaul.Communications
         private float GetFrequencyFactor(float frequency, AntennaShape antennaShape, float refFreq) => antennaShape == AntennaShape.Omni ? 1 : Mathf.Pow(frequency / refFreq, 2);
 
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => TotalMass - defaultMass;
-        public float GetModuleCost(float defaultCost, ModifierStagingSituation sit)
-        {
-            //Debug.Log($"[MARO] def cost: {defaultCost}, cost mod: {TechLevelInstance.BaseCost} + {TechLevelInstance.CostPerWatt * TxPower} + {defaultCost * (Scale * Scale - 1)}");
-            Debug.Log($"[MARO] tx power: {TxPower}, TxDbw: {TxPowerDbw}, TechLevel: {TechLevel}");
-            return TechLevelInstance.BaseCost + TechLevelInstance.CostPerWatt * TxPower + defaultCost * (Scale * Scale - 1);
-        }
+        public float GetModuleCost(float defaultCost, ModifierStagingSituation sit) => TechLevelInstance.BaseCost + TechLevelInstance.CostPerWatt * TxPower + defaultCost * (Scale * Scale - 1);
 
         public ModifierChangeWhen GetModuleMassChangeWhen() => ModifierChangeWhen.FIXED;
         public ModifierChangeWhen GetModuleCostChangeWhen() => ModifierChangeWhen.FIXED;
