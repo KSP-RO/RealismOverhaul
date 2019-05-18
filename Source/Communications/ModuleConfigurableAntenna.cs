@@ -74,7 +74,7 @@ namespace RealismOverhaul.Communications
         private float MinDataRate => TechLevelInstance.MinDataRate * FromLog2(DataRateExponent);
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
-        private float AntennaMass => part.prefabMass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
+        private float AntennaMass => PartPrefab.mass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
         private float TotalMass => AntennaMass + ElectronicsMass;
         private bool IsScalable => antennaShape != AntennaShape.Omni;
         private float MaxScale => IsScalable ? Mathf.Pow(SCALE_RANGE, 0.5f) : 1;
