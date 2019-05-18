@@ -148,7 +148,7 @@ namespace RealismOverhaul.Communications
             return result;
         }
 
-        private float GetScaleFromIndex(int i) => Mathf.Pow(2, ((float) i / HALF_SCALE_STEPS - 1) / 2);
+        private float GetScaleFromIndex(int i) => Mathf.Pow(2, ((float)i / HALF_SCALE_STEPS - 1) / 2);
 
         public override void OnAwake()
         {
@@ -219,7 +219,11 @@ namespace RealismOverhaul.Communications
             Debug.Log("[MARO]\n" + cn.ToString());
         }
 
-        private void OnScaleChanged(BaseField arg1, object arg2) => ReScale(true);
+        private void OnScaleChanged(BaseField arg1, object arg2)
+        {
+            ReScale(true);
+            UpdateConfiguration();
+        }
 
         private void UpdateConfiguration()
         {
