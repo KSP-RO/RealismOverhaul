@@ -341,8 +341,8 @@ namespace RealismOverhaul.Communications
         private void SetupBaseFields()
         {
             antennaPower = GetMdtAntennaPower(TechLevelInstance);
-            packetInterval = 1;
-            packetSize = MinDataRate * (_isKerbalismLoaded ? MAX_RATE_MULTIPLIER : 1) / 1024 / 1024;
+            packetInterval = 0.5f;
+            packetSize = MinDataRate * (_isKerbalismLoaded ? MAX_RATE_MULTIPLIER : 1) / 1024 / 1024 / 2;
             packetResourceCost = TotalPower / 1000;
             antennaType = AntennaType.RELAY;
             antennaCombinableExponent = antennaShape == AntennaShape.Dish ? 2f : 1f;
