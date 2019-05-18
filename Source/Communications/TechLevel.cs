@@ -31,7 +31,7 @@ namespace RealismOverhaul.Communications
 
         public static TechLevel GetTechLevel(int i)
         {
-            if (i > _techLevels.Count)
+            if (i < 0)
             {
                 i = 0;
             }

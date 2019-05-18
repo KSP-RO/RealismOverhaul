@@ -38,11 +38,11 @@ namespace RealismOverhaul.Communications
         private UI_ChooseOption DataRateExponentEdit => (UI_ChooseOption)Fields[nameof(DataRateExponent)].uiControlFlight;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tx Power (dBW)", guiUnits = "dBW", guiFormat = "F0"), UI_FloatRange(minValue = -12, stepIncrement = 1, scene = UI_Scene.Editor)]
-        public float TxPowerDbw = 0;
+        public float TxPowerDbw = ToDB(Communications.TechLevel.GetTechLevel(0).MaxPower);
         private UI_FloatRange TxPowerDbwEdit => (UI_FloatRange)Fields[nameof(TxPowerDbw)].uiControlEditor;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tech Level", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Editor)]
-        public float TechLevel = 99;
+        public float TechLevel = -1;
         private UI_FloatRange TechLevelEdit => (UI_FloatRange)Fields[nameof(TechLevel)].uiControlEditor;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Scale"), UI_ChooseOption(scene = UI_Scene.Editor)]
@@ -51,7 +51,7 @@ namespace RealismOverhaul.Communications
         public float Scale => GetScaleFromIndex(ScaleIndex);
 
         [KSPField]
-        public int maxTechLevel = 0;
+        public int maxTechLevel = -1;
 
         [KSPField]
         public float referenceGain = 0f;
@@ -93,6 +93,16 @@ namespace RealismOverhaul.Communications
         {
             SetupRangeCurve();
             SetAntennaShape();
+            ApplyUpgrades();
+        }
+
+        private void ApplyUpgrades()
+        {
+            if (TechLevel == -1 && maxTechLevel > 0)
+            {
+                TechLevel = maxTechLevel;
+                TxPowerDbw = ToDB(TechLevelInstance.MaxPower);
+            }
         }
 
         double ICommAntenna.CommPowerUnloaded(ProtoPartModuleSnapshot mSnap)
