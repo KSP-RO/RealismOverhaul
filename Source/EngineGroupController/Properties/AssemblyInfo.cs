@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EngineGroupController")]
-[assembly: AssemblyCopyright("Copyright ©  2014-2018")]
+[assembly: AssemblyCopyright("Copyright ©  2014-2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
