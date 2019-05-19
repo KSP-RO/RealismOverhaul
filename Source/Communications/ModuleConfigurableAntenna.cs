@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RealismOverhaul.Utils;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -41,7 +42,7 @@ namespace RealismOverhaul.Communications
         private UI_ChooseOption DataRateExponentEdit => (UI_ChooseOption)Fields[nameof(DataRateExponent)].uiControlFlight;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tx Power (dBW)", guiUnits = "dBW", guiFormat = "F0"), UI_FloatRange(minValue = -12, stepIncrement = 1, scene = UI_Scene.Editor)]
-        public float TxPowerDbw = ToDB(Communications.TechLevel.GetTechLevel(0).MaxPower);
+        public float TxPowerDbw = Communications.TechLevel.GetTechLevel(0).MaxPower.ToDB();
         private UI_FloatRange TxPowerDbwEdit => (UI_FloatRange)Fields[nameof(TxPowerDbw)].uiControlEditor;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tech Level", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Editor)]
@@ -69,14 +70,13 @@ namespace RealismOverhaul.Communications
         public AntennaShape antennaShape = AntennaShape.Auto;
 
         private bool _isKerbalismLoaded;
-        private Vector3 _defaultTransformScale = new Vector3(0f, 0f, 0f);
 
         private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
         private Part PartPrefab => part.partInfo.partPrefab;
 
-        private float TxPower => FromDB(TxPowerDbw);
+        private float TxPower => TxPowerDbw.FromDB();
         private float TotalPower => TxPower / TechLevelInstance.Efficiency + TechLevelInstance.BasePower;
-        private float MinDataRate => TechLevelInstance.MinDataRate * FromLog2(DataRateExponent);
+        private float MinDataRate => TechLevelInstance.MinDataRate * DataRateExponent.FromLog2();
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
         private float AntennaMass => PartPrefab.mass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
@@ -112,7 +112,7 @@ namespace RealismOverhaul.Communications
         {
             if (diameter > 0)
             {
-                referenceGain = ToDB(ANTENNA_EFFICIENCY * Mathf.Pow(Mathf.PI * referenceFrequency * 1e6f / SPEED_OF_LIGHT * diameter, 2));
+                referenceGain = (ANTENNA_EFFICIENCY * Mathf.Pow(Mathf.PI * referenceFrequency * 1e6f / SPEED_OF_LIGHT * diameter, 2)).ToDB();
             }
         }
 
@@ -121,23 +121,20 @@ namespace RealismOverhaul.Communications
             if (TechLevel == -1 && maxTechLevel > 0)
             {
                 TechLevel = maxTechLevel;
-                TxPowerDbw = ToDB(TechLevelInstance.MaxPower);
+                TxPowerDbw = TechLevelInstance.MaxPower.ToDB();
             }
         }
 
         double ICommAntenna.CommPowerUnloaded(ProtoPartModuleSnapshot mSnap)
         {
-            var techLevel = 0;
-            var scaleIndex = 0;
-            var dataRateExponent = 0;
-            var txPowerDbw = -10f;
-            mSnap.moduleValues.TryGetValue(nameof(TechLevel), ref techLevel);
-            mSnap.moduleValues.TryGetValue(nameof(ScaleIndex), ref scaleIndex);
-            mSnap.moduleValues.TryGetValue(nameof(DataRateExponent), ref dataRateExponent);
-            mSnap.moduleValues.TryGetValue(nameof(TxPowerDbw), ref txPowerDbw);
+            var values = mSnap.moduleValues;
+            var techLevel = values.GetInt(nameof(TechLevel));
+            var scaleIndex = values.GetInt(nameof(ScaleIndex));
+            var dataRateExponent = values.GetInt(nameof(DataRateExponent));
+            var txPowerDbw = values.GetFloat(nameof(TxPowerDbw));
             var tl = Communications.TechLevel.GetTechLevel(techLevel);
             var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
-            return GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), FromDB(txPowerDbw), FromLog2(dataRateExponent) * tl.MinDataRate, frequencyFactor);
+            return GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), txPowerDbw.FromDB(), dataRateExponent.FromLog2() * tl.MinDataRate, frequencyFactor);
         }
 
         private void SetupPaw()
@@ -171,7 +168,7 @@ namespace RealismOverhaul.Communications
             var result = new string[MAX_RATE_EXPONENT + 1];
             for (int i = 0; i <= MAX_RATE_EXPONENT; ++i)
             {
-                result[i] = Format(MinDataRate * (1 << i), "b/s", 1024);
+                result[i] = (MinDataRate * (1 << i)).Format("b/s", 1024);
             }
             return result;
         }
@@ -182,7 +179,7 @@ namespace RealismOverhaul.Communications
             var result = new string[stepCount];
             for (int i = 0; i < stepCount; ++i)
             {
-                result[i] = Format(GetScaleFromIndex(i) * 100, "%");
+                result[i] = (GetScaleFromIndex(i) * 100).Format("%");
             }
             return result;
         }
@@ -238,6 +235,8 @@ namespace RealismOverhaul.Communications
             UpdateConfiguration();
         }
 
+        private void ReScale(bool translateParts) => part.Scale(Scale, translateParts);
+
         private void UpdateConfiguration()
         {
             SetMaxTxPower();
@@ -245,71 +244,22 @@ namespace RealismOverhaul.Communications
             UpdatePawFields();
         }
 
-        private void ReScale(bool translateParts)
-        {
-            ScaleTransform(Scale);
-            ScaleAttachNodes(Scale, translateParts);
-        }
-
-        private void ScaleAttachNodes(float scale, bool translateParts)
-        {
-            for (int i = 0; i < part.attachNodes.Count; ++i)
-            {
-                TranslateNode(scale, part.attachNodes[i], PartPrefab.attachNodes[i], translateParts);
-            }
-            TranslateNode(scale, part.srfAttachNode, PartPrefab.srfAttachNode, translateParts);
-        }
-
-        private void TranslateNode(float scale, AttachNode node, AttachNode baseNode, bool translateParts)
-        {
-            var oldPosition = node.position;
-            node.position = baseNode.position * scale;
-            if (node.attachedPart == part.parent && translateParts)
-            {
-                part.transform.Translate(oldPosition - node.position);
-            }
-        }
-
-        private void ScaleTransform(float scale)
-        {
-            part.scaleFactor = PartPrefab.scaleFactor * scale;
-            var modelTransform = GetModelTransform(part);
-            if (_defaultTransformScale.x == 0.0f)
-            {
-                _defaultTransformScale = GetModelTransform(PartPrefab).localScale;
-            }
-            modelTransform.localScale = scale * _defaultTransformScale;
-            modelTransform.hasChanged = true;
-            part.partTransform.hasChanged = true;
-        }
-
-        private static Transform GetModelTransform(Part p) => p.partTransform.Find("model");
-
         private void UpdatePawFields()
         {
-            TxPowerString = Format(TxPower, "W");
-            TotalPowerString = Format(TotalPower, "W");
-            MinDataRateString = Format(MinDataRate, "b/s", 1024);
-            RangeDsnString = Format(GetRange(antennaPower, DsnRange), "m");
-            RangeSelfString = Format(GetRange(antennaPower, antennaPower), "m");
-            ElectronicsMassString = Format(ElectronicsMass * 1000000, "g");
-            TotalMassString = Format(TotalMass * 1000000, "g");
+            TxPowerString = TxPower.Format("W");
+            TotalPowerString = TotalPower.Format("W");
+            MinDataRateString = MinDataRate.Format("b/s", 1024);
+            RangeDsnString = GetRange(antennaPower, DsnRange).Format("m");
+            RangeSelfString = GetRange(antennaPower, antennaPower).Format("m");
+            ElectronicsMassString = (ElectronicsMass * 1e6f).Format("g");
+            TotalMassString = (TotalMass * 1e6f).Format("g");
         }
 
         private float GetRange(double a, double b) => (float)Math.Sqrt(a * b);
 
-        private string Format(float value, string unit, int logBase = 1000)
-        {
-            var prefixes = new[] { "m", "", "k", "M", "G", "T", "P", "E" };
-            var prefixNumber = (int)Mathf.Floor(Mathf.Log(value) / Mathf.Log(logBase));
-            value /= Mathf.Pow(logBase, prefixNumber);
-            var digits = (int)Mathf.Log10(value);
-            return $"{value:G3}\u2009{prefixes[prefixNumber + 1]}{unit}";
-        }
-
         private void SetMaxTxPower()
         {
-            var maxTxPowerDbw = ToDB(TechLevelInstance.MaxPower);
+            var maxTxPowerDbw = TechLevelInstance.MaxPower.ToDB();
             TxPowerDbw = Mathf.Clamp(TxPowerDbw, -13, maxTxPowerDbw);
             TxPowerDbwEdit.maxValue = maxTxPowerDbw;
         }
@@ -337,7 +287,7 @@ namespace RealismOverhaul.Communications
 
         private double GetMdtAntennaPower(TechLevel tl) => GetMdtAntennaPower(tl, Scale);
         private double GetMdtAntennaPower(TechLevel tl, float scale) => GetMdtAntennaPower(referenceGain, tl.Gain, scale, TxPower, MinDataRate, GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency));
-        private double GetMdtAntennaPower(float refGain, float gain, float scale, float txPower, float minDataRate, float frequencyFactor) => BASE_POWER * FromDB(refGain + gain) * scale * scale * txPower / minDataRate * frequencyFactor;
+        private double GetMdtAntennaPower(float refGain, float gain, float scale, float txPower, float minDataRate, float frequencyFactor) => BASE_POWER * (refGain + gain).FromDB() * scale * scale * txPower / minDataRate * frequencyFactor;
         private float GetFrequencyFactor(float frequency, AntennaShape antennaShape, float refFreq) => antennaShape == AntennaShape.Omni ? 1 : Mathf.Pow(frequency / refFreq, 2);
 
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => TotalMass - defaultMass;
@@ -351,14 +301,8 @@ namespace RealismOverhaul.Communications
         public override string GetInfo()
         {
             var mdtPower = GetMdtAntennaPower(TechLevelInstance, MaxScale);
-            return $"Max Range to DSN: <pos=66%><b><color=green>{Format(GetRange(mdtPower, DsnRange), "m")}</color></b>\n" +
-                $"Max Range to self: <pos=66%><b><color=green>{Format(GetRange(mdtPower, mdtPower), "m")}</color></b>\n";
+            return $"Max Range to DSN: <pos=66%><b><color=green>{GetRange(mdtPower, DsnRange).Format("m")}</color></b>\n" +
+                $"Max Range to self: <pos=66%><b><color=green>{GetRange(mdtPower, mdtPower).Format("m")}</color></b>\n";
         }
-
-        private static float ToLog2(float value) => Mathf.Log(value) / Mathf.Log(2);
-        private static float FromLog2(float value) => Mathf.Pow(2, value);
-
-        private static float ToDB(float value) => Mathf.Log10(value) * 10;
-        private static float FromDB(float value) => Mathf.Pow(10, value / 10f);
     }
 }
