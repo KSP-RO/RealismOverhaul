@@ -69,6 +69,9 @@ namespace RealismOverhaul.Communications
         [KSPField]
         public AntennaShape antennaShape = AntennaShape.Auto;
 
+        [KSPField]
+        public bool isScalable = true;
+
         private bool _isKerbalismLoaded;
 
         private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
@@ -81,7 +84,7 @@ namespace RealismOverhaul.Communications
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
         private float AntennaMass => PartPrefab.mass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
         private float TotalMass => AntennaMass + ElectronicsMass;
-        private bool IsScalable => antennaShape != AntennaShape.Omni;
+        private bool IsScalable => isScalable && antennaShape != AntennaShape.Omni;
         private float MaxScale => IsScalable ? Mathf.Pow(SCALE_RANGE, 0.5f) : 1;
 
         public override void OnLoad(ConfigNode node)
@@ -112,6 +115,7 @@ namespace RealismOverhaul.Communications
         {
             if (diameter > 0)
             {
+                referenceFrequency = 1;
                 referenceGain = (ANTENNA_EFFICIENCY * Mathf.Pow(Mathf.PI * referenceFrequency * 1e6f / SPEED_OF_LIGHT * diameter, 2)).ToDB();
             }
         }
