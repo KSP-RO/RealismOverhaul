@@ -78,7 +78,8 @@ namespace RealismOverhaul.Communications
         private Part PartPrefab => part.partInfo.partPrefab;
 
         private float TxPower => TxPowerDbw.FromDB();
-        private float TotalPower => TxPower / TechLevelInstance.Efficiency + TechLevelInstance.BasePower;
+        private float TotalUsedPower => TxUsedPower + TechLevelInstance.BasePower;
+        private float TxUsedPower => TxPower / TechLevelInstance.Efficiency;
         private float MinDataRate => TechLevelInstance.MinDataRate * DataRateExponent.FromLog2();
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
@@ -95,7 +96,7 @@ namespace RealismOverhaul.Communications
 
         public void Start()
         {
-            _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Select(x => x.name).Any(x => x.StartsWith("Kerbalism"));
+            _isKerbalismLoaded = AssemblyLoader.loadedAssemblies.Any(x => x.name.StartsWith("Kerbalism"));
             ReScale(false);
             SetMaxTechLevel();
             UpdateConfiguration();
@@ -245,13 +246,34 @@ namespace RealismOverhaul.Communications
         {
             SetMaxTxPower();
             SetupBaseFields();
+            SetupIdlePower();
             UpdatePawFields();
+        }
+
+        private void SetupIdlePower()
+        {
+            var electricCharge = resHandler.inputResources.First(x => x.id == PartResourceLibrary.ElectricityHashcode);
+            electricCharge.rate = TechLevelInstance.BasePower / 1000;
+        }
+
+        public void FixedUpdate()
+        {
+            if (HighLogic.LoadedSceneIsFlight)
+            {
+                ConsumeEc();
+            }
+        }
+
+        private void ConsumeEc()
+        {
+            string status = "";
+            resHandler.UpdateModuleResourceInputs(ref status, 1, 1, true, false);
         }
 
         private void UpdatePawFields()
         {
             TxPowerString = TxPower.Format("W");
-            TotalPowerString = TotalPower.Format("W");
+            TotalPowerString = TotalUsedPower.Format("W");
             MinDataRateString = MinDataRate.Format("b/s", 1024);
             RangeDsnString = GetRange(antennaPower, DsnRange).Format("m");
             RangeSelfString = GetRange(antennaPower, antennaPower).Format("m");
@@ -284,7 +306,7 @@ namespace RealismOverhaul.Communications
             antennaPower = GetMdtAntennaPower(TechLevelInstance);
             packetInterval = 0.5f;
             packetSize = MinDataRate * (_isKerbalismLoaded ? MAX_RATE_MULTIPLIER : 1) / 1024 / 1024 / 2;
-            packetResourceCost = TotalPower / 1000;
+            packetResourceCost = TxUsedPower / 1000;
             antennaType = AntennaType.RELAY;
             antennaCombinableExponent = antennaShape == AntennaShape.Dish ? 2f : 1f;
         }
