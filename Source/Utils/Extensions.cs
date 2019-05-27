@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -28,6 +29,11 @@ namespace RealismOverhaul.Utils
             return $"{value:G3}\u2009{prefixes[prefixNumber + 1]}{unit}";
         }
 
+        public static string Format(this double value, string unit, int logBase = 1000)
+        {
+            return Format((float) value, unit, logBase);
+        }
+
         public static float GetFloat(this ConfigNode node, string name, float defaultValue = 0)
         {
             node.TryGetValue(name, ref defaultValue);
@@ -38,6 +44,54 @@ namespace RealismOverhaul.Utils
         {
             node.TryGetValue(name, ref defaultValue);
             return defaultValue;
+        }
+
+        public static string GetString(this ConfigNode node, string name, string defaultValue = "")
+        {
+            node.TryGetValue(name, ref defaultValue);
+            return defaultValue;
+        }
+
+        public static float GetFloat(this ProtoPartModuleSnapshot snapshot, string name, float defaultValue = 0)
+        {
+            return snapshot.moduleValues.GetFloat(name, defaultValue);
+        }
+
+        public static int GetInt(this ProtoPartModuleSnapshot snapshot, string name, int defaultValue = 0)
+        {
+            return snapshot.moduleValues.GetInt(name, defaultValue);
+        }
+
+        public static string GetString(this ProtoPartModuleSnapshot snapshot, string name, string defaultValue = "")
+        {
+            return snapshot.moduleValues.GetString(name, defaultValue);
+        }
+
+        public static float Pow(this float @base, float exp)
+        {
+            return Mathf.Pow(@base, exp);
+        }
+
+        public static float Pow(this int @base, float exp)
+        {
+            return Mathf.Pow(@base, exp);
+        }
+
+        public static T GetField<T>(this object obj, string field)
+        {
+            return (T) GetField(obj, field).GetValue(obj);
+        }
+
+        public static void SetField<T>(this object obj, string field, T value)
+        {
+            GetField(obj, field).SetValue(obj, value);
+        }
+
+        private static FieldInfo GetField(object obj, string field) => obj.GetType().GetField(field, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        public static T ToEnum<T>(this string value)
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
         }
     }
 }

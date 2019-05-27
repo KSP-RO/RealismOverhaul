@@ -9,7 +9,6 @@ namespace RealismOverhaul.Communications
     {
         private const double BASE_POWER = 84610911.3771648;
         private const int MAX_RATE_EXPONENT = 20;
-        private const float MAX_RATE_MULTIPLIER = 1 << MAX_RATE_EXPONENT;
         private const int HALF_SCALE_STEPS = 8;
         private const int SCALE_RANGE = 2;
         private const float ANTENNA_MASS_SCALING_EXPONENT = 2.0f;
@@ -79,8 +78,9 @@ namespace RealismOverhaul.Communications
 
         private float TxPower => TxPowerDbw.FromDB();
         private float TotalUsedPower => TxUsedPower + TechLevelInstance.BasePower;
-        private float TxUsedPower => TxPower / TechLevelInstance.Efficiency;
-        private float MinDataRate => TechLevelInstance.MinDataRate * DataRateExponent.FromLog2();
+        public float TxUsedPower => GetTxUsedPower(TxPowerDbw, TechLevelInstance);
+        public float MinDataRate => TechLevelInstance.MinDataRate * DataRateExponent.FromLog2();
+        public float MaxDataRate => TechLevelInstance.MaxDataRate;
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
         private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
         private float AntennaMass => PartPrefab.mass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
@@ -132,6 +132,11 @@ namespace RealismOverhaul.Communications
 
         double ICommAntenna.CommPowerUnloaded(ProtoPartModuleSnapshot mSnap)
         {
+            return GetAntennaSpecs(mSnap).CommNetPower;
+        }
+
+        public AntennaSpecs GetAntennaSpecs(ProtoPartModuleSnapshot mSnap)
+        {
             var values = mSnap.moduleValues;
             var techLevel = values.GetInt(nameof(TechLevel));
             var scaleIndex = values.GetInt(nameof(ScaleIndex));
@@ -139,7 +144,20 @@ namespace RealismOverhaul.Communications
             var txPowerDbw = values.GetFloat(nameof(TxPowerDbw));
             var tl = Communications.TechLevel.GetTechLevel(techLevel);
             var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
-            return GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), txPowerDbw.FromDB(), dataRateExponent.FromLog2() * tl.MinDataRate, frequencyFactor);
+            var txUsedPower = GetTxUsedPower(txPowerDbw, tl);
+            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), txPowerDbw.FromDB(), dataRateExponent.FromLog2() * tl.MinDataRate, frequencyFactor);
+            return new AntennaSpecs(txUsedPower, txUsedPower + tl.BasePower, commPower, tl.MinDataRate, tl.MaxDataRate);
+        }
+
+        private static float GetTxUsedPower(float txPowerDbw, TechLevel tl) => txPowerDbw.FromDB() / tl.Efficiency;
+
+        public AntennaSpecs GetAntennaSpecs()
+        {
+            var tl = TechLevelInstance;
+            var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
+            var txUsedPower = GetTxUsedPower(TxPowerDbw, tl);
+            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(ScaleIndex), TxPowerDbw.FromDB(), MinDataRate, frequencyFactor);
+            return new AntennaSpecs(txUsedPower, txUsedPower + tl.BasePower, commPower, tl.MinDataRate, tl.MaxDataRate);
         }
 
         private void SetupPaw()
@@ -214,24 +232,8 @@ namespace RealismOverhaul.Communications
         private void SetupRangeCurve()
         {
             rangeCurve = new DoubleCurve();
-            var key = 1 / Math.Sqrt(MAX_RATE_MULTIPLIER);
-            rangeCurve.Add(1 - key, 1, 0, 0);
-            var steps = 50;
-            var factor = Math.Pow(MAX_RATE_MULTIPLIER, 0.5 / steps);
-            for (int i = 0; i < steps - 1; ++i)
-            {
-                key = key * factor;
-                var value = 1 / (key * key) / MAX_RATE_MULTIPLIER;
-                rangeCurve.Add(1 - key, value);
-            }
-            rangeCurve.Add(0, 1 / MAX_RATE_MULTIPLIER);
-        }
-
-        private void LogRangeCurve()
-        {
-            var cn = new ConfigNode();
-            rangeCurve.Save(cn);
-            Debug.Log("[MARO]\n" + cn.ToString());
+            rangeCurve.Add(0, 0, 0, 1);
+            rangeCurve.Add(1, 1, 1, 0);
         }
 
         private void OnScaleChanged(BaseField arg1, object arg2)
@@ -305,7 +307,7 @@ namespace RealismOverhaul.Communications
         {
             antennaPower = GetMdtAntennaPower(TechLevelInstance);
             packetInterval = 0.5f;
-            packetSize = MinDataRate * (_isKerbalismLoaded ? MAX_RATE_MULTIPLIER : 1) / 1024 / 1024 / 2;
+            packetSize = MinDataRate / 1024 / 1024 / 2;
             packetResourceCost = TxUsedPower / 1000;
             antennaType = AntennaType.RELAY;
             antennaCombinableExponent = antennaShape == AntennaShape.Dish ? 2f : 1f;
