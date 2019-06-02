@@ -40,9 +40,9 @@ namespace RealismOverhaul.Communications
         public int DataRateExponent = 0;
         private UI_ChooseOption DataRateExponentEdit => (UI_ChooseOption)Fields[nameof(DataRateExponent)].uiControlFlight;
 
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tx Power (dBW)", guiUnits = "dBW", guiFormat = "F0"), UI_FloatRange(minValue = -12, stepIncrement = 1, scene = UI_Scene.Editor)]
-        public float TxPowerDbw = Communications.TechLevel.GetTechLevel(0).MaxPower.ToDB();
-        private UI_FloatRange TxPowerDbwEdit => (UI_FloatRange)Fields[nameof(TxPowerDbw)].uiControlEditor;
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tx Power (dBmW)", guiUnits = "dBmW", guiFormat = "F0"), UI_FloatRange(minValue = 18, stepIncrement = 1, scene = UI_Scene.Editor)]
+        public float TxPowerDbmw = Communications.TechLevel.GetTechLevel(0).MaxPower.ToDBm();
+        private UI_FloatRange TxPowerDbmwEdit => (UI_FloatRange)Fields[nameof(TxPowerDbmw)].uiControlEditor;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tech Level", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Editor)]
         public float TechLevel = -1;
@@ -76,9 +76,9 @@ namespace RealismOverhaul.Communications
         private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
         private Part PartPrefab => part.partInfo.partPrefab;
 
-        private float TxPower => TxPowerDbw.FromDB();
+        private float TxPower => TxPowerDbmw.FromDBm();
         private float TotalUsedPower => TxUsedPower + TechLevelInstance.BasePower;
-        public float TxUsedPower => GetTxUsedPower(TxPowerDbw, TechLevelInstance);
+        public float TxUsedPower => GetTxUsedPower(TxPowerDbmw, TechLevelInstance);
         public float MinDataRate => TechLevelInstance.MinDataRate * DataRateExponent.FromLog2();
         public float MaxDataRate => TechLevelInstance.MaxDataRate;
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
@@ -117,7 +117,7 @@ namespace RealismOverhaul.Communications
             if (diameter > 0)
             {
                 referenceFrequency = 1;
-                referenceGain = (ANTENNA_EFFICIENCY * Mathf.Pow(Mathf.PI * referenceFrequency * 1e6f / SPEED_OF_LIGHT * diameter, 2)).ToDB();
+                referenceGain = (ANTENNA_EFFICIENCY * Mathf.Pow(Mathf.PI * referenceFrequency * 1e6f / SPEED_OF_LIGHT * diameter, 2)).ToDBm();
             }
         }
 
@@ -126,7 +126,7 @@ namespace RealismOverhaul.Communications
             if (TechLevel == -1 && maxTechLevel > 0)
             {
                 TechLevel = maxTechLevel;
-                TxPowerDbw = TechLevelInstance.MaxPower.ToDB();
+                TxPowerDbmw = TechLevelInstance.MaxPower.ToDBm();
             }
         }
 
@@ -141,22 +141,22 @@ namespace RealismOverhaul.Communications
             var techLevel = values.GetInt(nameof(TechLevel));
             var scaleIndex = values.GetInt(nameof(ScaleIndex));
             var dataRateExponent = values.GetInt(nameof(DataRateExponent));
-            var txPowerDbw = values.GetFloat(nameof(TxPowerDbw));
+            var txPowerDbmw = values.GetFloat(nameof(TxPowerDbmw));
             var tl = Communications.TechLevel.GetTechLevel(techLevel);
             var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
-            var txUsedPower = GetTxUsedPower(txPowerDbw, tl);
-            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), txPowerDbw.FromDB(), dataRateExponent.FromLog2() * tl.MinDataRate, frequencyFactor);
+            var txUsedPower = GetTxUsedPower(txPowerDbmw, tl);
+            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), txPowerDbmw.FromDBm(), dataRateExponent.FromLog2() * tl.MinDataRate, frequencyFactor);
             return new AntennaSpecs(txUsedPower, txUsedPower + tl.BasePower, commPower, tl.MinDataRate, tl.MaxDataRate);
         }
 
-        private static float GetTxUsedPower(float txPowerDbw, TechLevel tl) => txPowerDbw.FromDB() / tl.Efficiency;
+        private static float GetTxUsedPower(float txPowerDbmw, TechLevel tl) => txPowerDbmw.FromDBm() / tl.Efficiency;
 
         public AntennaSpecs GetAntennaSpecs()
         {
             var tl = TechLevelInstance;
             var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
-            var txUsedPower = GetTxUsedPower(TxPowerDbw, tl);
-            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(ScaleIndex), TxPowerDbw.FromDB(), MinDataRate, frequencyFactor);
+            var txUsedPower = GetTxUsedPower(TxPowerDbmw, tl);
+            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(ScaleIndex), TxPowerDbmw.FromDBm(), MinDataRate, frequencyFactor);
             return new AntennaSpecs(txUsedPower, txUsedPower + tl.BasePower, commPower, tl.MinDataRate, tl.MaxDataRate);
         }
 
@@ -213,8 +213,8 @@ namespace RealismOverhaul.Communications
         {
             DataRateExponentEdit.onFieldChanged = OnFieldChanged;
             DataRateExponentEdit.onSymmetryFieldChanged = OnFieldChanged;
-            TxPowerDbwEdit.onFieldChanged = OnFieldChanged;
-            TxPowerDbwEdit.onSymmetryFieldChanged = OnFieldChanged;
+            TxPowerDbmwEdit.onFieldChanged = OnFieldChanged;
+            TxPowerDbmwEdit.onSymmetryFieldChanged = OnFieldChanged;
             TechLevelEdit.onFieldChanged = OnFieldChanged;
             TechLevelEdit.onSymmetryFieldChanged = OnFieldChanged;
             ScaleEdit.onFieldChanged = OnScaleChanged;
@@ -287,9 +287,9 @@ namespace RealismOverhaul.Communications
 
         private void SetMaxTxPower()
         {
-            var maxTxPowerDbw = TechLevelInstance.MaxPower.ToDB();
-            TxPowerDbw = Mathf.Clamp(TxPowerDbw, -13, maxTxPowerDbw);
-            TxPowerDbwEdit.maxValue = maxTxPowerDbw;
+            var maxTxPowerDbmw = TechLevelInstance.MaxPower.ToDBm();
+            TxPowerDbmw = Mathf.Clamp(TxPowerDbmw, -13, maxTxPowerDbmw);
+            TxPowerDbmwEdit.maxValue = maxTxPowerDbmw;
         }
 
         private void OnFieldChanged(BaseField field, object oldValueObj)
@@ -315,7 +315,7 @@ namespace RealismOverhaul.Communications
 
         private double GetMdtAntennaPower(TechLevel tl) => GetMdtAntennaPower(tl, Scale);
         private double GetMdtAntennaPower(TechLevel tl, float scale) => GetMdtAntennaPower(referenceGain, tl.Gain, scale, TxPower, MinDataRate, GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency));
-        private double GetMdtAntennaPower(float refGain, float gain, float scale, float txPower, float minDataRate, float frequencyFactor) => BASE_POWER * (refGain + gain).FromDB() * scale * scale * txPower / minDataRate * frequencyFactor;
+        private double GetMdtAntennaPower(float refGain, float gain, float scale, float txPower, float minDataRate, float frequencyFactor) => BASE_POWER * (refGain + gain).FromDBm() * scale * scale * txPower / minDataRate * frequencyFactor;
         private float GetFrequencyFactor(float frequency, AntennaShape antennaShape, float refFreq) => antennaShape == AntennaShape.Omni ? 1 : Mathf.Pow(frequency / refFreq, 2);
 
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => TotalMass - defaultMass;
