@@ -41,12 +41,12 @@ namespace RealismOverhaul.Communications
         private UI_ChooseOption DataRateExponentEdit => (UI_ChooseOption)Fields[nameof(DataRateExponent)].uiControlFlight;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tx Power (dBmW)", guiUnits = "dBmW", guiFormat = "F0"), UI_FloatRange(minValue = 18, stepIncrement = 1, scene = UI_Scene.Editor)]
-        public float TxPowerDbmw = Communications.TechLevel.GetTechLevel(0).MaxPower.ToDBm();
-        private UI_FloatRange TxPowerDbmwEdit => (UI_FloatRange)Fields[nameof(TxPowerDbmw)].uiControlEditor;
+        public float txPowerDbmw = Communications.TechLevel.GetTechLevel(0).MaxPower.ToDBm();
+        private UI_FloatRange TxPowerDbmwEdit => (UI_FloatRange)Fields[nameof(txPowerDbmw)].uiControlEditor;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Tech Level", guiUnits = "#", guiFormat = "F0"), UI_FloatRange(minValue = 0, stepIncrement = 1, scene = UI_Scene.Editor)]
-        public float TechLevel = -1;
-        private UI_FloatRange TechLevelEdit => (UI_FloatRange)Fields[nameof(TechLevel)].uiControlEditor;
+        public float techLevel = -1;
+        private UI_FloatRange TechLevelEdit => (UI_FloatRange)Fields[nameof(techLevel)].uiControlEditor;
 
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "Scale"), UI_ChooseOption(scene = UI_Scene.Editor)]
         public int ScaleIndex = HALF_SCALE_STEPS;
@@ -73,20 +73,22 @@ namespace RealismOverhaul.Communications
 
         private bool _isKerbalismLoaded;
 
-        private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)TechLevel);
+        private TechLevel TechLevelInstance => Communications.TechLevel.GetTechLevel((int)techLevel);
         private Part PartPrefab => part.partInfo.partPrefab;
 
-        private float TxPower => TxPowerDbmw.FromDBm();
+        private float TxPower => txPowerDbmw.FromDBm();
         private float TotalUsedPower => TxUsedPower + TechLevelInstance.BasePower;
-        public float TxUsedPower => GetTxUsedPower(TxPowerDbmw, TechLevelInstance);
+        public float TxUsedPower => GetTxUsedPower(txPowerDbmw, TechLevelInstance);
         public float MinDataRate => TechLevelInstance.MinDataRate * DataRateExponent.FromLog2();
         public float MaxDataRate => TechLevelInstance.MaxDataRate;
         private double DsnRange => GameVariables.Instance.GetDSNRange(ScenarioUpgradeableFacilities.GetFacilityLevel(SpaceCenterFacility.TrackingStation));
-        private float ElectronicsMass => (TechLevelInstance.BaseMass + TechLevelInstance.MassPerWatt * TxPower) / 1000;
+        private float ElectronicsMass => GetElectronicsMass(TechLevelInstance, TxPower);
         private float AntennaMass => PartPrefab.mass * Mathf.Pow(Scale, ANTENNA_MASS_SCALING_EXPONENT);
         private float TotalMass => AntennaMass + ElectronicsMass;
         private bool IsScalable => isScalable && antennaShape != AntennaShape.Omni;
         private float MaxScale => IsScalable ? Mathf.Pow(SCALE_RANGE, 0.5f) : 1;
+
+        private float GetElectronicsMass(TechLevel techLevel, float txPower) => (techLevel.BaseMass + techLevel.MassPerWatt * txPower) / 1000;
 
         public override void OnLoad(ConfigNode node)
         {
@@ -123,10 +125,10 @@ namespace RealismOverhaul.Communications
 
         private void ApplyUpgrades()
         {
-            if (TechLevel == -1 && maxTechLevel > 0)
+            if (techLevel == -1 && maxTechLevel > 0)
             {
-                TechLevel = maxTechLevel;
-                TxPowerDbmw = TechLevelInstance.MaxPower.ToDBm();
+                techLevel = maxTechLevel;
+                txPowerDbmw = TechLevelInstance.MaxPower.ToDBm();
             }
         }
 
@@ -138,14 +140,14 @@ namespace RealismOverhaul.Communications
         public AntennaSpecs GetAntennaSpecs(ProtoPartModuleSnapshot mSnap)
         {
             var values = mSnap.moduleValues;
-            var techLevel = values.GetInt(nameof(TechLevel));
+            var techLevel = values.GetInt(nameof(ModuleConfigurableAntenna.techLevel));
             var scaleIndex = values.GetInt(nameof(ScaleIndex));
             var dataRateExponent = values.GetInt(nameof(DataRateExponent));
-            var txPowerDbmw = values.GetFloat(nameof(TxPowerDbmw));
+            var txPowerDbmw = values.GetFloat(nameof(ModuleConfigurableAntenna.txPowerDbmw));
             var tl = Communications.TechLevel.GetTechLevel(techLevel);
             var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
-            var txUsedPower = GetTxUsedPower(txPowerDbmw, tl);
-            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), txPowerDbmw.FromDBm(), dataRateExponent.FromLog2() * tl.MinDataRate, frequencyFactor);
+            var txUsedPower = GetTxUsedPower(this.txPowerDbmw, tl);
+            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(scaleIndex), this.txPowerDbmw.FromDBm(), dataRateExponent.FromLog2() * tl.MinDataRate, frequencyFactor);
             return new AntennaSpecs(txUsedPower, txUsedPower + tl.BasePower, commPower, tl.MinDataRate, tl.MaxDataRate);
         }
 
@@ -155,8 +157,8 @@ namespace RealismOverhaul.Communications
         {
             var tl = TechLevelInstance;
             var frequencyFactor = GetFrequencyFactor(tl.Frequency, antennaShape, referenceFrequency);
-            var txUsedPower = GetTxUsedPower(TxPowerDbmw, tl);
-            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(ScaleIndex), TxPowerDbmw.FromDBm(), MinDataRate, frequencyFactor);
+            var txUsedPower = GetTxUsedPower(txPowerDbmw, tl);
+            var commPower = GetMdtAntennaPower(referenceGain, tl.Gain, GetScaleFromIndex(ScaleIndex), txPowerDbmw.FromDBm(), MinDataRate, frequencyFactor);
             return new AntennaSpecs(txUsedPower, txUsedPower + tl.BasePower, commPower, tl.MinDataRate, tl.MaxDataRate);
         }
 
@@ -288,7 +290,7 @@ namespace RealismOverhaul.Communications
         private void SetMaxTxPower()
         {
             var maxTxPowerDbmw = TechLevelInstance.MaxPower.ToDBm();
-            TxPowerDbmw = Mathf.Clamp(TxPowerDbmw, -13, maxTxPowerDbmw);
+            txPowerDbmw = Mathf.Clamp(txPowerDbmw, -13, maxTxPowerDbmw);
             TxPowerDbmwEdit.maxValue = maxTxPowerDbmw;
         }
 
@@ -299,7 +301,7 @@ namespace RealismOverhaul.Communications
 
         private void SetMaxTechLevel()
         {
-            TechLevel = Mathf.Clamp(TechLevel, 0f, maxTechLevel);
+            techLevel = Mathf.Clamp(techLevel, 0f, maxTechLevel);
             TechLevelEdit.maxValue = maxTechLevel;
         }
 
@@ -318,8 +320,23 @@ namespace RealismOverhaul.Communications
         private double GetMdtAntennaPower(float refGain, float gain, float scale, float txPower, float minDataRate, float frequencyFactor) => BASE_POWER * (refGain + gain).FromDBm() * scale * scale * txPower / minDataRate * frequencyFactor;
         private float GetFrequencyFactor(float frequency, AntennaShape antennaShape, float refFreq) => antennaShape == AntennaShape.Omni ? 1 : Mathf.Pow(frequency / refFreq, 2);
 
-        public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => TotalMass - defaultMass;
-        public float GetModuleCost(float defaultCost, ModifierStagingSituation sit) => TechLevelInstance.BaseCost + TechLevelInstance.CostPerWatt * TxPower + defaultCost * (Scale * Scale - 1);
+        public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => TotalMass - defaultMass - GetDefaultConfigurationMass();
+
+        private float GetDefaultConfigurationMass()
+        {
+            var prefabAntenna = PartPrefab.FindModuleImplementing<ModuleConfigurableAntenna>();
+            return prefabAntenna.techLevel > -1 ? GetElectronicsMass(TechLevel.GetTechLevel((int)prefabAntenna.techLevel), prefabAntenna.txPowerDbmw.FromDBm()) : 0;
+        }
+
+        public float GetModuleCost(float defaultCost, ModifierStagingSituation sit) => GetElectronicsCost(TechLevelInstance, TxPower) + defaultCost * (Scale * Scale - 1) - GetDefaultConfigurationCost();
+
+        private float GetDefaultConfigurationCost()
+        {
+            var prefabAntenna = PartPrefab.FindModuleImplementing<ModuleConfigurableAntenna>();
+            return prefabAntenna.techLevel > -1 ? GetElectronicsCost(TechLevel.GetTechLevel((int)prefabAntenna.techLevel), prefabAntenna.txPowerDbmw.FromDBm()) : 0;
+        }
+
+        private float GetElectronicsCost(TechLevel techLevel, float txPower) => techLevel.BaseCost + techLevel.CostPerWatt * txPower;
 
         public ModifierChangeWhen GetModuleMassChangeWhen() => ModifierChangeWhen.FIXED;
         public ModifierChangeWhen GetModuleCostChangeWhen() => ModifierChangeWhen.FIXED;
