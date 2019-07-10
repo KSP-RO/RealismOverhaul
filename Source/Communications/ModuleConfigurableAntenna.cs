@@ -153,6 +153,11 @@ namespace RealismOverhaul.Communications
 
         public AntennaSpecs GetAntennaSpecs(ProtoPartModuleSnapshot mSnap)
         {
+            if(mSnap == null)
+            {
+                return new AntennaSpecs(0, 0, float.MaxValue, 1, 1024 * 1024 * 1024 * 123f);
+            }
+
             var values = mSnap.moduleValues;
             var techLevel = values.GetInt(nameof(ModuleConfigurableAntenna.techLevel));
             var scaleIndex = values.GetInt(nameof(ScaleIndex));
