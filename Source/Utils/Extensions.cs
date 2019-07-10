@@ -22,8 +22,8 @@ namespace RealismOverhaul.Utils
 
         public static string Format(this float value, string unit, int logBase = 1000)
         {
-            var prefixes = new[] { "m", "", "k", "M", "G", "T", "P", "E" };
-            var prefixNumber = (int)Mathf.Floor(Mathf.Log(value) / Mathf.Log(logBase));
+            var prefixes = new[] { "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y" };
+            var prefixNumber = Math.Min((int)Mathf.Floor(Mathf.Log(value) / Mathf.Log(logBase)), prefixes.Length - 1);
             value /= Mathf.Pow(logBase, prefixNumber);
             var digits = (int)Mathf.Log10(value);
             return $"{value:G3}\u2009{prefixes[prefixNumber + 1]}{unit}";
