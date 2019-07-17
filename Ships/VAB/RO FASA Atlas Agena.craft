@@ -1,29 +1,32 @@
 ship = RO FASA Atlas Agena
-version = 1.0.4
+version = 1.3.1
 description = 
 type = VAB
-size = 5.603582,31.93511,7.615635
+size = 5.60358191,30.395874,3.71927214
 PART
 {
 	part = FASAAgenaDocking_4294206838
 	partName = Part
-	pos = 0.4051282,29.30661,0.2019519
+	pos = 0.405128211,29.3066101,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0.4051282,29.30661,0.2019519
+	attPos0 = 0.405128211,29.3066101,0.201951906
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 0
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = -1
+	resPri = 0
 	dstg = 0
 	sidx = -1
 	sqor = -1
-	sepI = 1
+	sepI = 0
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAAgenaProbe_4292362078
 	link = KzProcFairingSide2_4293806018
 	link = KzProcFairingSide2_4293804514
@@ -43,99 +46,13 @@ PART
 	{
 		name = ModuleDockingNode
 		isEnabled = True
+		crossfeed = True
+		stagingEnabled = False
 		state = Ready
 		dockUId = 0
 		dockNodeIdx = 0
 		EVENTS
 		{
-			Undock
-			{
-				active = False
-				guiActive = True
-				guiIcon = Undock
-				guiName = Undock
-				category = Undock
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			UndockSameVessel
-			{
-				active = False
-				guiActive = True
-				guiIcon = Undock
-				guiName = Undock
-				category = Undock
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Decouple
-			{
-				active = False
-				guiActive = True
-				guiIcon = Decouple Node
-				guiName = Decouple Node
-				category = Decouple Node
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			SetAsTarget
-			{
-				active = True
-				guiActive = False
-				guiIcon = Set as Target
-				guiName = Set as Target
-				category = Set as Target
-				guiActiveUnfocused = True
-				unfocusedRange = 200
-				externalToEVAOnly = False
-			}
-			UnsetTarget
-			{
-				active = True
-				guiActive = False
-				guiIcon = Unset Target
-				guiName = Unset Target
-				category = Unset Target
-				guiActiveUnfocused = True
-				unfocusedRange = 200
-				externalToEVAOnly = False
-			}
-			EnableXFeed
-			{
-				active = False
-				guiActive = True
-				guiIcon = Enable Crossfeed
-				guiName = Enable Crossfeed
-				category = Enable Crossfeed
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			DisableXFeed
-			{
-				active = False
-				guiActive = True
-				guiIcon = Disable Crossfeed
-				guiName = Disable Crossfeed
-				category = Disable Crossfeed
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MakeReferenceTransform
-			{
-				active = True
-				guiActive = True
-				guiIcon = Control from Here
-				guiName = Control from Here
-				category = Control from Here
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -147,6 +64,25 @@ PART
 			{
 				actionGroup = None
 			}
+			MakeReferenceToggle
+			{
+				actionGroup = None
+			}
+			EnableXFeedAction
+			{
+				actionGroup = None
+			}
+			DisableXFeedAction
+			{
+				actionGroup = None
+			}
+			ToggleXFeedAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
 		}
 	}
 	MODULE
@@ -154,56 +90,13 @@ PART
 		name = ModuleLight
 		isEnabled = True
 		isOn = False
+		uiWriteLock = False
 		lightR = 1
 		lightG = 1
 		lightB = 1
-		lightR_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 1
-			stepIncrement = 0.05
-		}
-		lightG_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 1
-			stepIncrement = 0.05
-		}
-		lightB_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 1
-			stepIncrement = 0.05
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			LightsOff
-			{
-				active = False
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Lights Off
-				guiName = Lights Off
-				category = Lights Off
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			LightsOn
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Lights On
-				guiName = Lights On
-				category = Lights On
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -220,52 +113,7 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = ReflectiveShaderModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleDockingNodeNamed
-		isEnabled = True
-		portName = Gemini Agena Target/Docking Adapter
-		initialized = True
-		controlTransformName = 
-		EVENTS
-		{
-			renameDockingPort
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Rename Port
-				guiName = Rename Port
-				category = Rename Port
-				guiActiveUnfocused = True
-				unfocusedRange = 2000
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -273,10 +121,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -284,10 +136,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -295,46 +151,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -343,23 +167,26 @@ PART
 {
 	part = FASAAgenaProbe_4292362078
 	partName = Part
-	pos = 0.4051282,28.08761,0.2019519
+	pos = 0.405128211,28.0876102,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,-1.219,0
+	attPos0 = 0,-1.21899998,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 0
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = -1
+	resPri = 0
 	dstg = 0
 	sidx = -1
 	sqor = -1
-	sepI = 1
+	sepI = 0
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAAgenaLFT_4294197000
 	attN = bottom,FASAAgenaLFT_4294197000
 	attN = top,FASAAgenaDocking_4294206838
@@ -376,33 +203,25 @@ PART
 	{
 		name = ModuleCommand
 		isEnabled = True
-		controlSrcStatusText = 
+		hibernation = False
+		hibernateOnWarp = False
+		stagingEnabled = True
 		EVENTS
 		{
-			MakeReference
-			{
-				active = True
-				guiActive = True
-				guiIcon = Control From Here
-				guiName = Control From Here
-				category = Control From Here
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			RenameVessel
-			{
-				active = True
-				guiActive = True
-				guiIcon = Rename Vessel
-				guiName = Rename Vessel
-				category = Rename Vessel
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+			MakeReferenceToggle
+			{
+				actionGroup = None
+			}
+			HibernateToggle
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -411,14 +230,14 @@ PART
 		name = ModuleSAS
 		isEnabled = True
 		standaloneToggle = True
-		standaloneToggle_UIFlight
-		{
-			controlEnabled = True
-		}
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -428,85 +247,10 @@ PART
 		isEnabled = True
 		Deployed = False
 		Inoperable = False
+		cooldownToGo = 0
+		stagingEnabled = True
 		EVENTS
 		{
-			DeployExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CollectDataExternalEvent
-			{
-				active = True
-				guiActive = False
-				guiIcon = 
-				guiName = 
-				category = 
-				guiActiveUnfocused = True
-				unfocusedRange = 1.5
-				externalToEVAOnly = True
-			}
-			ReviewDataEvent
-			{
-				active = True
-				guiActive = True
-				guiIcon = Review Data
-				guiName = Review Data
-				category = Review Data
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			DeployExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CleanUpExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Restore
-				guiName = Restore
-				category = Restore
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -519,6 +263,9 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -526,85 +273,10 @@ PART
 		isEnabled = True
 		Deployed = False
 		Inoperable = False
+		cooldownToGo = 0
+		stagingEnabled = True
 		EVENTS
 		{
-			DeployExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CollectDataExternalEvent
-			{
-				active = True
-				guiActive = False
-				guiIcon = 
-				guiName = 
-				category = 
-				guiActiveUnfocused = True
-				unfocusedRange = 1.5
-				externalToEVAOnly = True
-			}
-			ReviewDataEvent
-			{
-				active = True
-				guiActive = True
-				guiIcon = Review Data
-				guiName = Review Data
-				category = Review Data
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			DeployExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CleanUpExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Restore
-				guiName = Restore
-				category = Restore
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -617,6 +289,9 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -624,85 +299,10 @@ PART
 		isEnabled = True
 		Deployed = False
 		Inoperable = False
+		cooldownToGo = 0
+		stagingEnabled = True
 		EVENTS
 		{
-			DeployExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CollectDataExternalEvent
-			{
-				active = True
-				guiActive = False
-				guiIcon = 
-				guiName = 
-				category = 
-				guiActiveUnfocused = True
-				unfocusedRange = 1.5
-				externalToEVAOnly = True
-			}
-			ReviewDataEvent
-			{
-				active = True
-				guiActive = True
-				guiIcon = Review Data
-				guiName = Review Data
-				category = Review Data
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			DeployExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CleanUpExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Restore
-				guiName = Restore
-				category = Restore
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -715,26 +315,28 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = ReflectiveShaderModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
 	MODULE
 	{
-		name = BBModule
+		name = ModuleDataTransmitter
 		isEnabled = True
+		xmitIncomplete = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+			StartTransmissionAction
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -742,10 +344,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -753,10 +359,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -764,10 +374,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -776,10 +390,7 @@ PART
 		name = MechJebCore
 		isEnabled = True
 		running = True
-		running_UIFlight
-		{
-			controlEnabled = True
-		}
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -845,6 +456,10 @@ PART
 			{
 				actionGroup = None
 			}
+			OnAscentAPToggleAction
+			{
+				actionGroup = None
+			}
 		}
 		MechJebLocalSettings
 		{
@@ -853,17 +468,164 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
-			MechJebModuleRoverWindow
+			MechJebModuleAirplaneAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAirplaneGuidance
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentClassic
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentClassicMenu
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentGT
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentGTMenu
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentGuidance
 			{
 				unlockParts = 
 				unlockTechs = start
+			}
+			MechJebModuleAscentNavBall
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentPEG
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleAscentPEGMenu
+			{
+				unlockParts = 
+				unlockTechs = 
 			}
 			MechJebModuleAttitudeAdjustment
 			{
 				unlockParts = 
 				unlockTechs = start
 			}
+			MechJebModuleCustomWindowEditor
+			{
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleDebugArrows
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleDockingAutopilot
+			{
+				forceRol = False
+				overrideSafeDistance = False
+				overrideTargetSize = False
+				unlockParts = 
+				unlockTechs = 
+				rol
+				{
+					_val = 0
+					_text = 0
+				}
+			}
+			MechJebModuleDockingGuidance
+			{
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleInfoItems
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleLandingAutopilot
+			{
+				deployGears = True
+				deployChutes = True
+				rcsAdjustment = True
+				unlockParts = 
+				unlockTechs = 
+				touchdownSpeed
+				{
+					_val = 0.5
+					_text = 0.5
+				}
+				limitGearsStage
+				{
+					val = 0
+					_text = 0
+				}
+				limitChutesStage
+				{
+					val = 0
+					_text = 0
+				}
+			}
+			MechJebModuleLandingGuidance
+			{
+				landingSiteIdx = 0
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleLandingPredictions
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleManeuverPlanner
+			{
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleNodeEditor
+			{
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleNodeExecutor
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
 			MechJebModuleRCSBalancerWindow
+			{
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleRendezvousAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleRendezvousAutopilotWindow
+			{
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleRendezvousGuidance
 			{
 				unlockParts = 
 				unlockTechs = start
@@ -890,43 +652,21 @@ PART
 					_text = 10
 				}
 			}
-			MechJebModuleSpaceplaneGuidance
-			{
-				runwayIndex = 0
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleInfoItems
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleSmartRcs
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleSpaceplaneAutopilot
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleDockingGuidance
+			MechJebModuleRoverWindow
 			{
 				unlockParts = 
 				unlockTechs = start
+			}
+			MechJebModuleScript
+			{
+				minifiedGUI = False
+				selectedSlot = 0
+				selectedMemorySlotType = 0
+				activeSavepoint = -1
+				unlockParts = 
+				unlockTechs = 
 			}
 			MechJebModuleSettings
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentPathEditor
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleDebugArrows
 			{
 				unlockParts = 
 				unlockTechs = 
@@ -978,20 +718,43 @@ PART
 					_text = 0
 				}
 			}
-			MechJebModuleDockingAutopilot
+			MechJebModuleSmartRcs
 			{
-				forceRol = False
-				overrideSafeDistance = False
-				overrideTargetSize = False
 				unlockParts = 
 				unlockTechs = 
-				rol
+			}
+			MechJebModuleSpaceplaneAutopilot
+			{
+				unlockParts = 
+				unlockTechs = 
+				glideslope
 				{
-					_val = 0
-					_text = 0
+					_val = 3
+					_text = 3
+				}
+				approachSpeed
+				{
+					_val = 80
+					_text = 80
+				}
+				maximumSafeBankAngle
+				{
+					_val = 25
+					_text = 25
 				}
 			}
-			ModExtensionDemo
+			MechJebModuleSpaceplaneGuidance
+			{
+				runwayIndex = 0
+				unlockParts = 
+				unlockTechs = start
+			}
+			MechJebModuleStageStats
+			{
+				unlockParts = 
+				unlockTechs = 
+			}
+			MechJebModuleTargetController
 			{
 				unlockParts = 
 				unlockTechs = 
@@ -1001,6 +764,16 @@ PART
 				autostageSavedState = False
 				unlockParts = 
 				unlockTechs = start
+			}
+			MechJebModuleTranslatron
+			{
+				unlockParts = 
+				unlockTechs = start
+				trans_spd
+				{
+					_val = 0
+					_text = 0
+				}
 			}
 			MechJebModuleWarpHelper
 			{
@@ -1012,81 +785,6 @@ PART
 					_text = 0
 				}
 			}
-			MechJebModuleCustomWindowEditor
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleAscentAutopilot
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleRendezvousAutopilotWindow
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleNodeExecutor
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleNodeEditor
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleLandingAutopilot
-			{
-				deployGears = True
-				deployChutes = True
-				rcsAdjustment = True
-				unlockParts = 
-				unlockTechs = 
-				touchdownSpeed
-				{
-					_val = 0.5
-					_text = 0.5
-				}
-				limitGearsStage
-				{
-					val = 0
-					_text = 0
-				}
-				limitChutesStage
-				{
-					val = 0
-					_text = 0
-				}
-			}
-			MechJebModuleLandingGuidance
-			{
-				landingSiteIdx = 0
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleLandingPredictions
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleTranslatron
-			{
-				trans_spd = 0
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleAscentGuidance
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleRendezvousAutopilot
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
 			MechJebModuleWaypointWindow
 			{
 				unlockParts = 
@@ -1097,28 +795,10 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
-			MechJebModuleTargetController
+			ModExtensionDemo
 			{
 				unlockParts = 
 				unlockTechs = 
-			}
-			MechJebModuleManeuverPlanner
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleStageStats
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleRendezvousGuidance
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleCustomInfoWindow
-			{
 			}
 			MechJebModuleCustomInfoWindow
 			{
@@ -1146,12 +826,29 @@ PART
 			MechJebModuleThrustController
 			{
 				limitThrottle = False
+				limiterMinThrottle = False
+				electricThrottle = False
 				unlockParts = 
 				unlockTechs = 
 				maxThrottle
 				{
 					_val = 1
 					_text = 100
+				}
+				minThrottle
+				{
+					_val = 0.050000000000000003
+					_text = 5
+				}
+				electricThrottleLo
+				{
+					_val = 0.050000000000000003
+					_text = 5
+				}
+				electricThrottleHi
+				{
+					_val = 0.14999999999999999
+					_text = 15
 				}
 			}
 			MechJebModuleRCSController
@@ -1163,6 +860,21 @@ PART
 					_val = 1
 					_text = 1
 				}
+				Kp
+				{
+					_val = 0.125
+					_text = 0.125
+				}
+				Ki
+				{
+					_val = 0.070000000000000007
+					_text = 0.07
+				}
+				Kd
+				{
+					_val = 0.53000000000000003
+					_text = 0.53
+				}
 			}
 			MechJebModuleRCSBalancer
 			{
@@ -1173,6 +885,15 @@ PART
 			{
 				unlockParts = 
 				unlockTechs = 
+				MJAttitudeController
+				{
+				}
+				KosAttitudeController
+				{
+				}
+				HybridController
+				{
+				}
 			}
 			MechJebModuleStagingController
 			{
@@ -1186,6 +907,7 @@ PART
 				dragLosses = 0
 				gravityLosses = 0
 				steeringLosses = 0
+				markLAN = 0
 				markLatitude = 0
 				markLongitude = 0
 				markAltitude = 0
@@ -1194,186 +916,13 @@ PART
 				unlockParts = 
 				unlockTechs = 
 			}
-		}
-	}
-	MODULE
-	{
-		name = ModuleAvionics
-		isEnabled = True
-		systemEnabled = True
-		EVENTS
-		{
-			ToggleEvent
+			MechJebModuleFlightRecorderGraph
 			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Shutdown Avionics
-				guiName = Shutdown Avionics
-				category = Shutdown Avionics
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
+				unlockParts = 
+				unlockTechs = 
 			}
 		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = ModuleScienceExperiment
-		isEnabled = True
-		Deployed = False
-		Inoperable = False
-		EVENTS
-		{
-			DeployExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CollectDataExternalEvent
-			{
-				active = True
-				guiActive = False
-				guiIcon = 
-				guiName = 
-				category = 
-				guiActiveUnfocused = True
-				unfocusedRange = 1.5
-				externalToEVAOnly = True
-			}
-			ReviewDataEvent
-			{
-				active = True
-				guiActive = True
-				guiIcon = Review Data
-				guiName = Review Data
-				category = Review Data
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperiment
-			{
-				active = True
-				guiActive = True
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			DeployExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ResetExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset
-				guiName = Reset
-				category = Reset
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			CleanUpExperimentExternal
-			{
-				active = True
-				guiActive = False
-				guiIcon = Restore
-				guiName = Restore
-				category = Restore
-				guiActiveUnfocused = True
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-			DeployAction
-			{
-				actionGroup = None
-			}
-			ResetAction
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = ModuleTagFilmReturn
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -1381,6 +930,7 @@ PART
 	{
 		name = ModuleTripLogger
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -1391,6 +941,9 @@ PART
 		{
 			flight = 0
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	RESOURCE
 	{
@@ -1400,6 +953,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -1407,23 +961,26 @@ PART
 {
 	part = FASAAgenaLFT_4294197000
 	partName = Part
-	pos = 0.4051282,25.95436,0.2019519
+	pos = 0.405128211,25.9543591,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,-2.133249,0
+	attPos0 = 0,-2.13324904,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 0
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = -1
+	resPri = 0
 	dstg = 0
 	sidx = -1
 	sqor = -1
-	sepI = 1
+	sepI = 0
 	attm = 0
-	modCost = 28.1849
+	modCost = 3.05915403
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAAgenaAnt_4294076668
 	link = FASAAgena.Engine.FP_4294022680
 	attN = top,FASAAgenaProbe_4292362078
@@ -1439,34 +996,16 @@ PART
 	}
 	MODULE
 	{
-		name = ReflectiveShaderModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -1474,10 +1013,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -1485,10 +1028,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -1498,90 +1045,13 @@ PART
 		isEnabled = True
 		type = Default
 		utilization = 86
-		mass = 0.3
+		mass = 0.150000006
+		_numberOfAddedMLILayers = 0
+		partPrevTemperature = -1
+		stagingEnabled = True
 		volume = 5583.5
-		type_UIEditor
-		{
-			controlEnabled = True
-		}
-		utilization_UIEditor
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			incrementSlide = 1
-		}
 		EVENTS
 		{
-			HideUI
-			{
-				active = False
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Hide UI
-				guiName = Hide UI
-				category = Hide UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ShowUI
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Show UI
-				guiName = Show UI
-				category = Show UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Empty
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Remove All Tanks
-				guiName = Remove All Tanks
-				category = Remove All Tanks
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT0
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.9% UDMH / 61.1% MON3
-				guiName = 38.9% UDMH / 61.1% MON3
-				category = 38.9% UDMH / 61.1% MON3
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 45.1% UDMH / 54.9% IRFNA-III
-				guiName = 45.1% UDMH / 54.9% IRFNA-III
-				category = 45.1% UDMH / 54.9% IRFNA-III
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT2
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.2% Kerosene / 61.8% LqdOxygen
-				guiName = 38.2% Kerosene / 61.8% LqdOxygen
-				category = 38.2% Kerosene / 61.8% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -1591,10 +1061,10 @@ PART
 			name = LqdOxygen
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.4E-05
-			cost = 0.0025
-			loss_rate = 5E-09
-			temperature = 90.15
+			mass = 1.40000002E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 90.1500015
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1605,8 +1075,8 @@ PART
 			name = Kerosene
 			note = 
 			utilization = 1
-			mass = 1.2E-05
-			cost = 0.0025
+			mass = 1.20000004E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1617,14 +1087,14 @@ PART
 		TANK
 		{
 			name = LqdHydrogen
-			note = (lacks insulation)
+			note = (basic insulation)
 			utilization = 1
-			mass = 2E-06
-			cost = 0.02
-			loss_rate = 1.7E-08
-			temperature = 20.15
+			mass = 1.99999999E-06
+			cost = 0
+			loss_rate = 0
+			temperature = 20.1499996
 			fillable = True
-			techRequired = hydroloxTL2
+			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
@@ -1634,7 +1104,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1648,7 +1118,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1662,7 +1132,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1676,7 +1146,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1690,7 +1160,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1703,8 +1173,8 @@ PART
 			name = AvGas
 			note = 
 			utilization = 1
-			mass = 8E-06
-			cost = 0.0025
+			mass = 7.99999998E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1717,8 +1187,8 @@ PART
 			name = IRFNA-III
 			note = 
 			utilization = 1
-			mass = 2E-05
-			cost = 0.0025
+			mass = 1.99999995E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1731,8 +1201,8 @@ PART
 			name = NitrousOxide
 			note = (pressurized)
 			utilization = 100
-			mass = 3E-05
-			cost = 0.0025
+			mass = 2.99999992E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1745,8 +1215,8 @@ PART
 			name = Aniline
 			note = 
 			utilization = 1
-			mass = 2E-05
-			cost = 0.0025
+			mass = 1.99999995E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1759,8 +1229,8 @@ PART
 			name = Ethanol75
 			note = 
 			utilization = 1
-			mass = 1.3E-05
-			cost = 0.0025
+			mass = 1.29999999E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1773,8 +1243,8 @@ PART
 			name = Ethanol90
 			note = 
 			utilization = 1
-			mass = 1.3E-05
-			cost = 0.0025
+			mass = 1.29999999E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1787,8 +1257,8 @@ PART
 			name = Ethanol
 			note = 
 			utilization = 1
-			mass = 1.3E-05
-			cost = 0.0025
+			mass = 1.29999999E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1801,10 +1271,10 @@ PART
 			name = LqdAmmonia
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.2E-05
-			cost = 0.0025
-			loss_rate = 2E-10
-			temperature = 195.15
+			mass = 1.20000004E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 237.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1815,10 +1285,10 @@ PART
 			name = LqdMethane
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.2E-05
-			cost = 0.0025
-			loss_rate = 5E-09
-			temperature = 91.15
+			mass = 1.20000004E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 111.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1829,8 +1299,8 @@ PART
 			name = ClF3
 			note = 
 			utilization = 1
-			mass = 4E-05
-			cost = 0.0025
+			mass = 3.9999999E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1843,8 +1313,8 @@ PART
 			name = ClF5
 			note = 
 			utilization = 1
-			mass = 4E-05
-			cost = 0.0025
+			mass = 3.9999999E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1857,10 +1327,10 @@ PART
 			name = Diborane
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.8E-05
-			cost = 0.0025
-			loss_rate = 2.3E-10
-			temperature = 180.65
+			mass = 1.80000006E-05
+			cost = 0
+			loss_rate = 2.3000000000000001E-10
+			temperature = 180.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1871,8 +1341,8 @@ PART
 			name = Pentaborane
 			note = 
 			utilization = 1
-			mass = 1.8E-05
-			cost = 0.0025
+			mass = 1.80000006E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1886,9 +1356,9 @@ PART
 			note = (lacks insulation)
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
-			loss_rate = 2.5E-10
-			temperature = 184.65
+			cost = 0
+			loss_rate = 2.5000000000000002E-10
+			temperature = 184.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1900,9 +1370,9 @@ PART
 			note = (lacks insulation)
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
-			loss_rate = 3.5E-10
-			temperature = 169.45
+			cost = 0
+			loss_rate = 3.4999999999999998E-10
+			temperature = 169.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1913,10 +1383,10 @@ PART
 			name = OF2
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.8E-05
-			cost = 0.0025
-			loss_rate = 1E-09
-			temperature = 128.4
+			mass = 1.80000006E-05
+			cost = 0
+			loss_rate = 1.0000000000000001E-09
+			temperature = 128.399994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1927,10 +1397,10 @@ PART
 			name = LqdFluorine
 			note = (lacks insulation)
 			utilization = 1
-			mass = 4E-05
-			cost = 0.0025
-			loss_rate = 5.5E-09
-			temperature = 85.04
+			mass = 3.9999999E-05
+			cost = 0
+			loss_rate = 5.4999999999999996E-09
+			temperature = 85.0400009
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1941,10 +1411,10 @@ PART
 			name = N2F4
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
-			loss_rate = 1.7E-10
-			temperature = 200.15
+			mass = 9.99999975E-06
+			cost = 0
+			loss_rate = 1.7000000000000001E-10
+			temperature = 200.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -1955,8 +1425,8 @@ PART
 			name = Methanol
 			note = 
 			utilization = 1
-			mass = 1.2E-05
-			cost = 0.0025
+			mass = 1.20000004E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1969,8 +1439,8 @@ PART
 			name = Furfuryl
 			note = 
 			utilization = 1
-			mass = 1.4E-05
-			cost = 0.0025
+			mass = 1.40000002E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1984,7 +1454,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -1998,7 +1468,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2012,7 +1482,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2025,10 +1495,10 @@ PART
 			name = FLOX30
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.65E-05
-			cost = 0.0025
+			mass = 1.65000001E-05
+			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -2039,10 +1509,10 @@ PART
 			name = FLOX70
 			note = (lacks insulation)
 			utilization = 1
-			mass = 3.85E-05
-			cost = 0.0025
+			mass = 3.84999985E-05
+			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -2053,10 +1523,10 @@ PART
 			name = FLOX88
 			note = (lacks insulation)
 			utilization = 1
-			mass = 4.84E-05
-			cost = 0.0025
+			mass = 4.84000011E-05
+			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -2067,8 +1537,8 @@ PART
 			name = IWFNA
 			note = 
 			utilization = 1
-			mass = 2E-05
-			cost = 0.0025
+			mass = 1.99999995E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2081,8 +1551,8 @@ PART
 			name = IRFNA-IV
 			note = 
 			utilization = 1
-			mass = 2E-05
-			cost = 0.0025
+			mass = 1.99999995E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2095,8 +1565,8 @@ PART
 			name = AK20
 			note = 
 			utilization = 1
-			mass = 2E-05
-			cost = 0.0025
+			mass = 1.99999995E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2109,8 +1579,8 @@ PART
 			name = AK27
 			note = 
 			utilization = 1
-			mass = 2E-05
-			cost = 0.0025
+			mass = 1.99999995E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2124,7 +1594,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2138,7 +1608,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2152,7 +1622,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2166,7 +1636,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2180,7 +1650,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2194,7 +1664,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2207,8 +1677,8 @@ PART
 			name = Hydyne
 			note = 
 			utilization = 1
-			mass = 1.3E-05
-			cost = 0.0025
+			mass = 1.29999999E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2221,8 +1691,8 @@ PART
 			name = Syntin
 			note = 
 			utilization = 1
-			mass = 1.2E-05
-			cost = 0.0025
+			mass = 1.20000004E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2236,7 +1706,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2250,7 +1720,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 1.6E-05
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2264,7 +1734,7 @@ PART
 			note = 
 			utilization = 1
 			mass = 0
-			cost = 0.0025
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -2274,143 +1744,42 @@ PART
 		}
 		TANK
 		{
-			name = Food
+			name = Beryllium
 			note = 
 			utilization = 1
-			mass = 0
+			mass = 1.6E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
-			techRequired = enhancedSurvivability
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = Water
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = enhancedSurvivability
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = Oxygen
-			note = (pressurized)
-			utilization = 221.1347
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = True
-			techRequired = enhancedSurvivability
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = Waste
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = False
 			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
-		TANK
-		{
-			name = WasteWater
-			note = 
-			utilization = 1
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = False
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-		TANK
-		{
-			name = CarbonDioxide
-			note = (pressurized)
-			utilization = 476.2173
-			mass = 0
-			cost = 0
-			loss_rate = 0
-			temperature = 300
-			fillable = False
-			techRequired = 
-			amount = 0
-			maxAmount = 0
-		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
 	RESOURCE
 	{
 		name = UDMH
-		amount = 2518.15845290844
-		maxAmount = 2518.15845290844
+		amount = 2518.1584529084398
+		maxAmount = 2518.1584529084398
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 	RESOURCE
 	{
 		name = IRFNA-III
-		amount = 3065.34154709156
-		maxAmount = 3065.34154709156
+		amount = 3065.3415470915602
+		maxAmount = 3065.3415470915602
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -2418,23 +1787,26 @@ PART
 {
 	part = FASAAgenaAnt_4294076668
 	partName = Part
-	pos = 0.4043742,27.3108,-0.5452845
+	pos = 0.404374212,27.3108006,-0.54528451
 	attPos = 0,0,0
-	attPos0 = -0.0007539392,1.35644,-0.7472364
-	rot = -3.370341E-14,1,-2.341741E-07,-1.439246E-07
+	attPos0 = -0.00075393921,1.35643995,-0.747236371
+	rot = -3.37034105E-14,1,-2.34174095E-07,-1.43924595E-07
 	attRot = 0,0,0,1
-	attRot0 = -3.370341E-14,1,-2.341741E-07,-1.439246E-07
+	attRot0 = -3.37034105E-14,1,-2.34174095E-07,-1.43924595E-07
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 0
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = -1
+	resPri = 0
 	dstg = 0
 	sidx = -1
 	sqor = -1
-	sepI = 1
+	sepI = 0
 	attm = 1
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	srfN = srfAttach,FASAAgenaLFT_4294197000
 	EVENTS
 	{
@@ -2449,24 +1821,15 @@ PART
 	{
 		name = ModuleAnimateGeneric
 		isEnabled = True
-		status = Locked
+		aniState = LOCKED
 		animSwitch = True
 		animTime = 0
 		animSpeed = 1
+		deployPercent = 100
+		animationIsDisabled = False
+		stagingEnabled = True
 		EVENTS
 		{
-			Toggle
-			{
-				active = True
-				guiActive = True
-				guiActiveEditor = True
-				guiIcon = Toggle
-				guiName = Extend
-				category = Toggle
-				guiActiveUnfocused = True
-				unfocusedRange = 5
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -2475,48 +1838,27 @@ PART
 				actionGroup = Custom09
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
 		name = ModuleDataTransmitter
 		isEnabled = True
-		EVENTS
-		{
-			StartTransmission
-			{
-				active = True
-				guiActive = True
-				guiIcon = Transmit Data
-				guiName = Transmit Data
-				category = Transmit Data
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			StopTransmission
-			{
-				active = False
-				guiActive = True
-				guiIcon = Stop Transmitting
-				guiName = Stop Transmitting
-				category = Stop Transmitting
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
+		xmitIncomplete = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+			StartTransmissionAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2524,10 +1866,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2535,10 +1881,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2546,46 +1896,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2594,7 +1912,7 @@ PART
 {
 	part = FASAAgena.Engine.FP_4294022680
 	partName = Part
-	pos = 0.4051282,23.82111,0.2019519
+	pos = 0.405128211,23.8211098,0.201951906
 	attPos = 0,0,0
 	attPos0 = 0,-2.13325,0
 	rot = 0,0,0,1
@@ -2602,15 +1920,18 @@ PART
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 2
+	resPri = 0
 	dstg = 0
 	sidx = 0
 	sqor = 2
-	sepI = 1
+	sepI = 0
 	attm = 0
-	modCost = 0.8991435
+	modCost = 0.0624809675
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAAgena.Engine_4294159980
 	link = FASAFairingWall05m_4293933366
 	link = FASAFairingWall05m_4293931738
@@ -2639,74 +1960,12 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
 			OnAction
 			{
 				actionGroup = None
@@ -2726,66 +1985,28 @@ PART
 		Ullage
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
 		name = ModuleRCSFX
 		isEnabled = True
+		rcsEnabled = True
+		thrustPercentage = 100
+		currentShowToggles = False
 		enableYaw = True
 		enablePitch = True
 		enableRoll = True
 		enableX = True
 		enableY = True
 		enableZ = True
-		rcsEnabled = True
-		enableYaw_UIFlight
-		{
-			controlEnabled = True
-		}
-		enablePitch_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableRoll_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableX_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableY_UIFlight
-		{
-			controlEnabled = True
-		}
-		enableZ_UIFlight
-		{
-			controlEnabled = True
-		}
+		useThrottle = False
+		fullThrust = False
+		stagingEnabled = True
 		EVENTS
 		{
-			Disable
-			{
-				active = True
-				guiActive = True
-				guiIcon = Disable RCS Port
-				guiName = Disable RCS Port
-				category = Disable RCS Port
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Enable
-			{
-				active = False
-				guiActive = True
-				guiIcon = Enable RCS Port
-				guiName = Enable RCS Port
-				category = Enable RCS Port
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -2794,26 +2015,7 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = ReflectiveShaderModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2822,34 +2024,14 @@ PART
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
+		stagingEnabled = True
 		EVENTS
 		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2857,10 +2039,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2868,10 +2054,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2879,10 +2069,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -2892,101 +2086,13 @@ PART
 		isEnabled = True
 		type = Fuselage
 		utilization = 86
-		mass = 0.2
+		mass = 0.206
+		_numberOfAddedMLILayers = 0
+		partPrevTemperature = -1
+		stagingEnabled = True
 		volume = 185.92500000000001
-		type_UIEditor
-		{
-			controlEnabled = True
-		}
-		utilization_UIEditor
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			incrementSlide = 1
-		}
 		EVENTS
 		{
-			HideUI
-			{
-				active = False
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Hide UI
-				guiName = Hide UI
-				category = Hide UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ShowUI
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Show UI
-				guiName = Show UI
-				category = Show UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Empty
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Remove All Tanks
-				guiName = Remove All Tanks
-				category = Remove All Tanks
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT0
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.9% UDMH / 61.1% MON3
-				guiName = 38.9% UDMH / 61.1% MON3
-				category = 38.9% UDMH / 61.1% MON3
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 100% Nitrogen
-				guiName = 100% Nitrogen
-				category = 100% Nitrogen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT2
-			{
-				active = True
-				guiActive = False
-				guiIcon = 45.1% UDMH / 54.9% IRFNA-III
-				guiName = 45.1% UDMH / 54.9% IRFNA-III
-				category = 45.1% UDMH / 54.9% IRFNA-III
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT3
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.2% Kerosene / 61.8% LqdOxygen
-				guiName = 38.2% Kerosene / 61.8% LqdOxygen
-				category = 38.2% Kerosene / 61.8% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -2996,10 +2102,10 @@ PART
 			name = LqdOxygen
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 7.9E-05
-			cost = 0.0025
-			loss_rate = 8E-11
-			temperature = 90.15
+			mass = 7.89999976E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 90.1500015
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3010,8 +2116,8 @@ PART
 			name = Kerosene
 			note = (pressurized)
 			utilization = 1
-			mass = 7.7E-05
-			cost = 0.0025
+			mass = 7.6999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3024,12 +2130,12 @@ PART
 			name = LqdHydrogen
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 6.7E-05
-			cost = 0.02
-			loss_rate = 5E-10
-			temperature = 20.15
+			mass = 6.70000009E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 20.1499996
 			fillable = True
-			techRequired = hydroloxTL2
+			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
@@ -3038,8 +2144,8 @@ PART
 			name = NTO
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3052,8 +2158,8 @@ PART
 			name = UDMH
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3066,8 +2172,8 @@ PART
 			name = Hydrazine
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3080,8 +2186,8 @@ PART
 			name = Aerozine50
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3094,8 +2200,8 @@ PART
 			name = MMH
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3108,8 +2214,8 @@ PART
 			name = HTP
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3122,8 +2228,8 @@ PART
 			name = AvGas
 			note = (pressurized)
 			utilization = 1
-			mass = 7.3E-05
-			cost = 0.0025
+			mass = 7.30000029E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3136,8 +2242,8 @@ PART
 			name = Nitrogen
 			note = (pressurized)
 			utilization = 200
-			mass = 9.5E-05
-			cost = 0.0025
+			mass = 9.50000031E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3150,8 +2256,8 @@ PART
 			name = IRFNA-III
 			note = (pressurized)
 			utilization = 1
-			mass = 8.5E-05
-			cost = 0.0025
+			mass = 8.49999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3164,8 +2270,8 @@ PART
 			name = NitrousOxide
 			note = (pressurized)
 			utilization = 100
-			mass = 9.5E-05
-			cost = 0.0025
+			mass = 9.50000031E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3178,8 +2284,8 @@ PART
 			name = Aniline
 			note = (pressurized)
 			utilization = 1
-			mass = 8.5E-05
-			cost = 0.0025
+			mass = 8.49999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3192,8 +2298,8 @@ PART
 			name = Ethanol75
 			note = (pressurized)
 			utilization = 1
-			mass = 7.8E-05
-			cost = 0.0025
+			mass = 7.79999973E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3206,8 +2312,8 @@ PART
 			name = Ethanol90
 			note = (pressurized)
 			utilization = 1
-			mass = 7.8E-05
-			cost = 0.0025
+			mass = 7.79999973E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3220,8 +2326,8 @@ PART
 			name = Ethanol
 			note = (pressurized)
 			utilization = 1
-			mass = 7.8E-05
-			cost = 0.0025
+			mass = 7.79999973E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3234,10 +2340,10 @@ PART
 			name = LqdAmmonia
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 7.7E-05
-			cost = 0.0025
+			mass = 7.6999997E-05
+			cost = 0
 			loss_rate = 0
-			temperature = 195.15
+			temperature = 237.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3248,10 +2354,10 @@ PART
 			name = LqdMethane
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 7.7E-05
-			cost = 0.0025
-			loss_rate = 8E-11
-			temperature = 91.15
+			mass = 7.6999997E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 111.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3262,8 +2368,8 @@ PART
 			name = Helium
 			note = (pressurized)
 			utilization = 200
-			mass = 0.000115
-			cost = 0.0025
+			mass = 0.000115000003
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3276,8 +2382,8 @@ PART
 			name = ClF3
 			note = (pressurized)
 			utilization = 1
-			mass = 0.000105
-			cost = 0.0025
+			mass = 0.000104999999
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3290,8 +2396,8 @@ PART
 			name = ClF5
 			note = (pressurized)
 			utilization = 1
-			mass = 0.000105
-			cost = 0.0025
+			mass = 0.000104999999
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3304,10 +2410,10 @@ PART
 			name = Diborane
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 8.3E-05
-			cost = 0.0025
+			mass = 8.2999999E-05
+			cost = 0
 			loss_rate = 0
-			temperature = 180.65
+			temperature = 180.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3318,8 +2424,8 @@ PART
 			name = Pentaborane
 			note = (pressurized)
 			utilization = 1
-			mass = 8.3E-05
-			cost = 0.0025
+			mass = 8.2999999E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3332,10 +2438,10 @@ PART
 			name = Ethane
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
-			temperature = 184.65
+			temperature = 184.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3346,10 +2452,10 @@ PART
 			name = Ethylene
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
-			temperature = 169.45
+			temperature = 169.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3360,10 +2466,10 @@ PART
 			name = OF2
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 8.3E-05
-			cost = 0.0025
+			mass = 8.2999999E-05
+			cost = 0
 			loss_rate = 1.6E-11
-			temperature = 128.4
+			temperature = 128.399994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3374,10 +2480,10 @@ PART
 			name = LqdFluorine
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 0.000105
-			cost = 0.0025
-			loss_rate = 8.8E-11
-			temperature = 85.04
+			mass = 0.000104999999
+			cost = 0
+			loss_rate = 8.8000000000000006E-11
+			temperature = 85.0400009
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3388,10 +2494,10 @@ PART
 			name = N2F4
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 7.5E-05
-			cost = 0.0025
+			mass = 7.50000036E-05
+			cost = 0
 			loss_rate = 0
-			temperature = 200.15
+			temperature = 200.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3402,8 +2508,8 @@ PART
 			name = Methanol
 			note = (pressurized)
 			utilization = 1
-			mass = 7.7E-05
-			cost = 0.0025
+			mass = 7.6999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3416,8 +2522,8 @@ PART
 			name = Furfuryl
 			note = (pressurized)
 			utilization = 1
-			mass = 7.9E-05
-			cost = 0.0025
+			mass = 7.89999976E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3430,8 +2536,8 @@ PART
 			name = UH25
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3444,8 +2550,8 @@ PART
 			name = Tonka250
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3458,8 +2564,8 @@ PART
 			name = Tonka500
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3472,10 +2578,10 @@ PART
 			name = FLOX30
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 8.15E-05
-			cost = 0.0025
+			mass = 8.15000021E-05
+			cost = 0
 			loss_rate = 0
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3486,10 +2592,10 @@ PART
 			name = FLOX70
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 0.0001035
-			cost = 0.0025
+			mass = 0.000103500002
+			cost = 0
 			loss_rate = 0
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3500,10 +2606,10 @@ PART
 			name = FLOX88
 			note = (has insulation, pressurized)
 			utilization = 1
-			mass = 0.0001134
-			cost = 0.0025
+			mass = 0.000113399998
+			cost = 0
 			loss_rate = 0
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -3514,8 +2620,8 @@ PART
 			name = IWFNA
 			note = (pressurized)
 			utilization = 1
-			mass = 8.5E-05
-			cost = 0.0025
+			mass = 8.49999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3528,8 +2634,8 @@ PART
 			name = IRFNA-IV
 			note = (pressurized)
 			utilization = 1
-			mass = 8.5E-05
-			cost = 0.0025
+			mass = 8.49999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3542,8 +2648,8 @@ PART
 			name = AK20
 			note = (pressurized)
 			utilization = 1
-			mass = 8.5E-05
-			cost = 0.0025
+			mass = 8.49999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3556,8 +2662,8 @@ PART
 			name = AK27
 			note = (pressurized)
 			utilization = 1
-			mass = 8.5E-05
-			cost = 0.0025
+			mass = 8.49999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3570,8 +2676,8 @@ PART
 			name = CaveaB
 			note = (pressurized)
 			utilization = 1
-			mass = 8.5E-05
-			cost = 0.0025
+			mass = 8.49999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3584,8 +2690,8 @@ PART
 			name = MON1
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3598,8 +2704,8 @@ PART
 			name = MON3
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3612,8 +2718,8 @@ PART
 			name = MON10
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3626,8 +2732,8 @@ PART
 			name = MON15
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3640,8 +2746,8 @@ PART
 			name = MON20
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3654,8 +2760,8 @@ PART
 			name = MON25
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3668,8 +2774,8 @@ PART
 			name = ArgonGas
 			note = (pressurized)
 			utilization = 100
-			mass = 3E-05
-			cost = 0.0025
+			mass = 2.99999992E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3682,8 +2788,8 @@ PART
 			name = KryptonGas
 			note = (pressurized)
 			utilization = 100
-			mass = 3E-05
-			cost = 0.0025
+			mass = 2.99999992E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3696,8 +2802,8 @@ PART
 			name = Hydrogen
 			note = (pressurized)
 			utilization = 100
-			mass = 3E-05
-			cost = 0.0025
+			mass = 2.99999992E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3710,12 +2816,12 @@ PART
 			name = Oxygen
 			note = (pressurized)
 			utilization = 200
-			mass = 3E-05
-			cost = 0.0025
+			mass = 2.99999992E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
-			techRequired = enhancedSurvivability
+			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
@@ -3724,12 +2830,12 @@ PART
 			name = Food
 			note = (pressurized)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
+			mass = 9.99999975E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
-			techRequired = enhancedSurvivability
+			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
@@ -3738,12 +2844,12 @@ PART
 			name = Water
 			note = (pressurized)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
+			mass = 9.99999975E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
-			techRequired = enhancedSurvivability
+			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
@@ -3752,8 +2858,8 @@ PART
 			name = CarbonDioxide
 			note = (pressurized)
 			utilization = 200
-			mass = 3E-05
-			cost = 0.0025
+			mass = 2.99999992E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = False
@@ -3766,8 +2872,8 @@ PART
 			name = Waste
 			note = (pressurized)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
+			mass = 9.99999975E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = False
@@ -3780,8 +2886,8 @@ PART
 			name = WasteWater
 			note = (pressurized)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
+			mass = 9.99999975E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = False
@@ -3794,8 +2900,8 @@ PART
 			name = LithiumPeroxide
 			note = (pressurized)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
+			mass = 9.99999975E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3808,8 +2914,8 @@ PART
 			name = LithiumHydroxide
 			note = (pressurized)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
+			mass = 9.99999975E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3822,8 +2928,8 @@ PART
 			name = PotassiumSuperoxide
 			note = (pressurized)
 			utilization = 1
-			mass = 1E-05
-			cost = 0.0025
+			mass = 9.99999975E-06
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3836,8 +2942,8 @@ PART
 			name = Hydyne
 			note = (pressurized)
 			utilization = 1
-			mass = 7.8E-05
-			cost = 0.0025
+			mass = 7.79999973E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3850,8 +2956,8 @@ PART
 			name = Syntin
 			note = (pressurized)
 			utilization = 1
-			mass = 7.7E-05
-			cost = 0.0025
+			mass = 7.6999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3864,8 +2970,8 @@ PART
 			name = LiquidFuel
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3878,8 +2984,8 @@ PART
 			name = Oxidizer
 			note = (pressurized)
 			utilization = 1
-			mass = 8.1E-05
-			cost = 0.0025
+			mass = 8.09999983E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3892,8 +2998,8 @@ PART
 			name = MonoPropellant
 			note = (pressurized)
 			utilization = 1
-			mass = 7.7E-05
-			cost = 0.0025
+			mass = 7.6999997E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3906,8 +3012,8 @@ PART
 			name = XenonGas
 			note = (pressurized)
 			utilization = 100
-			mass = 3E-05
-			cost = 0.0025
+			mass = 2.99999992E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3920,8 +3026,8 @@ PART
 			name = ElectricCharge
 			note = (pressurized)
 			utilization = 1000
-			mass = 0.00289
-			cost = 10
+			mass = 0.00288999989
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3934,8 +3040,8 @@ PART
 			name = LeadBallast
 			note = (pressurized)
 			utilization = 1
-			mass = 6.5E-05
-			cost = 0.0025
+			mass = 6.50000002E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
@@ -3948,14 +3054,31 @@ PART
 			name = Turpentine
 			note = (pressurized)
 			utilization = 1
-			mass = 7.8E-05
-			cost = 0.0025
+			mass = 7.79999973E-05
+			cost = 0
 			loss_rate = 0
 			temperature = 300
 			fillable = True
 			techRequired = 
 			amount = 0
 			maxAmount = 0
+		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 8.09999983E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		UPGRADESAPPLIED
+		{
 		}
 	}
 	MODULE
@@ -3966,46 +3089,14 @@ PART
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4017,6 +3108,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 	RESOURCE
@@ -4027,16 +3119,18 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 	RESOURCE
 	{
 		name = MON3
-		amount = 86.5176
-		maxAmount = 86.5176
+		amount = 86.517600000000002
+		maxAmount = 86.517600000000002
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -4044,23 +3138,26 @@ PART
 {
 	part = FASAAgena.Engine_4294159980
 	partName = Part
-	pos = 0.4051282,23.30304,0.2019519
+	pos = 0.405128211,23.3030396,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,-0.518075,0
+	attPos0 = 0,-0.518074989,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 1
+	resPri = 0
 	dstg = 0
 	sidx = 0
 	sqor = 1
-	sepI = 1
+	sepI = 0
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAFairingBase.15m_4293970968
 	attN = top,FASAAgena.Engine.FP_4294022680
 	attN = bottom,FASAFairingBase.15m_4293970968
@@ -4085,74 +3182,12 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
 			OnAction
 			{
 				actionGroup = None
@@ -4172,25 +3207,19 @@ PART
 		Ullage
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
 		name = ModuleJettison
 		isEnabled = True
 		isJettisoned = False
+		shroudHideOverride = False
+		stagingEnabled = True
 		EVENTS
 		{
-			Jettison
-			{
-				active = False
-				guiActive = False
-				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)
-				category = Jettison
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -4200,6 +3229,9 @@ PART
 				active = False
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -4207,17 +3239,12 @@ PART
 		isEnabled = True
 		gimbalLock = False
 		gimbalLimiter = 100
-		gimbalLock_UIFlight
-		{
-			controlEnabled = True
-		}
-		gimbalLimiter_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -4235,16 +3262,35 @@ PART
 			{
 				actionGroup = None
 			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
 		}
 	}
 	MODULE
 	{
-		name = ModuleAnimateEmissive
+		name = ModuleAnimateHeat
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4252,21 +3298,14 @@ PART
 	{
 		name = ModuleSurfaceFX
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4275,34 +3314,14 @@ PART
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
+		stagingEnabled = True
 		EVENTS
 		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4310,10 +3329,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4321,10 +3344,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4332,10 +3359,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4347,77 +3378,14 @@ PART
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ShroudToggle
-		isEnabled = True
-		disableFairing = False
-		disableFairing_UIFlight
-		{
-			controlEnabled = True
-		}
-		EVENTS
-		{
-			fairingjettisonEvent
-			{
-				active = True
-				guiActive = True
-				guiIcon = 
-				guiName = Jettison
-				category = 
-				guiActiveUnfocused = False
-				unfocusedRange = 0
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-			fairingjettisonAction
-			{
-				actionGroup = None
-			}
-		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4426,23 +3394,26 @@ PART
 {
 	part = FASAFairingBase.15m_4293970968
 	partName = Part
-	pos = 0.4051282,22.38879,0.2019519
+	pos = 0.405128211,22.3887901,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,-0.9142494,0
+	attPos0 = 0,-0.91424942,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 3
+	resPri = 0
 	dstg = 0
-	sidx = 6
+	sidx = 3
 	sqor = 3
 	sepI = 3
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAMercuryAtlasLFTLong_4293754846
 	attN = top,FASAAgena.Engine_4294159980
 	attN = bottom,FASAMercuryAtlasLFTLong_4293754846
@@ -4459,56 +3430,14 @@ PART
 	{
 		name = ModuleProceduralFairing
 		isEnabled = True
+		interstageCraftID = 0
+		nArcs = 2
+		ejectionForce = 100
+		useClamshell = False
+		stagingEnabled = True
 		fsm = st_idle
 		EVENTS
 		{
-			DeleteFairing
-			{
-				active = False
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Delete Fairing
-				guiName = Delete Fairing
-				category = Delete Fairing
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			EditFairing
-			{
-				active = False
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Edit Fairing
-				guiName = Edit Fairing
-				category = Edit Fairing
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			BuildFairing
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Build Fairing
-				guiName = Build Fairing
-				category = Build Fairing
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			DeployFairing
-			{
-				active = False
-				guiActive = True
-				guiIcon = Deploy
-				guiName = Deploy
-				category = Deploy
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -4517,15 +3446,7 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4533,10 +3454,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4544,10 +3469,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4555,10 +3484,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4568,26 +3501,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -4596,40 +3512,35 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4638,23 +3549,26 @@ PART
 {
 	part = FASAMercuryAtlasLFTLong_4293754846
 	partName = Part
-	pos = 0.4051282,11.80139,0.2019519
+	pos = 0.405128211,11.8013897,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,-10.5874,0
+	attPos0 = 0,-10.5874004,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
-	istg = 0
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 3
+	resPri = 0
 	dstg = 0
 	sidx = -1
 	sqor = -1
 	sepI = 3
 	attm = 0
-	modCost = 716.8979
+	modCost = 4.4960146
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAMercuryAtlasVernierEngine_4293740150
 	link = FASAMercuryAtlasVernierEngine_4293739986
 	link = FASAMercuryAtlasEng_4293637384
@@ -4671,34 +3585,16 @@ PART
 	}
 	MODULE
 	{
-		name = ReflectiveShaderModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4706,10 +3602,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4717,10 +3617,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -4730,90 +3634,13 @@ PART
 		isEnabled = True
 		type = Balloon
 		utilization = 86
-		mass = 1.566
+		mass = 1.48099995
+		_numberOfAddedMLILayers = 0
+		partPrevTemperature = -1
+		stagingEnabled = True
 		volume = 101771.7
-		type_UIEditor
-		{
-			controlEnabled = True
-		}
-		utilization_UIEditor
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			incrementSlide = 1
-		}
 		EVENTS
 		{
-			HideUI
-			{
-				active = False
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Hide UI
-				guiName = Hide UI
-				category = Hide UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ShowUI
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Show UI
-				guiName = Show UI
-				category = Show UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Empty
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Remove All Tanks
-				guiName = Remove All Tanks
-				category = Remove All Tanks
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT0
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.9% UDMH / 61.1% MON3
-				guiName = 38.9% UDMH / 61.1% MON3
-				category = 38.9% UDMH / 61.1% MON3
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 45.1% UDMH / 54.9% IRFNA-III
-				guiName = 45.1% UDMH / 54.9% IRFNA-III
-				category = 45.1% UDMH / 54.9% IRFNA-III
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT2
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.2% Kerosene / 61.8% LqdOxygen
-				guiName = 38.2% Kerosene / 61.8% LqdOxygen
-				category = 38.2% Kerosene / 61.8% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -4823,10 +3650,10 @@ PART
 			name = LqdOxygen
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.4E-05
+			mass = 1.40000002E-05
 			cost = 0
-			loss_rate = 5E-09
-			temperature = 90.15
+			loss_rate = 0
+			temperature = 90.1500015
 			fillable = True
 			techRequired = 
 			amount = 69692.899999999994
@@ -4837,7 +3664,7 @@ PART
 			name = Kerosene
 			note = 
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -4849,14 +3676,14 @@ PART
 		TANK
 		{
 			name = LqdHydrogen
-			note = (lacks insulation)
+			note = (basic insulation)
 			utilization = 1
-			mass = 2E-06
-			cost = 0.02
-			loss_rate = 1.7E-08
-			temperature = 20.15
+			mass = 1.99999999E-06
+			cost = 0
+			loss_rate = 0
+			temperature = 20.1499996
 			fillable = True
-			techRequired = hydroloxTL2
+			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
@@ -4935,7 +3762,7 @@ PART
 			name = AvGas
 			note = 
 			utilization = 1
-			mass = 8E-06
+			mass = 7.99999998E-06
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -4949,7 +3776,7 @@ PART
 			name = IRFNA-III
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -4963,7 +3790,7 @@ PART
 			name = NitrousOxide
 			note = (pressurized)
 			utilization = 100
-			mass = 3E-05
+			mass = 2.99999992E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -4977,7 +3804,7 @@ PART
 			name = Aniline
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -4991,7 +3818,7 @@ PART
 			name = Ethanol75
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5005,7 +3832,7 @@ PART
 			name = Ethanol90
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5019,7 +3846,7 @@ PART
 			name = Ethanol
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5033,10 +3860,10 @@ PART
 			name = LqdAmmonia
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
-			loss_rate = 2E-10
-			temperature = 195.15
+			loss_rate = 0
+			temperature = 237.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5047,10 +3874,10 @@ PART
 			name = LqdMethane
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
-			loss_rate = 5E-09
-			temperature = 91.15
+			loss_rate = 0
+			temperature = 111.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5061,7 +3888,7 @@ PART
 			name = ClF3
 			note = 
 			utilization = 1
-			mass = 4E-05
+			mass = 3.9999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5075,7 +3902,7 @@ PART
 			name = ClF5
 			note = 
 			utilization = 1
-			mass = 4E-05
+			mass = 3.9999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5089,10 +3916,10 @@ PART
 			name = Diborane
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.8E-05
+			mass = 1.80000006E-05
 			cost = 0
-			loss_rate = 2.3E-10
-			temperature = 180.65
+			loss_rate = 2.3000000000000001E-10
+			temperature = 180.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5103,7 +3930,7 @@ PART
 			name = Pentaborane
 			note = 
 			utilization = 1
-			mass = 1.8E-05
+			mass = 1.80000006E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5119,8 +3946,8 @@ PART
 			utilization = 1
 			mass = 1.6E-05
 			cost = 0
-			loss_rate = 2.5E-10
-			temperature = 184.65
+			loss_rate = 2.5000000000000002E-10
+			temperature = 184.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5133,8 +3960,8 @@ PART
 			utilization = 1
 			mass = 1.6E-05
 			cost = 0
-			loss_rate = 3.5E-10
-			temperature = 169.45
+			loss_rate = 3.4999999999999998E-10
+			temperature = 169.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5145,10 +3972,10 @@ PART
 			name = OF2
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.8E-05
+			mass = 1.80000006E-05
 			cost = 0
-			loss_rate = 1E-09
-			temperature = 128.4
+			loss_rate = 1.0000000000000001E-09
+			temperature = 128.399994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5159,10 +3986,10 @@ PART
 			name = LqdFluorine
 			note = (lacks insulation)
 			utilization = 1
-			mass = 4E-05
+			mass = 3.9999999E-05
 			cost = 0
-			loss_rate = 5.5E-09
-			temperature = 85.04
+			loss_rate = 5.4999999999999996E-09
+			temperature = 85.0400009
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5173,10 +4000,10 @@ PART
 			name = N2F4
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1E-05
+			mass = 9.99999975E-06
 			cost = 0
-			loss_rate = 1.7E-10
-			temperature = 200.15
+			loss_rate = 1.7000000000000001E-10
+			temperature = 200.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5187,7 +4014,7 @@ PART
 			name = Methanol
 			note = 
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5201,7 +4028,7 @@ PART
 			name = Furfuryl
 			note = 
 			utilization = 1
-			mass = 1.4E-05
+			mass = 1.40000002E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5257,10 +4084,10 @@ PART
 			name = FLOX30
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.65E-05
+			mass = 1.65000001E-05
 			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5271,10 +4098,10 @@ PART
 			name = FLOX70
 			note = (lacks insulation)
 			utilization = 1
-			mass = 3.85E-05
+			mass = 3.84999985E-05
 			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5285,10 +4112,10 @@ PART
 			name = FLOX88
 			note = (lacks insulation)
 			utilization = 1
-			mass = 4.84E-05
+			mass = 4.84000011E-05
 			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -5299,7 +4126,7 @@ PART
 			name = IWFNA
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5313,7 +4140,7 @@ PART
 			name = IRFNA-IV
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5327,7 +4154,7 @@ PART
 			name = AK20
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5341,7 +4168,7 @@ PART
 			name = AK27
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5439,7 +4266,7 @@ PART
 			name = Hydyne
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5453,7 +4280,7 @@ PART
 			name = Syntin
 			note = 
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -5504,99 +4331,44 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
-	}
-	MODULE
-	{
-		name = ModuleAvionics
-		isEnabled = True
-		systemEnabled = True
-		EVENTS
+		TANK
 		{
-			ToggleEvent
-			{
-				active = True
-				guiActive = False
-				guiIcon = Shutdown Avionics
-				guiName = Shutdown Avionics
-				category = Shutdown Avionics
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 1.6E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
 		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-				active = False
-			}
-			ActivateAction
-			{
-				actionGroup = None
-				active = False
-			}
-		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
 	RESOURCE
 	{
 		name = LqdOxygen
-		amount = 69692.9
-		maxAmount = 69692.9
+		amount = 69692.899999999994
+		maxAmount = 69692.899999999994
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 	RESOURCE
 	{
 		name = Kerosene
-		amount = 32078.8
-		maxAmount = 32078.8
+		amount = 32078.799999999999
+		maxAmount = 32078.799999999999
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -5604,15 +4376,18 @@ PART
 {
 	part = FASAMercuryAtlasVernierEngine_4293740150
 	partName = Part
-	pos = 0.4167248,5.590622,-1.522672
+	pos = 0.416724801,5.59062195,-1.52267206
 	attPos = 0,0,0
-	attPos0 = 0.01159659,-6.210767,-1.724624
-	rot = 1.711427E-08,1.924781E-07,3.294121E-15,-1
+	attPos0 = 0.0115965903,-6.21076679,-1.72462404
+	rot = 1.71142691E-08,1.92478097E-07,3.29412108E-15,-1
 	attRot = 0,0,0,1
-	attRot0 = 1.711427E-08,1.924781E-07,3.294121E-15,-1
+	attRot0 = 1.71142691E-08,1.92478097E-07,3.29412108E-15,-1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 6
+	resPri = 0
 	dstg = 1
 	sidx = 0
 	sqor = 6
@@ -5620,7 +4395,7 @@ PART
 	attm = 1
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	sym = FASAMercuryAtlasVernierEngine_4293739986
 	srfN = srfAttach,FASAMercuryAtlasLFTLong_4293754846
 	EVENTS
@@ -5644,74 +4419,12 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
 			OnAction
 			{
 				actionGroup = None
@@ -5731,6 +4444,9 @@ PART
 		Ullage
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -5738,17 +4454,12 @@ PART
 		isEnabled = True
 		gimbalLock = False
 		gimbalLimiter = 100
-		gimbalLock_UIFlight
-		{
-			controlEnabled = True
-		}
-		gimbalLimiter_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -5766,16 +4477,20 @@ PART
 			{
 				actionGroup = None
 			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -5784,34 +4499,14 @@ PART
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
+		stagingEnabled = True
 		EVENTS
 		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -5819,10 +4514,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -5830,10 +4529,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -5841,10 +4544,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -5856,46 +4563,14 @@ PART
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -5904,23 +4579,26 @@ PART
 {
 	part = FASAMercuryAtlasVernierEngine_4293739986
 	partName = Part
-	pos = 0.3935317,5.590622,1.926576
+	pos = 0.39353171,5.59062195,1.92657602
 	attPos = 0,0,0
-	attPos0 = -0.01159644,-6.210767,1.724624
-	rot = 2.546033E-15,-1,-1.711427E-08,-1.487667E-07
+	attPos0 = -0.0115964403,-6.21076679,1.72462404
+	rot = 2.54603302E-15,-1,-1.71142691E-08,-1.48766702E-07
 	attRot = 0,0,0,1
-	attRot0 = 2.546033E-15,-1,-1.711427E-08,-1.487667E-07
+	attRot0 = 2.54603302E-15,-1,-1.71142691E-08,-1.48766702E-07
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 6
+	resPri = 0
 	dstg = 1
-	sidx = 1
+	sidx = 0
 	sqor = 6
 	sepI = 3
 	attm = 1
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	sym = FASAMercuryAtlasVernierEngine_4293740150
 	srfN = srfAttach,FASAMercuryAtlasLFTLong_4293754846
 	EVENTS
@@ -5944,74 +4622,12 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
 			OnAction
 			{
 				actionGroup = None
@@ -6031,6 +4647,9 @@ PART
 		Ullage
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -6038,17 +4657,12 @@ PART
 		isEnabled = True
 		gimbalLock = False
 		gimbalLimiter = 100
-		gimbalLock_UIFlight
-		{
-			controlEnabled = True
-		}
-		gimbalLimiter_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -6066,16 +4680,20 @@ PART
 			{
 				actionGroup = None
 			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6084,34 +4702,14 @@ PART
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
+		stagingEnabled = True
 		EVENTS
 		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6119,10 +4717,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6130,10 +4732,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6141,10 +4747,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6156,46 +4766,14 @@ PART
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6204,23 +4782,26 @@ PART
 {
 	part = FASAMercuryAtlasEng_4293637384
 	partName = Part
-	pos = 0.4051282,5.606388,0.2019519
+	pos = 0.405128211,5.60638809,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,-6.195001,0
+	attPos0 = 0,-6.19500113,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 6
+	resPri = 0
 	dstg = 0
 	sidx = 2
 	sqor = 6
 	sepI = 3
 	attm = 0
-	modCost = 177.451
-	modMass = -0.09402156
-	modSize = (0.0, 0.0, 0.0)
+	modCost = 0.451000005
+	modMass = -0.0862568021
+	modSize = 0,0,0
 	link = FASAMercuryFairing_4293652894
 	attN = top,FASAMercuryAtlasLFTLong_4293754846
 	attN = bottom,FASAMercuryFairing_4293652894
@@ -6245,74 +4826,12 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
 			OnAction
 			{
 				actionGroup = None
@@ -6332,6 +4851,9 @@ PART
 		Ullage
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -6339,17 +4861,12 @@ PART
 		isEnabled = True
 		gimbalLock = False
 		gimbalLimiter = 100
-		gimbalLock_UIFlight
-		{
-			controlEnabled = True
-		}
-		gimbalLimiter_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -6367,16 +4884,35 @@ PART
 			{
 				actionGroup = None
 			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
 		}
 	}
 	MODULE
 	{
-		name = ModuleAnimateEmissive
+		name = ModuleAnimateHeat
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6384,32 +4920,14 @@ PART
 	{
 		name = ModuleSurfaceFX
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ReflectiveShaderModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6418,34 +4936,14 @@ PART
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
+		stagingEnabled = True
 		EVENTS
 		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6453,10 +4951,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6464,10 +4966,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6475,10 +4981,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -6488,90 +4998,13 @@ PART
 		isEnabled = True
 		type = Balloon
 		utilization = 86
-		mass = 0.7969892
+		mass = 0.75774318
+		_numberOfAddedMLILayers = 0
+		partPrevTemperature = -1
+		stagingEnabled = True
 		volume = 11000
-		type_UIEditor
-		{
-			controlEnabled = True
-		}
-		utilization_UIEditor
-		{
-			controlEnabled = True
-			minValue = 1
-			maxValue = 100
-			incrementSlide = 1
-		}
 		EVENTS
 		{
-			HideUI
-			{
-				active = False
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Hide UI
-				guiName = Hide UI
-				category = Hide UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ShowUI
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Show UI
-				guiName = Show UI
-				category = Show UI
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Empty
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Remove All Tanks
-				guiName = Remove All Tanks
-				category = Remove All Tanks
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT0
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.9% UDMH / 61.1% MON3
-				guiName = 38.9% UDMH / 61.1% MON3
-				category = 38.9% UDMH / 61.1% MON3
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT1
-			{
-				active = True
-				guiActive = False
-				guiIcon = 45.1% UDMH / 54.9% IRFNA-III
-				guiName = 45.1% UDMH / 54.9% IRFNA-III
-				category = 45.1% UDMH / 54.9% IRFNA-III
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			MFT2
-			{
-				active = True
-				guiActive = False
-				guiIcon = 38.2% Kerosene / 61.8% LqdOxygen
-				guiName = 38.2% Kerosene / 61.8% LqdOxygen
-				category = 38.2% Kerosene / 61.8% LqdOxygen
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -6581,10 +5014,10 @@ PART
 			name = LqdOxygen
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.4E-05
+			mass = 1.40000002E-05
 			cost = 0
-			loss_rate = 5E-09
-			temperature = 90.15
+			loss_rate = 0
+			temperature = 90.1500015
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6595,7 +5028,7 @@ PART
 			name = Kerosene
 			note = 
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6607,14 +5040,14 @@ PART
 		TANK
 		{
 			name = LqdHydrogen
-			note = (lacks insulation)
+			note = (basic insulation)
 			utilization = 1
-			mass = 2E-06
-			cost = 0.02
-			loss_rate = 1.7E-08
-			temperature = 20.15
+			mass = 1.99999999E-06
+			cost = 0
+			loss_rate = 0
+			temperature = 20.1499996
 			fillable = True
-			techRequired = hydroloxTL2
+			techRequired = 
 			amount = 0
 			maxAmount = 0
 		}
@@ -6693,7 +5126,7 @@ PART
 			name = AvGas
 			note = 
 			utilization = 1
-			mass = 8E-06
+			mass = 7.99999998E-06
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6707,7 +5140,7 @@ PART
 			name = IRFNA-III
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6721,7 +5154,7 @@ PART
 			name = NitrousOxide
 			note = (pressurized)
 			utilization = 100
-			mass = 3E-05
+			mass = 2.99999992E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6735,7 +5168,7 @@ PART
 			name = Aniline
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6749,7 +5182,7 @@ PART
 			name = Ethanol75
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6763,7 +5196,7 @@ PART
 			name = Ethanol90
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6777,7 +5210,7 @@ PART
 			name = Ethanol
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6791,10 +5224,10 @@ PART
 			name = LqdAmmonia
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
-			loss_rate = 2E-10
-			temperature = 195.15
+			loss_rate = 0
+			temperature = 237.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6805,10 +5238,10 @@ PART
 			name = LqdMethane
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
-			loss_rate = 5E-09
-			temperature = 91.15
+			loss_rate = 0
+			temperature = 111.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6819,7 +5252,7 @@ PART
 			name = ClF3
 			note = 
 			utilization = 1
-			mass = 4E-05
+			mass = 3.9999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6833,7 +5266,7 @@ PART
 			name = ClF5
 			note = 
 			utilization = 1
-			mass = 4E-05
+			mass = 3.9999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6847,10 +5280,10 @@ PART
 			name = Diborane
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.8E-05
+			mass = 1.80000006E-05
 			cost = 0
-			loss_rate = 2.3E-10
-			temperature = 180.65
+			loss_rate = 2.3000000000000001E-10
+			temperature = 180.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6861,7 +5294,7 @@ PART
 			name = Pentaborane
 			note = 
 			utilization = 1
-			mass = 1.8E-05
+			mass = 1.80000006E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6877,8 +5310,8 @@ PART
 			utilization = 1
 			mass = 1.6E-05
 			cost = 0
-			loss_rate = 2.5E-10
-			temperature = 184.65
+			loss_rate = 2.5000000000000002E-10
+			temperature = 184.649994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6891,8 +5324,8 @@ PART
 			utilization = 1
 			mass = 1.6E-05
 			cost = 0
-			loss_rate = 3.5E-10
-			temperature = 169.45
+			loss_rate = 3.4999999999999998E-10
+			temperature = 169.449997
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6903,10 +5336,10 @@ PART
 			name = OF2
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.8E-05
+			mass = 1.80000006E-05
 			cost = 0
-			loss_rate = 1E-09
-			temperature = 128.4
+			loss_rate = 1.0000000000000001E-09
+			temperature = 128.399994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6917,10 +5350,10 @@ PART
 			name = LqdFluorine
 			note = (lacks insulation)
 			utilization = 1
-			mass = 4E-05
+			mass = 3.9999999E-05
 			cost = 0
-			loss_rate = 5.5E-09
-			temperature = 85.04
+			loss_rate = 5.4999999999999996E-09
+			temperature = 85.0400009
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6931,10 +5364,10 @@ PART
 			name = N2F4
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1E-05
+			mass = 9.99999975E-06
 			cost = 0
-			loss_rate = 1.7E-10
-			temperature = 200.15
+			loss_rate = 1.7000000000000001E-10
+			temperature = 200.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -6945,7 +5378,7 @@ PART
 			name = Methanol
 			note = 
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -6959,7 +5392,7 @@ PART
 			name = Furfuryl
 			note = 
 			utilization = 1
-			mass = 1.4E-05
+			mass = 1.40000002E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -7015,10 +5448,10 @@ PART
 			name = FLOX30
 			note = (lacks insulation)
 			utilization = 1
-			mass = 1.65E-05
+			mass = 1.65000001E-05
 			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -7029,10 +5462,10 @@ PART
 			name = FLOX70
 			note = (lacks insulation)
 			utilization = 1
-			mass = 3.85E-05
+			mass = 3.84999985E-05
 			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -7043,10 +5476,10 @@ PART
 			name = FLOX88
 			note = (lacks insulation)
 			utilization = 1
-			mass = 4.84E-05
+			mass = 4.84000011E-05
 			cost = 0
 			loss_rate = 1E-10
-			temperature = 216.15
+			temperature = 216.149994
 			fillable = True
 			techRequired = 
 			amount = 0
@@ -7057,7 +5490,7 @@ PART
 			name = IWFNA
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -7071,7 +5504,7 @@ PART
 			name = IRFNA-IV
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -7085,7 +5518,7 @@ PART
 			name = AK20
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -7099,7 +5532,7 @@ PART
 			name = AK27
 			note = 
 			utilization = 1
-			mass = 2E-05
+			mass = 1.99999995E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -7197,7 +5630,7 @@ PART
 			name = Hydyne
 			note = 
 			utilization = 1
-			mass = 1.3E-05
+			mass = 1.29999999E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -7211,7 +5644,7 @@ PART
 			name = Syntin
 			note = 
 			utilization = 1
-			mass = 1.2E-05
+			mass = 1.20000004E-05
 			cost = 0
 			loss_rate = 0
 			temperature = 300
@@ -7262,6 +5695,23 @@ PART
 			amount = 0
 			maxAmount = 0
 		}
+		TANK
+		{
+			name = Beryllium
+			note = 
+			utilization = 1
+			mass = 1.6E-05
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 0
+			maxAmount = 0
+		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -7271,46 +5721,14 @@ PART
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7322,6 +5740,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -7329,15 +5748,18 @@ PART
 {
 	part = FASAMercuryFairing_4293652894
 	partName = Part
-	pos = 0.4051282,5.60639,0.2019519
+	pos = 0.405128211,5.60639,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,1.907349E-06,0
+	attPos0 = 0,1.90734909E-06,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 4
+	resPri = 0
 	dstg = 0
 	sidx = 0
 	sqor = 4
@@ -7345,7 +5767,7 @@ PART
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAMercuryAtlasEngBooster_4293657338
 	link = FASAMercuryAtlasEngBooster_4293652160
 	link = FASAlaunchClampAtlas_4293620756
@@ -7368,26 +5790,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -7396,15 +5801,7 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7412,10 +5809,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7423,10 +5824,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7434,46 +5839,42 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = True
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7482,23 +5883,26 @@ PART
 {
 	part = FASAMercuryAtlasEngBooster_4293657338
 	partName = Part
-	pos = -1.384872,2.420391,0.2019519
+	pos = -1.38487196,2.42039108,0.201951906
 	attPos = 0,0,0
-	attPos0 = -1.79,-3.185999,3.316149E-08
+	attPos0 = -1.78999996,-3.18599892,3.31614913E-08
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 6
+	resPri = 0
 	dstg = 1
-	sidx = 3
+	sidx = 1
 	sqor = 6
 	sepI = 4
 	attm = 0
-	modCost = 200
-	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modCost = 0
+	modMass = 0.163008034
+	modSize = 0,0,0
 	sym = FASAMercuryAtlasEngBooster_4293652160
 	attN = top,FASAMercuryFairing_4293652894
 	EVENTS
@@ -7522,74 +5926,12 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
 			OnAction
 			{
 				actionGroup = None
@@ -7609,25 +5951,19 @@ PART
 		Ullage
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
 		name = ModuleJettison
 		isEnabled = True
 		isJettisoned = True
+		shroudHideOverride = False
+		stagingEnabled = True
 		EVENTS
 		{
-			Jettison
-			{
-				active = False
-				guiActive = False
-				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)
-				category = Jettison
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -7637,15 +5973,22 @@ PART
 				active = False
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAnimateEmissive
+		name = ModuleAnimateHeat
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7653,21 +5996,14 @@ PART
 	{
 		name = ModuleSurfaceFX
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7676,34 +6012,14 @@ PART
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
+		stagingEnabled = True
 		EVENTS
 		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7711,10 +6027,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7722,10 +6042,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7733,25 +6057,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = LR89-NA-6
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -7761,17 +6074,12 @@ PART
 		isEnabled = True
 		gimbalLock = False
 		gimbalLimiter = 100
-		gimbalLock_UIFlight
-		{
-			controlEnabled = True
-		}
-		gimbalLimiter_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -7789,97 +6097,78 @@ PART
 			{
 				actionGroup = None
 			}
-		}
-	}
-	MODULE
-	{
-		name = ShroudToggle
-		isEnabled = True
-		disableFairing = False
-		disableFairing_UIFlight
-		{
-			controlEnabled = True
-		}
-		EVENTS
-		{
-			fairingjettisonEvent
+			TogglePitchAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = 
-				guiName = Jettison
-				category = 
-				guiActiveUnfocused = False
-				unfocusedRange = 0
-				externalToEVAOnly = False
+				actionGroup = None
 			}
-		}
-		ACTIONS
-		{
-			fairingjettisonAction
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
 			{
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
 	MODULE
 	{
-		name = ModuleShowInfo
+		name = ModuleEngineConfigs
 		isEnabled = True
+		configuration = LR89-NA-6
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
 	}
 }
 PART
 {
 	part = FASAMercuryAtlasEngBooster_4293652160
 	partName = Part
-	pos = 2.195128,2.420391,0.2019519
+	pos = 2.19512796,2.42039108,0.201951906
 	attPos = 0,0,0
-	attPos0 = 1.79,-3.185999,-2.451241E-08
-	rot = 0,1,0,-4.371139E-08
+	attPos0 = 1.78999996,-3.18599892,-2.45124099E-08
+	rot = 0,1,0,-4.37113883E-08
 	attRot = 0,0,0,1
-	attRot0 = 0,1,0,-4.371139E-08
+	attRot0 = 0,1,0,-4.37113883E-08
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 6
+	resPri = 0
 	dstg = 1
-	sidx = 4
+	sidx = 1
 	sqor = 6
 	sepI = 4
 	attm = 0
-	modCost = 200
-	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modCost = 0
+	modMass = 0.163008034
+	modSize = 0,0,0
 	sym = FASAMercuryAtlasEngBooster_4293657338
 	attN = top,FASAMercuryFairing_4293652894
 	EVENTS
@@ -7903,74 +6192,12 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			vActivate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			vShutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Activate
-			{
-				active = False
-				guiActive = False
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = False
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
-			vOnAction
-			{
-				actionGroup = None
-			}
-			vShutdownAction
-			{
-				actionGroup = None
-			}
-			vActivateAction
-			{
-				actionGroup = None
-			}
 			OnAction
 			{
 				actionGroup = None
@@ -7990,25 +6217,19 @@ PART
 		Ullage
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
 		name = ModuleJettison
 		isEnabled = True
 		isJettisoned = True
+		shroudHideOverride = False
+		stagingEnabled = True
 		EVENTS
 		{
-			Jettison
-			{
-				active = False
-				guiActive = False
-				guiIcon = Jettison
-				guiName = Jettison(DEPRECATED)(DEPRECATED)(DEPRECATED)
-				category = Jettison
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -8018,15 +6239,22 @@ PART
 				active = False
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAnimateEmissive
+		name = ModuleAnimateHeat
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8034,21 +6262,14 @@ PART
 	{
 		name = ModuleSurfaceFX
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8057,34 +6278,14 @@ PART
 		name = EngineGroupModule
 		isEnabled = True
 		EngineGroupId = 
+		stagingEnabled = True
 		EVENTS
 		{
-			AssignGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Assign Group ID
-				guiName = Assign Group ID
-				category = Assign Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			ClearGroupId
-			{
-				active = True
-				guiActive = False
-				guiActiveEditor = True
-				guiIcon = Clear Group ID
-				guiName = Clear Group ID
-				category = Clear Group ID
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8092,10 +6293,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8103,10 +6308,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8114,25 +6323,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = LR89-NA-6
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8142,17 +6340,12 @@ PART
 		isEnabled = True
 		gimbalLock = False
 		gimbalLimiter = 100
-		gimbalLock_UIFlight
-		{
-			controlEnabled = True
-		}
-		gimbalLimiter_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -8170,89 +6363,70 @@ PART
 			{
 				actionGroup = None
 			}
-		}
-	}
-	MODULE
-	{
-		name = ShroudToggle
-		isEnabled = True
-		disableFairing = False
-		disableFairing_UIFlight
-		{
-			controlEnabled = True
-		}
-		EVENTS
-		{
-			fairingjettisonEvent
+			TogglePitchAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = 
-				guiName = Jettison
-				category = 
-				guiActiveUnfocused = False
-				unfocusedRange = 0
-				externalToEVAOnly = False
+				actionGroup = None
 			}
-		}
-		ACTIONS
-		{
-			fairingjettisonAction
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
 			{
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
 	MODULE
 	{
-		name = ModuleShowInfo
+		name = ModuleEngineConfigs
 		isEnabled = True
+		configuration = LR89-NA-6
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
 	}
 }
 PART
 {
 	part = FASAlaunchClampAtlas_4293620756
 	partName = Part
-	pos = 0.280043,0.1579227,-1.867226
+	pos = 0.280043006,0.157922745,-1.867226
 	attPos = 0,0,0
-	attPos0 = -0.1250852,-5.448467,-2.069178
-	rot = 3.699739E-07,5.869416E-08,2.171531E-14,-1
+	attPos0 = -0.125085205,-5.44846678,-2.0691781
+	rot = 3.6997389E-07,5.86941589E-08,2.17153108E-14,-1
 	attRot = 0,0,0,1
-	attRot0 = 3.699739E-07,5.869416E-08,2.171531E-14,-1
+	attRot0 = 3.6997389E-07,5.86941589E-08,2.17153108E-14,-1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 5
+	resPri = 0
 	dstg = 1
 	sidx = 0
 	sqor = 5
@@ -8260,7 +6434,7 @@ PART
 	attm = 1
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	sym = FASAlaunchClampAtlas_4293620400
 	srfN = srfAttach,FASAMercuryFairing_4293652894
 	EVENTS
@@ -8276,22 +6450,12 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.393046
-		height = 0.5597153
-		towerRot = -3.699739E-07,-5.869416E-08,-2.171531E-14,-1
+		scaleFactor = 1.39304554
+		height = 0.559715271
+		stagingEnabled = True
+		towerRot = -3.6997389E-07,-5.86941589E-08,-2.17153108E-14,-1
 		EVENTS
 		{
-			Release
-			{
-				active = False
-				guiActive = True
-				guiIcon = Release Clamp
-				guiName = Release Clamp
-				category = Release Clamp
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -8300,6 +6464,9 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -8307,77 +6474,44 @@ PART
 		isEnabled = True
 		generatorIsActive = False
 		throttle = 0
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Generator
-				guiName = Activate Generator
-				category = Activate Generator
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = True
-				guiActive = True
-				guiIcon = Shutdown Generator
-				guiName = Shutdown Generator
-				category = Shutdown Generator
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
 			ToggleAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ActivateAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ShutdownAction
 			{
 				actionGroup = None
+				active = False
 			}
+		}
+		UPGRADESAPPLIED
+		{
 		}
 	}
 	MODULE
 	{
 		name = ModuleTestSubject
 		isEnabled = True
-		EVENTS
-		{
-			RunTestEvent
-			{
-				active = False
-				guiActive = True
-				guiIcon = Run Test
-				guiName = Run Test
-				category = Run Test
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8385,80 +6519,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleCommand
-		isEnabled = True
-		controlSrcStatusText = 
-		EVENTS
-		{
-			MakeReference
-			{
-				active = True
-				guiActive = True
-				guiIcon = Control From Here
-				guiName = Control From Here
-				category = Control From Here
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			RenameVessel
-			{
-				active = True
-				guiActive = True
-				guiIcon = Rename Vessel
-				guiName = Rename Vessel
-				category = Rename Vessel
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8467,23 +6535,26 @@ PART
 {
 	part = FASAlaunchClampAtlas_4293620400
 	partName = Part
-	pos = 0.5302135,0.1579227,2.27113
+	pos = 0.530213475,0.157922745,2.27113008
 	attPos = 0,0,0
-	attPos0 = 0.1250854,-5.448467,2.069178
-	rot = 5.543236E-15,-1,-3.699739E-07,-1.498277E-08
+	attPos0 = 0.125085399,-5.44846678,2.0691781
+	rot = 5.54323602E-15,-1,-3.6997389E-07,-1.49827706E-08
 	attRot = 0,0,0,1
-	attRot0 = 5.543236E-15,-1,-3.699739E-07,-1.498277E-08
+	attRot0 = 5.54323602E-15,-1,-3.6997389E-07,-1.49827706E-08
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 5
+	resPri = 0
 	dstg = 1
-	sidx = 1
+	sidx = 0
 	sqor = 5
 	sepI = 5
 	attm = 1
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	sym = FASAlaunchClampAtlas_4293620756
 	srfN = srfAttach,FASAMercuryFairing_4293652894
 	EVENTS
@@ -8499,22 +6570,12 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.393046
-		height = 0.5597153
-		towerRot = -5.543236E-15,1,3.699739E-07,-1.498277E-08
+		scaleFactor = 1.39304554
+		height = 0.559715271
+		stagingEnabled = True
+		towerRot = -5.54323602E-15,1,3.6997389E-07,-1.49827706E-08
 		EVENTS
 		{
-			Release
-			{
-				active = False
-				guiActive = True
-				guiIcon = Release Clamp
-				guiName = Release Clamp
-				category = Release Clamp
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -8523,6 +6584,9 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -8530,77 +6594,44 @@ PART
 		isEnabled = True
 		generatorIsActive = False
 		throttle = 0
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Generator
-				guiName = Activate Generator
-				category = Activate Generator
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = True
-				guiActive = True
-				guiIcon = Shutdown Generator
-				guiName = Shutdown Generator
-				category = Shutdown Generator
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
 			ToggleAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ActivateAction
 			{
 				actionGroup = None
+				active = False
 			}
 			ShutdownAction
 			{
 				actionGroup = None
+				active = False
 			}
+		}
+		UPGRADESAPPLIED
+		{
 		}
 	}
 	MODULE
 	{
 		name = ModuleTestSubject
 		isEnabled = True
-		EVENTS
-		{
-			RunTestEvent
-			{
-				active = False
-				guiActive = True
-				guiIcon = Run Test
-				guiName = Run Test
-				category = Run Test
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8608,80 +6639,14 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
-		EVENTS
-		{
-			ResetRecordedHeat
-			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
-			}
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleCommand
-		isEnabled = True
-		controlSrcStatusText = 
-		EVENTS
-		{
-			MakeReference
-			{
-				active = True
-				guiActive = True
-				guiIcon = Control From Here
-				guiName = Control From Here
-				category = Control From Here
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			RenameVessel
-			{
-				active = True
-				guiActive = True
-				guiIcon = Rename Vessel
-				guiName = Rename Vessel
-				category = Rename Vessel
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8690,15 +6655,18 @@ PART
 {
 	part = FASAFairingWall05m_4293933366
 	partName = Part
-	pos = 0.4100042,23.60779,0.2019519
+	pos = 0.410004199,23.60779,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0.004876018,-0.2133245,0
+	attPos0 = 0.00487601804,-0.213324502,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 3
+	resPri = 0
 	dstg = 1
 	sidx = 0
 	sqor = 3
@@ -8706,7 +6674,7 @@ PART
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAFairingWall05m_4293929826
 	sym = FASAFairingWall05m_4293931738
 	attN = top,FASAFairingWall05m_4293929826
@@ -8726,26 +6694,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -8754,11 +6705,15 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -8766,37 +6721,9 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -8813,15 +6740,10 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
+		Ullage
 		{
 		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8829,10 +6751,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8840,10 +6766,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8851,46 +6781,42 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -8902,6 +6828,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -8909,15 +6836,18 @@ PART
 {
 	part = FASAFairingWall05m_4293929826
 	partName = Part
-	pos = 0.4100042,24.21729,0.2019519
+	pos = 0.410004199,24.2172909,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,0.6095009,0
+	attPos0 = 0,0.609500885,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 3
+	resPri = 0
 	dstg = 3
 	sidx = 1
 	sqor = 3
@@ -8925,7 +6855,7 @@ PART
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAFairingWall05m_4293928618
 	sym = FASAFairingWall05m_4293929576
 	attN = top,FASAFairingWall05m_4293928618
@@ -8945,26 +6875,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -8973,11 +6886,15 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -8985,37 +6902,9 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9032,15 +6921,10 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
+		Ullage
 		{
 		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9048,10 +6932,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9059,10 +6947,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9070,46 +6962,42 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9121,6 +7009,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -9128,15 +7017,18 @@ PART
 {
 	part = FASAFairingWall05m_4293928618
 	partName = Part
-	pos = 0.4100042,24.82679,0.2019519
+	pos = 0.410004199,24.8267899,0.201951906
 	attPos = 0,0,0
-	attPos0 = 0,0.6095009,0
+	attPos0 = 0,0.609500885,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 3
+	resPri = 0
 	dstg = 5
 	sidx = 2
 	sqor = 3
@@ -9144,7 +7036,7 @@ PART
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	sym = FASAFairingWall05m_4293928222
 	attN = bottom,FASAFairingWall05m_4293929826
 	EVENTS
@@ -9162,26 +7054,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9190,11 +7065,15 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -9202,37 +7081,9 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9249,15 +7100,10 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
+		Ullage
 		{
 		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9265,10 +7111,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9276,10 +7126,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9287,46 +7141,42 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9338,6 +7188,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -9345,23 +7196,26 @@ PART
 {
 	part = FASAFairingWall05m_4293931738
 	partName = Part
-	pos = 0.4002522,23.60779,0.201952
+	pos = 0.400252193,23.60779,0.201951995
 	attPos = 0,0,0
-	attPos0 = -0.004876018,-0.2133245,5.960464E-08
-	rot = 0,1,0,-4.371139E-08
+	attPos0 = -0.00487601804,-0.213324502,5.96046412E-08
+	rot = 0,1,0,-4.37113883E-08
 	attRot = 0,0,0,1
-	attRot0 = 0,1,0,-4.371139E-08
+	attRot0 = 0,1,0,-4.37113883E-08
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 3
+	resPri = 0
 	dstg = 1
-	sidx = 3
+	sidx = 0
 	sqor = 3
 	sepI = 3
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAFairingWall05m_4293929576
 	sym = FASAFairingWall05m_4293933366
 	attN = top,FASAFairingWall05m_4293929576
@@ -9381,26 +7235,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9409,11 +7246,15 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -9421,37 +7262,9 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9468,15 +7281,10 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
+		Ullage
 		{
 		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9484,10 +7292,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9495,10 +7307,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9506,46 +7322,42 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9557,6 +7369,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -9564,23 +7377,26 @@ PART
 {
 	part = FASAFairingWall05m_4293929576
 	partName = Part
-	pos = 0.4002522,24.21729,0.201952
+	pos = 0.400252193,24.2172909,0.201951995
 	attPos = 0,0,0
-	attPos0 = 0,0.6095009,0
-	rot = 0,1,0,-4.371139E-08
+	attPos0 = 0,0.609500885,0
+	rot = 0,1,0,-4.37113883E-08
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 3
+	resPri = 0
 	dstg = 3
-	sidx = 4
+	sidx = 1
 	sqor = 3
 	sepI = 3
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	link = FASAFairingWall05m_4293928222
 	sym = FASAFairingWall05m_4293929826
 	attN = top,FASAFairingWall05m_4293928222
@@ -9600,26 +7416,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9628,11 +7427,15 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -9640,37 +7443,9 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9687,15 +7462,10 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
+		Ullage
 		{
 		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9703,10 +7473,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9714,10 +7488,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9725,46 +7503,42 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9776,6 +7550,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -9783,23 +7558,26 @@ PART
 {
 	part = FASAFairingWall05m_4293928222
 	partName = Part
-	pos = 0.4002522,24.82679,0.201952
+	pos = 0.400252193,24.8267899,0.201951995
 	attPos = 0,0,0
-	attPos0 = 0,0.6095009,0
-	rot = 0,1,0,-4.371139E-08
+	attPos0 = 0,0.609500885,0
+	rot = 0,1,0,-4.37113883E-08
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 3
+	resPri = 0
 	dstg = 5
-	sidx = 5
+	sidx = 2
 	sqor = 3
 	sepI = 3
 	attm = 0
 	modCost = 0
 	modMass = 0
-	modSize = (0.0, 0.0, 0.0)
+	modSize = 0,0,0
 	sym = FASAFairingWall05m_4293928618
 	attN = bottom,FASAFairingWall05m_4293929576
 	EVENTS
@@ -9817,26 +7595,9 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		ejectionForcePercent_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 1
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Decouple
-			{
-				active = True
-				guiActive = True
-				guiIcon = Decouple
-				guiName = Decouple
-				category = Decouple
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9845,11 +7606,15 @@ PART
 				actionGroup = None
 			}
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleEngines
+		name = ModuleEnginesRF
 		isEnabled = True
+		ignitions = -1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -9857,37 +7622,9 @@ PART
 		currentThrottle = 0
 		thrustPercentage = 100
 		manuallyOverridden = False
-		thrustPercentage_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 100
-			stepIncrement = 0.5
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Activate
-			{
-				active = True
-				guiActive = True
-				guiIcon = Activate Engine
-				guiName = Activate Engine
-				category = Activate Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
-			Shutdown
-			{
-				active = False
-				guiActive = True
-				guiIcon = Shutdown Engine
-				guiName = Shutdown Engine
-				category = Shutdown Engine
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -9904,15 +7641,10 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
+		Ullage
 		{
 		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9920,10 +7652,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9931,10 +7667,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9942,46 +7682,42 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -9993,6 +7729,7 @@ PART
 		flowState = True
 		isTweakable = True
 		hideFlow = False
+		isVisible = True
 		flowMode = Both
 	}
 }
@@ -10000,23 +7737,26 @@ PART
 {
 	part = KzProcFairingSide2_4293806018
 	partName = Part
-	pos = -0.3555278,29.1608,0.2019519
-	attPos = 0,0.354187,0
-	attPos0 = -0.760656,-0.5,0
+	pos = -0.355527788,29.1608009,0.201951906
+	attPos = 0,0.354187012,0
+	attPos0 = -0.760655999,-0.5,0
 	rot = 0,-1,0,0
-	attRot = 0,-0.9999999,0,0
+	attRot = 0,-0.999999881,0,0
 	attRot0 = 0,-1,0,0
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 0
+	resPri = 0
 	dstg = 1
-	sidx = 1
+	sidx = 0
 	sqor = 0
-	sepI = 1
+	sepI = 0
 	attm = 0
-	modCost = 0.2926936
-	modMass = 0.0195129
-	modSize = (0.0, 0.0, 0.0)
+	modCost = -51.2177429
+	modMass = 0.00975645147
+	modSize = 0,0,0
 	attN = connect,FASAAgenaDocking_4294206838
 	EVENTS
 	{
@@ -10033,24 +7773,24 @@ PART
 		isEnabled = True
 		numSegs = 12
 		numSideParts = 2
-		baseRad = 0.7015001
-		maxRad = 0.7015001
+		baseRad = 0.701500118
+		maxRad = 0.701500118
 		cylStart = 0
-		cylEnd = 0.7015001
+		cylEnd = 0.701500118
 		topRad = 0
 		inlineHeight = 0
-		sideThickness = 0.061
-		meshPos = (-0.7624999, 0.14925, 0)
+		sideThickness = 0.0610000007
+		meshPos = (-0.762499928, 0.149250001, 0)
 		meshRot = (0, 0, 0, -1)
 		shapeLock = True
-		shapeLock_UIFlight
-		{
-			controlEnabled = True
-		}
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10058,36 +7798,12 @@ PART
 	{
 		name = ProceduralFairingDecoupler
 		isEnabled = True
-		ejectionPower = 0.32
-		torqueAmount = 0.01
+		ejectionPower = 0.319999993
+		torqueAmount = 0.00999999978
 		decoupled = False
-		ejectionPower_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 1
-			stepIncrement = 0.01
-		}
-		torqueAmount_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 1
-			stepIncrement = 0.01
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Jettison
-			{
-				active = True
-				guiActive = True
-				guiIcon = Jettison
-				guiName = Jettison
-				category = Jettison
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -10096,15 +7812,7 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10112,10 +7820,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10123,10 +7835,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10134,46 +7850,45 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+				active = False
+			}
+			EnableAction
+			{
+				actionGroup = None
+				active = False
+			}
+			DisableAction
+			{
+				actionGroup = None
+				active = False
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10182,23 +7897,26 @@ PART
 {
 	part = KzProcFairingSide2_4293804514
 	partName = Part
-	pos = 1.165784,29.15973,0.2019519
-	attPos = 0,0.3531227,0
-	attPos0 = 0.760656,-0.5,0
+	pos = 1.165784,29.1597309,0.201951906
+	attPos = 0,0.353122711,0
+	attPos0 = 0.760655999,-0.5,0
 	rot = 0,0,0,1
-	attRot = 0,0,0,0.9999999
+	attRot = 0,0,0,0.999999881
 	attRot0 = 0,0,0,1
 	mir = 1,1,1
 	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
 	istg = 0
+	resPri = 0
 	dstg = 1
-	sidx = 0
+	sidx = 1
 	sqor = 0
-	sepI = 1
+	sepI = 0
 	attm = 0
-	modCost = 0.2926936
-	modMass = 0.0195129
-	modSize = (0.0, 0.0, 0.0)
+	modCost = -51.2177429
+	modMass = 0.00975645147
+	modSize = 0,0,0
 	attN = connect,FASAAgenaDocking_4294206838
 	EVENTS
 	{
@@ -10215,24 +7933,24 @@ PART
 		isEnabled = True
 		numSegs = 12
 		numSideParts = 2
-		baseRad = 0.7015001
-		maxRad = 0.7015001
+		baseRad = 0.701500118
+		maxRad = 0.701500118
 		cylStart = 0
-		cylEnd = 0.7015001
+		cylEnd = 0.701500118
 		topRad = 0
 		inlineHeight = 0
-		sideThickness = 0.061
-		meshPos = (-0.7624999, 0.14925, 0)
+		sideThickness = 0.0610000007
+		meshPos = (-0.762499928, 0.149250001, 0)
 		meshRot = (0, 0, 0, -1)
 		shapeLock = True
-		shapeLock_UIFlight
-		{
-			controlEnabled = True
-		}
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10240,36 +7958,12 @@ PART
 	{
 		name = ProceduralFairingDecoupler
 		isEnabled = True
-		ejectionPower = 0.32
-		torqueAmount = 0.01
+		ejectionPower = 0.319999993
+		torqueAmount = 0.00999999978
 		decoupled = False
-		ejectionPower_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 1
-			stepIncrement = 0.01
-		}
-		torqueAmount_UIFlight
-		{
-			controlEnabled = True
-			minValue = 0
-			maxValue = 1
-			stepIncrement = 0.01
-		}
+		stagingEnabled = True
 		EVENTS
 		{
-			Jettison
-			{
-				active = True
-				guiActive = True
-				guiIcon = Jettison
-				guiName = Jettison
-				category = Jettison
-				guiActiveUnfocused = False
-				unfocusedRange = 2
-				externalToEVAOnly = True
-			}
 		}
 		ACTIONS
 		{
@@ -10278,15 +7972,7 @@ PART
 				actionGroup = None
 			}
 		}
-	}
-	MODULE
-	{
-		name = BBModule
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10294,10 +7980,14 @@ PART
 	{
 		name = GeometryPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10305,10 +7995,14 @@ PART
 	{
 		name = FARAeroPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
 		{
 		}
 	}
@@ -10316,46 +8010,45 @@ PART
 	{
 		name = FARPartModule
 		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		damage = 0
+		crossfeedStatus = False
+		stagingEnabled = True
 		EVENTS
 		{
-			ResetRecordedHeat
+		}
+		ACTIONS
+		{
+			ToggleAction
 			{
-				active = True
-				guiActive = False
-				guiIcon = Reset Heat Record
-				guiName = Reset Heat Record
-				category = Reset Heat Record
-				guiActiveUnfocused = True
-				unfocusedRange = 4
-				externalToEVAOnly = False
+				actionGroup = None
+				active = False
+			}
+			EnableAction
+			{
+				actionGroup = None
+				active = False
+			}
+			DisableAction
+			{
+				actionGroup = None
+				active = False
 			}
 		}
-		ACTIONS
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleShowInfo
-		isEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
+		UPGRADESAPPLIED
 		{
 		}
 	}
