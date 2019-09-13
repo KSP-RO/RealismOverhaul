@@ -25,9 +25,9 @@ namespace RealismOverhaul
         [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
         public float offsetZ = 0;
 
-        [KSPField(isPersistant = true, guiActive = true, guiName = "CoM Offset Limit")]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "CoM Offset Limit")]
         [UI_FloatRange(minValue = 0, maxValue = 1, stepIncrement = 0.01f)]
-        private float offsetPercent = 1;
+        public float offsetPercent = 1;
 
         [KSPField(isPersistant = true)]
         public bool IsDescentMode;
@@ -35,7 +35,6 @@ namespace RealismOverhaul
         [KSPField]
         public string comString;
 
-        protected bool _uiBound = false;
         protected Vector3 _offsetCoM = new Vector3(0f, 0f, 0f);
         protected Vector3 _defaultCoM;
         
@@ -64,17 +63,11 @@ namespace RealismOverhaul
             base.OnStart(state);
 
             BindUI();
-
-            if (HighLogic.LoadedSceneIsFlight)
-            {
-                DescentModeChanged(IsDescentMode);
-            }
+            DescentModeChanged(IsDescentMode);
         }
 
         protected void BindUI()
         {
-            if (_uiBound) return;
-
             if (HighLogic.LoadedSceneIsFlight)
             {
                 Fields[nameof(offsetPercent)].uiControlFlight.onFieldChanged += OffsetPercentChanged;
@@ -97,8 +90,6 @@ namespace RealismOverhaul
             Fields[nameof(offsetX)].guiActiveEditor = !configuredForDescentMode;
             Fields[nameof(offsetY)].guiActiveEditor = !configuredForDescentMode;
             Fields[nameof(offsetZ)].guiActiveEditor = !configuredForDescentMode;
-
-            _uiBound = true;
         }
 
         protected void OffsetPercentChanged(BaseField bf, object o)
