@@ -2,7 +2,7 @@ ship = RO RN Soyuz 7K-OK-P
 version = 1.1.3
 description = Raidernick's Soyuz-7KOKP for RO¨AG1 - Deploy antennae¨AG2 - Toggle "burn" state on descent module¨AG9 - Deploy parachute and decouple heatshield¨AG10 - Decouple orbital module only, for use during abort only
 type = VAB
-size = 10.200264,50.3009186,10.2002945
+size = 10.200264,50.3076706,10.2002926
 PART
 {
 	part = ok.sa_4292714736
@@ -17,25 +17,25 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 3
+	istg = 0
 	resPri = 0
 	dstg = 0
-	sidx = 0
-	sqor = 3
+	sidx = 1
+	sqor = 0
 	sepI = -1
 	attm = 0
 	modCost = 0.0824732408
 	modMass = 0
 	modSize = 0,0,0
 	link = rn.zond.asas_4292690222
-	link = ok.para_4292027242
 	link = ok.bo.fem_4291961900
 	link = ok.hs_4292103196
-	link = ok.sa.srb_4292535810
+	link = ok.para_4292027242
+	link = ok-sa-rcs_4292576430
 	attN = top,ok.bo.fem_4291961900
 	attN = bottom,ok.hs_4292103196
 	attN = para,ok.para_4292027242
-	attN = srb,ok.sa.srb_4292535810
+	attN = rcs,ok-sa-rcs_4292576430
 	EVENTS
 	{
 	}
@@ -131,7 +131,7 @@ PART
 		name = ModuleCommand
 		isEnabled = True
 		hibernation = False
-		hibernateOnWarp = False
+		hibernateOnWarp = True
 		stagingEnabled = True
 		EVENTS
 		{
@@ -145,7 +145,6 @@ PART
 			HibernateToggle
 			{
 				actionGroup = None
-				active = False
 			}
 		}
 		UPGRADESAPPLIED
@@ -154,29 +153,37 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleRCSFX
+		name = ModuleEnginesRF
 		isEnabled = True
-		rcsEnabled = False
+		ignitions = -1
+		staged = True
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
 		thrustPercentage = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		enableX = True
-		enableY = True
-		enableZ = True
-		useThrottle = False
-		fullThrust = False
+		manuallyOverridden = False
 		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
-			ToggleAction
+			OnAction
 			{
 				actionGroup = None
 			}
+			ShutdownAction
+			{
+				actionGroup = None
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -198,6 +205,37 @@ PART
 			{
 				actionGroup = None
 			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = RNLandingEngine
+		isEnabled = True
+		IgnitionAltitude = 5
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleSurfaceFX
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -297,7 +335,7 @@ PART
 		isEnabled = True
 		type = ServiceModule
 		utilization = 86
-		mass = 2.53600001
+		mass = 2.72600007
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -1318,547 +1356,6 @@ PART
 	}
 	MODULE
 	{
-		name = MechJebCore
-		isEnabled = True
-		running = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnOrbitProgradeAction
-			{
-				actionGroup = None
-			}
-			OnOrbitRetrogradeAction
-			{
-				actionGroup = None
-			}
-			OnOrbitNormalAction
-			{
-				actionGroup = None
-			}
-			OnOrbitAntinormalAction
-			{
-				actionGroup = None
-			}
-			OnOrbitRadialInAction
-			{
-				actionGroup = None
-			}
-			OnOrbitRadialOutAction
-			{
-				actionGroup = None
-			}
-			OnKillRotationAction
-			{
-				actionGroup = None
-			}
-			OnDeactivateSmartASSAction
-			{
-				actionGroup = None
-			}
-			OnPanicAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronOffAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronKeepVertAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronZeroSpeedAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronPlusOneSpeedAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronMinusOneSpeedAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronToggleHSAction
-			{
-				actionGroup = None
-			}
-			OnAscentAPToggleAction
-			{
-				actionGroup = None
-			}
-		}
-		MechJebLocalSettings
-		{
-			MechJebModuleMenu
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAirplaneAutopilot
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAirplaneGuidance
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentAutopilot
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentClassic
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentClassicMenu
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentGT
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentGTMenu
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentGuidance
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleAscentNavBall
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentPEG
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAscentPEGMenu
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAttitudeAdjustment
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleCustomWindowEditor
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleDebugArrows
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleDockingAutopilot
-			{
-				forceRol = False
-				overrideSafeDistance = False
-				overrideTargetSize = False
-				unlockParts = 
-				unlockTechs = 
-				rol
-				{
-					_val = 0
-					_text = 0
-				}
-			}
-			MechJebModuleDockingGuidance
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleInfoItems
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleLandingAutopilot
-			{
-				deployGears = True
-				deployChutes = True
-				rcsAdjustment = True
-				unlockParts = 
-				unlockTechs = 
-				touchdownSpeed
-				{
-					_val = 0.5
-					_text = 0.5
-				}
-				limitGearsStage
-				{
-					val = 0
-					_text = 0
-				}
-				limitChutesStage
-				{
-					val = 0
-					_text = 0
-				}
-			}
-			MechJebModuleLandingGuidance
-			{
-				landingSiteIdx = 0
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleLandingPredictions
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleManeuverPlanner
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleNodeEditor
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleNodeExecutor
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleRCSBalancerWindow
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleRendezvousAutopilot
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleRendezvousAutopilotWindow
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleRendezvousGuidance
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleRoverController
-			{
-				ControlHeading = False
-				ControlSpeed = False
-				BrakeOnEject = False
-				BrakeOnEnergyDepletion = False
-				WarpToDaylight = False
-				StabilityControl = False
-				LimitAcceleration = False
-				unlockParts = 
-				unlockTechs = 
-				heading
-				{
-					_val = 0
-					_text = 0
-				}
-				speed
-				{
-					_val = 10
-					_text = 10
-				}
-			}
-			MechJebModuleRoverWindow
-			{
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleScript
-			{
-				minifiedGUI = False
-				selectedSlot = 0
-				selectedMemorySlotType = 0
-				activeSavepoint = -1
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleSettings
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleSmartASS
-			{
-				mode = ORBITAL
-				target = OFF
-				advReference = INERTIAL
-				advDirection = FORWARD
-				forceRol = False
-				forcePitch = True
-				forceYaw = True
-				unlockParts = 
-				unlockTechs = start
-				srfHdg
-				{
-					_val = 90
-					_text = 90
-				}
-				srfPit
-				{
-					_val = 90
-					_text = 90
-				}
-				srfRol
-				{
-					_val = 0
-					_text = 0
-				}
-				srfVelYaw
-				{
-					_val = 0
-					_text = 0
-				}
-				srfVelPit
-				{
-					_val = 0
-					_text = 0
-				}
-				srfVelRol
-				{
-					_val = 0
-					_text = 0
-				}
-				rol
-				{
-					_val = 0
-					_text = 0
-				}
-			}
-			MechJebModuleSmartRcs
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleSpaceplaneAutopilot
-			{
-				unlockParts = 
-				unlockTechs = 
-				glideslope
-				{
-					_val = 3
-					_text = 3
-				}
-				approachSpeed
-				{
-					_val = 80
-					_text = 80
-				}
-				maximumSafeBankAngle
-				{
-					_val = 25
-					_text = 25
-				}
-			}
-			MechJebModuleSpaceplaneGuidance
-			{
-				runwayIndex = 0
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleStageStats
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleTargetController
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleThrustWindow
-			{
-				autostageSavedState = False
-				unlockParts = 
-				unlockTechs = start
-			}
-			MechJebModuleTranslatron
-			{
-				unlockParts = 
-				unlockTechs = start
-				trans_spd
-				{
-					_val = 0
-					_text = 0
-				}
-			}
-			MechJebModuleWarpHelper
-			{
-				unlockParts = 
-				unlockTechs = start
-				phaseAngle
-				{
-					_val = 0
-					_text = 0
-				}
-			}
-			MechJebModuleWaypointWindow
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleWaypointHelpWindow
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			ModExtensionDemo
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleCustomInfoWindow
-			{
-			}
-			MechJebModuleCustomInfoWindow
-			{
-			}
-			MechJebModuleCustomInfoWindow
-			{
-			}
-			MechJebModuleCustomInfoWindow
-			{
-			}
-			MechJebModuleWarpController
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleSolarPanelController
-			{
-				prev_ShouldOpenSolarPanels = False
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleThrustController
-			{
-				limitThrottle = False
-				limiterMinThrottle = False
-				electricThrottle = False
-				unlockParts = 
-				unlockTechs = 
-				maxThrottle
-				{
-					_val = 1
-					_text = 100
-				}
-				minThrottle
-				{
-					_val = 0.050000000000000003
-					_text = 5
-				}
-				electricThrottleLo
-				{
-					_val = 0.050000000000000003
-					_text = 5
-				}
-				electricThrottleHi
-				{
-					_val = 0.14999999999999999
-					_text = 15
-				}
-			}
-			MechJebModuleRCSController
-			{
-				unlockParts = 
-				unlockTechs = 
-				Tf
-				{
-					_val = 1
-					_text = 1
-				}
-				Kp
-				{
-					_val = 0.125
-					_text = 0.125
-				}
-				Ki
-				{
-					_val = 0.070000000000000007
-					_text = 0.07
-				}
-				Kd
-				{
-					_val = 0.53000000000000003
-					_text = 0.53
-				}
-			}
-			MechJebModuleRCSBalancer
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleAttitudeController
-			{
-				unlockParts = 
-				unlockTechs = 
-				MJAttitudeController
-				{
-				}
-				KosAttitudeController
-				{
-				}
-				HybridController
-				{
-				}
-			}
-			MechJebModuleStagingController
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleFlightRecorder
-			{
-				markUT = 0
-				deltaVExpended = 0
-				dragLosses = 0
-				gravityLosses = 0
-				steeringLosses = 0
-				markLAN = 0
-				markLatitude = 0
-				markLongitude = 0
-				markAltitude = 0
-				markBodyIndex = 1
-				maxDragGees = 0
-				unlockParts = 
-				unlockTechs = 
-			}
-			MechJebModuleFlightRecorderGraph
-			{
-				unlockParts = 
-				unlockTechs = 
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
 		name = ModuleTripLogger
 		isEnabled = True
 		stagingEnabled = True
@@ -1875,6 +1372,17 @@ PART
 		UPGRADESAPPLIED
 		{
 		}
+	}
+	RESOURCE
+	{
+		name = SolidFuel
+		amount = 0.625
+		maxAmount = 0.625
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
 	}
 	RESOURCE
 	{
@@ -1979,7 +1487,7 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 3
+	istg = 0
 	resPri = 0
 	dstg = 0
 	sidx = -1
@@ -2004,7 +1512,7 @@ PART
 		name = ModuleCommand
 		isEnabled = True
 		hibernation = False
-		hibernateOnWarp = False
+		hibernateOnWarp = True
 		stagingEnabled = True
 		EVENTS
 		{
@@ -2018,7 +1526,6 @@ PART
 			HibernateToggle
 			{
 				actionGroup = None
-				active = False
 			}
 		}
 		UPGRADESAPPLIED
@@ -2088,86 +1595,6 @@ PART
 	}
 	MODULE
 	{
-		name = MechJebCore
-		isEnabled = True
-		running = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnOrbitProgradeAction
-			{
-				actionGroup = None
-			}
-			OnOrbitRetrogradeAction
-			{
-				actionGroup = None
-			}
-			OnOrbitNormalAction
-			{
-				actionGroup = None
-			}
-			OnOrbitAntinormalAction
-			{
-				actionGroup = None
-			}
-			OnOrbitRadialInAction
-			{
-				actionGroup = None
-			}
-			OnOrbitRadialOutAction
-			{
-				actionGroup = None
-			}
-			OnKillRotationAction
-			{
-				actionGroup = None
-			}
-			OnDeactivateSmartASSAction
-			{
-				actionGroup = None
-			}
-			OnPanicAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronOffAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronKeepVertAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronZeroSpeedAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronPlusOneSpeedAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronMinusOneSpeedAction
-			{
-				actionGroup = None
-			}
-			OnTranslatronToggleHSAction
-			{
-				actionGroup = None
-			}
-			OnAscentAPToggleAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
 		name = ModuleTripLogger
 		isEnabled = True
 		stagingEnabled = True
@@ -2199,152 +1626,6 @@ PART
 }
 PART
 {
-	part = ok.para_4292027242
-	partName = Part
-	pos = -0.008662045,40.5033379,0.00330877304
-	attPos = 0,0,0
-	attPos0 = -1.11758709E-08,0,1.39698386E-09
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 2
-	resPri = 0
-	dstg = 1
-	sidx = 0
-	sqor = 2
-	sepI = -1
-	attm = 0
-	modCost = 74.1999969
-	modMass = 1.86264515E-09
-	modSize = 0,0,0
-	attN = para,ok.sa_4292714736
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = RealChuteModule
-		isEnabled = True
-		caseMass = 0.00999999978
-		cutSpeed = 0.5
-		timer = 0
-		mustGoDown = True
-		deployOnGround = False
-		spareChutes = 1
-		initiated = True
-		wait = True
-		armed = False
-		oneWasDeployed = False
-		staged = False
-		launched = False
-		chuteCount = 1
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ActionDeploy
-			{
-				actionGroup = Custom09
-			}
-			ActionCut
-			{
-				actionGroup = None
-			}
-			ActionArm
-			{
-				actionGroup = None
-			}
-			ActionDisarm
-			{
-				actionGroup = None
-			}
-		}
-		PARACHUTE
-		{
-			material = Nylon
-			preDeployedDiameter = 4.25
-			deployedDiameter = 35.5
-			minIsPressure = True
-			capOff = False
-			minDeployment = 25000
-			minPressure = 0.25
-			deploymentAlt = 4000
-			cutAlt = -1
-			preDeploymentSpeed = 2
-			deploymentSpeed = 6
-			time = 0
-			parachuteName = canopy
-			baseParachuteName = canopy
-			capName = cap
-			preDeploymentAnimation = semi
-			deploymentAnimation = full
-			forcedOrientation = 0
-			depState = STOWED
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-}
-PART
-{
 	part = ok.bo.fem_4291961900
 	partName = Part
 	pos = -0.00866203383,42.9979973,0.00330877164
@@ -2357,19 +1638,23 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 3
-	resPri = 0
+	istg = 4
+	resPri = 10
 	dstg = 0
-	sidx = 1
-	sqor = 3
-	sepI = 3
+	sidx = 0
+	sqor = 4
+	sepI = 4
 	attm = 0
-	modCost = 3.91766167
+	modCost = 1.59313214
 	modMass = 0
 	modSize = 0,0,0
 	link = rn.r7.les.okt_4293394368
+	link = rn.r7.soyuz.fairing2_4292334766
+	link = rn.r7.soyuz.fairing2_4292333340
 	attN = bottom,ok.sa_4292714736
 	attN = les,rn.r7.les.okt_4293394368
+	attN = f1,rn.r7.soyuz.fairing2_4292334766
+	attN = f2,rn.r7.soyuz.fairing2_4292333340
 	EVENTS
 	{
 	}
@@ -2587,7 +1872,7 @@ PART
 		isEnabled = True
 		type = ServiceModule
 		utilization = 86
-		mass = 1.3441
+		mass = 1.27559996
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -3323,8 +2608,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 22696.050997683244
-			maxAmount = 56740.127494208107
+			amount = 22696.099999999999
+			maxAmount = 22696.099999999999
 		}
 		TANK
 		{
@@ -3337,8 +2622,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 108.07643345696782
-			maxAmount = 270.19108364241958
+			amount = 108.09999999999999
+			maxAmount = 108.09999999999999
 		}
 		TANK
 		{
@@ -3351,8 +2636,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 61.243311632415107
-			maxAmount = 153.10827908103778
+			amount = 61.200000000000003
+			maxAmount = 61.200000000000003
 		}
 		TANK
 		{
@@ -3643,8 +2928,8 @@ PART
 	RESOURCE
 	{
 		name = Oxygen
-		amount = 22696.050997683244
-		maxAmount = 56740.127494208107
+		amount = 22696.099999999999
+		maxAmount = 22696.099999999999
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -3654,8 +2939,8 @@ PART
 	RESOURCE
 	{
 		name = Food
-		amount = 108.07643345696782
-		maxAmount = 270.19108364241958
+		amount = 108.09999999999999
+		maxAmount = 108.09999999999999
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -3665,8 +2950,8 @@ PART
 	RESOURCE
 	{
 		name = Water
-		amount = 61.243311632415107
-		maxAmount = 153.10827908103778
+		amount = 61.200000000000003
+		maxAmount = 61.200000000000003
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -3720,11 +3005,11 @@ PART
 }
 PART
 {
-	part = rn.r7.les.okt_4293394368
+	part = ok.hs_4292103196
 	partName = Part
-	pos = -0.00866203383,46.9374771,0.00330877164
-	attPos = 0,-0.0667495728,0
-	attPos0 = 0,4.0062294,0
+	pos = -0.00866203383,39.6922493,0.00330877164
+	attPos = 0,0,0
+	attPos0 = 0,-0.811088562,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -3732,12 +3017,606 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 5
+	istg = 1
+	resPri = 0
+	dstg = 0
+	sidx = 0
+	sqor = 1
+	sepI = 1
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	link = ok.dec_4292056686
+	attN = top,ok.sa_4292714736
+	attN = bottom,ok.dec_4292056686
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleDecouple
+		isEnabled = True
+		ejectionForcePercent = 100
+		isDecoupled = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			DecoupleAction
+			{
+				actionGroup = Custom09
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = Ablator
+		amount = 200
+		maxAmount = 200
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = CharredAblator
+		amount = 0
+		maxAmount = 150
+		flowState = True
+		isTweakable = False
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = ok.dec_4292056686
+	partName = Part
+	pos = -0.00866203383,39.7122536,0.00330877164
+	attPos = 0,0,0
+	attPos0 = 0,0.0200004578,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 3
 	resPri = 0
 	dstg = 1
 	sidx = 0
-	sqor = 5
-	sepI = 5
+	sqor = 3
+	sepI = 3
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	link = ok.pao_4293020152
+	attN = bottom,ok.pao_4293020152
+	attN = top,ok.hs_4292103196
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleDecouple
+		isEnabled = True
+		ejectionForcePercent = 100
+		isDecoupled = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			DecoupleAction
+			{
+				actionGroup = Abort
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleJettison
+		isEnabled = True
+		isJettisoned = False
+		shroudHideOverride = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			JettisonAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = BDFStextureSwitch2
+		isEnabled = True
+		selectedTexture = 0
+		selectedTextureURL = RN_Soyuz/Parts/7k/salyut4_orb
+		selectedMapURL = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = ok.para_4292027242
+	partName = Part
+	pos = -0.008662045,40.5033379,0.00330877304
+	attPos = 0,0,0
+	attPos0 = -1.11758709E-08,0,1.39698386E-09
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 2
+	resPri = 0
+	dstg = 1
+	sidx = 0
+	sqor = 2
+	sepI = -1
+	attm = 0
+	modCost = 74.1999969
+	modMass = 1.86264515E-09
+	modSize = 0,0,0
+	attN = para,ok.sa_4292714736
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = RealChuteModule
+		isEnabled = True
+		caseMass = 0.00999999978
+		cutSpeed = 0.5
+		timer = 0
+		mustGoDown = True
+		deployOnGround = False
+		spareChutes = 1
+		initiated = True
+		wait = True
+		armed = False
+		oneWasDeployed = False
+		staged = False
+		launched = False
+		chuteCount = 1
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ActionDeploy
+			{
+				actionGroup = Custom09
+			}
+			ActionCut
+			{
+				actionGroup = None
+			}
+			ActionArm
+			{
+				actionGroup = None
+			}
+			ActionDisarm
+			{
+				actionGroup = None
+			}
+		}
+		PARACHUTE
+		{
+			material = Nylon
+			preDeployedDiameter = 4.25
+			deployedDiameter = 35.5
+			minIsPressure = True
+			capOff = False
+			minDeployment = 25000
+			minPressure = 0.25
+			deploymentAlt = 4000
+			cutAlt = -1
+			preDeploymentSpeed = 2
+			deploymentSpeed = 6
+			time = 0
+			parachuteName = canopy
+			baseParachuteName = canopy
+			capName = cap
+			preDeploymentAnimation = semi
+			deploymentAnimation = full
+			forcedOrientation = 0
+			depState = STOWED
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = ok-sa-rcs_4292576430
+	partName = Part
+	pos = -0.00866203383,40.5033379,0.00330877304
+	attPos = 0,0,0
+	attPos0 = 0,0,1.39698386E-09
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 3
+	resPri = 0
+	dstg = 0
+	sidx = 1
+	sqor = 3
+	sepI = -1
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	attN = top,ok.sa_4292714736
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleRCSFX
+		isEnabled = True
+		rcsEnabled = False
+		thrustPercentage = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		enableX = True
+		enableY = True
+		enableZ = True
+		useThrottle = False
+		fullThrust = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = rn.r7.les.okt_4293394368
+	partName = Part
+	pos = -0.00866203383,46.9442291,0.00330877164
+	attPos = 0,-0.0667495728,0
+	attPos0 = 0,3.94623184,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 12
+	resPri = 0
+	dstg = 1
+	sidx = 0
+	sqor = 12
+	sepI = 12
 	attm = 0
 	modCost = 82.5899963
 	modMass = 0
@@ -3881,7 +3760,7 @@ PART
 		isEnabled = True
 		type = HTPB
 		utilization = 86
-		mass = 2.8349998
+		mass = 3.03499985
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -3952,11 +3831,11 @@ PART
 }
 PART
 {
-	part = ok.hs_4292103196
+	part = rn.r7.soyuz.fairing2_4292334766
 	partName = Part
-	pos = -0.00866203383,39.6922493,0.00330877164
+	pos = -0.0086619854,36.8579979,0.00330877164
 	attPos = 0,0,0
-	attPos0 = 0,-0.811088562,0
+	attPos0 = 4.84287739E-08,-6.13999939,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -3964,187 +3843,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 1
-	resPri = 0
-	dstg = 0
-	sidx = 0
-	sqor = 1
-	sepI = 1
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	link = ok.dec_4292056686
-	attN = top,ok.sa_4292714736
-	attN = bottom,ok.dec_4292056686
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleDecouple
-		isEnabled = True
-		ejectionForcePercent = 100
-		isDecoupled = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			DecoupleAction
-			{
-				actionGroup = Custom09
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleToggleCrossfeed
-		isEnabled = True
-		crossfeedStatus = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			EnableAction
-			{
-				actionGroup = None
-			}
-			DisableAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = Ablator
-		amount = 200
-		maxAmount = 200
-		flowState = True
-		isTweakable = True
-		hideFlow = False
-		isVisible = True
-		flowMode = Both
-	}
-	RESOURCE
-	{
-		name = CharredAblator
-		amount = 0
-		maxAmount = 150
-		flowState = True
-		isTweakable = False
-		hideFlow = False
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = ok.dec_4292056686
-	partName = Part
-	pos = -0.00866203383,39.7122536,0.00330877164
-	attPos = 0,0,0
-	attPos0 = 0,0.0200004578,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 3
+	istg = 10
 	resPri = 0
 	dstg = 1
-	sidx = 2
-	sqor = 3
-	sepI = 3
+	sidx = 0
+	sqor = 10
+	sepI = 10
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = ok.pao_4292045100
-	attN = bottom,ok.pao_4292045100
-	attN = top,ok.hs_4292103196
+	link = rn.r7.soyuz.fairing2.srb_4293291404
+	sym = rn.r7.soyuz.fairing2_4292333340
+	attN = top,ok.bo.fem_4291961900
+	attN = srb,rn.r7.soyuz.fairing2.srb_4293291404
 	EVENTS
 	{
 	}
@@ -4168,7 +3880,7 @@ PART
 		{
 			DecoupleAction
 			{
-				actionGroup = Abort
+				actionGroup = None
 			}
 		}
 		UPGRADESAPPLIED
@@ -4177,20 +3889,37 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleJettison
+		name = ModuleEnginesRF
 		isEnabled = True
-		isJettisoned = False
-		shroudHideOverride = False
+		ignitions = -1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
 		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
-			JettisonAction
+			OnAction
 			{
 				actionGroup = None
 			}
+			ShutdownAction
+			{
+				actionGroup = None
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -4201,7 +3930,7 @@ PART
 		name = BDFStextureSwitch2
 		isEnabled = True
 		selectedTexture = 0
-		selectedTextureURL = RN_Soyuz/Parts/7k/salyut4_orb
+		selectedTextureURL = RN_Soviet_Rockets/R7/master/B FAIRING OKT
 		selectedMapURL = 
 		stagingEnabled = True
 		EVENTS
@@ -4216,6 +3945,31 @@ PART
 	}
 	MODULE
 	{
+		name = BDFSanimateGeneric
+		isEnabled = True
+		startDeployed = False
+		isAnimating = False
+		animTime = 0
+		reverseAnimation = False
+		animSpeed = -1
+		hasBeenInitialized = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			toggleAction
+			{
+				actionGroup = Abort
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = GeometryPartModule
 		isEnabled = True
 		stagingEnabled = True
@@ -4287,14 +4041,249 @@ PART
 		{
 		}
 	}
+	RESOURCE
+	{
+		name = SolidFuel
+		amount = 3.3599999999999999
+		maxAmount = 3.3599999999999999
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
 }
 PART
 {
-	part = ok.pao_4292045100
+	part = rn.r7.soyuz.fairing2_4292333340
 	partName = Part
-	pos = -0.00866203383,38.3739014,0.00330877164
+	pos = -0.0086619854,36.8579979,0.00330890086
 	attPos = 0,0,0
-	attPos0 = 0,-1.3383503,0
+	attPos0 = 4.84287739E-08,-6.13999939,1.29221007E-07
+	rot = 0,1,0,-4.37113883E-08
+	attRot = 0,0,0,1
+	attRot0 = 0,1,0,-4.37113883E-08
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 10
+	resPri = 0
+	dstg = 1
+	sidx = 0
+	sqor = 10
+	sepI = 10
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	link = rn.r7.soyuz.fairing2.srb_4292332574
+	sym = rn.r7.soyuz.fairing2_4292334766
+	attN = top,ok.bo.fem_4291961900
+	attN = srb,rn.r7.soyuz.fairing2.srb_4292332574
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleDecouple
+		isEnabled = True
+		ejectionForcePercent = 100
+		isDecoupled = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			DecoupleAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = -1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = BDFStextureSwitch2
+		isEnabled = True
+		selectedTexture = 0
+		selectedTextureURL = RN_Soviet_Rockets/R7/master/B FAIRING OKT
+		selectedMapURL = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = BDFSanimateGeneric
+		isEnabled = True
+		startDeployed = False
+		isAnimating = False
+		animTime = 0
+		reverseAnimation = False
+		animSpeed = -1
+		hasBeenInitialized = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			toggleAction
+			{
+				actionGroup = Abort
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = SolidFuel
+		amount = 3.3599999999999999
+		maxAmount = 3.3599999999999999
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = rn.r7.soyuz.fairing2.srb_4293291404
+	partName = Part
+	pos = -0.966222942,43.6758575,0.00330877164
+	attPos = 0,0,0
+	attPos0 = -0.957560956,6.81785965,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -4302,21 +4291,389 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 4
+	istg = 0
+	resPri = 0
+	dstg = 3
+	sidx = 0
+	sqor = 0
+	sepI = 10
+	attm = 0
+	modCost = 14.8000002
+	modMass = 0
+	modSize = 0,0,0
+	sym = rn.r7.soyuz.fairing2.srb_4292332574
+	attN = top,rn.r7.soyuz.fairing2_4292334766
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = -1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+			}
+			ActivateAction
+			{
+				actionGroup = Abort
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleFuelTanks
+		isEnabled = True
+		type = NGNC
+		utilization = 86
+		mass = 0.312999994
+		_numberOfAddedMLILayers = 0
+		partPrevTemperature = -1
+		stagingEnabled = True
+		volume = 148
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		TANK
+		{
+			name = NGNC
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 148
+			maxAmount = 148
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RGD
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = NGNC
+		amount = 148
+		maxAmount = 148
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = rn.r7.soyuz.fairing2.srb_4292332574
+	partName = Part
+	pos = 0.948898971,43.6758575,0.00330881705
+	attPos = 0,0,0
+	attPos0 = -0.957560956,6.81785965,1.06396669E-10
+	rot = 0,1,0,-4.37113883E-08
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 0
+	resPri = 0
+	dstg = 3
+	sidx = 0
+	sqor = 0
+	sepI = 10
+	attm = 0
+	modCost = 14.8000002
+	modMass = 0
+	modSize = 0,0,0
+	sym = rn.r7.soyuz.fairing2.srb_4293291404
+	attN = top,rn.r7.soyuz.fairing2_4292333340
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = -1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+			}
+			ActivateAction
+			{
+				actionGroup = Abort
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleFuelTanks
+		isEnabled = True
+		type = NGNC
+		utilization = 86
+		mass = 0.312999994
+		_numberOfAddedMLILayers = 0
+		partPrevTemperature = -1
+		stagingEnabled = True
+		volume = 148
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		TANK
+		{
+			name = NGNC
+			note = 
+			utilization = 1
+			mass = 0
+			cost = 0
+			loss_rate = 0
+			temperature = 300
+			fillable = True
+			techRequired = 
+			amount = 148
+			maxAmount = 148
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RGD
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = NGNC
+		amount = 148
+		maxAmount = 148
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = ok.pao_4293020152
+	partName = Part
+	pos = -0.00866203383,38.3739052,0.00330877164
+	attPos = 0,-3.75368881,0
+	attPos0 = 0,-1.33834839,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 5
 	resPri = 0
 	dstg = 2
 	sidx = 0
-	sqor = 4
+	sqor = 5
 	sepI = 3
 	attm = 0
 	modCost = 0.450324059
 	modMass = 0
 	modSize = 0,0,0
-	link = ok.tft_4292040172
-	link = 7k.ok.lsolar_4292009774
-	link = 7k.ok.rsolar_4292004664
+	link = ok.tft_4293018630
+	link = 7k.ok.lsolar_4293018170
+	link = 7k.ok.rsolar_4293017926
 	attN = top,ok.dec_4292056686
-	attN = bottom,ok.tft_4292040172
+	attN = bottom,ok.tft_4293018630
 	EVENTS
 	{
 	}
@@ -4474,7 +4831,7 @@ PART
 		isEnabled = True
 		type = ServiceModule
 		utilization = 86
-		mass = 1.58399999
+		mass = 1.63549995
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -5589,11 +5946,11 @@ PART
 }
 PART
 {
-	part = ok.tft_4292040172
+	part = ok.tft_4293018630
 	partName = Part
-	pos = -0.00866203383,37.2689323,0.00330877164
+	pos = -0.00866203383,37.2689362,0.00330877164
 	attPos = 0,0,0
-	attPos0 = 0,-1.10496998,0
+	attPos0 = 0,-1.10496902,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -5601,19 +5958,19 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 4
-	resPri = 0
+	istg = 5
+	resPri = 5
 	dstg = 2
-	sidx = -1
-	sqor = -1
-	sepI = 4
+	sidx = 2
+	sqor = 2
+	sepI = 5
 	attm = 0
-	modCost = 0
+	modCost = 0.204129189
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.r7.adapter.blok.iv2_4291421608
-	attN = top,ok.pao_4292045100
-	attN = bottom,rn.r7.adapter.blok.iv2_4291421608
+	link = rn.r7.adapter.blok.iv2.s_4292313890
+	attN = top,ok.pao_4293020152
+	attN = bottom,rn.r7.adapter.blok.iv2.s_4292313890
 	EVENTS
 	{
 	}
@@ -5629,7 +5986,7 @@ PART
 		isEnabled = True
 		ejectionForcePercent = 100
 		isDecoupled = False
-		stagingEnabled = True
+		stagingEnabled = False
 		EVENTS
 		{
 		}
@@ -5740,7 +6097,7 @@ PART
 		isEnabled = True
 		type = ServiceModule
 		utilization = 86
-		mass = 0.180000007
+		mass = 0.379999995
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -5818,8 +6175,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 0
-			maxAmount = 0
+			amount = 171.90000000000001
+			maxAmount = 171.90000000000001
 		}
 		TANK
 		{
@@ -6322,8 +6679,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 0
-			maxAmount = 0
+			amount = 228.09999999999999
+			maxAmount = 228.09999999999999
 		}
 		TANK
 		{
@@ -6739,7 +7096,7 @@ PART
 	{
 		name = ModuleToggleCrossfeed
 		isEnabled = True
-		crossfeedStatus = False
+		crossfeedStatus = True
 		stagingEnabled = True
 		EVENTS
 		{
@@ -6763,12 +7120,266 @@ PART
 		{
 		}
 	}
+	RESOURCE
+	{
+		name = UDMH
+		amount = 171.90000000000001
+		maxAmount = 171.90000000000001
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = AK27
+		amount = 228.09999999999999
+		maxAmount = 228.09999999999999
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
 }
 PART
 {
-	part = rn.r7.adapter.blok.iv2_4291421608
+	part = 7k.ok.lsolar_4293018170
 	partName = Part
-	pos = -0.00866203383,35.9109917,0.00330877164
+	pos = -1.05649567,38.3684921,0.00330877164
+	attPos = 0,0,0
+	attPos0 = -1.04783368,-0.00541305542,6.24568202E-08
+	rot = -1.25607405E-15,-8.42937027E-08,-2.33692514E-08,-1
+	attRot = 0,0,0,-0.999999881
+	attRot0 = -1.25607405E-15,-8.42937027E-08,-2.33692514E-08,-1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 5
+	resPri = 0
+	dstg = 2
+	sidx = -1
+	sqor = -1
+	sepI = 3
+	attm = 1
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	srfN = srfAttach,ok.pao_4293020152
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = KopernicusSolarPanel
+		isEnabled = True
+		trackingBodyName = The Sun
+		manualTracking = False
+		relativeSunAOA = False
+		efficiencyMult = 1
+		launchUT = -1
+		currentRotation = (0.707106829, 9.41569667E-08, 0.707106829, -9.41569667E-08)
+		storedAnimationTime = 0
+		storedAnimationSpeed = 1
+		deployState = RETRACTED
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ExtendPanelsAction
+			{
+				actionGroup = Custom01
+			}
+			ExtendAction
+			{
+				actionGroup = None
+			}
+			RetractAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = 7k.ok.rsolar_4293017926
+	partName = Part
+	pos = 1.04030347,38.3719864,0.00330877164
+	attPos = 0,0,0
+	attPos0 = 1.04896545,-0.00191879272,6.25150278E-08
+	rot = 2.33692514E-08,1,1.25607405E-15,8.42937027E-08
+	attRot = 0,0,0,0.999999881
+	attRot0 = 2.33692514E-08,1,1.25607405E-15,8.42937027E-08
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 5
+	resPri = 0
+	dstg = 2
+	sidx = -1
+	sqor = -1
+	sepI = 3
+	attm = 1
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	srfN = srfAttach,ok.pao_4293020152
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = KopernicusSolarPanel
+		isEnabled = True
+		trackingBodyName = The Sun
+		manualTracking = False
+		relativeSunAOA = False
+		efficiencyMult = 1
+		launchUT = -1
+		currentRotation = (0, -0.707106829, 0, 0.707106829)
+		storedAnimationTime = 0
+		storedAnimationSpeed = 1
+		deployState = RETRACTED
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ExtendPanelsAction
+			{
+				actionGroup = Custom01
+			}
+			ExtendAction
+			{
+				actionGroup = None
+			}
+			RetractAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = rn.r7.adapter.blok.iv2.s_4292313890
+	partName = Part
+	pos = -0.00866203383,35.9109955,0.00330877164
 	attPos = 0,0,0
 	attPos0 = 0,-1.35794067,0
 	rot = 0,0,0,1
@@ -6778,23 +7389,19 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 4
+	istg = 6
 	resPri = 0
 	dstg = 3
-	sidx = 1
-	sqor = 4
-	sepI = 4
+	sidx = 0
+	sqor = 6
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.r7.blok.i.3_4291438884
-	link = rn.r7.soyuz.fairing2_4293577194
-	link = rn.r7.soyuz.fairing2_4293576048
-	attN = top,ok.tft_4292040172
-	attN = bottom,rn.r7.blok.i.3_4291438884
-	attN = 1,rn.r7.soyuz.fairing2_4293577194
-	attN = 2,rn.r7.soyuz.fairing2_4293576048
+	link = rn.r7.blok.i.3_4292602690
+	attN = top,ok.tft_4293018630
+	attN = bottom,rn.r7.blok.i.3_4292602690
 	EVENTS
 	{
 	}
@@ -6890,6 +7497,44 @@ PART
 	}
 	MODULE
 	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = -1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = None
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = ModuleToggleCrossfeed
 		isEnabled = True
 		crossfeedStatus = True
@@ -6919,11 +7564,11 @@ PART
 }
 PART
 {
-	part = rn.r7.blok.i.3_4291438884
+	part = rn.r7.blok.i.3_4292602690
 	partName = Part
-	pos = -0.00866203383,32.1272125,0.00330877164
+	pos = -0.00866203383,32.1272163,0.00330877164
 	attPos = 0,0,0
-	attPos0 = 0,-3.78377891,0
+	attPos0 = 0,-3.78377914,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -6931,29 +7576,29 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 7
+	istg = 9
 	resPri = 0
 	dstg = 4
 	sidx = 2
-	sqor = 7
-	sepI = 4
+	sqor = 9
+	sepI = 6
 	attm = 0
 	modCost = 0.978498816
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.r7.vernier.blok.i.s.fg_4291416648
-	link = rn.r7.vernier.blok.i.s.fg_4291416350
-	link = rn.r7.vernier.blok.i.s.fg_4291416060
-	link = rn.r7.vernier.blok.i.s.fg_4291415606
-	link = rn.r7.adapter.blok.e_4291406892
-	link = rn.r7.blok.i.covers_4293438702
-	attN = top,rn.r7.adapter.blok.iv2_4291421608
-	attN = bottom,rn.r7.adapter.blok.e_4291406892
-	attN = 1,rn.r7.vernier.blok.i.s.fg_4291416648
-	attN = 2,rn.r7.vernier.blok.i.s.fg_4291416350
-	attN = 3,rn.r7.vernier.blok.i.s.fg_4291415606
-	attN = 4,rn.r7.vernier.blok.i.s.fg_4291416060
-	attN = covers,rn.r7.blok.i.covers_4293438702
+	link = rn.r7.vernier.blok.i.s.fg_4292602442
+	link = rn.r7.vernier.blok.i.s.fg_4292602364
+	link = rn.r7.vernier.blok.i.s.fg_4292602286
+	link = rn.r7.vernier.blok.i.s.fg_4292602208
+	link = rn.r7.blok.i.covers_4292602130
+	link = rn.r7.adapter.blok.e_4292601996
+	attN = top,rn.r7.adapter.blok.iv2.s_4292313890
+	attN = bottom,rn.r7.adapter.blok.e_4292601996
+	attN = 1,rn.r7.vernier.blok.i.s.fg_4292602442
+	attN = 2,rn.r7.vernier.blok.i.s.fg_4292602364
+	attN = 3,rn.r7.vernier.blok.i.s.fg_4292602208
+	attN = 4,rn.r7.vernier.blok.i.s.fg_4292602286
+	attN = covers,rn.r7.blok.i.covers_4292602130
 	EVENTS
 	{
 	}
@@ -6987,7 +7632,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -7175,30 +7820,11 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = RD-0110
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
 		name = ModuleFuelTanks
 		isEnabled = True
 		type = ServiceModule
 		utilization = 86
-		mass = 2.3499999
+		mass = 2.54999995
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -7220,8 +7846,8 @@ PART
 			temperature = 90.1500015
 			fillable = True
 			techRequired = 
-			amount = 13716.1442222939
-			maxAmount = 13716.1442222939
+			amount = 13716.144222293931
+			maxAmount = 13716.144222293931
 		}
 		TANK
 		{
@@ -7234,8 +7860,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 8597.4139747059598
-			maxAmount = 8597.4139747059598
+			amount = 8597.413974705958
+			maxAmount = 8597.413974705958
 		}
 		TANK
 		{
@@ -8144,8 +8770,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 125.000000112039
-			maxAmount = 125.000000112039
+			amount = 125.00000011203888
+			maxAmount = 125.00000011203888
 		}
 		TANK
 		{
@@ -8193,13 +8819,32 @@ PART
 		{
 		}
 	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD-0110
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
 	RESOURCE
 	{
 		name = TEATEB
 		amount = 1
 		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
@@ -8207,8 +8852,8 @@ PART
 	RESOURCE
 	{
 		name = LqdOxygen
-		amount = 13716.1442222939
-		maxAmount = 13716.1442222939
+		amount = 13716.144222293931
+		maxAmount = 13716.144222293931
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -8218,8 +8863,8 @@ PART
 	RESOURCE
 	{
 		name = Kerosene
-		amount = 8597.4139747059598
-		maxAmount = 8597.4139747059598
+		amount = 8597.413974705958
+		maxAmount = 8597.413974705958
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -8229,8 +8874,8 @@ PART
 	RESOURCE
 	{
 		name = ElectricCharge
-		amount = 125.000000112039
-		maxAmount = 125.000000112039
+		amount = 125.00000011203888
+		maxAmount = 125.00000011203888
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -8240,11 +8885,11 @@ PART
 }
 PART
 {
-	part = rn.r7.vernier.blok.i.s.fg_4291416648
+	part = rn.r7.vernier.blok.i.s.fg_4292602442
 	partName = Part
-	pos = -0.944247007,29.7228928,0.00330877164
+	pos = -0.944247067,29.7228966,0.00330877164
 	attPos = 0,0,0
-	attPos0 = -0.935585022,-2.40432,0
+	attPos0 = -0.935585022,-2.40431976,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -8252,18 +8897,18 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 7
+	istg = 9
 	resPri = 0
 	dstg = 4
 	sidx = 0
-	sqor = 7
-	sepI = 4
+	sqor = 9
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.blok.i.s.fg_4291416350
-	attN = top,rn.r7.blok.i.3_4291438884
+	sym = rn.r7.vernier.blok.i.s.fg_4292602364
+	attN = top,rn.r7.blok.i.3_4292602690
 	EVENTS
 	{
 	}
@@ -8297,7 +8942,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -8336,52 +8981,6 @@ PART
 		}
 		ACTIONS
 		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -8452,7 +9051,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-0107_RD-0108_RD-0110_Vernier
+		configuration = RD-0107/RD-0110-Vernier
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -8467,25 +9066,60 @@ PART
 		{
 		}
 	}
-	RESOURCE
+	MODULE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 }
 PART
 {
-	part = rn.r7.vernier.blok.i.s.fg_4291416350
+	part = rn.r7.vernier.blok.i.s.fg_4292602364
 	partName = Part
-	pos = 0.926923096,29.7228928,0.00330877164
+	pos = 0.926922977,29.7228966,0.00330877164
 	attPos = 0,0,0
-	attPos0 = 0.935585022,-2.40432,0
+	attPos0 = 0.935585022,-2.40431976,0
 	rot = 0,1,0,-4.37113883E-08
 	attRot = 0,0,0,1
 	attRot0 = 0,1,0,-4.37113883E-08
@@ -8493,18 +9127,18 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 7
+	istg = 9
 	resPri = 0
 	dstg = 4
 	sidx = 0
-	sqor = 7
-	sepI = 4
+	sqor = 9
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.blok.i.s.fg_4291416648
-	attN = top,rn.r7.blok.i.3_4291438884
+	sym = rn.r7.vernier.blok.i.s.fg_4292602442
+	attN = top,rn.r7.blok.i.3_4292602690
 	EVENTS
 	{
 	}
@@ -8538,7 +9172,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -8577,52 +9211,6 @@ PART
 		}
 		ACTIONS
 		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -8693,7 +9281,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-0107_RD-0108_RD-0110_Vernier
+		configuration = RD-0107/RD-0110-Vernier
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -8708,44 +9296,79 @@ PART
 		{
 		}
 	}
-	RESOURCE
+	MODULE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 }
 PART
 {
-	part = rn.r7.vernier.blok.i.s.fg_4291416060
+	part = rn.r7.vernier.blok.i.s.fg_4292602286
 	partName = Part
-	pos = -0.00866203383,29.7228928,-0.932276189
+	pos = -0.00866203383,29.7228966,-0.932276249
 	attPos = 0,0,0
-	attPos0 = 0,-2.40432,-0.935585022
+	attPos0 = 0,-2.40431976,-0.935585022
 	rot = 0,-0.707106829,0,0.707106829
-	attRot = 0,-0.707106829,0,0.707106829
+	attRot = 0,-0.707106769,0,0.707106769
 	attRot0 = 0,-0.707106829,0,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 7
+	istg = 9
 	resPri = 0
 	dstg = 4
 	sidx = 1
-	sqor = 7
-	sepI = 4
+	sqor = 9
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.blok.i.s.fg_4291415606
-	attN = top,rn.r7.blok.i.3_4291438884
+	sym = rn.r7.vernier.blok.i.s.fg_4292602208
+	attN = top,rn.r7.blok.i.3_4292602690
 	EVENTS
 	{
 	}
@@ -8779,7 +9402,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -8818,52 +9441,6 @@ PART
 		}
 		ACTIONS
 		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -8934,7 +9511,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-0107_RD-0108_RD-0110_Vernier
+		configuration = RD-0107/RD-0110-Vernier
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -8949,44 +9526,79 @@ PART
 		{
 		}
 	}
-	RESOURCE
+	MODULE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 }
 PART
 {
-	part = rn.r7.vernier.blok.i.s.fg_4291415606
+	part = rn.r7.vernier.blok.i.s.fg_4292602208
 	partName = Part
-	pos = -0.00866203383,29.7228928,0.938893795
+	pos = -0.00866203383,29.7228966,0.938893914
 	attPos = 0,0,0
-	attPos0 = 0,-2.40432,0.935585022
-	rot = 0,0.707106829,0,0.707106829
-	attRot = 0,-0.707106829,0,0.707106829
-	attRot0 = 0,0.707106888,0,0.707106829
+	attPos0 = 0,-2.40431976,0.935585082
+	rot = 0,0.707106888,0,0.707106769
+	attRot = 0,-0.707106769,0,0.707106769
+	attRot0 = 0,0.707106888,0,0.707106769
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 7
+	istg = 9
 	resPri = 0
 	dstg = 4
 	sidx = 1
-	sqor = 7
-	sepI = 4
+	sqor = 9
+	sepI = 6
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.blok.i.s.fg_4291416060
-	attN = top,rn.r7.blok.i.3_4291438884
+	sym = rn.r7.vernier.blok.i.s.fg_4292602286
+	attN = top,rn.r7.blok.i.3_4292602690
 	EVENTS
 	{
 	}
@@ -9020,7 +9632,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -9059,52 +9671,6 @@ PART
 		}
 		ACTIONS
 		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -9175,7 +9741,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-0107_RD-0108_RD-0110_Vernier
+		configuration = RD-0107/RD-0110-Vernier
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -9190,25 +9756,60 @@ PART
 		{
 		}
 	}
-	RESOURCE
+	MODULE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 }
 PART
 {
-	part = rn.r7.adapter.blok.e_4291406892
+	part = rn.r7.blok.i.covers_4292602130
 	partName = Part
-	pos = -0.00866203383,28.2944736,0.00330877164
+	pos = -0.00866203383,32.1272163,0.00330877164
 	attPos = 0,0,0
-	attPos0 = 0,-3.83274102,0
+	attPos0 = 0,0,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -9216,19 +9817,211 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 6
+	istg = 7
 	resPri = 0
 	dstg = 5
 	sidx = 0
-	sqor = 6
-	sepI = 6
+	sqor = 7
+	sepI = 7
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.r7.blok.a.10_4291443978
-	attN = top,rn.r7.blok.i.3_4291438884
-	attN = bottom,rn.r7.blok.a.10_4291443978
+	attN = top,rn.r7.blok.i.3_4292602690
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleJettison
+		isEnabled = True
+		isJettisoned = False
+		shroudHideOverride = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			JettisonAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleJettison
+		isEnabled = True
+		isJettisoned = False
+		shroudHideOverride = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			JettisonAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleJettison
+		isEnabled = True
+		isJettisoned = False
+		shroudHideOverride = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			JettisonAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleDecouple
+		isEnabled = True
+		ejectionForcePercent = 100
+		isDecoupled = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			DecoupleAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleToggleCrossfeed
+		isEnabled = True
+		crossfeedStatus = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = rn.r7.adapter.blok.e_4292601996
+	partName = Part
+	pos = -0.00866203383,28.2944756,0.00330877164
+	attPos = 0,0,0
+	attPos0 = 0,-3.83274078,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 8
+	resPri = 0
+	dstg = 5
+	sidx = 0
+	sqor = 8
+	sepI = 8
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	link = rn.r7.blok.a.10_4292601922
+	attN = top,rn.r7.blok.i.3_4292602690
+	attN = bottom,rn.r7.blok.a.10_4292601922
 	EVENTS
 	{
 	}
@@ -9353,9 +10146,9 @@ PART
 }
 PART
 {
-	part = rn.r7.blok.a.10_4291443978
+	part = rn.r7.blok.a.10_4292601922
 	partName = Part
-	pos = -0.00866203383,13.4330139,0.00330877164
+	pos = -0.00866203383,13.4330177,0.00330877164
 	attPos = 0,0,0
 	attPos0 = 0,-14.8614597,0
 	rot = 0,0,0,1
@@ -9365,23 +10158,23 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 6
+	istg = 8
 	resPri = 0
 	dstg = 6
 	sidx = -1
 	sqor = -1
-	sepI = 6
+	sepI = 8
 	attm = 0
-	modCost = 4.03731155
+	modCost = 7.73307276
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.r7.blok.a.engine_4293722488
-	link = rn.r7.blok.bvgd.10_4291443208
-	link = rn.r7.blok.bvgd.10_4293673104
-	link = rn.r7.blok.bvgd.10_4293672462
-	link = rn.r7.blok.bvgd.10_4293671820
-	attN = top,rn.r7.adapter.blok.e_4291406892
-	attN = bottom,rn.r7.blok.a.engine_4293722488
+	link = rn.r7.blok.bvgd.10_4292601706
+	link = rn.r7.blok.bvgd.10_4292601040
+	link = rn.r7.blok.bvgd.10_4292600374
+	link = rn.r7.blok.bvgd.10_4292599708
+	link = rn.r7.blok.a.engine_4292599042
+	attN = top,rn.r7.adapter.blok.e_4292601996
+	attN = bottom,rn.r7.blok.a.engine_4292599042
 	EVENTS
 	{
 	}
@@ -9512,7 +10305,7 @@ PART
 		isEnabled = True
 		type = Default
 		utilization = 86
-		mass = 4.8499999
+		mass = 5.01000023
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -9534,8 +10327,8 @@ PART
 			temperature = 90.1500015
 			fillable = True
 			techRequired = 
-			amount = 58079.60330368
-			maxAmount = 58079.60330368
+			amount = 56968.714330874012
+			maxAmount = 56968.714330874012
 		}
 		TANK
 		{
@@ -9548,8 +10341,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 33818.503186319998
-			maxAmount = 33818.503186319998
+			amount = 33171.654983611865
+			maxAmount = 33171.654983611865
 		}
 		TANK
 		{
@@ -9632,8 +10425,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 0
-			maxAmount = 0
+			amount = 1757.7371855141209
+			maxAmount = 1757.7371855141209
 		}
 		TANK
 		{
@@ -10229,20 +11022,31 @@ PART
 	}
 	RESOURCE
 	{
-		name = LqdOxygen
-		amount = 58079.60330368
-		maxAmount = 58079.60330368
-		flowState = True
-		isTweakable = True
-		hideFlow = False
-		isVisible = True
-		flowMode = Both
-	}
-	RESOURCE
-	{
 		name = Kerosene
-		amount = 33818.503186319998
-		maxAmount = 33818.503186319998
+		amount = 33171.654983611865
+		maxAmount = 33171.654983611865
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = LqdOxygen
+		amount = 56968.714330874012
+		maxAmount = 56968.714330874012
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = HTP
+		amount = 1757.7371855141209
+		maxAmount = 1757.7371855141209
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -10252,1175 +11056,9 @@ PART
 }
 PART
 {
-	part = rn.r7.blok.a.engine_4293722488
+	part = rn.r7.blok.bvgd.10_4292601706
 	partName = Part
-	pos = -0.00866203383,2.10443497,0.00330877164
-	attPos = 0,0,0
-	attPos0 = 0,-11.3285799,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 11
-	resPri = 0
-	dstg = 6
-	sidx = 5
-	sqor = 11
-	sepI = 6
-	attm = 0
-	modCost = 300
-	modMass = 0.121942997
-	modSize = 0,0,0
-	link = rn.r7.vernier.engine.v.fg_4293680152
-	link = rn.r7.vernier.engine.v.fg_4293679826
-	link = rn.r7.vernier.engine.v.fg_4293679492
-	link = rn.r7.vernier.engine.v.fg_4293679136
-	attN = top,rn.r7.blok.a.10_4291443978
-	attN = 1,rn.r7.vernier.engine.v.fg_4293679826
-	attN = 2,rn.r7.vernier.engine.v.fg_4293680152
-	attN = 3,rn.r7.vernier.engine.v.fg_4293679492
-	attN = 4,rn.r7.vernier.engine.v.fg_4293679136
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-		Ullage
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleSurfaceFX
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = RD-108-11D512
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = TEATEB
-		amount = 1
-		maxAmount = 1
-		flowState = True
-		isTweakable = True
-		hideFlow = False
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.r7.vernier.engine.v.fg_4293680152
-	partName = Part
-	pos = -1.10994112,1.53477478,0.00330877164
-	attPos = 0,0,0
-	attPos0 = -1.10127902,-0.569660187,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 11
-	resPri = 0
-	dstg = 6
-	sidx = 0
-	sqor = 11
-	sepI = 6
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293679826
-	attN = top,rn.r7.blok.a.engine_4293722488
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-		Ullage
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = Core_Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.r7.vernier.engine.v.fg_4293679826
-	partName = Part
-	pos = 1.09261692,1.53477478,0.00330877164
-	attPos = 0,0,0
-	attPos0 = 1.10127902,-0.569660187,0
-	rot = 0,1,0,-4.37113883E-08
-	attRot = 0,0,0,1
-	attRot0 = 0,1,0,-4.37113883E-08
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 11
-	resPri = 0
-	dstg = 6
-	sidx = 0
-	sqor = 11
-	sepI = 6
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293680152
-	attN = top,rn.r7.blok.a.engine_4293722488
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-		Ullage
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = Core_Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.r7.vernier.engine.v.fg_4293679492
-	partName = Part
-	pos = -0.00866203383,1.53477478,-1.09797013
-	attPos = 0,0,0
-	attPos0 = 0,-0.569660187,-1.10127902
-	rot = 0,-0.707106829,0,0.707106829
-	attRot = 0,-0.707106829,0,0.707106829
-	attRot0 = 0,-0.707106829,0,0.707106829
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 11
-	resPri = 0
-	dstg = 6
-	sidx = 1
-	sqor = 11
-	sepI = 6
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293679136
-	attN = top,rn.r7.blok.a.engine_4293722488
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-		Ullage
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = Core_Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.r7.vernier.engine.v.fg_4293679136
-	partName = Part
-	pos = -0.00866203383,1.53477478,1.10458791
-	attPos = 0,0,0
-	attPos0 = 0,-0.569660187,1.10127902
-	rot = 0,0.707106829,0,0.707106829
-	attRot = 0,-0.707106829,0,0.707106829
-	attRot0 = 0,0.707106888,0,0.707106829
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 11
-	resPri = 0
-	dstg = 6
-	sidx = 1
-	sqor = 11
-	sepI = 6
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293679492
-	attN = top,rn.r7.blok.a.engine_4293722488
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-		Ullage
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = Core_Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.r7.blok.bvgd.10_4291443208
-	partName = Part
-	pos = -1.03311908,15.5877113,0.00330883265
+	pos = -1.03312278,15.587719,0.00330877164
 	attPos = 0,0,0
 	attPos0 = -1.02445698,2.15469599,6.10016286E-08
 	rot = -1.60777506E-13,0,-2.58529508E-06,1
@@ -11430,25 +11068,25 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 7
 	sidx = 0
-	sqor = 9
-	sepI = 9
+	sqor = 11
+	sepI = 11
 	attm = 1
-	modCost = 1.69167256
+	modCost = 3.23894739
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.WING.R7_4293710982
-	link = launchClamp1_4293584294
-	link = rn.r7.bvgd.engine_4293719278
-	sym = rn.r7.blok.bvgd.10_4293673104
-	sym = rn.r7.blok.bvgd.10_4293672462
-	sym = rn.r7.blok.bvgd.10_4293671820
-	srfN = srfAttach,rn.r7.blok.a.10_4291443978
-	attN = top,rn.r7.bvgd.engine_4293719278
-	attN = wing,rn.WING.R7_4293710982
+	link = rn.WING.R7_4292601618
+	link = launchClamp1_4292601568
+	link = rn.r7.bvgd.engine_4292601452
+	sym = rn.r7.blok.bvgd.10_4292601040
+	sym = rn.r7.blok.bvgd.10_4292600374
+	sym = rn.r7.blok.bvgd.10_4292599708
+	srfN = srfAttach,rn.r7.blok.a.10_4292601922
+	attN = top,rn.r7.bvgd.engine_4292601452
+	attN = wing,rn.WING.R7_4292601618
 	EVENTS
 	{
 	}
@@ -11604,7 +11242,7 @@ PART
 		isEnabled = True
 		type = Default
 		utilization = 86
-		mass = 1.83000004
+		mass = 1.9749999
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -11626,8 +11264,8 @@ PART
 			temperature = 90.1500015
 			fillable = True
 			techRequired = 
-			amount = 24612.395826397002
-			maxAmount = 24612.395826397002
+			amount = 24141.633791811855
+			maxAmount = 24141.633791811855
 		}
 		TANK
 		{
@@ -11640,8 +11278,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 13862.507763603
-			maxAmount = 13862.507763603
+			amount = 13597.359425271441
+			maxAmount = 13597.359425271441
 		}
 		TANK
 		{
@@ -11724,8 +11362,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 0
-			maxAmount = 0
+			amount = 735.91038291670441
+			maxAmount = 735.91038291670441
 		}
 		TANK
 		{
@@ -12360,9 +11998,9 @@ PART
 	}
 	RESOURCE
 	{
-		name = LqdOxygen
-		amount = 24612.395826397002
-		maxAmount = 24612.395826397002
+		name = Kerosene
+		amount = 13597.359425271441
+		maxAmount = 13597.359425271441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -12371,9 +12009,20 @@ PART
 	}
 	RESOURCE
 	{
-		name = Kerosene
-		amount = 13862.507763603
-		maxAmount = 13862.507763603
+		name = LqdOxygen
+		amount = 24141.633791811855
+		maxAmount = 24141.633791811855
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = HTP
+		amount = 735.91038291670441
+		maxAmount = 735.91038291670441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -12383,9 +12032,9 @@ PART
 }
 PART
 {
-	part = rn.WING.R7_4293710982
+	part = rn.WING.R7_4292601618
 	partName = Part
-	pos = -4.00036335,2.53577805,0.00330883265
+	pos = -4.00036192,2.53578568,0.00330877164
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.00499199E-10
 	rot = -4.59090285E-13,-8.42937027E-08,-5.17065791E-06,1
@@ -12395,20 +12044,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 9
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.WING.R7_4293672516
-	sym = rn.WING.R7_4293671874
-	sym = rn.WING.R7_4293671232
-	attN = top,rn.r7.blok.bvgd.10_4291443208
+	sym = rn.WING.R7_4292600952
+	sym = rn.WING.R7_4292600286
+	sym = rn.WING.R7_4292599620
+	attN = top,rn.r7.blok.bvgd.10_4292601706
 	EVENTS
 	{
 	}
@@ -12502,9 +12151,9 @@ PART
 }
 PART
 {
-	part = launchClamp1_4293584294
+	part = launchClamp1_4292601568
 	partName = Part
-	pos = -4.43653631,2.22673798,-0.908615112
+	pos = -4.43653297,2.22674561,-0.908615172
 	attPos = 0,0,0
 	attPos0 = -3.40334702,-13.3609896,-0.911923885
 	rot = 0.0186921805,0.60859251,-0.0143438596,0.79313308
@@ -12514,20 +12163,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 10
+	istg = 13
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 10
-	sepI = 10
+	sqor = 13
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4293583530
-	sym = launchClamp1_4293583410
-	sym = launchClamp1_4293583290
-	srfN = srfAttach,rn.r7.blok.bvgd.10_4291443208
+	sym = launchClamp1_4292600902
+	sym = launchClamp1_4292600236
+	sym = launchClamp1_4292599570
+	srfN = srfAttach,rn.r7.blok.bvgd.10_4292601706
 	EVENTS
 	{
 	}
@@ -12541,8 +12190,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.16133225
-		height = 2.93027115
+		scaleFactor = 1.16133535
+		height = 2.93027878
 		stagingEnabled = True
 		towerRot = -0.0186921805,-0.60859251,0.0143438596,0.79313308
 		EVENTS
@@ -12641,36 +12290,36 @@ PART
 }
 PART
 {
-	part = rn.r7.bvgd.engine_4293719278
+	part = rn.r7.bvgd.engine_4292601452
 	partName = Part
-	pos = -1.45236206,2.45851898,0.0033088387
+	pos = -1.45236611,2.4585228,0.00330877164
 	attPos = 0,0,0
-	attPos0 = -0.419175208,-13.1292,5.58371305E-09
+	attPos0 = -0.419175208,-13.1291981,-4.22175923E-12
 	rot = -4.06575815E-20,-0.707106829,4.06575815E-20,0.707106829
-	attRot = 0,-0.707106829,0,0.707106829
-	attRot0 = 1.82808003E-06,-0.707106829,1.82808003E-06,0.707106829
+	attRot = 0,-0.707106769,0,0.707106769
+	attRot0 = 1.82807992E-06,-0.707106829,1.82807969E-06,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 2
-	sqor = 11
-	sepI = 9
+	sidx = 0
+	sqor = 14
+	sepI = 11
 	attm = 0
-	modCost = 300
-	modMass = 0.0449460745
+	modCost = 0
+	modMass = -0.0102959871
 	modSize = 0,0,0
-	link = rn.r7.vernier.engine.v.fg_4293677338
-	link = rn.r7.vernier.engine.v.fg_4293673788
-	sym = rn.r7.bvgd.engine_4292184104
-	sym = rn.r7.bvgd.engine_4292183626
-	sym = rn.r7.bvgd.engine_4292183148
-	attN = top,rn.r7.blok.bvgd.10_4291443208
-	attN = 1,rn.r7.vernier.engine.v.fg_4293677338
-	attN = 2,rn.r7.vernier.engine.v.fg_4293673788
+	link = rn.r7.vernier.engine.v.fg2_4292601308
+	link = rn.r7.vernier.engine.v.fg2_4292601174
+	sym = rn.r7.bvgd.engine_4292600786
+	sym = rn.r7.bvgd.engine_4292600120
+	sym = rn.r7.bvgd.engine_4292599454
+	attN = top,rn.r7.blok.bvgd.10_4292601706
+	attN = 1,rn.r7.vernier.engine.v.fg2_4292601174
+	attN = 2,rn.r7.vernier.engine.v.fg2_4292601308
 	EVENTS
 	{
 	}
@@ -12704,7 +12353,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -12813,7 +12462,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-107-11D511
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -12834,7 +12483,7 @@ PART
 		amount = 1
 		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
@@ -12842,32 +12491,32 @@ PART
 }
 PART
 {
-	part = rn.r7.vernier.engine.v.fg_4293677338
+	part = rn.r7.vernier.engine.v.fg2_4292601308
 	partName = Part
-	pos = -3.50632787,1.59389496,0.550287068
+	pos = -3.50632882,1.59390259,-0.540047884
 	attPos = 0,0,0
-	attPos0 = 0.546976507,-0.864620328,2.05395389
-	rot = -9.23716073E-13,-1.1920929E-07,2.27373703E-13,1.00000012
+	attPos0 = -0.543354094,-0.86462009,2.05395436
+	rot = -4.70906815E-14,1.21743357E-19,2.27373675E-13,1.00000012
 	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
+	attRot0 = 0,0.707106829,0,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 3
-	sqor = 11
-	sepI = 9
+	sidx = 1
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4292183910
-	sym = rn.r7.vernier.engine.v.fg_4292183432
-	sym = rn.r7.vernier.engine.v.fg_4292182954
-	attN = top,rn.r7.bvgd.engine_4293719278
+	sym = rn.r7.vernier.engine.v.fg2_4292600642
+	sym = rn.r7.vernier.engine.v.fg2_4292599976
+	sym = rn.r7.vernier.engine.v.fg2_4292599310
+	attN = top,rn.r7.bvgd.engine_4292601452
 	EVENTS
 	{
 	}
@@ -12901,7 +12550,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -13056,7 +12705,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = Booster_Verniers
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -13073,44 +12722,44 @@ PART
 	}
 	RESOURCE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
 		isTweakable = False
-		hideFlow = True
+		hideFlow = False
 		isVisible = True
 		flowMode = Both
 	}
 }
 PART
 {
-	part = rn.r7.vernier.engine.v.fg_4293673788
+	part = rn.r7.vernier.engine.v.fg2_4292601174
 	partName = Part
-	pos = -3.50632691,1.59389496,-0.540048659
+	pos = -3.50632787,1.59390259,0.550287008
 	attPos = 0,0,0
-	attPos0 = -0.543354094,-0.864620328,2.05395389
-	rot = -9.23716073E-13,-1.1920929E-07,2.27373703E-13,1.00000012
+	attPos0 = 0.546976626,-0.86462009,2.05395412
+	rot = -4.70906815E-14,1.21743357E-19,2.27373675E-13,1.00000012
 	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
+	attRot0 = 0,0.707106829,0,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 4
-	sqor = 11
-	sepI = 9
+	sidx = 2
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4292183768
-	sym = rn.r7.vernier.engine.v.fg_4292183290
-	sym = rn.r7.vernier.engine.v.fg_4292182812
-	attN = top,rn.r7.bvgd.engine_4293719278
+	sym = rn.r7.vernier.engine.v.fg2_4292600508
+	sym = rn.r7.vernier.engine.v.fg2_4292599842
+	sym = rn.r7.vernier.engine.v.fg2_4292599176
+	attN = top,rn.r7.bvgd.engine_4292601452
 	EVENTS
 	{
 	}
@@ -13144,7 +12793,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -13299,7 +12948,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = Booster_Verniers
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -13316,21 +12965,21 @@ PART
 	}
 	RESOURCE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
 		isTweakable = False
-		hideFlow = True
+		hideFlow = False
 		isVisible = True
 		flowMode = Both
 	}
 }
 PART
 {
-	part = rn.r7.blok.bvgd.10_4293673104
+	part = rn.r7.blok.bvgd.10_4292601040
 	partName = Part
-	pos = -0.00866203383,15.5877113,1.02776587
+	pos = -0.00866203383,15.587719,1.02776563
 	attPos = 0,0,0
 	attPos0 = -1.16415301E-10,2.15469599,1.02445698
 	rot = -1.82808003E-06,0.707106829,-1.82808003E-06,0.707106829
@@ -13340,25 +12989,25 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 7
 	sidx = 0
-	sqor = 9
-	sepI = 9
+	sqor = 11
+	sepI = 11
 	attm = 1
-	modCost = 1.69167256
+	modCost = 3.23894739
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.WING.R7_4293672516
-	link = launchClamp1_4293583530
-	link = rn.r7.bvgd.engine_4292184104
-	sym = rn.r7.blok.bvgd.10_4291443208
-	sym = rn.r7.blok.bvgd.10_4293672462
-	sym = rn.r7.blok.bvgd.10_4293671820
-	srfN = srfAttach,rn.r7.blok.a.10_4291443978
-	attN = top,rn.r7.bvgd.engine_4292184104
-	attN = wing,rn.WING.R7_4293672516
+	link = rn.WING.R7_4292600952
+	link = launchClamp1_4292600902
+	link = rn.r7.bvgd.engine_4292600786
+	sym = rn.r7.blok.bvgd.10_4292601706
+	sym = rn.r7.blok.bvgd.10_4292600374
+	sym = rn.r7.blok.bvgd.10_4292599708
+	srfN = srfAttach,rn.r7.blok.a.10_4292601922
+	attN = top,rn.r7.bvgd.engine_4292600786
+	attN = wing,rn.WING.R7_4292600952
 	EVENTS
 	{
 	}
@@ -13514,7 +13163,7 @@ PART
 		isEnabled = True
 		type = Default
 		utilization = 86
-		mass = 1.83000004
+		mass = 1.9749999
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -13536,8 +13185,8 @@ PART
 			temperature = 90.1500015
 			fillable = True
 			techRequired = 
-			amount = 24612.395826397002
-			maxAmount = 24612.395826397002
+			amount = 24141.633791811855
+			maxAmount = 24141.633791811855
 		}
 		TANK
 		{
@@ -13550,8 +13199,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 13862.507763603
-			maxAmount = 13862.507763603
+			amount = 13597.359425271441
+			maxAmount = 13597.359425271441
 		}
 		TANK
 		{
@@ -13634,8 +13283,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 0
-			maxAmount = 0
+			amount = 735.91038291670441
+			maxAmount = 735.91038291670441
 		}
 		TANK
 		{
@@ -14270,9 +13919,9 @@ PART
 	}
 	RESOURCE
 	{
-		name = LqdOxygen
-		amount = 24612.395826397002
-		maxAmount = 24612.395826397002
+		name = Kerosene
+		amount = 13597.359425271441
+		maxAmount = 13597.359425271441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -14281,9 +13930,20 @@ PART
 	}
 	RESOURCE
 	{
-		name = Kerosene
-		amount = 13862.507763603
-		maxAmount = 13862.507763603
+		name = LqdOxygen
+		amount = 24141.633791811855
+		maxAmount = 24141.633791811855
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = HTP
+		amount = 735.91038291670441
+		maxAmount = 735.91038291670441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -14293,9 +13953,9 @@ PART
 }
 PART
 {
-	part = rn.WING.R7_4293672516
+	part = rn.WING.R7_4292600952
 	partName = Part
-	pos = -0.00866179541,2.53577805,3.99502707
+	pos = -0.00866203383,2.53578568,3.99502182
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.00499199E-10
 	rot = -3.65620804E-06,0.707106769,-3.6562069E-06,0.707106888
@@ -14305,20 +13965,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 9
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.WING.R7_4293710982
-	sym = rn.WING.R7_4293671874
-	sym = rn.WING.R7_4293671232
-	attN = top,rn.r7.blok.bvgd.10_4293673104
+	sym = rn.WING.R7_4292601618
+	sym = rn.WING.R7_4292600286
+	sym = rn.WING.R7_4292599620
+	attN = top,rn.r7.blok.bvgd.10_4292601040
 	EVENTS
 	{
 	}
@@ -14412,32 +14072,32 @@ PART
 }
 PART
 {
-	part = launchClamp1_4293583530
+	part = launchClamp1_4292600902
 	partName = Part
-	pos = -0.920591354,2.22673798,4.43120909
+	pos = -0.920588017,2.22674561,4.43121052
 	attPos = 0,0,0
 	attPos0 = -3.40334892,-13.3609896,-0.911924183
-	rot = 0.00307472912,0.991169691,-0.0233599711,0.130489945
+	rot = 0.00307472912,0.991169691,-0.0233599525,0.130489945
 	attRot = 0,0,0,1
 	attRot0 = 0.0186906103,0.60859251,-0.0143418098,0.79313308
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 10
+	istg = 13
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 10
-	sepI = 10
+	sqor = 13
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4293584294
-	sym = launchClamp1_4293583410
-	sym = launchClamp1_4293583290
-	srfN = srfAttach,rn.r7.blok.bvgd.10_4293673104
+	sym = launchClamp1_4292601568
+	sym = launchClamp1_4292600236
+	sym = launchClamp1_4292599570
+	srfN = srfAttach,rn.r7.blok.bvgd.10_4292601040
 	EVENTS
 	{
 	}
@@ -14451,10 +14111,10 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.16133225
-		height = 2.93027115
+		scaleFactor = 1.16133535
+		height = 2.93027878
 		stagingEnabled = True
-		towerRot = -0.00307472888,-0.991169691,0.023359973,0.130489945
+		towerRot = -0.00307472888,-0.991169691,0.0233599525,0.130489945
 		EVENTS
 		{
 		}
@@ -14551,36 +14211,36 @@ PART
 }
 PART
 {
-	part = rn.r7.bvgd.engine_4292184104
+	part = rn.r7.bvgd.engine_4292600786
 	partName = Part
-	pos = -0.00866197422,2.45851898,1.44703722
+	pos = -0.00866203383,2.4585228,1.44701099
 	attPos = 0,0,0
-	attPos0 = -0.419175297,-13.1292,5.55244384E-09
+	attPos0 = -0.419175327,-13.1291981,0
 	rot = -3.41060513E-13,0,-1.13686838E-13,1.00000012
-	attRot = 0,-0.707106829,0,0.707106829
-	attRot0 = 1.82808003E-06,-0.707106829,1.82808003E-06,0.707106829
+	attRot = 0,-0.707106769,0,0.707106769
+	attRot0 = 1.82807992E-06,-0.707106829,1.82807969E-06,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 2
-	sqor = 11
-	sepI = 9
+	sidx = 0
+	sqor = 14
+	sepI = 11
 	attm = 0
-	modCost = 300
-	modMass = 0.0449460745
+	modCost = 0
+	modMass = -0.0102959871
 	modSize = 0,0,0
-	link = rn.r7.vernier.engine.v.fg_4292183910
-	link = rn.r7.vernier.engine.v.fg_4292183768
-	sym = rn.r7.bvgd.engine_4293719278
-	sym = rn.r7.bvgd.engine_4292183626
-	sym = rn.r7.bvgd.engine_4292183148
-	attN = top,rn.r7.blok.bvgd.10_4293673104
-	attN = 1,rn.r7.vernier.engine.v.fg_4292183910
-	attN = 2,rn.r7.vernier.engine.v.fg_4292183768
+	link = rn.r7.vernier.engine.v.fg2_4292600642
+	link = rn.r7.vernier.engine.v.fg2_4292600508
+	sym = rn.r7.bvgd.engine_4292601452
+	sym = rn.r7.bvgd.engine_4292600120
+	sym = rn.r7.bvgd.engine_4292599454
+	attN = top,rn.r7.blok.bvgd.10_4292601040
+	attN = 1,rn.r7.vernier.engine.v.fg2_4292600508
+	attN = 2,rn.r7.vernier.engine.v.fg2_4292600642
 	EVENTS
 	{
 	}
@@ -14614,7 +14274,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -14723,7 +14383,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-107-11D511
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -14744,7 +14404,7 @@ PART
 		amount = 1
 		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
@@ -14752,32 +14412,32 @@ PART
 }
 PART
 {
-	part = rn.r7.vernier.engine.v.fg_4292183910
+	part = rn.r7.vernier.engine.v.fg2_4292600642
 	partName = Part
-	pos = 0.538318157,1.59389496,3.50100565
+	pos = -0.552020013,1.59390259,3.50098467
 	attPos = 0,0,0
-	attPos0 = 0.546976507,-0.864620328,2.05395389
-	rot = -4.54747351E-13,0.707106829,2.17924122E-13,0.707106948
+	attPos0 = -0.543354213,-0.86462009,2.05395532
+	rot = 0,0.707106888,-2.27373675E-13,0.707106888
 	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
+	attRot0 = 1.13686824E-13,0.707106829,1.13686824E-13,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 3
-	sqor = 11
-	sepI = 9
+	sidx = 1
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293677338
-	sym = rn.r7.vernier.engine.v.fg_4292183432
-	sym = rn.r7.vernier.engine.v.fg_4292182954
-	attN = top,rn.r7.bvgd.engine_4292184104
+	sym = rn.r7.vernier.engine.v.fg2_4292601308
+	sym = rn.r7.vernier.engine.v.fg2_4292599976
+	sym = rn.r7.vernier.engine.v.fg2_4292599310
+	attN = top,rn.r7.bvgd.engine_4292600786
 	EVENTS
 	{
 	}
@@ -14811,7 +14471,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -14966,7 +14626,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = Booster_Verniers
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -14983,44 +14643,44 @@ PART
 	}
 	RESOURCE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
 		isTweakable = False
-		hideFlow = True
+		hideFlow = False
 		isVisible = True
 		flowMode = Both
 	}
 }
 PART
 {
-	part = rn.r7.vernier.engine.v.fg_4292183768
+	part = rn.r7.vernier.engine.v.fg2_4292600508
 	partName = Part
-	pos = -0.552020311,1.59389496,3.5010066
+	pos = 0.538318336,1.59390259,3.50097847
 	attPos = 0,0,0
-	attPos0 = -0.543354094,-0.864620328,2.05395389
-	rot = -4.54747351E-13,0.707106829,2.17924122E-13,0.707106948
+	attPos0 = 0.546976626,-0.86462009,2.05395508
+	rot = 0,0.707106888,-2.27373675E-13,0.707106888
 	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
+	attRot0 = 1.13686824E-13,0.707106829,1.13686824E-13,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 4
-	sqor = 11
-	sepI = 9
+	sidx = 2
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293673788
-	sym = rn.r7.vernier.engine.v.fg_4292183290
-	sym = rn.r7.vernier.engine.v.fg_4292182812
-	attN = top,rn.r7.bvgd.engine_4292184104
+	sym = rn.r7.vernier.engine.v.fg2_4292601174
+	sym = rn.r7.vernier.engine.v.fg2_4292599842
+	sym = rn.r7.vernier.engine.v.fg2_4292599176
+	attN = top,rn.r7.bvgd.engine_4292600786
 	EVENTS
 	{
 	}
@@ -15054,7 +14714,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -15209,7 +14869,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = Booster_Verniers
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -15226,21 +14886,21 @@ PART
 	}
 	RESOURCE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
 		isTweakable = False
-		hideFlow = True
+		hideFlow = False
 		isVisible = True
 		flowMode = Both
 	}
 }
 PART
 {
-	part = rn.r7.blok.bvgd.10_4293672462
+	part = rn.r7.blok.bvgd.10_4292600374
 	partName = Part
-	pos = 1.01579487,15.5877113,0.00330862077
+	pos = 1.01579595,15.587719,0.00330841402
 	attPos = 0,0,0
 	attPos0 = 1.02445698,2.15469599,-1.50641398E-07
 	rot = -2.58529508E-06,1,2.73784305E-13,-4.37113883E-08
@@ -15250,25 +14910,25 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 7
 	sidx = 0
-	sqor = 9
-	sepI = 9
+	sqor = 11
+	sepI = 11
 	attm = 1
-	modCost = 1.69167256
+	modCost = 3.23894739
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.WING.R7_4293671874
-	link = launchClamp1_4293583410
-	link = rn.r7.bvgd.engine_4292183626
-	sym = rn.r7.blok.bvgd.10_4291443208
-	sym = rn.r7.blok.bvgd.10_4293673104
-	sym = rn.r7.blok.bvgd.10_4293671820
-	srfN = srfAttach,rn.r7.blok.a.10_4291443978
-	attN = top,rn.r7.bvgd.engine_4292183626
-	attN = wing,rn.WING.R7_4293671874
+	link = rn.WING.R7_4292600286
+	link = launchClamp1_4292600236
+	link = rn.r7.bvgd.engine_4292600120
+	sym = rn.r7.blok.bvgd.10_4292601706
+	sym = rn.r7.blok.bvgd.10_4292601040
+	sym = rn.r7.blok.bvgd.10_4292599708
+	srfN = srfAttach,rn.r7.blok.a.10_4292601922
+	attN = top,rn.r7.bvgd.engine_4292600120
+	attN = wing,rn.WING.R7_4292600286
 	EVENTS
 	{
 	}
@@ -15424,7 +15084,7 @@ PART
 		isEnabled = True
 		type = Default
 		utilization = 86
-		mass = 1.83000004
+		mass = 1.9749999
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -15446,8 +15106,8 @@ PART
 			temperature = 90.1500015
 			fillable = True
 			techRequired = 
-			amount = 24612.395826397002
-			maxAmount = 24612.395826397002
+			amount = 24141.633791811855
+			maxAmount = 24141.633791811855
 		}
 		TANK
 		{
@@ -15460,8 +15120,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 13862.507763603
-			maxAmount = 13862.507763603
+			amount = 13597.359425271441
+			maxAmount = 13597.359425271441
 		}
 		TANK
 		{
@@ -15544,8 +15204,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 0
-			maxAmount = 0
+			amount = 735.91038291670441
+			maxAmount = 735.91038291670441
 		}
 		TANK
 		{
@@ -16180,9 +15840,9 @@ PART
 	}
 	RESOURCE
 	{
-		name = LqdOxygen
-		amount = 24612.395826397002
-		maxAmount = 24612.395826397002
+		name = Kerosene
+		amount = 13597.359425271441
+		maxAmount = 13597.359425271441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -16191,9 +15851,20 @@ PART
 	}
 	RESOURCE
 	{
-		name = Kerosene
-		amount = 13862.507763603
-		maxAmount = 13862.507763603
+		name = LqdOxygen
+		amount = 24141.633791811855
+		maxAmount = 24141.633791811855
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = HTP
+		amount = 735.91038291670441
+		maxAmount = 735.91038291670441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -16203,9 +15874,9 @@ PART
 }
 PART
 {
-	part = rn.WING.R7_4293671874
+	part = rn.WING.R7_4292600286
 	partName = Part
-	pos = 3.98303914,2.53577805,0.00330836163
+	pos = 3.98303962,2.53578568,0.0033081756
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.00499199E-10
 	rot = -5.17065791E-06,1,6.85106919E-13,4.05823144E-08
@@ -16215,20 +15886,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 9
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.WING.R7_4293710982
-	sym = rn.WING.R7_4293672516
-	sym = rn.WING.R7_4293671232
-	attN = top,rn.r7.blok.bvgd.10_4293672462
+	sym = rn.WING.R7_4292601618
+	sym = rn.WING.R7_4292600952
+	sym = rn.WING.R7_4292599620
+	attN = top,rn.r7.blok.bvgd.10_4292600374
 	EVENTS
 	{
 	}
@@ -16322,9 +15993,9 @@ PART
 }
 PART
 {
-	part = launchClamp1_4293583410
+	part = launchClamp1_4292600236
 	partName = Part
-	pos = 4.41921139,2.22673798,0.915232182
+	pos = 4.41921234,2.22674561,0.915232539
 	attPos = 0,0,0
 	attPos0 = -3.40334702,-13.3609896,-0.911923885
 	rot = -0.0143438596,0.79313308,-0.0186921805,-0.60859251
@@ -16334,20 +16005,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 10
+	istg = 13
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 10
-	sepI = 10
+	sqor = 13
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4293584294
-	sym = launchClamp1_4293583530
-	sym = launchClamp1_4293583290
-	srfN = srfAttach,rn.r7.blok.bvgd.10_4293672462
+	sym = launchClamp1_4292601568
+	sym = launchClamp1_4292600902
+	sym = launchClamp1_4292599570
+	srfN = srfAttach,rn.r7.blok.bvgd.10_4292600374
 	EVENTS
 	{
 	}
@@ -16361,8 +16032,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.16133225
-		height = 2.93027115
+		scaleFactor = 1.16133535
+		height = 2.93027878
 		stagingEnabled = True
 		towerRot = 0.0143438596,-0.79313308,0.0186921787,-0.60859251
 		EVENTS
@@ -16461,36 +16132,36 @@ PART
 }
 PART
 {
-	part = rn.r7.bvgd.engine_4292183626
+	part = rn.r7.bvgd.engine_4292600120
 	partName = Part
-	pos = 1.43503797,2.45851898,0.00330859656
+	pos = 1.43503928,2.4585228,0.00330841402
 	attPos = 0,0,0
-	attPos0 = -0.419175208,-13.1292,-1.267406E-08
-	rot = 0,0.707106829,0,0.707106829
-	attRot = 0,-0.707106829,0,0.707106829
-	attRot0 = 1.82808003E-06,-0.707106829,1.82808003E-06,0.707106829
+	attPos0 = -0.419175327,-13.1291981,-1.43038861E-08
+	rot = 0,0.707106888,0,0.707106769
+	attRot = 0,-0.707106769,0,0.707106769
+	attRot0 = 1.82807992E-06,-0.707106829,1.82807969E-06,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 2
-	sqor = 11
-	sepI = 9
+	sidx = 0
+	sqor = 14
+	sepI = 11
 	attm = 0
-	modCost = 300
-	modMass = 0.0449460745
+	modCost = 0
+	modMass = -0.0102959871
 	modSize = 0,0,0
-	link = rn.r7.vernier.engine.v.fg_4292183432
-	link = rn.r7.vernier.engine.v.fg_4292183290
-	sym = rn.r7.bvgd.engine_4293719278
-	sym = rn.r7.bvgd.engine_4292184104
-	sym = rn.r7.bvgd.engine_4292183148
-	attN = top,rn.r7.blok.bvgd.10_4293672462
-	attN = 1,rn.r7.vernier.engine.v.fg_4292183432
-	attN = 2,rn.r7.vernier.engine.v.fg_4292183290
+	link = rn.r7.vernier.engine.v.fg2_4292599976
+	link = rn.r7.vernier.engine.v.fg2_4292599842
+	sym = rn.r7.bvgd.engine_4292601452
+	sym = rn.r7.bvgd.engine_4292600786
+	sym = rn.r7.bvgd.engine_4292599454
+	attN = top,rn.r7.blok.bvgd.10_4292600374
+	attN = 1,rn.r7.vernier.engine.v.fg2_4292599842
+	attN = 2,rn.r7.vernier.engine.v.fg2_4292599976
 	EVENTS
 	{
 	}
@@ -16524,7 +16195,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -16633,7 +16304,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-107-11D511
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -16654,7 +16325,7 @@ PART
 		amount = 1
 		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
@@ -16662,32 +16333,32 @@ PART
 }
 PART
 {
-	part = rn.r7.vernier.engine.v.fg_4292183432
+	part = rn.r7.vernier.engine.v.fg2_4292599976
 	partName = Part
-	pos = 3.48900294,1.59389496,-0.543667495
+	pos = 3.48900247,1.59390259,0.546666563
 	attPos = 0,0,0
-	attPos0 = 0.546976507,-0.864620328,2.05395389
-	rot = -2.27373675E-13,1.00000012,-2.46021628E-13,1.94707184E-07
+	attPos0 = -0.543354094,-0.86462009,2.05395436
+	rot = 2.27373675E-13,1.00000012,4.70906408E-14,-4.37113918E-08
 	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
+	attRot0 = 0,0.707106829,3.94991386E-14,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 3
-	sqor = 11
-	sepI = 9
+	sidx = 1
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293677338
-	sym = rn.r7.vernier.engine.v.fg_4292183910
-	sym = rn.r7.vernier.engine.v.fg_4292182954
-	attN = top,rn.r7.bvgd.engine_4292183626
+	sym = rn.r7.vernier.engine.v.fg2_4292601308
+	sym = rn.r7.vernier.engine.v.fg2_4292600642
+	sym = rn.r7.vernier.engine.v.fg2_4292599310
+	attN = top,rn.r7.bvgd.engine_4292600120
 	EVENTS
 	{
 	}
@@ -16721,7 +16392,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -16876,7 +16547,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = Booster_Verniers
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -16893,44 +16564,44 @@ PART
 	}
 	RESOURCE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
 		isTweakable = False
-		hideFlow = True
+		hideFlow = False
 		isVisible = True
 		flowMode = Both
 	}
 }
 PART
 {
-	part = rn.r7.vernier.engine.v.fg_4292183290
+	part = rn.r7.vernier.engine.v.fg2_4292599842
 	partName = Part
-	pos = 3.48899865,1.59389496,0.546668708
+	pos = 3.48900247,1.59390259,-0.543667614
 	attPos = 0,0,0
-	attPos0 = -0.543354094,-0.864620328,2.05395389
-	rot = -2.27373675E-13,1.00000012,-2.46021628E-13,1.94707184E-07
+	attPos0 = 0.546976626,-0.86462009,2.05395412
+	rot = 2.27373675E-13,1.00000012,4.70906408E-14,-4.37113918E-08
 	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
+	attRot0 = 0,0.707106829,3.94991386E-14,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 4
-	sqor = 11
-	sepI = 9
+	sidx = 2
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293673788
-	sym = rn.r7.vernier.engine.v.fg_4292183768
-	sym = rn.r7.vernier.engine.v.fg_4292182812
-	attN = top,rn.r7.bvgd.engine_4292183626
+	sym = rn.r7.vernier.engine.v.fg2_4292601174
+	sym = rn.r7.vernier.engine.v.fg2_4292600508
+	sym = rn.r7.vernier.engine.v.fg2_4292599176
+	attN = top,rn.r7.bvgd.engine_4292600120
 	EVENTS
 	{
 	}
@@ -16964,7 +16635,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -17119,7 +16790,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = Booster_Verniers
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -17136,21 +16807,21 @@ PART
 	}
 	RESOURCE
 	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
 		isTweakable = False
-		hideFlow = True
+		hideFlow = False
 		isVisible = True
 		flowMode = Both
 	}
 }
 PART
 {
-	part = rn.r7.blok.bvgd.10_4293671820
+	part = rn.r7.blok.bvgd.10_4292599708
 	partName = Part
-	pos = -0.00866215583,15.5877113,-1.02114809
+	pos = -0.00866203383,15.587719,-1.02114844
 	attPos = 0,0,0
 	attPos0 = -1.22119701E-07,2.15469599,-1.02445698
 	rot = -1.82808003E-06,0.707106829,1.82808003E-06,-0.707106829
@@ -17160,25 +16831,25 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 7
 	sidx = 0
-	sqor = 9
-	sepI = 9
+	sqor = 11
+	sepI = 11
 	attm = 1
-	modCost = 1.69167256
+	modCost = 3.23894739
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.WING.R7_4293671232
-	link = launchClamp1_4293583290
-	link = rn.r7.bvgd.engine_4292183148
-	sym = rn.r7.blok.bvgd.10_4291443208
-	sym = rn.r7.blok.bvgd.10_4293673104
-	sym = rn.r7.blok.bvgd.10_4293672462
-	srfN = srfAttach,rn.r7.blok.a.10_4291443978
-	attN = top,rn.r7.bvgd.engine_4292183148
-	attN = wing,rn.WING.R7_4293671232
+	link = rn.WING.R7_4292599620
+	link = launchClamp1_4292599570
+	link = rn.r7.bvgd.engine_4292599454
+	sym = rn.r7.blok.bvgd.10_4292601706
+	sym = rn.r7.blok.bvgd.10_4292601040
+	sym = rn.r7.blok.bvgd.10_4292600374
+	srfN = srfAttach,rn.r7.blok.a.10_4292601922
+	attN = top,rn.r7.bvgd.engine_4292599454
+	attN = wing,rn.WING.R7_4292599620
 	EVENTS
 	{
 	}
@@ -17334,7 +17005,7 @@ PART
 		isEnabled = True
 		type = Default
 		utilization = 86
-		mass = 1.83000004
+		mass = 1.9749999
 		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
@@ -17356,8 +17027,8 @@ PART
 			temperature = 90.1500015
 			fillable = True
 			techRequired = 
-			amount = 24612.395826397002
-			maxAmount = 24612.395826397002
+			amount = 24141.633791811855
+			maxAmount = 24141.633791811855
 		}
 		TANK
 		{
@@ -17370,8 +17041,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 13862.507763603
-			maxAmount = 13862.507763603
+			amount = 13597.359425271441
+			maxAmount = 13597.359425271441
 		}
 		TANK
 		{
@@ -17454,8 +17125,8 @@ PART
 			temperature = 300
 			fillable = True
 			techRequired = 
-			amount = 0
-			maxAmount = 0
+			amount = 735.91038291670441
+			maxAmount = 735.91038291670441
 		}
 		TANK
 		{
@@ -18090,9 +17761,9 @@ PART
 	}
 	RESOURCE
 	{
-		name = LqdOxygen
-		amount = 24612.395826397002
-		maxAmount = 24612.395826397002
+		name = Kerosene
+		amount = 13597.359425271441
+		maxAmount = 13597.359425271441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -18101,9 +17772,20 @@ PART
 	}
 	RESOURCE
 	{
-		name = Kerosene
-		amount = 13862.507763603
-		maxAmount = 13862.507763603
+		name = LqdOxygen
+		amount = 24141.633791811855
+		maxAmount = 24141.633791811855
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+	RESOURCE
+	{
+		name = HTP
+		amount = 735.91038291670441
+		maxAmount = 735.91038291670441
 		flowState = True
 		isTweakable = True
 		hideFlow = False
@@ -18113,9 +17795,9 @@ PART
 }
 PART
 {
-	part = rn.WING.R7_4293671232
+	part = rn.WING.R7_4292599620
 	partName = Part
-	pos = -0.00866191741,2.53577805,-3.98840523
+	pos = -0.00866203383,2.53578568,-3.9884088
 	attPos = 0,0,0
 	attPos0 = -2.96717596,-13.0519505,-1.00499199E-10
 	rot = -3.65620599E-06,0.707106888,3.65620781E-06,-0.707106769
@@ -18125,20 +17807,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 9
+	istg = 11
 	resPri = 0
 	dstg = 8
 	sidx = -1
 	sqor = -1
-	sepI = 9
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.WING.R7_4293710982
-	sym = rn.WING.R7_4293672516
-	sym = rn.WING.R7_4293671874
-	attN = top,rn.r7.blok.bvgd.10_4293671820
+	sym = rn.WING.R7_4292601618
+	sym = rn.WING.R7_4292600952
+	sym = rn.WING.R7_4292600286
+	attN = top,rn.r7.blok.bvgd.10_4292599708
 	EVENTS
 	{
 	}
@@ -18232,32 +17914,32 @@ PART
 }
 PART
 {
-	part = launchClamp1_4293583290
+	part = launchClamp1_4292599570
 	partName = Part
-	pos = 0.903269053,2.22673798,-4.42458582
+	pos = 0.903270841,2.22674561,-4.42458963
 	attPos = 0,0,0
 	attPos0 = -3.40334892,-13.3609896,-0.911924183
-	rot = -0.0233599674,0.130489886,-0.00307472865,-0.991169691
+	rot = -0.0233599544,0.130489886,-0.00307472865,-0.991169691
 	attRot = 0,0,0,1
 	attRot0 = 0.0186906103,0.60859251,-0.0143418098,0.79313308
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 10
+	istg = 13
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 10
-	sepI = 10
+	sqor = 13
+	sepI = 13
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4293584294
-	sym = launchClamp1_4293583530
-	sym = launchClamp1_4293583410
-	srfN = srfAttach,rn.r7.blok.bvgd.10_4293671820
+	sym = launchClamp1_4292601568
+	sym = launchClamp1_4292600902
+	sym = launchClamp1_4292600236
+	srfN = srfAttach,rn.r7.blok.bvgd.10_4292599708
 	EVENTS
 	{
 	}
@@ -18271,10 +17953,10 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = 1.16133225
-		height = 2.93027115
+		scaleFactor = 1.16133535
+		height = 2.93027878
 		stagingEnabled = True
-		towerRot = 0.0233599693,-0.130489886,0.00307472888,-0.991169691
+		towerRot = 0.0233599544,-0.130489886,0.00307472888,-0.991169691
 		EVENTS
 		{
 		}
@@ -18371,36 +18053,36 @@ PART
 }
 PART
 {
-	part = rn.r7.bvgd.engine_4292183148
+	part = rn.r7.bvgd.engine_4292599454
 	partName = Part
-	pos = -0.00866209622,2.45851898,-1.44041944
+	pos = -0.00866203383,2.4585228,-1.44039392
 	attPos = 0,0,0
-	attPos0 = -0.419175297,-13.1292,-5.55244384E-09
+	attPos0 = -0.419175327,-13.1291981,0
 	rot = -2.27373675E-13,1.00000012,2.27373675E-13,0
-	attRot = 0,-0.707106829,0,0.707106829
-	attRot0 = 1.82808003E-06,-0.707106829,1.82808003E-06,0.707106829
+	attRot = 0,-0.707106769,0,0.707106769
+	attRot0 = 1.82807992E-06,-0.707106829,1.82807969E-06,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 2
-	sqor = 11
-	sepI = 9
+	sidx = 0
+	sqor = 14
+	sepI = 11
 	attm = 0
-	modCost = 300
-	modMass = 0.0449460745
+	modCost = 0
+	modMass = -0.0102959871
 	modSize = 0,0,0
-	link = rn.r7.vernier.engine.v.fg_4292182954
-	link = rn.r7.vernier.engine.v.fg_4292182812
-	sym = rn.r7.bvgd.engine_4293719278
-	sym = rn.r7.bvgd.engine_4292184104
-	sym = rn.r7.bvgd.engine_4292183626
-	attN = top,rn.r7.blok.bvgd.10_4293671820
-	attN = 1,rn.r7.vernier.engine.v.fg_4292182954
-	attN = 2,rn.r7.vernier.engine.v.fg_4292182812
+	link = rn.r7.vernier.engine.v.fg2_4292599310
+	link = rn.r7.vernier.engine.v.fg2_4292599176
+	sym = rn.r7.bvgd.engine_4292601452
+	sym = rn.r7.bvgd.engine_4292600786
+	sym = rn.r7.bvgd.engine_4292600120
+	attN = top,rn.r7.blok.bvgd.10_4292599708
+	attN = 1,rn.r7.vernier.engine.v.fg2_4292599176
+	attN = 2,rn.r7.vernier.engine.v.fg2_4292599310
 	EVENTS
 	{
 	}
@@ -18434,7 +18116,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -18543,7 +18225,7 @@ PART
 	{
 		name = ModuleEngineConfigs
 		isEnabled = True
-		configuration = RD-107-11D511
+		configuration = RD-107-8D728
 		techLevel = -1
 		thrustRating = maxThrust
 		modded = False
@@ -18564,7 +18246,7 @@ PART
 		amount = 1
 		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
@@ -18572,515 +18254,32 @@ PART
 }
 PART
 {
-	part = rn.r7.vernier.engine.v.fg_4292182954
+	part = rn.r7.vernier.engine.v.fg2_4292599310
 	partName = Part
-	pos = -0.555639505,1.59389496,-3.4943881
+	pos = 0.534696758,1.59390259,-3.49436545
 	attPos = 0,0,0
-	attPos0 = 0.546976507,-0.864620328,2.05395389
-	rot = -3.41060513E-13,0.707106948,-1.23136391E-13,-0.707106829
+	attPos0 = -0.543354094,-0.86462009,2.05395508
+	rot = -2.27373675E-13,0.707106888,0,-0.707106888
 	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
+	attRot0 = 1.13686824E-13,0.707106829,1.13686824E-13,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 14
 	resPri = 0
 	dstg = 8
-	sidx = 3
-	sqor = 11
-	sepI = 9
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293677338
-	sym = rn.r7.vernier.engine.v.fg_4292183910
-	sym = rn.r7.vernier.engine.v.fg_4292183432
-	attN = top,rn.r7.bvgd.engine_4292183148
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-		Ullage
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = Booster_Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.r7.vernier.engine.v.fg_4292182812
-	partName = Part
-	pos = 0.534698248,1.59389496,-3.49438715
-	attPos = 0,0,0
-	attPos0 = -0.543354094,-0.864620328,2.05395389
-	rot = -3.41060513E-13,0.707106948,-1.23136391E-13,-0.707106829
-	attRot = 0,0,0,1
-	attRot0 = 1.13686797E-13,0.707106829,-9.72562417E-14,0.707106829
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 11
-	resPri = 0
-	dstg = 8
-	sidx = 4
-	sqor = 11
-	sepI = 9
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	sym = rn.r7.vernier.engine.v.fg_4293673788
-	sym = rn.r7.vernier.engine.v.fg_4292183768
-	sym = rn.r7.vernier.engine.v.fg_4292183290
-	attN = top,rn.r7.bvgd.engine_4292183148
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleEnginesRF
-		isEnabled = True
-		ignitions = 1
-		staged = False
-		flameout = False
-		EngineIgnited = False
-		engineShutdown = False
-		currentThrottle = 0
-		thrustPercentage = 100
-		manuallyOverridden = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			OnAction
-			{
-				actionGroup = None
-			}
-			ShutdownAction
-			{
-				actionGroup = None
-			}
-			ActivateAction
-			{
-				actionGroup = None
-			}
-		}
-		Ullage
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAnimateHeat
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleGimbal
-		isEnabled = True
-		gimbalLock = False
-		gimbalLimiter = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		gimbalActive = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			LockAction
-			{
-				actionGroup = None
-			}
-			FreeAction
-			{
-				actionGroup = None
-			}
-			TogglePitchAction
-			{
-				actionGroup = None
-			}
-			ToggleYawAction
-			{
-				actionGroup = None
-			}
-			ToggleRollAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = EngineGroupModule
-		isEnabled = True
-		EngineGroupId = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleEngineConfigs
-		isEnabled = True
-		configuration = Booster_Verniers
-		techLevel = -1
-		thrustRating = maxThrust
-		modded = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	RESOURCE
-	{
-		name = ElectricCharge
-		amount = 0
-		maxAmount = 0.10000000000000001
-		flowState = True
-		isTweakable = False
-		hideFlow = True
-		isVisible = True
-		flowMode = Both
-	}
-}
-PART
-{
-	part = rn.r7.blok.i.covers_4293438702
-	partName = Part
-	pos = -0.00866203383,32.1272125,0.00330877164
-	attPos = 0,0,0
-	attPos0 = 0,0,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 5
-	resPri = 0
-	dstg = 5
 	sidx = 1
-	sqor = 5
-	sepI = 5
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	attN = top,rn.r7.blok.i.3_4291438884
+	sym = rn.r7.vernier.engine.v.fg2_4292601308
+	sym = rn.r7.vernier.engine.v.fg2_4292600642
+	sym = rn.r7.vernier.engine.v.fg2_4292599976
+	attN = top,rn.r7.bvgd.engine_4292599454
 	EVENTS
 	{
 	}
@@ -19089,226 +18288,12 @@ PART
 	}
 	PARTDATA
 	{
-	}
-	MODULE
-	{
-		name = ModuleJettison
-		isEnabled = True
-		isJettisoned = False
-		shroudHideOverride = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			JettisonAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleJettison
-		isEnabled = True
-		isJettisoned = False
-		shroudHideOverride = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			JettisonAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleJettison
-		isEnabled = True
-		isJettisoned = False
-		shroudHideOverride = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			JettisonAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleDecouple
-		isEnabled = True
-		ejectionForcePercent = 100
-		isDecoupled = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			DecoupleAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleToggleCrossfeed
-		isEnabled = True
-		crossfeedStatus = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			EnableAction
-			{
-				actionGroup = None
-			}
-			DisableAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-}
-PART
-{
-	part = rn.r7.soyuz.fairing2_4293577194
-	partName = Part
-	pos = -0.00866203383,36.8631134,0.00330877164
-	attPos = 0,0,0
-	attPos0 = 1.16415301E-10,0.952121675,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 8
-	resPri = 0
-	dstg = 5
-	sidx = 0
-	sqor = 8
-	sepI = 8
-	attm = 0
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	sym = rn.r7.soyuz.fairing2_4293576048
-	attN = top,rn.r7.adapter.blok.iv2_4291421608
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = ModuleDecouple
-		isEnabled = True
-		ejectionForcePercent = 100
-		isDecoupled = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			DecoupleAction
-			{
-				actionGroup = Abort
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
 	}
 	MODULE
 	{
 		name = ModuleEnginesRF
 		isEnabled = True
-		ignitions = -1
+		ignitions = 1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -19328,11 +18313,11 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
-				actionGroup = Abort
+				actionGroup = None
 			}
 		}
 		Ullage
@@ -19344,11 +18329,85 @@ PART
 	}
 	MODULE
 	{
-		name = BDFStextureSwitch2
+		name = ModuleAnimateHeat
 		isEnabled = True
-		selectedTexture = 0
-		selectedTextureURL = RN_Soviet_Rockets/R7/master/B FAIRING OKT
-		selectedMapURL = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
 		stagingEnabled = True
 		EVENTS
 		{
@@ -19407,27 +18466,18 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleToggleCrossfeed
+		name = ModuleEngineConfigs
 		isEnabled = True
-		crossfeedStatus = False
+		configuration = RD-107-8D728
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
 		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-			EnableAction
-			{
-				actionGroup = None
-			}
-			DisableAction
-			{
-				actionGroup = None
-			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -19435,11 +18485,11 @@ PART
 	}
 	RESOURCE
 	{
-		name = SolidFuel
-		amount = 1.1200000000000001
-		maxAmount = 1.1200000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
@@ -19447,30 +18497,32 @@ PART
 }
 PART
 {
-	part = rn.r7.soyuz.fairing2_4293576048
+	part = rn.r7.vernier.engine.v.fg2_4292599176
 	partName = Part
-	pos = -0.00866203383,36.8631134,0.00330890063
+	pos = -0.555641115,1.59390259,-3.49436665
 	attPos = 0,0,0
-	attPos0 = 1.16415301E-10,0.952121675,1.29220993E-07
-	rot = 0,1,0,-4.37113883E-08
+	attPos0 = 0.546976745,-0.86462009,2.05395508
+	rot = -2.27373675E-13,0.707106888,0,-0.707106888
 	attRot = 0,0,0,1
-	attRot0 = 0,1,0,-4.37113883E-08
+	attRot0 = 1.13686824E-13,0.707106829,1.13686824E-13,0.707106829
 	mir = 1,1,1
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 8
+	istg = 14
 	resPri = 0
-	dstg = 5
-	sidx = 0
-	sqor = 8
-	sepI = 8
+	dstg = 8
+	sidx = 2
+	sqor = 14
+	sepI = 11
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.r7.soyuz.fairing2_4293577194
-	attN = top,rn.r7.adapter.blok.iv2_4291421608
+	sym = rn.r7.vernier.engine.v.fg2_4292601174
+	sym = rn.r7.vernier.engine.v.fg2_4292600508
+	sym = rn.r7.vernier.engine.v.fg2_4292599842
+	attN = top,rn.r7.bvgd.engine_4292599454
 	EVENTS
 	{
 	}
@@ -19482,30 +18534,9 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleDecouple
-		isEnabled = True
-		ejectionForcePercent = 100
-		isDecoupled = False
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			DecoupleAction
-			{
-				actionGroup = Abort
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
 		name = ModuleEnginesRF
 		isEnabled = True
-		ignitions = -1
+		ignitions = 1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -19525,11 +18556,11 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
-				actionGroup = Abort
+				actionGroup = None
 			}
 		}
 		Ullage
@@ -19541,25 +18572,7 @@ PART
 	}
 	MODULE
 	{
-		name = BDFStextureSwitch2
-		isEnabled = True
-		selectedTexture = 0
-		selectedTextureURL = RN_Soviet_Rockets/R7/master/B FAIRING OKT
-		selectedMapURL = 
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
+		name = ModuleAnimateHeat
 		isEnabled = True
 		stagingEnabled = True
 		EVENTS
@@ -19574,7 +18587,7 @@ PART
 	}
 	MODULE
 	{
-		name = FARAeroPartModule
+		name = ModuleAnimateHeat
 		isEnabled = True
 		stagingEnabled = True
 		EVENTS
@@ -19589,24 +18602,15 @@ PART
 	}
 	MODULE
 	{
-		name = FARPartModule
+		name = ModuleGimbal
 		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleToggleCrossfeed
-		isEnabled = True
-		crossfeedStatus = False
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
 		stagingEnabled = True
 		EVENTS
 		{
@@ -19617,14 +18621,106 @@ PART
 			{
 				actionGroup = None
 			}
-			EnableAction
+			LockAction
 			{
 				actionGroup = None
 			}
-			DisableAction
+			FreeAction
 			{
 				actionGroup = None
 			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD-107-8D728
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
 		}
 		UPGRADESAPPLIED
 		{
@@ -19632,11 +18728,11 @@ PART
 	}
 	RESOURCE
 	{
-		name = SolidFuel
-		amount = 1.1200000000000001
-		maxAmount = 1.1200000000000001
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
@@ -19644,243 +18740,11 @@ PART
 }
 PART
 {
-	part = 7k.ok.lsolar_4292009774
+	part = rn.r7.blok.a.engine_4292599042
 	partName = Part
-	pos = -1.05477035,38.4195175,0.00330883404
+	pos = -0.00866203383,2.10443878,0.00330877164
 	attPos = 0,0,0
-	attPos0 = -1.04610837,0.0456161499,6.23529104E-08
-	rot = -1.25607395E-15,0,-2.33692532E-08,1
-	attRot = 0,0,0,0.999999881
-	attRot0 = -1.25607395E-15,0,-2.33692532E-08,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 4
-	resPri = 0
-	dstg = 2
-	sidx = -1
-	sqor = -1
-	sepI = 3
-	attm = 1
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	srfN = srfAttach,ok.pao_4292045100
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = KopernicusSolarPanel
-		isEnabled = True
-		trackingBodyName = The Sun
-		manualTracking = False
-		relativeSunAOA = False
-		efficiencyMult = 1
-		launchUT = -1
-		currentRotation = (0.707106829, 9.41569667E-08, 0.707106829, -9.41569667E-08)
-		storedAnimationTime = 0
-		storedAnimationSpeed = 1
-		deployState = RETRACTED
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ExtendPanelsAction
-			{
-				actionGroup = Custom01
-			}
-			ExtendAction
-			{
-				actionGroup = None
-			}
-			RetractAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-}
-PART
-{
-	part = 7k.ok.rsolar_4292004664
-	partName = Part
-	pos = 1.03620505,38.4122543,0.00330883381
-	attPos = 0,0,0
-	attPos0 = 1.04486704,0.0383529663,6.22790139E-08
-	rot = -2.33692514E-08,-1,-1.25607405E-15,-8.42937027E-08
-	attRot = 0,0,0,-0.999999881
-	attRot0 = -2.33692514E-08,-1,-1.25607405E-15,-8.42937027E-08
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 4
-	resPri = 0
-	dstg = 2
-	sidx = -1
-	sqor = -1
-	sepI = 3
-	attm = 1
-	modCost = 0
-	modMass = 0
-	modSize = 0,0,0
-	srfN = srfAttach,ok.pao_4292045100
-	EVENTS
-	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
-	}
-	MODULE
-	{
-		name = KopernicusSolarPanel
-		isEnabled = True
-		trackingBodyName = The Sun
-		manualTracking = False
-		relativeSunAOA = False
-		efficiencyMult = 1
-		launchUT = -1
-		currentRotation = (0, -0.707106829, 0, 0.707106829)
-		storedAnimationTime = 0
-		storedAnimationSpeed = 1
-		deployState = RETRACTED
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ExtendPanelsAction
-			{
-				actionGroup = Custom01
-			}
-			ExtendAction
-			{
-				actionGroup = None
-			}
-			RetractAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = GeometryPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARAeroPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = FARPartModule
-		isEnabled = True
-		stagingEnabled = True
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-}
-PART
-{
-	part = ok.sa.srb_4292535810
-	partName = Part
-	pos = -0.00866203383,40.5033379,0.00330877164
-	attPos = 0,0,0
-	attPos0 = 0,0,0
+	attPos0 = 0,-11.3285789,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -19888,17 +18752,25 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 0
+	istg = 14
 	resPri = 0
-	dstg = 0
-	sidx = 0
-	sqor = 0
-	sepI = -1
+	dstg = 6
+	sidx = 5
+	sqor = 14
+	sepI = 8
 	attm = 0
 	modCost = 0
-	modMass = 0
+	modMass = -0.0480344296
 	modSize = 0,0,0
-	attN = top,ok.sa_4292714736
+	link = rn.r7.vernier.engine.v.fg_4292598764
+	link = rn.r7.vernier.engine.v.fg_4292598630
+	link = rn.r7.vernier.engine.v.fg_4292598496
+	link = rn.r7.vernier.engine.v.fg_4292598362
+	attN = top,rn.r7.blok.a.10_4292601922
+	attN = 1,rn.r7.vernier.engine.v.fg_4292598630
+	attN = 2,rn.r7.vernier.engine.v.fg_4292598764
+	attN = 3,rn.r7.vernier.engine.v.fg_4292598496
+	attN = 4,rn.r7.vernier.engine.v.fg_4292598362
 	EVENTS
 	{
 	}
@@ -19912,7 +18784,7 @@ PART
 	{
 		name = ModuleEnginesRF
 		isEnabled = True
-		ignitions = -1
+		ignitions = 1
 		staged = False
 		flameout = False
 		EngineIgnited = False
@@ -19932,7 +18804,7 @@ PART
 			}
 			ShutdownAction
 			{
-				actionGroup = None
+				actionGroup = Abort
 			}
 			ActivateAction
 			{
@@ -19948,9 +18820,8 @@ PART
 	}
 	MODULE
 	{
-		name = RNLandingEngine
+		name = ModuleAnimateHeat
 		isEnabled = True
-		IgnitionAltitude = 5
 		stagingEnabled = True
 		EVENTS
 		{
@@ -19979,6 +18850,22 @@ PART
 	}
 	MODULE
 	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
 		name = GeometryPartModule
 		isEnabled = True
 		stagingEnabled = True
@@ -20022,13 +18909,996 @@ PART
 		{
 		}
 	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD-108-8D727
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
 	RESOURCE
 	{
-		name = SolidFuel
-		amount = 0.625
-		maxAmount = 0.625
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
 		flowState = True
-		isTweakable = True
+		isTweakable = False
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = rn.r7.vernier.engine.v.fg_4292598764
+	partName = Part
+	pos = -1.10994077,1.53477478,0.00330877164
+	attPos = 0,0,0
+	attPos0 = -1.10127902,-0.569664001,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 14
+	resPri = 0
+	dstg = 6
+	sidx = 3
+	sqor = 14
+	sepI = 8
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	sym = rn.r7.vernier.engine.v.fg_4292598630
+	attN = top,rn.r7.blok.a.engine_4292599042
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = 1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = Abort
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD-108-8D727
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
+		flowState = True
+		isTweakable = False
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = rn.r7.vernier.engine.v.fg_4292598630
+	partName = Part
+	pos = 1.09261703,1.53477478,0.00330877164
+	attPos = 0,0,0
+	attPos0 = 1.10127902,-0.569664001,0
+	rot = 0,1,0,-4.37113883E-08
+	attRot = 0,0,0,1
+	attRot0 = 0,1,0,-4.37113883E-08
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 14
+	resPri = 0
+	dstg = 6
+	sidx = 3
+	sqor = 14
+	sepI = 8
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	sym = rn.r7.vernier.engine.v.fg_4292598764
+	attN = top,rn.r7.blok.a.engine_4292599042
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = 1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = Abort
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD-108-8D727
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
+		flowState = True
+		isTweakable = False
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = rn.r7.vernier.engine.v.fg_4292598496
+	partName = Part
+	pos = -0.00866203383,1.53477478,-1.09797025
+	attPos = 0,0,0
+	attPos0 = 0,-0.569664001,-1.10127902
+	rot = 0,-0.707106829,0,0.707106829
+	attRot = 0,-0.707106769,0,0.707106769
+	attRot0 = 0,-0.707106829,0,0.707106829
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 14
+	resPri = 0
+	dstg = 6
+	sidx = 4
+	sqor = 14
+	sepI = 8
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	sym = rn.r7.vernier.engine.v.fg_4292598362
+	attN = top,rn.r7.blok.a.engine_4292599042
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = 1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = Abort
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD-108-8D727
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
+		flowState = True
+		isTweakable = False
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
+	}
+}
+PART
+{
+	part = rn.r7.vernier.engine.v.fg_4292598362
+	partName = Part
+	pos = -0.00866203383,1.53477478,1.10458791
+	attPos = 0,0,0
+	attPos0 = 0,-0.569664001,1.10127902
+	rot = 0,0.707106888,0,0.707106769
+	attRot = 0,-0.707106769,0,0.707106769
+	attRot0 = 0,0.707106888,0,0.707106769
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 14
+	resPri = 0
+	dstg = 6
+	sidx = 4
+	sqor = 14
+	sepI = 8
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	sym = rn.r7.vernier.engine.v.fg_4292598496
+	attN = top,rn.r7.blok.a.engine_4292599042
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleEnginesRF
+		isEnabled = True
+		ignitions = 1
+		staged = False
+		flameout = False
+		EngineIgnited = False
+		engineShutdown = False
+		currentThrottle = 0
+		thrustPercentage = 100
+		manuallyOverridden = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnAction
+			{
+				actionGroup = None
+			}
+			ShutdownAction
+			{
+				actionGroup = Abort
+			}
+			ActivateAction
+			{
+				actionGroup = None
+			}
+		}
+		Ullage
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleAnimateHeat
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleGimbal
+		isEnabled = True
+		gimbalLock = False
+		gimbalLimiter = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		gimbalActive = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			LockAction
+			{
+				actionGroup = None
+			}
+			FreeAction
+			{
+				actionGroup = None
+			}
+			TogglePitchAction
+			{
+				actionGroup = None
+			}
+			ToggleYawAction
+			{
+				actionGroup = None
+			}
+			ToggleRollAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = EngineGroupModule
+		isEnabled = True
+		EngineGroupId = 
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleEngineConfigs
+		isEnabled = True
+		configuration = RD-108-8D727
+		techLevel = -1
+		thrustRating = maxThrust
+		modded = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	RESOURCE
+	{
+		name = TEATEB
+		amount = 1
+		maxAmount = 1
+		flowState = True
+		isTweakable = False
 		hideFlow = False
 		isVisible = True
 		flowMode = Both
