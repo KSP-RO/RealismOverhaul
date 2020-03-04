@@ -27,7 +27,7 @@ namespace RealismOverhaul
         [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Pe", groupName = "solarCellPlanner")]
         public string solarOutputPe = "";
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Ap", groupName = "solarCellPlanner"]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Ap", groupName = "solarCellPlanner")]
         public string solarOutputAp = "";
 
         [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = false, guiName = "Expected Output", guiFormat = "F2", groupName = "solarCellPlanner")]
