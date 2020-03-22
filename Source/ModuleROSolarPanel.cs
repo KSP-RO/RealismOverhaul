@@ -10,27 +10,27 @@ namespace RealismOverhaul
     {
         private static HashSet<string> cbOptions = new HashSet<string>();
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "<b>SOLAR CELL DEGRADATION AT</b>")]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "<b>SOLAR CELL DEGRADATION AT</b>", groupName = "solarCellPlanner", groupDisplayName = "Solar Cell Planner")]
         public string spCalc = String.Empty;
 
-        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = false, guiName = "Days Elapsed"),
+        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = false, guiName = "Days Elapsed", groupName = "solarCellPlanner"),
             UI_FloatEdit(minValue = 1, maxValue = 36500, incrementLarge = 100.0f, incrementSmall = 10.0f, incrementSlide = 1.0f, requireFullControl = false, suppressEditorShipModified = true, sigFigs = 0)]
         public float daysElapsed = 1f;
 
-        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = false, guiName = "Efficiency", guiFormat = "F0", guiUnits = "%")]
+        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = false, guiName = "Efficiency", guiFormat = "F0", guiUnits = "%", groupName = "solarCellPlanner")]
         public float solarEfficiency = 100.0f;
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Celestial Body"),
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Celestial Body", groupName = "solarCellPlanner"),
             UI_ChooseOption(suppressEditorShipModified = true, options = new[] { "Choose One" })]
         public string selectedBody = "Choose One";
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Pe")]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Pe", groupName = "solarCellPlanner")]
         public string solarOutputPe = "";
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Ap")]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Ap", groupName = "solarCellPlanner")]
         public string solarOutputAp = "";
 
-        [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = false, guiName = "Expected Output", guiFormat = "F2")]
+        [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = false, guiName = "Expected Output", guiFormat = "F2", groupName = "solarCellPlanner")]
         public string futureOutput = "";
 
         public override void OnAwake()
