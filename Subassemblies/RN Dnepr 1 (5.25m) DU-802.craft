@@ -2,14 +2,14 @@ ship = Dnepr 1 (5.25m) DU-802
 version = 1.1.3
 description = GEO - 300kg (unconfirmed). 5.25m fairing.
 type = None
-size = 4.32108498,34.246521,4.32108402
+size = 4.3210845,34.246521,4.32108402
 PART
 {
-	part = rn.du802_4292765958
+	part = rn.du802_4293213730
 	partName = Part
-	pos = -4.51139498,29.0502548,-0.576327264
+	pos = -2.72543097,41.7420731,2.35089731
 	attPos = 0,0,0
-	attPos0 = -4.51139498,29.0502548,-0.576327264
+	attPos0 = -2.72543097,41.7420731,2.35089731
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -17,18 +17,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 11
+	istg = 27
 	resPri = 0
 	dstg = 2
 	sidx = 0
-	sqor = 10
-	sepI = 10
+	sqor = 26
+	sepI = 26
 	attm = 0
 	modCost = 0.237500757
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.du802.engine_4292765164
-	attN = bottom,rn.du802.engine_4292765164
+	link = rn.du802.rcs_4293213226
+	link = rn.du802.engine_4293212928
+	attN = bottom,rn.du802.engine_4293212928
+	attN = rcs,rn.du802.rcs_4293213226
 	EVENTS
 	{
 	}
@@ -57,7 +59,6 @@ PART
 			HibernateToggle
 			{
 				actionGroup = None
-				active = False
 			}
 		}
 		UPGRADESAPPLIED
@@ -94,6 +95,7 @@ PART
 			StartTransmissionAction
 			{
 				actionGroup = None
+				active = False
 			}
 		}
 		UPGRADESAPPLIED
@@ -172,7 +174,8 @@ PART
 		isEnabled = True
 		type = ServiceModule
 		utilization = 86
-		mass = 0.119999997
+		mass = 0.144999996
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 505
@@ -1168,36 +1171,6 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleRCSFX
-		isEnabled = True
-		rcsEnabled = True
-		thrustPercentage = 100
-		currentShowToggles = False
-		enableYaw = True
-		enablePitch = True
-		enableRoll = True
-		enableX = True
-		enableY = True
-		enableZ = True
-		useThrottle = False
-		fullThrust = False
-		stagingEnabled = False
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-			ToggleAction
-			{
-				actionGroup = None
-			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
 		name = MechJebCore
 		isEnabled = True
 		running = True
@@ -1278,18 +1251,46 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		crossfeedStatus = False
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleTripLogger
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		Log
+		{
+			flight = 0
 		}
 		UPGRADESAPPLIED
 		{
@@ -1331,11 +1332,11 @@ PART
 }
 PART
 {
-	part = rn.du802.engine_4292765164
+	part = rn.du802.rcs_4293213226
 	partName = Part
-	pos = -4.51139498,28.9168205,-0.576327264
+	pos = -2.72543097,41.7420731,2.35089731
 	attPos = 0,0,0
-	attPos0 = 0,-0.133433342,0
+	attPos0 = 0,0,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -1343,19 +1344,129 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 12
+	istg = 29
 	resPri = 0
-	dstg = 3
-	sidx = 1
-	sqor = 11
-	sepI = 10
+	dstg = 2
+	sidx = 0
+	sqor = 28
+	sepI = 26
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.dnepr1.fairing.base_4292746510
-	attN = top,rn.du802_4292765958
-	attN = bottom,rn.dnepr1.fairing.base_4292746510
+	attN = top,rn.du802_4293213730
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = GeometryPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARAeroPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = FARPartModule
+		isEnabled = True
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleRCSFX
+		isEnabled = True
+		rcsEnabled = False
+		thrustPercentage = 100
+		currentShowToggles = False
+		enableYaw = True
+		enablePitch = True
+		enableRoll = True
+		enableX = True
+		enableY = True
+		enableZ = True
+		useThrottle = False
+		fullThrust = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = rn.du802.engine_4293212928
+	partName = Part
+	pos = -2.72543097,41.6086388,2.35089731
+	attPos = 0,0,0
+	attPos0 = 0,-0.133434296,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 28
+	resPri = 0
+	dstg = 3
+	sidx = 0
+	sqor = 27
+	sepI = 26
+	attm = 0
+	modCost = 0
+	modMass = 0
+	modSize = 0,0,0
+	link = rn.dnepr1.fairing.base_4293205328
+	attN = top,rn.du802_4293213730
+	attN = bottom,rn.dnepr1.fairing.base_4293205328
 	EVENTS
 	{
 	}
@@ -1529,33 +1640,14 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.fairing.base_4292746510
+	part = rn.dnepr1.fairing.base_4293205328
 	partName = Part
-	pos = -4.51139498,28.9697227,-0.576327264
+	pos = -2.72543097,41.8083687,2.35089731
 	attPos = 0,0,0
-	attPos0 = 0,0.0529022217,0
+	attPos0 = 0,0.199729919,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -1563,21 +1655,21 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 12
+	istg = 29
 	resPri = 0
 	dstg = 5
-	sidx = 0
-	sqor = 11
-	sepI = 11
+	sidx = 1
+	sqor = 28
+	sepI = 28
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.dnepr1.fairing_4292746332
-	link = rn.dnepr1.interstage2_4292745502
-	attN = top,rn.du802.engine_4292765164
-	attN = bottom,rn.dnepr1.interstage2_4292745502
-	attN = f1,rn.dnepr1.fairing_4292746332
+	link = rn.dnepr1.fairing_4293205148
+	link = rn.dnepr1.interstage2_4293204202
+	attN = top,rn.du802.engine_4293212928
+	attN = bottom,rn.dnepr1.interstage2_4293204202
+	attN = f1,rn.dnepr1.fairing_4293205148
 	EVENTS
 	{
 	}
@@ -1673,18 +1765,27 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		crossfeedStatus = False
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -1693,11 +1794,11 @@ PART
 }
 PART
 {
-	part = rn.dnepr1.fairing_4292746332
+	part = rn.dnepr1.fairing_4293205148
 	partName = Part
-	pos = -4.51139498,30.2640533,-0.576327264
+	pos = -2.72543097,43.1026993,2.35089731
 	attPos = 0,0,0
-	attPos0 = 8.94069672E-08,1.2943306,1.78813934E-07
+	attPos0 = 8.94069672E-08,1.2943306,1.7509501E-07
 	rot = 0,0.707106829,0,0.707106829
 	attRot = 0,0.707106769,0,0.707106769
 	attRot0 = 0,0.707106829,0,0.707106829
@@ -1705,17 +1806,17 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 13
+	istg = 30
 	resPri = 0
 	dstg = 7
 	sidx = 0
-	sqor = 12
-	sepI = 12
+	sqor = 29
+	sepI = 29
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	attN = top,rn.dnepr1.fairing.base_4292746510
+	attN = top,rn.dnepr1.fairing.base_4293205328
 	EVENTS
 	{
 	}
@@ -1867,18 +1968,27 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		crossfeedStatus = False
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -1898,11 +2008,11 @@ PART
 }
 PART
 {
-	part = rn.dnepr1.interstage2_4292745502
+	part = rn.dnepr1.interstage2_4293204202
 	partName = Part
-	pos = -4.51139498,27.9874344,-0.576327264
+	pos = -2.72543097,40.8260765,2.35089731
 	attPos = 0,0,0
-	attPos0 = 0,-0.982288361,0
+	attPos0 = 0,-0.982292175,0
 	rot = 0,0,0,1
 	attRot = 0,0,0,1
 	attRot0 = 0,0,0,1
@@ -1910,19 +2020,19 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 12
+	istg = 29
 	resPri = 0
 	dstg = 7
 	sidx = 0
-	sqor = 14
-	sepI = 11
+	sqor = 6
+	sepI = 27
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.dnepr1.ss_4292745418
-	attN = bottom,rn.dnepr1.ss_4292745418
-	attN = top,rn.dnepr1.fairing.base_4292746510
+	link = rn.dnepr1.ss_4293204116
+	attN = bottom,rn.dnepr1.ss_4293204116
+	attN = top,rn.dnepr1.fairing.base_4293205328
 	EVENTS
 	{
 	}
@@ -2036,13 +2146,111 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		crossfeedStatus = False
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+}
+PART
+{
+	part = rn.dnepr1.ss_4293204116
+	partName = Part
+	pos = -2.72543097,37.6772881,2.35089731
+	attPos = 0,0,0
+	attPos0 = 0,-3.14878845,0
+	rot = 0,0,0,1
+	attRot = 0,0,0,1
+	attRot0 = 0,0,0,1
+	mir = 1,1,1
+	symMethod = Radial
+	autostrutMode = Off
+	rigidAttachment = False
+	istg = 29
+	resPri = 0
+	dstg = 8
+	sidx = -1
+	sqor = -1
+	sepI = 27
+	attm = 0
+	modCost = 14.1855688
+	modMass = 0
+	modSize = 0,0,0
+	link = rn.dnepr1.rd0255_4293203880
+	link = rn.dnepr1.rd0255.vernier_4293203798
+	link = rn.dnepr1.rd0255.vernier_4293203658
+	link = rn.dnepr1.rd0255.vernier_4293203518
+	link = rn.dnepr1.rd0255.vernier_4293203378
+	link = rn.dnepr1.interstage_4293203238
+	attN = top,rn.dnepr1.interstage2_4293204202
+	attN = bottom,rn.dnepr1.interstage_4293203238
+	attN = eng,rn.dnepr1.rd0255_4293203880
+	attN = v1,rn.dnepr1.rd0255.vernier_4293203798
+	attN = v2,rn.dnepr1.rd0255.vernier_4293203518
+	attN = v3,rn.dnepr1.rd0255.vernier_4293203658
+	attN = v4,rn.dnepr1.rd0255.vernier_4293203378
+	EVENTS
+	{
+	}
+	ACTIONS
+	{
+	}
+	PARTDATA
+	{
+	}
+	MODULE
+	{
+		name = ModuleCommand
+		isEnabled = True
+		hibernation = False
+		hibernateOnWarp = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			MakeReferenceToggle
+			{
+				actionGroup = None
+			}
+			HibernateToggle
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleSAS
+		isEnabled = True
+		standaloneToggle = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
@@ -2053,52 +2261,26 @@ PART
 		{
 		}
 	}
-}
-PART
-{
-	part = rn.dnepr1.ss_4292745418
-	partName = Part
-	pos = -4.51139498,24.8386421,-0.576327264
-	attPos = 0,0,0
-	attPos0 = 0,-3.14879227,0
-	rot = 0,0,0,1
-	attRot = 0,0,0,1
-	attRot0 = 0,0,0,1
-	mir = 1,1,1
-	symMethod = Radial
-	autostrutMode = Off
-	rigidAttachment = False
-	istg = 12
-	resPri = 0
-	dstg = 8
-	sidx = -1
-	sqor = -1
-	sepI = 11
-	attm = 0
-	modCost = 14.1855688
-	modMass = 0
-	modSize = 0,0,0
-	link = rn.dnepr1.rd0255_4292745198
-	link = rn.dnepr1.rd0255.vernier_4292745116
-	link = rn.dnepr1.rd0255.vernier_4292744976
-	link = rn.dnepr1.rd0255.vernier_4292744836
-	link = rn.dnepr1.rd0255.vernier_4292744696
-	link = rn.dnepr1.interstage_4292744556
-	attN = top,rn.dnepr1.interstage2_4292745502
-	attN = bottom,rn.dnepr1.interstage_4292744556
-	attN = eng,rn.dnepr1.rd0255_4292745198
-	attN = v1,rn.dnepr1.rd0255.vernier_4292745116
-	attN = v2,rn.dnepr1.rd0255.vernier_4292744836
-	attN = v3,rn.dnepr1.rd0255.vernier_4292744976
-	attN = v4,rn.dnepr1.rd0255.vernier_4292744696
-	EVENTS
+	MODULE
 	{
-	}
-	ACTIONS
-	{
-	}
-	PARTDATA
-	{
+		name = ModuleDataTransmitter
+		isEnabled = True
+		xmitIncomplete = False
+		stagingEnabled = True
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			StartTransmissionAction
+			{
+				actionGroup = None
+				active = False
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
 	}
 	MODULE
 	{
@@ -2206,6 +2388,7 @@ PART
 		type = Default
 		utilization = 86
 		mass = 3.44000006
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 31201.605800000001
@@ -2921,22 +3104,113 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = MechJebCore
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		running = True
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
+		EVENTS
+		{
+		}
+		ACTIONS
+		{
+			OnOrbitProgradeAction
+			{
+				actionGroup = None
+			}
+			OnOrbitRetrogradeAction
+			{
+				actionGroup = None
+			}
+			OnOrbitNormalAction
+			{
+				actionGroup = None
+			}
+			OnOrbitAntinormalAction
+			{
+				actionGroup = None
+			}
+			OnOrbitRadialInAction
+			{
+				actionGroup = None
+			}
+			OnOrbitRadialOutAction
+			{
+				actionGroup = None
+			}
+			OnKillRotationAction
+			{
+				actionGroup = None
+			}
+			OnDeactivateSmartASSAction
+			{
+				actionGroup = None
+			}
+			OnPanicAction
+			{
+				actionGroup = None
+			}
+			OnTranslatronOffAction
+			{
+				actionGroup = None
+			}
+			OnTranslatronKeepVertAction
+			{
+				actionGroup = None
+			}
+			OnTranslatronZeroSpeedAction
+			{
+				actionGroup = None
+			}
+			OnTranslatronPlusOneSpeedAction
+			{
+				actionGroup = None
+			}
+			OnTranslatronMinusOneSpeedAction
+			{
+				actionGroup = None
+			}
+			OnTranslatronToggleHSAction
+			{
+				actionGroup = None
+			}
+			OnAscentAPToggleAction
+			{
+				actionGroup = None
+			}
+		}
+		UPGRADESAPPLIED
+		{
+		}
+	}
+	MODULE
+	{
+		name = ModuleTripLogger
+		isEnabled = True
+		stagingEnabled = True
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
 		}
+		Log
+		{
+			flight = 0
+		}
 		UPGRADESAPPLIED
 		{
 		}
+	}
+	RESOURCE
+	{
+		name = ElectricCharge
+		amount = 150
+		maxAmount = 150
+		flowState = True
+		isTweakable = True
+		hideFlow = False
+		isVisible = True
+		flowMode = Both
 	}
 	RESOURCE
 	{
@@ -2963,9 +3237,9 @@ PART
 }
 PART
 {
-	part = rn.dnepr1.rd0255_4292745198
+	part = rn.dnepr1.rd0255_4293203880
 	partName = Part
-	pos = -4.51139498,22.0966034,-0.576327264
+	pos = -2.72543097,34.9352493,2.35089731
 	attPos = 0,0,0
 	attPos0 = 0,-2.74203873,0
 	rot = 0,0,0,1
@@ -2975,17 +3249,17 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 14
+	istg = 31
 	resPri = 0
 	dstg = 9
 	sidx = 0
-	sqor = 15
-	sepI = 11
+	sqor = 30
+	sepI = 27
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	attN = top,rn.dnepr1.ss_4292745418
+	attN = top,rn.dnepr1.ss_4293204116
 	EVENTS
 	{
 	}
@@ -3143,31 +3417,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.rd0255.vernier_4292745116
+	part = rn.dnepr1.rd0255.vernier_4293203798
 	partName = Part
-	pos = -5.54705524,21.7257614,-0.576327264
+	pos = -3.76109099,34.5644073,2.35089731
 	attPos = 0,0,0
 	attPos0 = -1.03566003,-3.11288071,0
 	rot = 0,0,0,1
@@ -3177,20 +3432,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 15
+	istg = 32
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 16
-	sepI = 11
+	sqor = 31
+	sepI = 27
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd0255.vernier_4292744976
-	sym = rn.dnepr1.rd0255.vernier_4292744836
-	sym = rn.dnepr1.rd0255.vernier_4292744696
-	attN = top,rn.dnepr1.ss_4292745418
+	sym = rn.dnepr1.rd0255.vernier_4293203658
+	sym = rn.dnepr1.rd0255.vernier_4293203518
+	sym = rn.dnepr1.rd0255.vernier_4293203378
+	attN = top,rn.dnepr1.ss_4293204116
 	EVENTS
 	{
 	}
@@ -3364,31 +3619,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.rd0255.vernier_4292744976
+	part = rn.dnepr1.rd0255.vernier_4293203658
 	partName = Part
-	pos = -4.51139498,21.7257614,0.459332526
+	pos = -2.72543097,34.5644073,3.3865571
 	attPos = 0,0,0
 	attPos0 = 0,-3.11288071,1.03566003
 	rot = 0,0.707106829,0,0.707106829
@@ -3398,20 +3634,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 15
+	istg = 32
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 16
-	sepI = 11
+	sqor = 31
+	sepI = 27
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd0255.vernier_4292745116
-	sym = rn.dnepr1.rd0255.vernier_4292744836
-	sym = rn.dnepr1.rd0255.vernier_4292744696
-	attN = top,rn.dnepr1.ss_4292745418
+	sym = rn.dnepr1.rd0255.vernier_4293203798
+	sym = rn.dnepr1.rd0255.vernier_4293203518
+	sym = rn.dnepr1.rd0255.vernier_4293203378
+	attN = top,rn.dnepr1.ss_4293204116
 	EVENTS
 	{
 	}
@@ -3585,31 +3821,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.rd0255.vernier_4292744836
+	part = rn.dnepr1.rd0255.vernier_4293203518
 	partName = Part
-	pos = -3.47573495,21.7257614,-0.576327264
+	pos = -1.68977094,34.5644073,2.35089731
 	attPos = 0,0,0
 	attPos0 = 1.03566003,-3.11288071,0
 	rot = 0,1,0,-4.37113883E-08
@@ -3619,20 +3836,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 15
+	istg = 32
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 16
-	sepI = 11
+	sqor = 31
+	sepI = 27
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd0255.vernier_4292745116
-	sym = rn.dnepr1.rd0255.vernier_4292744976
-	sym = rn.dnepr1.rd0255.vernier_4292744696
-	attN = top,rn.dnepr1.ss_4292745418
+	sym = rn.dnepr1.rd0255.vernier_4293203798
+	sym = rn.dnepr1.rd0255.vernier_4293203658
+	sym = rn.dnepr1.rd0255.vernier_4293203378
+	attN = top,rn.dnepr1.ss_4293204116
 	EVENTS
 	{
 	}
@@ -3806,31 +4023,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.rd0255.vernier_4292744696
+	part = rn.dnepr1.rd0255.vernier_4293203378
 	partName = Part
-	pos = -4.51139498,21.7257614,-1.61198711
+	pos = -2.72543097,34.5644073,1.31523752
 	attPos = 0,0,0
 	attPos0 = 0,-3.11288071,-1.03566003
 	rot = 0,0.707106829,0,-0.707106829
@@ -3840,20 +4038,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 15
+	istg = 32
 	resPri = 0
 	dstg = 8
 	sidx = 0
-	sqor = 16
-	sepI = 11
+	sqor = 31
+	sepI = 27
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd0255.vernier_4292745116
-	sym = rn.dnepr1.rd0255.vernier_4292744976
-	sym = rn.dnepr1.rd0255.vernier_4292744836
-	attN = top,rn.dnepr1.ss_4292745418
+	sym = rn.dnepr1.rd0255.vernier_4293203798
+	sym = rn.dnepr1.rd0255.vernier_4293203658
+	sym = rn.dnepr1.rd0255.vernier_4293203518
+	attN = top,rn.dnepr1.ss_4293204116
 	EVENTS
 	{
 	}
@@ -4027,31 +4225,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.interstage_4292744556
+	part = rn.dnepr1.interstage_4293203238
 	partName = Part
-	pos = -4.51139498,21.5034599,-0.576327264
+	pos = -2.72543097,34.3421059,2.35089731
 	attPos = 0,0,0
 	attPos0 = 0,-3.33518219,0
 	rot = 0,0,0,1
@@ -4061,19 +4240,19 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 14
+	istg = 31
 	resPri = 0
 	dstg = 9
 	sidx = 1
-	sqor = 15
-	sepI = 13
+	sqor = 30
+	sepI = 30
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.dnepr1.fs_4292744216
-	attN = bottom,rn.dnepr1.fs_4292744216
-	attN = top,rn.dnepr1.ss_4292745418
+	link = rn.dnepr1.fs_4293202896
+	attN = bottom,rn.dnepr1.fs_4293202896
+	attN = top,rn.dnepr1.ss_4293204116
 	EVENTS
 	{
 	}
@@ -4187,18 +4366,27 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		crossfeedStatus = False
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -4207,9 +4395,9 @@ PART
 }
 PART
 {
-	part = rn.dnepr1.fs_4292744216
+	part = rn.dnepr1.fs_4293202896
 	partName = Part
-	pos = -4.51139498,10.8879013,-0.576327264
+	pos = -2.72543097,23.7265472,2.35089731
 	attPos = 0,0,0
 	attPos0 = 0,-10.6155586,0
 	rot = 0,0,0,1
@@ -4219,29 +4407,29 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 14
+	istg = 31
 	resPri = 0
 	dstg = 10
 	sidx = -1
 	sqor = -1
-	sepI = 13
+	sepI = 30
 	attm = 0
 	modCost = 56.1636658
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.dnepr1.rd264_4292744092
-	link = rn.dnepr1.rd264_4292743978
-	link = rn.dnepr1.rd264_4292743864
-	link = rn.dnepr1.rd264_4292743750
-	link = rn.dnepr1.ejector_4292743636
-	link = rn.dnepr1.slides_4292742658
-	link = rn.dnepr1.slides_4292742594
-	attN = top,rn.dnepr1.interstage_4292744556
-	attN = bottom,rn.dnepr1.ejector_4292743636
-	attN = eng1,rn.dnepr1.rd264_4292743978
-	attN = eng2,rn.dnepr1.rd264_4292743750
-	attN = eng3,rn.dnepr1.rd264_4292743864
-	attN = eng4,rn.dnepr1.rd264_4292744092
+	link = rn.dnepr1.rd264_4293202772
+	link = rn.dnepr1.rd264_4293202658
+	link = rn.dnepr1.rd264_4293202544
+	link = rn.dnepr1.rd264_4293202430
+	link = rn.dnepr1.ejector_4293202316
+	link = rn.dnepr1.slides_4293201320
+	link = rn.dnepr1.slides_4293201256
+	attN = top,rn.dnepr1.interstage_4293203238
+	attN = bottom,rn.dnepr1.ejector_4293202316
+	attN = eng1,rn.dnepr1.rd264_4293202658
+	attN = eng2,rn.dnepr1.rd264_4293202430
+	attN = eng3,rn.dnepr1.rd264_4293202544
+	attN = eng4,rn.dnepr1.rd264_4293202772
 	EVENTS
 	{
 	}
@@ -4357,6 +4545,7 @@ PART
 		type = Default
 		utilization = 86
 		mass = 9.89999962
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 124968.2721
@@ -5070,25 +5259,6 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 	RESOURCE
 	{
 		name = NTO
@@ -5114,9 +5284,9 @@ PART
 }
 PART
 {
-	part = rn.dnepr1.rd264_4292744092
+	part = rn.dnepr1.rd264_4293202772
 	partName = Part
-	pos = -4.51139498,1.15917206,-1.43371773
+	pos = -2.72543097,13.997818,1.49350691
 	attPos = 0,0,0
 	attPos0 = 0,-9.72872925,-0.857389987
 	rot = 0,0,0,1
@@ -5126,20 +5296,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 17
+	istg = 34
 	resPri = 0
 	dstg = 11
 	sidx = 0
-	sqor = 18
-	sepI = 13
+	sqor = 33
+	sepI = 30
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd264_4292743978
-	sym = rn.dnepr1.rd264_4292743864
-	sym = rn.dnepr1.rd264_4292743750
-	attN = top,rn.dnepr1.fs_4292744216
+	sym = rn.dnepr1.rd264_4293202658
+	sym = rn.dnepr1.rd264_4293202544
+	sym = rn.dnepr1.rd264_4293202430
+	attN = top,rn.dnepr1.fs_4293202896
 	EVENTS
 	{
 	}
@@ -5343,31 +5513,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.rd264_4292743978
+	part = rn.dnepr1.rd264_4293202658
 	partName = Part
-	pos = -5.3687849,1.15917206,-0.576327264
+	pos = -3.58282113,13.997818,2.35089731
 	attPos = 0,0,0
 	attPos0 = -0.857389987,-9.72872925,0
 	rot = 0,0.707106829,0,0.707106829
@@ -5377,20 +5528,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 17
+	istg = 34
 	resPri = 0
 	dstg = 11
 	sidx = 0
-	sqor = 18
-	sepI = 13
+	sqor = 33
+	sepI = 30
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd264_4292744092
-	sym = rn.dnepr1.rd264_4292743864
-	sym = rn.dnepr1.rd264_4292743750
-	attN = top,rn.dnepr1.fs_4292744216
+	sym = rn.dnepr1.rd264_4293202772
+	sym = rn.dnepr1.rd264_4293202544
+	sym = rn.dnepr1.rd264_4293202430
+	attN = top,rn.dnepr1.fs_4293202896
 	EVENTS
 	{
 	}
@@ -5594,31 +5745,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.rd264_4292743864
+	part = rn.dnepr1.rd264_4293202544
 	partName = Part
-	pos = -4.51139498,1.15917206,0.281063139
+	pos = -2.72543097,13.997818,3.20828772
 	attPos = 0,0,0
 	attPos0 = 0,-9.72872925,0.857389987
 	rot = 0,1,0,-4.37113883E-08
@@ -5628,20 +5760,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 17
+	istg = 34
 	resPri = 0
 	dstg = 11
 	sidx = 0
-	sqor = 18
-	sepI = 13
+	sqor = 33
+	sepI = 30
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd264_4292744092
-	sym = rn.dnepr1.rd264_4292743978
-	sym = rn.dnepr1.rd264_4292743750
-	attN = top,rn.dnepr1.fs_4292744216
+	sym = rn.dnepr1.rd264_4293202772
+	sym = rn.dnepr1.rd264_4293202658
+	sym = rn.dnepr1.rd264_4293202430
+	attN = top,rn.dnepr1.fs_4293202896
 	EVENTS
 	{
 	}
@@ -5845,31 +5977,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.rd264_4292743750
+	part = rn.dnepr1.rd264_4293202430
 	partName = Part
-	pos = -3.65400505,1.15917206,-0.576327264
+	pos = -1.86804104,13.997818,2.35089731
 	attPos = 0,0,0
 	attPos0 = 0.857389987,-9.72872925,0
 	rot = 0,0.707106829,0,-0.707106829
@@ -5879,20 +5992,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 17
+	istg = 34
 	resPri = 0
 	dstg = 11
 	sidx = 0
-	sqor = 18
-	sepI = 13
+	sqor = 33
+	sepI = 30
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.rd264_4292744092
-	sym = rn.dnepr1.rd264_4292743978
-	sym = rn.dnepr1.rd264_4292743864
-	attN = top,rn.dnepr1.fs_4292744216
+	sym = rn.dnepr1.rd264_4293202772
+	sym = rn.dnepr1.rd264_4293202658
+	sym = rn.dnepr1.rd264_4293202544
+	attN = top,rn.dnepr1.fs_4293202896
 	EVENTS
 	{
 	}
@@ -6096,31 +6209,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.ejector_4292743636
+	part = rn.dnepr1.ejector_4293202316
 	partName = Part
-	pos = -4.51139498,0.327241898,-0.576327264
+	pos = -2.72543097,13.1658878,2.35089731
 	attPos = 0,0,0
 	attPos0 = 0,-10.5606594,0
 	rot = 0,0,0,1
@@ -6130,19 +6224,19 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 18
+	istg = 35
 	resPri = 0
 	dstg = 11
 	sidx = 1
-	sqor = 19
-	sepI = 17
+	sqor = 34
+	sepI = 34
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.dnepr1.ejector.cap_4292743442
-	attN = bottom,rn.dnepr1.ejector.cap_4292743442
-	attN = top,rn.dnepr1.fs_4292744216
+	link = rn.dnepr1.ejector.cap_4293202120
+	attN = bottom,rn.dnepr1.ejector.cap_4293202120
+	attN = top,rn.dnepr1.fs_4293202896
 	EVENTS
 	{
 	}
@@ -6273,18 +6367,27 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		crossfeedStatus = False
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -6304,9 +6407,9 @@ PART
 }
 PART
 {
-	part = rn.dnepr1.ejector.cap_4292743442
+	part = rn.dnepr1.ejector.cap_4293202120
 	partName = Part
-	pos = -4.51139498,-0.46411705,-0.576327264
+	pos = -2.72543097,12.3745289,2.35089731
 	attPos = 0,0,0
 	attPos0 = 0,-0.791358948,0
 	rot = 0,0,0,1
@@ -6316,19 +6419,19 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 19
+	istg = 36
 	resPri = 0
 	dstg = 12
 	sidx = 0
-	sqor = 20
-	sepI = 17
+	sqor = 35
+	sepI = 34
 	attm = 0
 	modCost = 364.4375
 	modMass = 0
 	modSize = 0,0,0
-	link = rn.dnepr1.silo.tube_4292743374
-	attN = top,rn.dnepr1.ejector_4292743636
-	attN = bottom,rn.dnepr1.silo.tube_4292743374
+	link = rn.dnepr1.silo.tube_4293202052
+	attN = top,rn.dnepr1.ejector_4293202316
+	attN = bottom,rn.dnepr1.silo.tube_4293202052
 	EVENTS
 	{
 	}
@@ -6449,6 +6552,7 @@ PART
 		type = NGNC
 		utilization = 86
 		mass = 0.00999999978
+		_numberOfAddedMLILayers = 0
 		partPrevTemperature = -1
 		stagingEnabled = True
 		volume = 3644.375
@@ -6495,25 +6599,6 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 	RESOURCE
 	{
 		name = NGNC
@@ -6528,9 +6613,9 @@ PART
 }
 PART
 {
-	part = rn.dnepr1.silo.tube_4292743374
+	part = rn.dnepr1.silo.tube_4293202052
 	partName = Part
-	pos = -4.51139498,14.2512131,-0.576327264
+	pos = -2.72543097,27.089859,2.35089731
 	attPos = 0,0,0
 	attPos0 = 0,14.7153301,0
 	rot = 0,0,0,1
@@ -6540,21 +6625,21 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 19
+	istg = 36
 	resPri = 0
 	dstg = 13
 	sidx = 1
-	sqor = 20
-	sepI = 18
+	sqor = 35
+	sepI = 35
 	attm = 0
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	link = launchClamp1_4292743122
-	link = launchClamp1_4292743006
-	link = launchClamp1_4292742890
-	link = launchClamp1_4292742774
-	attN = top,rn.dnepr1.ejector.cap_4292743442
+	link = launchClamp1_4293201784
+	link = launchClamp1_4293201668
+	link = launchClamp1_4293201552
+	link = launchClamp1_4293201436
+	attN = top,rn.dnepr1.ejector.cap_4293202120
 	EVENTS
 	{
 	}
@@ -6685,18 +6770,27 @@ PART
 	}
 	MODULE
 	{
-		name = ModuleAeroReentry
+		name = ModuleToggleCrossfeed
 		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
+		crossfeedStatus = False
 		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
 		EVENTS
 		{
 		}
 		ACTIONS
 		{
+			ToggleAction
+			{
+				actionGroup = None
+			}
+			EnableAction
+			{
+				actionGroup = None
+			}
+			DisableAction
+			{
+				actionGroup = None
+			}
 		}
 		UPGRADESAPPLIED
 		{
@@ -6716,9 +6810,9 @@ PART
 }
 PART
 {
-	part = launchClamp1_4292743122
+	part = launchClamp1_4293201784
 	partName = Part
-	pos = -5.50900841,-1.56024933,-1.93076324
+	pos = -3.72304416,11.2783966,0.996461391
 	attPos = 0,0,0
 	attPos0 = -0.997613132,-15.8114624,-1.3544364
 	rot = 0,0.707106948,0.70710659,0
@@ -6728,20 +6822,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 18
+	istg = 35
 	resPri = 0
 	dstg = 14
 	sidx = 0
-	sqor = 19
-	sepI = 17
+	sqor = 34
+	sepI = 34
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4292743006
-	sym = launchClamp1_4292742890
-	sym = launchClamp1_4292742774
-	srfN = srfAttach,rn.dnepr1.silo.tube_4292743374
+	sym = launchClamp1_4293201668
+	sym = launchClamp1_4293201552
+	sym = launchClamp1_4293201436
+	srfN = srfAttach,rn.dnepr1.silo.tube_4293202052
 	EVENTS
 	{
 	}
@@ -6755,8 +6849,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = -1.23339403
-		height = -3.11209488
+		scaleFactor = 3.85485291
+		height = 9.72655106
 		stagingEnabled = True
 		towerRot = 0,-0.707106948,-0.70710659,0
 		EVENTS
@@ -6852,31 +6946,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = launchClamp1_4292743006
+	part = launchClamp1_4293201668
 	partName = Part
-	pos = -5.86583138,-1.56024933,0.421285689
+	pos = -4.07986736,11.2783966,3.34851027
 	attPos = 0,0,0
 	attPos0 = -1.3544364,-15.8114624,0.997613013
 	rot = 0.499999881,0.500000179,0.499999881,-0.500000179
@@ -6886,20 +6961,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 18
+	istg = 35
 	resPri = 0
 	dstg = 14
 	sidx = 0
-	sqor = 19
-	sepI = 17
+	sqor = 34
+	sepI = 34
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4292743122
-	sym = launchClamp1_4292742890
-	sym = launchClamp1_4292742774
-	srfN = srfAttach,rn.dnepr1.silo.tube_4292743374
+	sym = launchClamp1_4293201784
+	sym = launchClamp1_4293201552
+	sym = launchClamp1_4293201436
+	srfN = srfAttach,rn.dnepr1.silo.tube_4293202052
 	EVENTS
 	{
 	}
@@ -6913,8 +6988,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = -1.23339283
-		height = -3.11209488
+		scaleFactor = 3.85484982
+		height = 9.72655106
 		stagingEnabled = True
 		towerRot = -0.499999881,-0.500000179,-0.499999881,-0.500000179
 		EVENTS
@@ -7010,31 +7085,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = launchClamp1_4292742890
+	part = launchClamp1_4293201552
 	partName = Part
-	pos = -3.51378179,-1.56024933,0.778108656
+	pos = -1.72781777,11.2783966,3.70533323
 	attPos = 0,0,0
 	attPos0 = 0.997613251,-15.8114624,1.35443616
 	rot = 0.70710659,-3.09086268E-08,-3.0908609E-08,-0.707106948
@@ -7044,20 +7100,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 18
+	istg = 35
 	resPri = 0
 	dstg = 14
 	sidx = 0
-	sqor = 19
-	sepI = 17
+	sqor = 34
+	sepI = 34
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4292743122
-	sym = launchClamp1_4292743006
-	sym = launchClamp1_4292742774
-	srfN = srfAttach,rn.dnepr1.silo.tube_4292743374
+	sym = launchClamp1_4293201784
+	sym = launchClamp1_4293201668
+	sym = launchClamp1_4293201436
+	srfN = srfAttach,rn.dnepr1.silo.tube_4293202052
 	EVENTS
 	{
 	}
@@ -7071,8 +7127,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = -1.23339379
-		height = -3.11209488
+		scaleFactor = 3.85485291
+		height = 9.72655106
 		stagingEnabled = True
 		towerRot = -0.70710659,3.09086268E-08,3.0908609E-08,-0.707106948
 		EVENTS
@@ -7168,31 +7224,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = launchClamp1_4292742774
+	part = launchClamp1_4293201436
 	partName = Part
-	pos = -3.15695858,-1.56024933,-1.57394028
+	pos = -1.37099457,11.2783966,1.35328436
 	attPos = 0,0,0
 	attPos0 = 1.35443628,-15.8114624,-0.997613132
 	rot = 0.499999881,-0.500000179,-0.499999881,-0.500000179
@@ -7202,20 +7239,20 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 18
+	istg = 35
 	resPri = 0
 	dstg = 14
 	sidx = 0
-	sqor = 19
-	sepI = 17
+	sqor = 34
+	sepI = 34
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = launchClamp1_4292743122
-	sym = launchClamp1_4292743006
-	sym = launchClamp1_4292742890
-	srfN = srfAttach,rn.dnepr1.silo.tube_4292743374
+	sym = launchClamp1_4293201784
+	sym = launchClamp1_4293201668
+	sym = launchClamp1_4293201552
+	srfN = srfAttach,rn.dnepr1.silo.tube_4293202052
 	EVENTS
 	{
 	}
@@ -7229,8 +7266,8 @@ PART
 	{
 		name = LaunchClamp
 		isEnabled = True
-		scaleFactor = -1.23339283
-		height = -3.11209488
+		scaleFactor = 3.85484982
+		height = 9.72655106
 		stagingEnabled = True
 		towerRot = -0.499999881,0.500000179,0.499999881,-0.500000179
 		EVENTS
@@ -7326,31 +7363,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.slides_4292742658
+	part = rn.dnepr1.slides_4293201320
 	partName = Part
-	pos = -6.00468683,10.3423424,-0.576327264
+	pos = -4.2187233,23.1809883,2.35089731
 	attPos = 0,0,0
 	attPos0 = -1.49329197,-0.545558929,8.94069672E-08
 	rot = 1.82078583E-19,7.58643182E-07,2.47957986E-13,1
@@ -7360,18 +7378,18 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 16
+	istg = 33
 	resPri = 0
 	dstg = 11
 	sidx = 0
-	sqor = 17
-	sepI = 15
+	sqor = 32
+	sepI = 32
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.slides_4292742594
-	srfN = srfAttach,rn.dnepr1.fs_4292744216
+	sym = rn.dnepr1.slides_4293201256
+	srfN = srfAttach,rn.dnepr1.fs_4293202896
 	EVENTS
 	{
 	}
@@ -7475,31 +7493,12 @@ PART
 		{
 		}
 	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
 }
 PART
 {
-	part = rn.dnepr1.slides_4292742594
+	part = rn.dnepr1.slides_4293201256
 	partName = Part
-	pos = -3.01810312,10.3423424,-0.576327264
+	pos = -1.23213911,23.1809883,2.35089731
 	attPos = 0,0,0
 	attPos0 = 1.49329197,-0.545558929,-2.19792128E-07
 	rot = 2.47957986E-13,1,-1.92917169E-19,-8.02354577E-07
@@ -7509,18 +7508,18 @@ PART
 	symMethod = Radial
 	autostrutMode = Off
 	rigidAttachment = False
-	istg = 16
+	istg = 33
 	resPri = 0
 	dstg = 11
 	sidx = 0
-	sqor = 17
-	sepI = 15
+	sqor = 32
+	sepI = 32
 	attm = 1
 	modCost = 0
 	modMass = 0
 	modSize = 0,0,0
-	sym = rn.dnepr1.slides_4292742658
-	srfN = srfAttach,rn.dnepr1.fs_4292744216
+	sym = rn.dnepr1.slides_4293201320
+	srfN = srfAttach,rn.dnepr1.fs_4293202896
 	EVENTS
 	{
 	}
@@ -7619,25 +7618,6 @@ PART
 			{
 				actionGroup = None
 			}
-		}
-		UPGRADESAPPLIED
-		{
-		}
-	}
-	MODULE
-	{
-		name = ModuleAeroReentry
-		isEnabled = True
-		dead = False
-		crashTolerance = 8
-		internalDamage = 0
-		stagingEnabled = True
-		damageCube = 0, 0, 0, 0, 0, 0
-		EVENTS
-		{
-		}
-		ACTIONS
-		{
 		}
 		UPGRADESAPPLIED
 		{
