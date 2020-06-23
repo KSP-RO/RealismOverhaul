@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace RealismOverhaul
 {
@@ -10,35 +11,38 @@ namespace RealismOverhaul
     /// </summary>
     public class AdjustableCoMShifter : PartModule
     {
-        [KSPField]
-        public Vector3 DescentModeCoM = new Vector3(0f, 0f, 0f);
+        public const string groupName = "CoMShifter";
+        public const string groupDisplayName = "CoM Shifter";
 
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "CoM X-offset")]
-        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
+        [KSPField]
+        public Vector3 DescentModeCoM = Vector3.zero;   // If configured, disable customization
+
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM X-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName, groupDisplayName = groupDisplayName),
+         UI_FloatRange(maxValue = 100, minValue = -100f, stepIncrement = 1)]
         public float offsetX = 0;
 
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "CoM Y-offset")]
-        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Y-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName)]
+        [UI_FloatRange(maxValue = 100, minValue = -100f, stepIncrement = 1)]
         public float offsetY = 0;
 
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "CoM Z-offset")]
-        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Z-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName)]
+        [UI_FloatRange(maxValue = 100, minValue = -100f, stepIncrement = 1)]
         public float offsetZ = 0;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "CoM Offset Limit")]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiFormat = "P0", guiName = "CoM Offset Limit", groupName = groupName, groupDisplayName = groupDisplayName)]
         [UI_FloatRange(minValue = 0, maxValue = 1, stepIncrement = 0.01f)]
         public float offsetPercent = 1;
 
         [KSPField(isPersistant = true)]
         public bool IsDescentMode;
 
-        [KSPField]
+        [KSPField(guiName = "CoM", groupName = groupName, groupDisplayName = groupDisplayName)]
         public string comString;
 
-        protected Vector3 _offsetCoM = new Vector3(0f, 0f, 0f);
-        protected Vector3 _defaultCoM;
+        protected Vector3 defaultCoM;
+        public bool ConfiguredForDescentMode => DescentModeCoM != Vector3.zero;
         
-        [KSPEvent(guiName = "Turn Descent Mode On", guiActive = true, guiActiveEditor = true)]
+        [KSPEvent(guiName = "Turn Descent Mode On", guiActive = true, guiActiveEditor = true, groupName = groupName)]
         public virtual void ToggleMode()
         {
             IsDescentMode = !IsDescentMode;
@@ -52,18 +56,12 @@ namespace RealismOverhaul
             DescentModeChanged(IsDescentMode);
         }
 
-        public override void OnAwake()
+        public override void OnStartFinished(StartState state)
         {
-            base.OnAwake();
-            _defaultCoM = part.CoMOffset;
-        }
-
-        public override void OnStart(StartState state)
-        {
-            base.OnStart(state);
-
+            defaultCoM = part.CoMOffset;
             BindUI();
             DescentModeChanged(IsDescentMode);
+            StartCoroutine(SlowUpdateCycle());
         }
 
         protected void BindUI()
@@ -80,55 +78,44 @@ namespace RealismOverhaul
                 Fields[nameof(offsetZ)].uiControlEditor.onFieldChanged += CoMOffsetChanged;
             }
 
-            bool configuredForDescentMode = DescentModeCoM != Vector3.zero;
+            Actions[nameof(Toggle)].active = ConfiguredForDescentMode;
+            Events[nameof(ToggleMode)].active = ConfiguredForDescentMode;
 
-            Actions[nameof(Toggle)].active = configuredForDescentMode;
-            Events[nameof(ToggleMode)].active = configuredForDescentMode;
+            Fields[nameof(offsetPercent)].guiActive = ConfiguredForDescentMode;
+            Fields[nameof(offsetPercent)].guiActiveEditor = ConfiguredForDescentMode;
 
-            Fields[nameof(offsetPercent)].guiActive = configuredForDescentMode;
-            Fields[nameof(offsetPercent)].guiActiveEditor = configuredForDescentMode;
-            Fields[nameof(offsetX)].guiActiveEditor = !configuredForDescentMode;
-            Fields[nameof(offsetY)].guiActiveEditor = !configuredForDescentMode;
-            Fields[nameof(offsetZ)].guiActiveEditor = !configuredForDescentMode;
+            Fields[nameof(offsetX)].guiActiveEditor = !ConfiguredForDescentMode;
+            Fields[nameof(offsetY)].guiActiveEditor = !ConfiguredForDescentMode;
+            Fields[nameof(offsetZ)].guiActiveEditor = !ConfiguredForDescentMode;
         }
 
-        protected void OffsetPercentChanged(BaseField bf, object o)
-        {
-            UpdateCoM();
-        }
-
-        protected void CoMOffsetChanged(BaseField bf, object o)
-        {
-            UpdateCoM();
-        }
+        protected void OffsetPercentChanged(BaseField bf, object o) => UpdateCoM();
+        protected void CoMOffsetChanged(BaseField bf, object o) => UpdateCoM();
 
         protected void DescentModeChanged(bool isEnabled)
         {
-            Events[nameof(ToggleMode)].guiName = isEnabled ? "Turn Descent Mode Off" : "Turn Descent Mode On";
+            Events[nameof(ToggleMode)].guiName = $"Turn Descent Mode {(isEnabled ? "Off" : "On")}";
             UpdateCoM();
         }
 
         protected void UpdateCoM()
         {
-            if (DescentModeCoM != Vector3.zero)
-            {
-                if (IsDescentMode)
-                    part.CoMOffset = DescentModeCoM * offsetPercent + _defaultCoM;
-                else
-                    part.CoMOffset = _defaultCoM;
-            }
+            part.CoMOffset = defaultCoM;
+            if (ConfiguredForDescentMode)
+                part.CoMOffset += IsDescentMode ? DescentModeCoM * offsetPercent : Vector3.zero;
             else
-            {
-                _offsetCoM.x = offsetX / 100f;
-                _offsetCoM.y = offsetY / 100f;
-                _offsetCoM.z = offsetZ / 100f;
-                part.CoMOffset = _defaultCoM + _offsetCoM;
-            }
+                part.CoMOffset += new Vector3(offsetX / 100, offsetY / 100, offsetZ / 100);
 
-            Fields[nameof(comString)].guiActive = PhysicsGlobals.ThermalDataDisplay;
-            if (PhysicsGlobals.ThermalDataDisplay)
+            comString = $"({part.CoMOffset.x:F2},{part.CoMOffset.y:F2},{part.CoMOffset.z:F2})";
+        }
+
+        private IEnumerator SlowUpdateCycle()
+        {
+            WaitForSeconds wait = new WaitForSeconds(1);
+            while (true)
             {
-                comString = part.CoMOffset.x.ToString("N3") + "," + part.CoMOffset.y.ToString("N3") + "," + part.CoMOffset.z.ToString("N3");
+                Fields[nameof(comString)].guiActive = PhysicsGlobals.ThermalDataDisplay;
+                yield return wait;
             }
         }
     }
