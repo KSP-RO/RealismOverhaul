@@ -60,18 +60,18 @@ namespace RealismOverhaul
             solarEfficiency = timeEfficEvaluated * 100;
             float currentOutputW = pm.chargeRate * timeEfficEvaluated * 1000;
 
-            float currentPeAU = _getAU(FlightGlobals.GetBodyByName(selectedBody).orbit.PeA);
-            float currentApAU = _getAU(FlightGlobals.GetBodyByName(selectedBody).orbit.ApA);
-            solarOutputPe = _getModifier(currentPeAU) * currentOutputW;
-            solarOutputAp = _getModifier(currentApAU) * currentOutputW;
+            float currentPeAU = ConvertToAU(FlightGlobals.GetBodyByName(selectedBody).orbit.PeA);
+            float currentApAU = ConvertToAU(FlightGlobals.GetBodyByName(selectedBody).orbit.ApA);
+            solarOutputPe = DistanceScaling(currentPeAU) * currentOutputW;
+            solarOutputAp = DistanceScaling(currentApAU) * currentOutputW;
         }
 
         private void PlanningChange(BaseField f, object obj) => CalculateRates();
         private void OnEditorShipModified(ShipConstruct _) => CalculateRates();
 
-        private float _getModifier(float AU) => 1 / Mathf.Pow(AU, 2);
+        private float DistanceScaling(float AU) => 1 / Mathf.Pow(AU, 2);
 
-        private float _getAU(double orbitParam)
+        private float ConvertToAU(double orbitParam)
         {
             return Convert.ToSingle(orbitParam / FlightGlobals.GetHomeBody().orbit.semiMajorAxis);
         }

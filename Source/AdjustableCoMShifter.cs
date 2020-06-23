@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RealismOverhaul
 {
@@ -17,16 +16,16 @@ namespace RealismOverhaul
         [KSPField]
         public Vector3 DescentModeCoM = Vector3.zero;   // If configured, disable customization
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM X-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName, groupDisplayName = groupDisplayName),
-         UI_FloatRange(maxValue = 100, minValue = -100f, stepIncrement = 1)]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM X-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName, groupDisplayName = groupDisplayName)]
+        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
         public float offsetX = 0;
 
         [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Y-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName)]
-        [UI_FloatRange(maxValue = 100, minValue = -100f, stepIncrement = 1)]
+        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
         public float offsetY = 0;
 
         [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Z-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName)]
-        [UI_FloatRange(maxValue = 100, minValue = -100f, stepIncrement = 1)]
+        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
         public float offsetZ = 0;
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiFormat = "P0", guiName = "CoM Offset Limit", groupName = groupName, groupDisplayName = groupDisplayName)]
@@ -50,7 +49,7 @@ namespace RealismOverhaul
         }
 
         [KSPAction("Toggle Descent Mode")]
-        public void Toggle(KSPActionParam param)
+        public void Toggle(KSPActionParam _)
         {
             IsDescentMode = !IsDescentMode;
             DescentModeChanged(IsDescentMode);
@@ -61,7 +60,11 @@ namespace RealismOverhaul
             defaultCoM = part.CoMOffset;
             BindUI();
             DescentModeChanged(IsDescentMode);
-            StartCoroutine(SlowUpdateCycle());
+        }
+
+        public void Update()
+        {
+            Fields[nameof(comString)].guiActive = PhysicsGlobals.ThermalDataDisplay;
         }
 
         protected void BindUI()
@@ -107,16 +110,6 @@ namespace RealismOverhaul
                 part.CoMOffset += new Vector3(offsetX / 100, offsetY / 100, offsetZ / 100);
 
             comString = $"({part.CoMOffset.x:F2},{part.CoMOffset.y:F2},{part.CoMOffset.z:F2})";
-        }
-
-        private IEnumerator SlowUpdateCycle()
-        {
-            WaitForSeconds wait = new WaitForSeconds(1);
-            while (true)
-            {
-                Fields[nameof(comString)].guiActive = PhysicsGlobals.ThermalDataDisplay;
-                yield return wait;
-            }
         }
     }
 }
