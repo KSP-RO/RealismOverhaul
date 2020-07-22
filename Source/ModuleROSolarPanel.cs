@@ -1,113 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using KSP;
+using System.Linq;
 using UnityEngine;
 
 namespace RealismOverhaul
 {
     public class ModuleROSolarPanel : PartModule
     {
-        private static HashSet<string> cbOptions = new HashSet<string>();
+        private static readonly HashSet<string> cbOptions = new HashSet<string>();
+        public const string groupName = "solarCellPlanner";
+        public const string groupDisplayName = "Solar Cell Planner";
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "<b>SOLAR CELL DEGRADATION AT</b>", groupName = "solarCellPlanner", groupDisplayName = "Solar Cell Planner")]
-        public string spCalc = String.Empty;
+        [KSPField(guiActiveEditor = true, guiName = "Celestial Body", groupName = groupName, groupDisplayName = groupDisplayName),
+            UI_ChooseOption(suppressEditorShipModified = true, options = new[] { "Choose One" })]
+        public string selectedBody = string.Empty;
 
-        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = false, guiName = "Days Elapsed", groupName = "solarCellPlanner"),
-            UI_FloatEdit(minValue = 1, maxValue = 36500, incrementLarge = 100.0f, incrementSmall = 10.0f, incrementSlide = 1.0f, requireFullControl = false, suppressEditorShipModified = true, sigFigs = 0)]
+        [KSPField(guiActiveEditor = true, guiName = "Days Elapsed", groupName = groupName),
+            UI_FloatRange(maxValue = 7300, minValue = 1, stepIncrement = 1, suppressEditorShipModified = true)]
         public float daysElapsed = 1f;
 
-        [KSPField(isPersistant = false, guiActiveEditor = true, guiActive = false, guiName = "Efficiency", guiFormat = "F0", guiUnits = "%", groupName = "solarCellPlanner")]
+        [KSPField(guiActiveEditor = true, guiName = "Efficiency", guiFormat = "F0", guiUnits = "%", groupName = groupName)]
         public float solarEfficiency = 100.0f;
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Celestial Body", groupName = "solarCellPlanner"),
-            UI_ChooseOption(suppressEditorShipModified = true, options = new[] { "Choose One" })]
-        public string selectedBody = "Choose One";
+        [KSPField(guiActiveEditor = true, guiName = "Output at Pe", guiFormat = "F2", guiUnits = " W", groupName = groupName)]
+        public float solarOutputPe = 0;
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Pe", groupName = "solarCellPlanner")]
-        public string solarOutputPe = "";
+        [KSPField(guiActiveEditor = true, guiName = "Output at Ap", guiFormat = "F2", guiUnits = " W", groupName = groupName)]
+        public float solarOutputAp = 0;
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiActive = false, guiName = "Output at Ap", groupName = "solarCellPlanner")]
-        public string solarOutputAp = "";
-
-        [KSPField(isPersistant = true, guiActiveEditor = false, guiActive = false, guiName = "Expected Output", guiFormat = "F2", groupName = "solarCellPlanner")]
-        public string futureOutput = "";
-
-        public override void OnAwake()
-        {
-            base.OnAwake();
-        }
         public override void OnStart(StartState state)
         {
-            base.OnStart(state);
-
-            BaseField field = Fields[nameof(selectedBody)];
-            UI_ChooseOption choose = (UI_ChooseOption)field.uiControlEditor;
-            choose.options = PlanetWalk();
-
-            UIElements();
+            Fields[nameof(daysElapsed)].uiControlEditor.onFieldChanged = PlanningChange;
+            Fields[nameof(selectedBody)].uiControlEditor.onFieldChanged = PlanningChange;
+            (Fields[nameof(selectedBody)].uiControlEditor as UI_ChooseOption).options = PlanetWalk();
+            selectedBody = Planetarium.fetch.Home.name;
+            GameEvents.onEditorShipModified.Add(OnEditorShipModified);
         }
+
+        public void OnDestroy() => GameEvents.onEditorShipModified.Remove(OnEditorShipModified);
 
         /// <summary>
-        /// Get all CB's from the game and add the planets to the bodyOptions List
+        /// Return names of all direct children of Planetarium.fetch.Sun
         /// </summary>
-        public String[] PlanetWalk()
+        public string[] PlanetWalk()
         {
-            if (cbOptions.Count < 1)
+            cbOptions.Clear();
+            CelestialBody theSun = Planetarium.fetch.Sun;
+            foreach (CelestialBody body in FlightGlobals.Bodies.Where(x => x.referenceBody == theSun && x != theSun))
             {
-                CelestialBody theSun = Planetarium.fetch.Sun;
-                foreach (CelestialBody body in FlightGlobals.Bodies)
-                {
-                    if (body.referenceBody == theSun && body != theSun)
-                    {
-                        cbOptions.Add(body.name);
-                    }
-                }
+                cbOptions.Add(body.name);
             }
-            String[] bodyOptions = new string[cbOptions.Count];
-            cbOptions.CopyTo(bodyOptions);
-            return bodyOptions;
-        }
-
-        private void UIElements()
-        {
-            BaseField theField = Fields[nameof(daysElapsed)];
-            theField.uiControlEditor.onFieldChanged = (a, b) =>
-            {
-                CalculateRates();
-            };
-            Fields[nameof(selectedBody)].uiControlEditor.onFieldChanged = (a, b) =>
-            {
-                CalculateRates();
-            };
+            return cbOptions.ToArray();
         }
 
         private void CalculateRates()
         {
-            double currentPeMeters, currentApMeters = 0.0;
-
             ModuleDeployableSolarPanel pm = part.Modules.GetModule<ModuleDeployableSolarPanel>();
             float timeEfficEvaluated = pm.timeEfficCurve.Evaluate(daysElapsed);
             solarEfficiency = timeEfficEvaluated * 100;
-            double currentOutput = pm.chargeRate * timeEfficEvaluated;
+            float currentOutputW = pm.chargeRate * timeEfficEvaluated * 1000;
 
-            if (HighLogic.LoadedSceneIsEditor)
-            {
-                currentPeMeters = _getAU(FlightGlobals.GetBodyByName(selectedBody).orbit.PeA);
-                currentApMeters = _getAU(FlightGlobals.GetBodyByName(selectedBody).orbit.ApA);
-                solarOutputPe = Math.Round(_getModifier(currentPeMeters) * currentOutput * 1000, 2).ToString() + " Watts";
-                solarOutputAp = Math.Round(_getModifier(currentApMeters) * currentOutput * 1000, 2).ToString() + " Watts";
-            }
+            float currentPeAU = ConvertToAU(FlightGlobals.GetBodyByName(selectedBody).orbit.PeA);
+            float currentApAU = ConvertToAU(FlightGlobals.GetBodyByName(selectedBody).orbit.ApA);
+            solarOutputPe = DistanceScaling(currentPeAU) * currentOutputW;
+            solarOutputAp = DistanceScaling(currentApAU) * currentOutputW;
         }
 
-        private double _getModifier(double AU)
-        {
-            return (1 / Math.Pow(AU, 2));
-        }
+        private void PlanningChange(BaseField f, object obj) => CalculateRates();
+        private void OnEditorShipModified(ShipConstruct _) => CalculateRates();
 
-        private double _getAU(double orbitParam)
+        private float DistanceScaling(float AU) => 1 / Mathf.Pow(AU, 2);
+
+        private float ConvertToAU(double orbitParam)
         {
-            return orbitParam / FlightGlobals.GetHomeBody().orbit.semiMajorAxis;
+            return Convert.ToSingle(orbitParam / FlightGlobals.GetHomeBody().orbit.semiMajorAxis);
         }
     }
 }
