@@ -8,5 +8,11 @@ The following files are originally from [Bluedog Design Bureau](https://github.c
 The following templates are modified from templates shipped with [Waterfall](https://github.com/post-kerbin-mining-corporation/Waterfall), licensed CC-BY-NC-SA 4.0. They are distributed here under the same license.
 
 * All files under `_Templates/glow`
-* `_Templates/rowaterfall-hypergolic-superdraco.cfg`
+* `_Templates/rowaterfall-cold-gas-1.cfg`
 * `_Templates/rowaterfall-hydrolox-ssme.cfg`
+* `_Templates/rowaterfall-hypergolic-superdraco.cfg`
+* `_Templates/rowaterfall-hypergolic-udmh-pentaborane-lower-1.cfg`
+* `_Templates/rowaterfall-monopropellant-hydrazine-1.cfg`
+* `_Templates/rowaterfall-rcs-cold-gas-1.cfg`
+* `_Templates/rowaterfall-rcs-hydrazine-1.cfg`
+* `_Templates/rowaterfall-rcs-srm-vac-1.cfg`
