@@ -15,4 +15,4 @@ The following templates are modified from templates shipped with [Waterfall](htt
 * `_Templates/rowaterfall-monopropellant-hydrazine-1.cfg`
 * `_Templates/rowaterfall-rcs-cold-gas-1.cfg`
 * `_Templates/rowaterfall-rcs-hydrazine-1.cfg`
-* `_Templates/rowaterfall-rcs-srm-vac-1.cfg`
+* `_Templates/rowaterfall-rcs-hypergolic-1.cfg`
