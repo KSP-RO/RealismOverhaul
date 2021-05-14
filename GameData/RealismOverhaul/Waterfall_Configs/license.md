@@ -4,6 +4,7 @@ The following files are originally from [Bluedog Design Bureau](https://github.c
 
 * `_Audio/Clips/GeminiWhoop.ogg`
 * All files under `_Templates/BDB`
+* `_Templates/deprecated/BDB_nuclear_PBR_vac.cfg`
 
 The following templates are modified from templates shipped with [Waterfall](https://github.com/post-kerbin-mining-corporation/Waterfall), licensed CC-BY-NC-SA 4.0. They are distributed here under the same license.
 
