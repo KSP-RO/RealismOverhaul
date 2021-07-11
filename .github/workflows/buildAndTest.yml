@@ -55,12 +55,11 @@ jobs:
         run: |
           RELEASE_DIR="${RUNNER_TEMP}/release"
           echo "Release dir: ${RELEASE_DIR}"
-          echo "Release zip: ${RELEASE_DIR}/RealismOverhaul-${{ github.event.release.tag_name }}.zip"
           mkdir -v "${RELEASE_DIR}"
           echo "::set-output name=release-dir::${RELEASE_DIR}"
           cp -v -R "${GITHUB_WORKSPACE}/GameData" "${RELEASE_DIR}"
-          cd ${RELEASE_DIR}
-          zip -r RealismOverhaul-${{ github.event.release.tag_name }}.zip GameData Ships README.md    
+          cp -v -R "${GITHUB_WORKSPACE}/Ships" "${RELEASE_DIR}"
+          cp -v "${GITHUB_WORKSPACE}/README.md" "${RELEASE_DIR}"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
