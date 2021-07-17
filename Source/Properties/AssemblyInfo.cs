@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("RealismOverhaul")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NathanKell and RedAV8R")]
+[assembly: AssemblyCompany("KSP-RO Group")]
 [assembly: AssemblyProduct("RealismOverhaul")]
-[assembly: AssemblyCopyright("Copyright ©  2014-2020")]
+[assembly: AssemblyCopyright("Copyright ©  2014-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
