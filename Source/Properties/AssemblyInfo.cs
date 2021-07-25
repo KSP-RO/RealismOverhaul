@@ -1,4 +1,4 @@
-﻿//@DEFINE@ CIBUILD
+﻿#define CIBUILD_disabled
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
