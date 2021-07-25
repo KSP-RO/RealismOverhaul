@@ -1,4 +1,4 @@
-﻿//def CIBUILD
+﻿//@DEFINE@ CIBUILD
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.12.8.1")]
 #if CIBUILD
-[assembly: AssemblyFileVersion("vmajor.vminor.vpatch.vbuild")]
+[assembly: AssemblyFileVersion("@MAJOR@.@MINOR@.@PATCH.@BUILD@")]
 #else
 [assembly: AssemblyFileVersion("14.2.0.0")]
 #endif
