@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿//def CIBUILD
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -33,4 +34,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.12.8.1")]
+#if CIBUILD
+[assembly: AssemblyFileVersion("vmajor.vminor.vpatch.vbuild")]
+#else
 [assembly: AssemblyFileVersion("14.2.0.0")]
+#endif
