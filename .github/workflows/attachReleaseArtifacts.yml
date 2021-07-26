@@ -17,6 +17,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 100
+          
+      - name: Get Branch
+        shell: bash
+        run: |
+          raw=$(git branch -r --contains ${{ github.ref }})
+          releaseBranch=${raw##*/}
+          echo "Found branch ${releaseBranch} from ${raw}"
+          echo "tagged_branch=${releaseBranch}" >> $GITHUB_ENV
         
       - name: Download required assemblies
         id: download-assemblies
@@ -108,9 +116,8 @@ jobs:
         env:
           TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
-          raw=$(git branch -r --contains ${{ github.ref }})
-          RELEASEBRANCH=${raw##*/}
-          echo "Found branch ${RELEASEBRANCH} from ${raw}"
+          RELEASEBRANCH=${{ env.tagged_branch }}
+          echo "Checking out branch ${RELEASEBRANCH}"
           git checkout $RELEASEBRANCH
           cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
