@@ -84,6 +84,7 @@ jobs:
           cp -v -R "${GITHUB_WORKSPACE}/Ships" "${RELEASE_DIR}"
           cp -v -R "${GITHUB_WORKSPACE}/GameData" "${RELEASE_DIR}"
           cp -v "${GITHUB_WORKSPACE}/RO.version" "${RELEASE_DIR}/GameData/RealismOverhaul/RO.version"
+          cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           cp -v "${GITHUB_WORKSPACE}/README.md" "${RELEASE_DIR}/README.md"
           cd ${RELEASE_DIR}
           zip -r RealismOverhaul-${{ github.event.release.tag_name }}.zip GameData Ships README.md
@@ -97,3 +98,14 @@ jobs:
           asset_path: ${{ steps.assemble-release.outputs.release-dir }}/RealismOverhaul-${{ github.event.release.tag_name }}.zip
           asset_name: RealismOverhaul-${{ github.event.release.tag_name }}.zip
           asset_content_type: application/zip
+          
+      - name: Setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          
+      - name: Commit new version file
+        run: |
+          git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
+          git commit -m "Update version to ${{ github.event.release.tag_name }}"
+          git push origin ${GITHUB_REF##*/}
