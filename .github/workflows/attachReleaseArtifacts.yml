@@ -35,6 +35,21 @@ jobs:
         run: |
           rm -f ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/*.dll
           rm -f ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/*.dll
+          
+          tag_stringg=${{ github.event.release.tag_name }}
+          vFull=$(echo $tag_string | sed -e s/v//)
+          vMajor=$(echo $vFull | cut -f 1 -d '.')
+          vMinor=$(echo $vFull | cut -f 2 -d '.')
+          vPatch=$(echo $vFull | cut -f 3 -d '.')
+          vBuild=$(echo $vFull | cut -f 4 -d '.')
+          sed \
+            -e s/CIBUILD_disabled/CIBUILD/ \
+            -e "s/@MAJOR@/$vMajor/" \
+            -e "s/@MINOR@/$vMinor/" \
+            -e "s/@PATCH/$vPatch/" \
+            -e "s/@BUILD@/$vBuild/" \
+            -i ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
+          
           msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/RealismOverhaul.sln
           msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/KerbalPlugins.EngineGroupController.sln
           cp -v ${GITHUB_WORKSPACE}/Source/obj/Release/RealismOverhaul.dll ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/RealismOverhaul.dll
