@@ -20,10 +20,14 @@ jobs:
           
       - name: Get Branch
         shell: bash
+        env:
+          TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
-          raw=$(git branch -r --contains ${{ github.ref }})
-          releaseBranch=${raw##*/}
-          echo "Found branch ${releaseBranch} from ${raw}"
+          tagged_commit=$(git rev-list -n 1 ${TAG_STRING})
+          echo "Finding commit $tagged_commit"
+          git branch -a --contains tagged_commit
+          releaseBranch=$(git branch -a --contains ${tagged_commit} | head -n 2 | tail -n 1 | sed -e "s/\s*//")
+          echo "Found branch ${releaseBranch}"
           echo "tagged_branch=${releaseBranch}" >> $GITHUB_ENV
         
       - name: Download required assemblies
