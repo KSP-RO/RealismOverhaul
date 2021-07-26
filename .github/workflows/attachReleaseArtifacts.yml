@@ -20,15 +20,8 @@ jobs:
           
       - name: Get Branch
         shell: bash
-        env:
-          TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
-          echo "Ref: ${GITHUB_REF}"
-          echo "SHA: ${GITHUB_SHA}"
-          tagged_commit=$(git rev-list -n 1 ${TAG_STRING})
-          echo "Finding commit $tagged_commit"
-          git branch -a --contains $tagged_commit
-          releaseBranch=$(git branch -a --contains ${tagged_commit} | head -n 2 | tail -n 1 | sed -e "s/\s*//")
+          releaseBranch=$(git branch -a --contains ${GITHUB_SHA} | head -n 2 | tail -n 1 | sed -e "s/\s*//" | sed -e "/remotes\/origin\///")
           echo "Found branch ${releaseBranch}"
           echo "tagged_branch=${releaseBranch}" >> $GITHUB_ENV
         
@@ -125,6 +118,7 @@ jobs:
           RELEASEBRANCH=${{ env.tagged_branch }}
           echo "Checking out branch ${RELEASEBRANCH}"
           git checkout $RELEASEBRANCH
+          git reset --hard origin/$RELEASEBRANCH
           cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           git commit -m "Update version to $TAG_STRING"
