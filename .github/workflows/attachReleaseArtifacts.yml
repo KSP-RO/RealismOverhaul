@@ -30,19 +30,22 @@ jobs:
           mkdir -p "${KSP_DLL_PATH}"
           unzip -P "${KSP_ZIP_PASSWORD}" '/tmp/bins.zip' -d "${KSP_DLL_PATH}"
           rm '/tmp/bins.zip'          
+          
+      - name: Set assembly version
+        run: |
+          echo "tag_string=$(echo ${{ github.event.release.tag_name }})" >> $GITHUB_ENV
+          echo "vFull=$(echo $tag_string | sed -e s/v//)" >> $GITHUB_ENV
+          echo "vMajor=$(echo $vFull | cut -f 1 -d '.')" >> $GITHUB_ENV
+          echo "vMinor=$(echo $vFull | cut -f 2 -d '.')" >> $GITHUB_ENV
+          echo "vPatch=$(echo $vFull | cut -f 3 -d '.')" >> $GITHUB_ENV
+          echo "vBuild=$(echo $vFull | cut -f 4 -d '.')" >> $GITHUB_ENV
                     
       - name: Build mod solution
         run: |
           rm -f ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/*.dll
           rm -f ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/*.dll
           
-          set tag_stringg=${{ github.event.release.tag_name }}
           echo "Version string: $(tag_string)"
-          set vFull=$(echo $tag_string | sed -e s/v//)
-          set vMajor=$(echo $vFull | cut -f 1 -d '.')
-          set vMinor=$(echo $vFull | cut -f 2 -d '.')
-          set vPatch=$(echo $vFull | cut -f 3 -d '.')
-          set vBuild=$(echo $vFull | cut -f 4 -d '.')
           echo "Version is $(vMajor) dot $(vMinor) dot $(vPatch) dot $(vBuild)"
           sed \
             -e "s/CIBUILD_disabled/CIBUILD/" \
