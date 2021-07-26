@@ -16,13 +16,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 100
+          fetch-depth: 0
           
       - name: Get Branch
         shell: bash
         env:
           TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
+          echo "Ref: ${GITHUB_REF}"
+          echo "SHA: ${GITHUB_SHA}"
           tagged_commit=$(git rev-list -n 1 ${TAG_STRING})
           echo "Finding commit $tagged_commit"
           git branch -a --contains $tagged_commit
