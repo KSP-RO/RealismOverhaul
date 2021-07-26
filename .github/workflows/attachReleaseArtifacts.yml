@@ -84,7 +84,6 @@ jobs:
           cp -v -R "${GITHUB_WORKSPACE}/Ships" "${RELEASE_DIR}"
           cp -v -R "${GITHUB_WORKSPACE}/GameData" "${RELEASE_DIR}"
           cp -v "${GITHUB_WORKSPACE}/RO.version" "${RELEASE_DIR}/GameData/RealismOverhaul/RO.version"
-          cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           cp -v "${GITHUB_WORKSPACE}/README.md" "${RELEASE_DIR}/README.md"
           cd ${RELEASE_DIR}
           zip -r RealismOverhaul-${{ github.event.release.tag_name }}.zip GameData Ships README.md
@@ -105,7 +104,14 @@ jobs:
           git config user.email "<>"
           
       - name: Commit new version file
+        shell: bash
+        env:
+          TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
+          git branch --contains tags/$TAG_STRING > t.txt
+          RELEASEBRANCH=$(cat t.txt | sed -e "s/\* //")
+          git checkout $RELEASEBRANCH
+          cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
-          git commit -m "Update version to ${{ github.event.release.tag_name }}"
-          git push origin ${GITHUB_REF##*/}
+          git commit -m "Update version to $TAG_STRING"
+          git push origin $RELEASEBRANCH
