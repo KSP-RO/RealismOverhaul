@@ -16,7 +16,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 100
+          fetch-depth: 0
+          
+      - name: Get Branch
+        shell: bash
+        run: |
+          releaseBranch=$(git branch -a --contains ${GITHUB_SHA} | head -n 2 | tail -n 1 | sed -e "s/\s*//" | sed -e "s/remotes\/origin\///")
+          echo "Found branch ${releaseBranch}"
+          echo "tagged_branch=${releaseBranch}" >> $GITHUB_ENV
         
       - name: Download required assemblies
         id: download-assemblies
@@ -97,3 +104,22 @@ jobs:
           asset_path: ${{ steps.assemble-release.outputs.release-dir }}/RealismOverhaul-${{ github.event.release.tag_name }}.zip
           asset_name: RealismOverhaul-${{ github.event.release.tag_name }}.zip
           asset_content_type: application/zip
+          
+      - name: Setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          
+      - name: Commit new version file
+        shell: bash
+        env:
+          TAG_STRING: ${{ github.event.release.tag_name }}
+        run: |
+          RELEASEBRANCH=${{ env.tagged_branch }}
+          echo "Checking out branch ${RELEASEBRANCH}"
+          git checkout $RELEASEBRANCH
+          git reset --hard origin/$RELEASEBRANCH
+          cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
+          git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
+          git commit -m "Update version to $TAG_STRING"
+          git push origin $RELEASEBRANCH
