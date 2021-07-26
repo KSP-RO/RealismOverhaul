@@ -108,9 +108,9 @@ jobs:
         env:
           TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
-          git branch --contains tags/$TAG_STRING > t.txt
-          cat t.txt
-          RELEASEBRANCH=$(cat t.txt | sed -e "s/(HEAD detached at //" | sed -e "s/\)//")
+          raw=$(git branch -r --contains ${{ github.ref }})
+          RELEASEBRANCH=${raw##*/}
+          echo "Found branch ${RELEASEBRANCH} from ${raw}"
           git checkout $RELEASEBRANCH
           cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
