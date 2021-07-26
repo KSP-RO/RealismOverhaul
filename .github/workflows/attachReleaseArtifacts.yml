@@ -37,18 +37,23 @@ jobs:
           rm -f ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/*.dll
           
           tag_stringg=${{ github.event.release.tag_name }}
+          echo "Version string: $(tag_string)"
           vFull=$(echo $tag_string | sed -e s/v//)
           vMajor=$(echo $vFull | cut -f 1 -d '.')
           vMinor=$(echo $vFull | cut -f 2 -d '.')
           vPatch=$(echo $vFull | cut -f 3 -d '.')
           vBuild=$(echo $vFull | cut -f 4 -d '.')
+          echo "Version is $(vMajor) dot $(vMinor) dot $(vPatch) dot $(vBuild)"
           sed \
-            -e s/CIBUILD_disabled/CIBUILD/ \
+            -e "s/CIBUILD_disabled/CIBUILD/" \
             -e "s/@MAJOR@/$vMajor/" \
             -e "s/@MINOR@/$vMinor/" \
             -e "s/@PATCH/$vPatch/" \
             -e "s/@BUILD@/$vBuild/" \
             -i ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
+            
+          grep CIBUILD ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
+          grep AssemblyFileVersion ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
           
           msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/RealismOverhaul.sln
           msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/KerbalPlugins.EngineGroupController.sln
