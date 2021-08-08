@@ -9,7 +9,7 @@ namespace RealismOverhaul
     class StartupPopup : MonoBehaviour
     {
         private const string PreferenceFileName = "RORotationPopupLock";
-        private static string PreferenceFilePath => Assembly.GetExecutingAssembly().Location + PreferenceFileName;
+        private static string PreferenceFilePath => Assembly.GetExecutingAssembly().Location + "PluginData/" + PreferenceFileName;
         
         public void Start()
         {
