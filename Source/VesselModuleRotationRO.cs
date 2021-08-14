@@ -24,6 +24,9 @@ namespace RealismOverhaul
         [KSPField(isPersistant = true)]
         public int autopilotContext;
 
+        [KSPField(isPersistant = true)]
+        public double lastUT = -1d;
+
         // Restore the angular velocity when loading / switching vessels
         private bool restoreAngularVelocity = false;
 
@@ -48,7 +51,10 @@ namespace RealismOverhaul
         public Vector3 targetDirection;
 
         // Note this is the magnitude, so 0.5 implies 0.3deg/sec in each axis, give or take.
-        private const float RotationThreshold = 0.5f * Mathf.Deg2Rad;
+        private const float RotationThreshold = 0.1f * Mathf.Deg2Rad;
+        private const float RotationThresholdSAS = 0.5f * Mathf.Deg2Rad;
+
+        private static double GetUT() => HighLogic.LoadedSceneIsEditor ? HighLogic.CurrentGame.UniversalTime : Planetarium.GetUniversalTime();
 
         private bool isEnabled = true;
         private bool shouldCheckEnabled = true;
@@ -69,6 +75,12 @@ namespace RealismOverhaul
         }
 
         private bool IsEnabled => shouldCheckEnabled ? CheckEnabled() : isEnabled;
+
+        private bool IsOverThreshold(Vector3 rot)
+        {
+            float thresh = Vessel.Autopilot.Enabled ? RotationThresholdSAS : RotationThreshold;
+            return Mathf.Abs(rot.x) > thresh || Mathf.Abs(rot.y) > thresh || Mathf.Abs(rot.z) > thresh;
+        }
 
         private void FixedUpdate()
         {
@@ -93,7 +105,7 @@ namespace RealismOverhaul
 
                     // If angular velocity is over the threshold, rotate--even if we have SAS on. No cheating Newton!
                     // Note this is the magnitude, so 0.5 implies 0.3deg/sec in each axis, give or take.
-                    if (angularVelocity.magnitude > RotationThreshold)
+                    if (IsOverThreshold(angularVelocity))
                     {
                         RotatePacked();
                     }
@@ -105,6 +117,7 @@ namespace RealismOverhaul
                 }
                 else if (FlightGlobals.ready) // The vessel is in physics simulation and fully loaded
                 {
+                    bool okToSaveAngularVelocity = true;
                     // Restoring previous SAS selection after a vessel change
                     if (vesselSASHasChanged)
                     {
@@ -130,9 +143,10 @@ namespace RealismOverhaul
                     if (restoreAngularVelocity) // Restoring saved rotation if it was above the threshold
                     {
                         // Debug.Log("[US] " + Vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
-                        if (angularVelocity.magnitude > RotationThreshold)
+                        if (IsOverThreshold(angularVelocity))
                         {
                             ApplyAngularVelocity();
+                            okToSaveAngularVelocity = false;
                         }
                         restoreAngularVelocity = false;
                     }
@@ -156,9 +170,10 @@ namespace RealismOverhaul
                         }
                     }
 
-                    // Saving angular velocity, SAS mode, calculate reaction wheels torque and check target hold status
-                    SaveOffRailsStatus();
+                    // Saving angular velocity (if we can), SAS mode, and check target hold status
+                    SaveOffRailsStatus(okToSaveAngularVelocity);
                 }
+                lastUT = GetUT();
             }
             // Saving this FixedUpdate target, autopilot context and maneuver node, to check if they have changed in the next FixedUpdate
             SaveLastUpdateStatus();
@@ -215,14 +230,15 @@ namespace RealismOverhaul
             {
                 return;
             }
-
-            double rotAngle = (double)angularVelocity.magnitude * TimeWarp.CurrentRate;
+            double timestep = lastUT < 0 ? TimeWarp.fixedDeltaTime : (GetUT() - lastUT);
+            timestep *= 50d; // for some reason we need to divide out normal fixed delta time of 0.02s
+            double rotAngle = (double)angularVelocity.magnitude * timestep;
             int subMult = (int)(rotAngle / 360d);
-            if(subMult > 0d)
+            if(subMult > 0)
             {
                 rotAngle -= subMult * 360d;
             }
-
+            
             Vessel.SetRotation(Quaternion.AngleAxis((float)rotAngle, Vessel.ReferenceTransform.rotation * angularVelocity) * Vessel.transform.rotation, true); // false seems to fix the "infinite roll bug"
         }
 
@@ -238,22 +254,27 @@ namespace RealismOverhaul
             }
         }
 
-        private void SaveOffRailsStatus()
+        private void SaveOffRailsStatus(bool okToSaveAngularVelocity)
         {
             // Saving the current angular velocity, zeroing it if negligible
-            if (Vessel.angularVelocity.magnitude <= RotationThreshold)
+            // Only do this if the vessel is fully unpacked (and we've restored angular velocity)
+            // otherwise we might zero it out by mistake.
+            if (okToSaveAngularVelocity)
             {
-                angularVelocity = Vector3.zero;
-            }
-            else
-            {
-                angularVelocity = Vessel.angularVelocity;
+                if (IsOverThreshold(Vessel.angularVelocity))
+                {
+                    angularVelocity = Vessel.angularVelocity;
+                }
+                else
+                {
+                    angularVelocity = Vector3.zero;
+                }
             }
 
             // Checking if the autopilot hold mode should be enabled
             if (Vessel.Autopilot.Enabled
                 && !(Vessel.Autopilot.Mode.Equals(VesselAutopilot.AutopilotMode.StabilityAssist))
-                && angularVelocity.magnitude < RotationThreshold * 2 // The vessel isn't rotating too much
+                && !IsOverThreshold(angularVelocity) // The vessel isn't rotating too much
                 && Vector3.Dot(Vessel.Autopilot.SAS.targetOrientation.normalized, Vessel.GetTransform().up.normalized) > 0.999f) // about 2.5 degrees
             {
                 autopilotTargetHold = true;
