@@ -19,3 +19,7 @@ The following templates are modified from templates shipped with [Waterfall](htt
 * `_Templates/rowaterfall-rcs-hydrazine-1.cfg`
 * `_Templates/rowaterfall-rcs-hypergolic-1.cfg`
 * `_Templates/rowaterfall-rcs-hypergolic-2.cfg`
+
+The following textures were created by Katniss and are distributed in RO with their permission:
+
+* `_Textures/fx-katniss-noise-1-blurred.dds`
