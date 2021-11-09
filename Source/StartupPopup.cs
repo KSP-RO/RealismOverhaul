@@ -10,7 +10,7 @@ namespace RealismOverhaul
     {
         private const string PreferenceFileName = "RORotationPopupLock";
         private static string PreferenceFilePath => Assembly.GetExecutingAssembly().Location + "PluginData/" + PreferenceFileName;
-        
+
         public void Start()
         {
             if (File.Exists(PreferenceFilePath)) return;
@@ -20,7 +20,7 @@ namespace RealismOverhaul
 
             foreach (var a in AssemblyLoader.loadedAssemblies)
             {
-                if (a.name == "PersistentRotation")
+                if (a.name == "PersistentRotation" || a.name == "PersistentRotationUpgraded")
                 {
                     hasPR = true;
                 }
@@ -30,7 +30,7 @@ namespace RealismOverhaul
                 }
             }
 
-            
+
             if (hasPR || hasMRCS)
             {
                 String message = "Realism Overhaul now contains its own, light, implementation of continuing vessel rotation during timewarp for when Principia is not installed. We've detected you have:\n\n";
@@ -39,7 +39,7 @@ namespace RealismOverhaul
                 if (hasMRCS)
                     message += "* MandatoryRCS\n";
                 message += "\ninstalled. It is suggested to quit, remove " + ((hasPR && hasMRCS) ? "them" : "it") + ", and relaunch KSP.\n\nBut don't worry, RO's own implementation will be disabled until you do.";
-                
+
 
                 PopupDialog.SpawnPopupDialog(
                     new Vector2(0, 0),
