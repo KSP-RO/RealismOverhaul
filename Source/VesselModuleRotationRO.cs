@@ -65,7 +65,7 @@ namespace RealismOverhaul
             foreach (var a in AssemblyLoader.loadedAssemblies)
             {
                 // ksp_plugin_adapter is Principia
-                if (a.name == "PersistentRotation" || a.name == "ksp_plugin_adapter" || a.name == "MandatoryRCS")
+                if (a.name == "PersistentRotation" || a.name == "PersistentRotationUpgraded" || a.name == "ksp_plugin_adapter" || a.name == "MandatoryRCS")
                 {
                     isEnabled = false;
                     break;
@@ -91,7 +91,7 @@ namespace RealismOverhaul
             {
                 targetDirection = AutopilotTargetDirection();
 
-                // Vessel is loaded but not in physics, either because 
+                // Vessel is loaded but not in physics, either because
                 // - It is in the physics bubble but in non-physics timewarp
                 // - It has gone outside of the physics bubble
                 // - It was just loaded, is in the physics bubble and will be unpacked in a few frames
@@ -234,11 +234,11 @@ namespace RealismOverhaul
             timestep *= 50d; // for some reason we need to divide out normal fixed delta time of 0.02s
             double rotAngle = (double)angularVelocity.magnitude * timestep;
             int subMult = (int)(rotAngle / 360d);
-            if(subMult > 0)
+            if (subMult > 0)
             {
                 rotAngle -= subMult * 360d;
             }
-            
+
             Vessel.SetRotation(Quaternion.AngleAxis((float)rotAngle, Vessel.ReferenceTransform.rotation * angularVelocity) * Vessel.transform.rotation, true); // false seems to fix the "infinite roll bug"
         }
 
@@ -426,7 +426,7 @@ namespace RealismOverhaul
                 }
             }
 
-            // 
+            //
             else
             {
                 // Abort orientation keeping
