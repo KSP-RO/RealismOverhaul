@@ -20,6 +20,7 @@ The following templates are modified from templates shipped with [Waterfall](htt
 * `_Templates/rowaterfall-rcs-hypergolic-1.cfg`
 * `_Templates/rowaterfall-rcs-hypergolic-2.cfg`
 
-The following textures were created by Katniss and are distributed in RO with their permission:
+The following templates are from [Katniss's Parts Pack](https://github.com/Katniss218/KatnisssPartsPack), used with permission:
 
-* `_Textures/fx-katniss-noise-1-blurred.dds`
+* `_Templates/hybrid/rowaterfall-hybrid-srm-1_ss.cfg`
+* `_Templates/hybrid/rowaterfall-hybrid-srm-1_wf.cfg`
