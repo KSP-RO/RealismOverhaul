@@ -4,13 +4,13 @@ namespace RealismOverhaul
 {
     public static class SpecFuncs
     {
-        public static bool IsPartAvailable(AvailablePart ap, int specLevel)
+        public static bool IsPartAvailable(AvailablePart ap, RealismOverhaulSpeculative specLevel)
         {
             if (ap == null)
             {
                 return false;
             }
-            int level = GetSpecLevel(ap);
+            RealismOverhaulSpeculative level = GetSpecLevel(ap);
             if (level > specLevel)
             {
                 Debug.Log($"[RealismOverhaulSpecLevel] Part excluded: {ap.name}, specLevel was {level}, compared to {specLevel}");
@@ -19,7 +19,7 @@ namespace RealismOverhaul
             return true;
         }
 
-        public static void PruneRDNode(RDTech tech, int specLevel)
+        public static void PruneRDNode(RDTech tech, RealismOverhaulSpeculative specLevel)
         {
             foreach (AvailablePart ap in tech.partsAssigned.ToArray())
             {
@@ -31,28 +31,20 @@ namespace RealismOverhaul
             }
         }
 
-        public static int GetCompInt()
+        public static RealismOverhaulSpeculative GetCompInt()
         {
             RealismOverhaulSettings _settings = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>();
             RealismOverhaulSpeculative setting = _settings.speculativeLevel;
-            return SetSpecLevel(setting);
+            return setting;
         }
 
-        public static int SetSpecLevel(RealismOverhaulSpeculative setting)
-        {
-            if (setting == RealismOverhaulSpeculative.real)     { return 0; }
-            if (setting == RealismOverhaulSpeculative.proposal) { return 1; }
-            if (setting == RealismOverhaulSpeculative.scifi)    { return 2; }
-            return -1;
-        }
-
-        public static int GetSpecLevel(AvailablePart ap)
+        public static RealismOverhaulSpeculative GetSpecLevel(AvailablePart ap)
         {
             string tagsString = ap.tags;
-            if (tagsString.Contains("speclevelreal"))  { return 0; }
-            if (tagsString.Contains("speclevelproto")) { return 1; }
-            if (tagsString.Contains("speclevelscifi")) { return 2; }
-            return -1;
+            if (tagsString.Contains("speclevelreal")) { return RealismOverhaulSpeculative.real; }
+            if (tagsString.Contains("speclevelproto")) { return RealismOverhaulSpeculative.proposal; }
+            if (tagsString.Contains("speclevelscifi")) { return RealismOverhaulSpeculative.scifi; }
+            return RealismOverhaulSpeculative.none;
         }
     }
 }

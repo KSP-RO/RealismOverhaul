@@ -8,7 +8,7 @@ namespace RealismOverhaul
     class SpeculativeHider : MonoBehaviour
     {
         public static EditorPartListFilter<AvailablePart> searchFilterParts;
-        private int specLevel;
+        private RealismOverhaulSpeculative specLevel;
         public void Start()
         {
             GameEvents.onLevelWasLoadedGUIReady.Add(OnLevelLoaded);
@@ -39,9 +39,9 @@ namespace RealismOverhaul
 
         void OnSpecLevelChanged()
         {
-            int oldCompInt = specLevel;
+            RealismOverhaulSpeculative oldSpecLevel = specLevel;
             specLevel = SpecFuncs.GetCompInt();
-            Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldCompInt} to {specLevel}");
+            Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldSpecLevel} to {specLevel}");
         }
 
         void OnUpdateRnD(RDTechTree tree)

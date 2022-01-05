@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
-
 namespace RealismOverhaul
 {
     public class RealismOverhaulSettings : GameParameters.CustomParameterNode
@@ -20,6 +16,7 @@ namespace RealismOverhaul
 
     public enum RealismOverhaulSpeculative
     {
+        none,
         real,
         proposal,
         scifi
