@@ -17,7 +17,5 @@ namespace RealismOverhaul
                 Destroy(this);
             }
         }
-
-        
     }
 }

@@ -17,14 +17,12 @@ namespace RealismOverhaul
             specLevel = SpecFuncs.GetCompInt();
             GameEvents.OnGameSettingsApplied.Add(OnSpecLevelChanged);
             Debug.Log($"[RealismOverhaulSpecLevel] Started specLevelhandler with level {specLevel}");
-
         }
 
         public void Destroy()
         {
             GameEvents.onLevelWasLoadedGUIReady.Remove(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Remove(new EventData<RDTechTree>.OnEvent(OnUpdateRnD));
-            
         }
 
         public void OnLevelLoaded(GameScenes scene)
@@ -36,15 +34,14 @@ namespace RealismOverhaul
                 Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart, specLevel);
                 searchFilterParts = new EditorPartListFilter<AvailablePart>("SpeculativeLevel", _criteria);
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
-
             }
         }
 
         void OnSpecLevelChanged()
         {
-                int oldCompInt = specLevel;
-                specLevel = SpecFuncs.GetCompInt();
-                Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldCompInt} to {specLevel}");
+            int oldCompInt = specLevel;
+            specLevel = SpecFuncs.GetCompInt();
+            Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldCompInt} to {specLevel}");
         }
 
         void OnUpdateRnD(RDTechTree tree)
