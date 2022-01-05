@@ -31,7 +31,7 @@ namespace RealismOverhaul
             }
         }
 
-        public static RealismOverhaulSpeculative GetCompInt()
+        public static RealismOverhaulSpeculative GetSpecLevelSetting()
         {
             RealismOverhaulSettings _settings = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>();
             RealismOverhaulSpeculative setting = _settings.speculativeLevel;

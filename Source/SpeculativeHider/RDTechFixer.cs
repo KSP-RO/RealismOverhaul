@@ -5,7 +5,7 @@ namespace RealismOverhaul
     class RDTechFixer : MonoBehaviour
     {
         public bool fixParts = false;
-        private RealismOverhaulSpeculative specLevel = SpecFuncs.GetCompInt();
+        private RealismOverhaulSpeculative specLevel = SpecFuncs.GetSpecLevelSetting();
         public void Start() { fixParts = true; }
         public void Update()
         {
