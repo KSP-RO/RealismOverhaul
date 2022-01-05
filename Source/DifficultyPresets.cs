@@ -42,15 +42,15 @@ namespace RealismOverhaul
         public override bool HasPresets { get { return true; } }
 
         [GameParameters.CustomParameterUI("Speculative Level", toolTip = "What parts are available.\nReal = Only real hardware is available.\nProposal = Real proposals that were never built are available.\nScifi = Scifi parts are available.")]
-        public RealismOverhaulspeculative speculativeLevel = RealismOverhaulspeculative.REAL;
+        public RealismOverhaulspeculative speculativeLevel = RealismOverhaulspeculative.real;
         
 
     }
 
     public enum RealismOverhaulspeculative
     {
-        REAL,
-        PROPOSAL,
-        SCIFI
+        real,
+        proposal,
+        scifi
     }
 }

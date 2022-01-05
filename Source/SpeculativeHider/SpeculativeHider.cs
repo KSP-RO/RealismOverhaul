@@ -42,7 +42,7 @@ namespace RealismOverhaul
 
         void OnSpecLevelChanged()
         {
-                var oldCompInt = specLevel;
+                int oldCompInt = specLevel;
                 specLevel = SpecFuncs.GetCompInt();
                 Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldCompInt} to {specLevel}");
         }
@@ -50,7 +50,7 @@ namespace RealismOverhaul
         void OnUpdateRnD(RDTechTree tree)
         {
             Debug.Log($"[RealismOverhaulSpecLevel] TechTree updated");
-            foreach (var node in tree.controller.nodes)
+            foreach (RDNode node in tree.controller.nodes)
             {
                 SpecFuncs.PruneRDNode(node.tech, specLevel);
                 node.gameObject.AddComponent<RDTechFixer>();

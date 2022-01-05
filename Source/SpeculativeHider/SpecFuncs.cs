@@ -10,7 +10,7 @@ namespace RealismOverhaul
             {
                 return false;
             }
-            var level = SpecFuncs.GetSpecLevel(ap);
+            int level = SpecFuncs.GetSpecLevel(ap);
             if (level > specLevel)
             {
                 Debug.Log($"[RealismOverhaulSpecLevel] Part excluded: {ap.name}, specLevel was {level}, compared to {specLevel}");
@@ -21,7 +21,7 @@ namespace RealismOverhaul
 
         public static void PruneRDNode(RDTech tech, int specLevel)
         {
-            foreach (var ap in tech.partsAssigned.ToArray())
+            foreach (AvailablePart ap in tech.partsAssigned.ToArray())
             {
                 Debug.Log($"[RealismOverhaulSpecLevel] RnD inner check: checked part {ap.name}, is available: {SpecFuncs.IsPartAvailable(ap, specLevel)}");
                 if (!SpecFuncs.IsPartAvailable(ap, specLevel))
@@ -33,22 +33,22 @@ namespace RealismOverhaul
 
         public static int GetCompInt()
         {
-            var _settings = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>();
-            var setting = _settings.speculativeLevel;
+            RealismOverhaulSettings _settings = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>();
+            RealismOverhaulspeculative setting = _settings.speculativeLevel;
             return SetSpecLevel(setting);
         }
 
         public static int SetSpecLevel(RealismOverhaulspeculative setting)
         {
-            if (setting == RealismOverhaulspeculative.REAL)
+            if (setting == RealismOverhaulspeculative.real)
             {
                 return 0;
             }
-            if (setting == RealismOverhaulspeculative.PROPOSAL)
+            if (setting == RealismOverhaulspeculative.proposal)
             {
                 return 1;
             }
-            if (setting == RealismOverhaulspeculative.SCIFI)
+            if (setting == RealismOverhaulspeculative.scifi)
             {
                 return 2;
             }
@@ -57,7 +57,7 @@ namespace RealismOverhaul
 
         public static int GetSpecLevel(AvailablePart ap)
         {
-            var tagsString = ap.tags;
+            string tagsString = ap.tags;
             if (tagsString.Contains("speclevelreal"))
             {
                 return 0;
