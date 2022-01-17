@@ -23,11 +23,12 @@ namespace RealismOverhaul
         {
             GameEvents.onLevelWasLoadedGUIReady.Remove(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Remove(new EventData<RDTechTree>.OnEvent(OnUpdateRnD));
+
+            GameEvents.OnGameSettingsApplied.Remove(OnSpecLevelChanged);
         }
 
         public void OnLevelLoaded(GameScenes scene)
         {
-            Debug.Log("[RealismOverhaulSpecLevel] Level Loaded");
             if (scene == GameScenes.EDITOR)
             {
                 specLevel = SpecFuncs.GetSpecLevelSetting();
@@ -41,7 +42,10 @@ namespace RealismOverhaul
         {
             RealismOverhaulSpeculative oldSpecLevel = specLevel;
             specLevel = SpecFuncs.GetSpecLevelSetting();
-            Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldSpecLevel} to {specLevel}");
+            if (oldSpecLevel != specLevel)
+            {
+                Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldSpecLevel} to {specLevel}");
+            }
         }
 
         void OnUpdateRnD(RDTechTree tree)

@@ -10,7 +10,11 @@ namespace RealismOverhaul
             {
                 return false;
             }
-            RealismOverhaulSpeculative level = GetSpecLevel(ap);
+            RealismOverhaulSpeculative level = GetSpecLevelFromTags(ap);
+
+            var module = ap.partPrefab.Modules.GetModule<SpeculativePartModule>();
+            level = module != null ? module.specLevel : RealismOverhaulSpeculative.real;
+
             if (level > specLevel)
             {
                 Debug.Log($"[RealismOverhaulSpecLevel] Part excluded: {ap.name}, specLevel was {level}, compared to {specLevel}");
@@ -34,17 +38,18 @@ namespace RealismOverhaul
         public static RealismOverhaulSpeculative GetSpecLevelSetting()
         {
             RealismOverhaulSettings _settings = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>();
-            RealismOverhaulSpeculative setting = _settings.speculativeLevel;
-            return setting;
+            return _settings.speculativeLevel;
         }
 
-        public static RealismOverhaulSpeculative GetSpecLevel(AvailablePart ap)
+        public static RealismOverhaulSpeculative GetSpecLevelFromTags(AvailablePart ap)
         {
             string tagsString = ap.tags;
             if (tagsString.Contains("speclevelreal")) { return RealismOverhaulSpeculative.real; }
-            if (tagsString.Contains("speclevelproto")) { return RealismOverhaulSpeculative.proposal; }
-            if (tagsString.Contains("speclevelscifi")) { return RealismOverhaulSpeculative.scifi; }
-            return RealismOverhaulSpeculative.none;
+            if (tagsString.Contains("speclevelprototype")) { return RealismOverhaulSpeculative.prototype; }
+            if (tagsString.Contains("speclevelconcept")) { return RealismOverhaulSpeculative.concept; }
+            if (tagsString.Contains("speclevelspeculative")) { return RealismOverhaulSpeculative.speculative; }
+            if (tagsString.Contains("speclevelfictional")) { return RealismOverhaulSpeculative.fictional; }
+            return RealismOverhaulSpeculative.real;
         }
     }
 
