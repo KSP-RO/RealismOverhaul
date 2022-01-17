@@ -47,4 +47,13 @@ namespace RealismOverhaul
             return RealismOverhaulSpeculative.none;
         }
     }
+
+    public enum RealismOverhaulSpeculative
+    {
+        real,
+        prototype,
+        concept,
+        speculative,
+        fictional
+    }
 }
