@@ -1,6 +1,7 @@
 using UnityEngine;
 using KSP.UI.Screens;
 using System;
+using RealFuels;
 
 namespace RealismOverhaul
 {
@@ -35,6 +36,10 @@ namespace RealismOverhaul
                 Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart, specLevel);
                 searchFilterParts = new EditorPartListFilter<AvailablePart>("SpeculativeLevel", _criteria);
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
+
+                Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg, specLevel);
+                // TODO: prevent identical filter from being added again.
+                ConfigFilters.Instance.configDisplayFilters.Add(_filterRF);
             }
         }
 

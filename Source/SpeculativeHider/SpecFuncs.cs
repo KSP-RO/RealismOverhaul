@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace RealismOverhaul
@@ -23,15 +24,24 @@ namespace RealismOverhaul
             return true;
         }
 
+        public static bool IsRFConfigAvailable(ConfigNode cfg, RealismOverhaulSpeculative specLevel)
+        {
+            if (cfg == null)
+            {
+                return false;
+            }
+
+            // TODO: Implement actual checking
+
+            return true;
+        }
+
         public static void PruneRDNode(RDTech tech, RealismOverhaulSpeculative specLevel)
         {
-            foreach (AvailablePart ap in tech.partsAssigned.ToArray())
+            foreach (AvailablePart ap in tech.partsAssigned.Where(ap => !IsPartAvailable(ap, specLevel)).ToArray())
             {
                 Debug.Log($"[RealismOverhaulSpecLevel] RnD inner check: checked part {ap.name}, is available: {IsPartAvailable(ap, specLevel)}");
-                if (!IsPartAvailable(ap, specLevel))
-                {
-                    tech.partsAssigned.Remove(ap);
-                }
+                tech.partsAssigned.Remove(ap);
             }
         }
 
