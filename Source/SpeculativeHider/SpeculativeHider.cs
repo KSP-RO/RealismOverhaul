@@ -38,8 +38,7 @@ namespace RealismOverhaul
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
 
                 Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg, specLevel);
-                // TODO: prevent identical filter from being added again.
-                ConfigFilters.Instance.configDisplayFilters.Add(_filterRF);
+                ConfigFilters.Instance.configDisplayFilters.AddFilter(_filterRF);
             }
         }
 
