@@ -5,7 +5,6 @@ namespace RealismOverhaul
     class RDTechFixer : MonoBehaviour
     {
         public bool fixParts = false;
-        private RealismOverhaulSpeculative specLevel = SpecFuncs.GetSpecLevelSetting();
         public void Start() { fixParts = true; }
         public void Update()
         {
@@ -13,7 +12,7 @@ namespace RealismOverhaul
             {
                 // Hides unwanted parts from the RnD techtree
                 RDTech tech = GetComponent<RDTech>();
-                SpecFuncs.PruneRDNode(tech, specLevel);
+                RDTechFilters.Instance.FilterRDNode(tech);
                 Destroy(this);
             }
         }

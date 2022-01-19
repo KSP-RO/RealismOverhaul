@@ -10,6 +10,7 @@ namespace RealismOverhaul
     {
         public static EditorPartListFilter<AvailablePart> searchFilterParts;
         public static ConfigFilters.Filter engineConfigFilter;
+        public static RDTechFilters.Filter RDFilter;
         private RealismOverhaulSpeculative specLevel;
         public void Start()
         {
@@ -39,6 +40,10 @@ namespace RealismOverhaul
                 searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, _criteria);
                 EditorPartList.Instance.ExcludeFilters.RemoveFilter(partFilterID);
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
+
+                RDFilter = new RDTechFilters.Filter(partFilterID, _criteria);
+                RDTechFilters.Instance.filters.RemoveFilter(partFilterID);
+                RDTechFilters.Instance.filters.AddFilter(RDFilter);
 
                 string rfFilterID = "SpeculativeRFFilter";
                 Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg, specLevel);

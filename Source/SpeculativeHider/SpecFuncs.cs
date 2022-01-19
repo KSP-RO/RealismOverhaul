@@ -49,15 +49,6 @@ namespace RealismOverhaul
             return true;
         }
 
-        public static void PruneRDNode(RDTech tech, RealismOverhaulSpeculative specLevel)
-        {
-            foreach (AvailablePart ap in tech.partsAssigned.Where(ap => !IsPartAvailable(ap, specLevel)).ToArray())
-            {
-                Debug.Log($"[RealismOverhaulSpecLevel] RnD inner check: checked part {ap.name}, is available: {IsPartAvailable(ap, specLevel)}");
-                tech.partsAssigned.Remove(ap);
-            }
-        }
-
         public static RealismOverhaulSpeculative GetSpecLevelSetting()
         {
             RealismOverhaulSettings _settings = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>();
