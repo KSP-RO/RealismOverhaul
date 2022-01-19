@@ -9,6 +9,7 @@ namespace RealismOverhaul
     class SpeculativeHider : MonoBehaviour
     {
         public static EditorPartListFilter<AvailablePart> searchFilterParts;
+        public static ConfigFilters.Filter engineConfigFilter;
         private RealismOverhaulSpeculative specLevel;
         public void Start()
         {
@@ -33,12 +34,17 @@ namespace RealismOverhaul
             if (scene == GameScenes.EDITOR)
             {
                 specLevel = SpecFuncs.GetSpecLevelSetting();
+                string partFilterID = "SpeculativeFilter";
                 Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart, specLevel);
-                searchFilterParts = new EditorPartListFilter<AvailablePart>("SpeculativeLevel", _criteria);
+                searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, _criteria);
+                EditorPartList.Instance.ExcludeFilters.RemoveFilter(partFilterID);
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
 
+                string rfFilterID = "SpeculativeRFFilter";
                 Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg, specLevel);
-                ConfigFilters.Instance.configDisplayFilters.AddFilter(_filterRF);
+                engineConfigFilter = new ConfigFilters.Filter(rfFilterID, _filterRF);
+                ConfigFilters.Instance.configDisplayFilters.RemoveFilter(rfFilterID);
+                ConfigFilters.Instance.configDisplayFilters.AddFilter(engineConfigFilter);
             }
         }
 
