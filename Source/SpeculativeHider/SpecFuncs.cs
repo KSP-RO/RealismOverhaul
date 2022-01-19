@@ -31,7 +31,20 @@ namespace RealismOverhaul
                 return false;
             }
 
-            // TODO: Implement actual checking
+            if (cfg.HasValue("specLevel"))
+            {
+                string value = cfg.GetValue("specLevel");
+                if(RealismOverhaulSpeculative.TryParse(value, out RealismOverhaulSpeculative valueEnum))
+                {
+                    if (valueEnum > specLevel)
+                    {
+                        Debug.Log($"[RealismOverhaulSpecLevel] Engine Config excluded: {cfg.GetValue("name")}, specLevel was {valueEnum}, compared to {specLevel}");
+                        return false;
+                    }
+                    return true;
+                }
+                Debug.Log($"[RealismOverhaulSpecLevel] Parsing specLevel failed on Engine Config: {cfg.GetValue("name")} ");
+            }
 
             return true;
         }
