@@ -68,7 +68,7 @@ namespace RealismOverhaul
             Debug.Log($"[RealismOverhaulSpecLevel] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
             {
-                SpecFuncs.PruneRDNode(node.tech, specLevel);
+                RDTechFilters.Instance.FilterRDNode(node.tech);
                 node.gameObject.AddComponent<RDTechFixer>();
             }
         }
