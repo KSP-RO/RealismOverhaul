@@ -41,10 +41,6 @@ namespace RealismOverhaul
                 EditorPartList.Instance.ExcludeFilters.RemoveFilter(partFilterID);
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
 
-                RDFilter = new RDTechFilters.Filter(partFilterID, _criteria);
-                RDTechFilters.Instance.filters.RemoveFilter(partFilterID);
-                RDTechFilters.Instance.filters.AddFilter(RDFilter);
-
                 string rfFilterID = "SpeculativeRFFilter";
                 Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg, specLevel);
                 engineConfigFilter = new ConfigFilters.Filter(rfFilterID, _filterRF);
@@ -65,6 +61,11 @@ namespace RealismOverhaul
 
         void OnUpdateRnD(RDTechTree tree)
         {
+            string partFilterID = "SpeculativeFilter";
+            Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart, specLevel);
+            RDFilter = new RDTechFilters.Filter(partFilterID, _criteria);
+            RDTechFilters.Instance.filters.RemoveFilter(partFilterID);
+            RDTechFilters.Instance.filters.AddFilter(RDFilter);
             Debug.Log($"[RealismOverhaulSpecLevel] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
             {
