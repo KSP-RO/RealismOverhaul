@@ -20,6 +20,7 @@ namespace RealismOverhaul
             specLevel = SpecFuncs.GetSpecLevelSetting();
             GameEvents.OnGameSettingsApplied.Add(OnSpecLevelChanged);
             Debug.Log($"[RealismOverhaulSpecLevel] Started specLevelhandler with level {specLevel}");
+            AttachFilters();
         }
 
         public void Destroy()
@@ -34,19 +35,28 @@ namespace RealismOverhaul
         {
             if (scene == GameScenes.EDITOR)
             {
-                specLevel = SpecFuncs.GetSpecLevelSetting();
-                string partFilterID = "SpeculativeFilter";
-                Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart, specLevel);
-                searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, _criteria);
-                EditorPartList.Instance.ExcludeFilters.RemoveFilter(partFilterID);
-                EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
-
-                string rfFilterID = "SpeculativeRFFilter";
-                Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg, specLevel);
-                engineConfigFilter = new ConfigFilters.Filter(rfFilterID, _filterRF);
-                ConfigFilters.Instance.configDisplayFilters.RemoveFilter(rfFilterID);
-                ConfigFilters.Instance.configDisplayFilters.AddFilter(engineConfigFilter);
+                AttachFilters();
             }
+        }
+
+        void AttachFilters()
+        {
+            Debug.Log("[RealismOverhaulSpecLevel] Attached filters");
+            string partFilterID = "SpeculativeFilter";
+            Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart);
+            searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, _criteria);
+            if (EditorPartList.Instance != null)
+            {
+                EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
+            }
+
+            RDFilter = new RDTechFilters.Filter(partFilterID, _criteria);
+            RDTechFilters.Instance.filters.AddFilter(RDFilter);
+
+            string rfFilterID = "SpeculativeRFFilter";
+            Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg);
+            engineConfigFilter = new ConfigFilters.Filter(rfFilterID, _filterRF);
+            ConfigFilters.Instance.configDisplayFilters.AddFilter(engineConfigFilter);
         }
 
         void OnSpecLevelChanged()
@@ -61,11 +71,6 @@ namespace RealismOverhaul
 
         void OnUpdateRnD(RDTechTree tree)
         {
-            string partFilterID = "SpeculativeFilter";
-            Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart, specLevel);
-            RDFilter = new RDTechFilters.Filter(partFilterID, _criteria);
-            RDTechFilters.Instance.filters.RemoveFilter(partFilterID);
-            RDTechFilters.Instance.filters.AddFilter(RDFilter);
             Debug.Log($"[RealismOverhaulSpecLevel] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
             {

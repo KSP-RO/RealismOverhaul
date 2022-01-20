@@ -5,12 +5,13 @@ namespace RealismOverhaul
 {
     public static class SpecFuncs
     {
-        public static bool IsPartAvailable(AvailablePart ap, RealismOverhaulSpeculative specLevel)
+        public static bool IsPartAvailable(AvailablePart ap)
         {
             if (ap == null)
             {
                 return false;
             }
+            var specLevel = GetSpecLevelSetting();
             RealismOverhaulSpeculative level = GetSpecLevelFromTags(ap);
 
             var module = ap.partPrefab.Modules.GetModule<SpeculativePartModule>();
@@ -24,7 +25,7 @@ namespace RealismOverhaul
             return true;
         }
 
-        public static bool IsRFConfigAvailable(ConfigNode cfg, RealismOverhaulSpeculative specLevel)
+        public static bool IsRFConfigAvailable(ConfigNode cfg)
         {
             if (cfg == null)
             {
@@ -36,6 +37,7 @@ namespace RealismOverhaul
                 string value = cfg.GetValue("specLevel");
                 if(RealismOverhaulSpeculative.TryParse(value, out RealismOverhaulSpeculative valueEnum))
                 {
+                    var specLevel = GetSpecLevelSetting();
                     if (valueEnum > specLevel)
                     {
                         Debug.Log($"[RealismOverhaulSpecLevel] Engine Config excluded: {cfg.GetValue("name")}, specLevel was {valueEnum}, compared to {specLevel}");
