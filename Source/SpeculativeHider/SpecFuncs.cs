@@ -16,6 +16,7 @@ namespace RealismOverhaul
 
             if (level > specLevel)
             {
+                // TODO: Delete the debug print
                 Debug.Log($"[RealismOverhaulSpecLevel] Part excluded: {ap.name}, specLevel was {level}, compared to {specLevel}");
                 return false;
             }
@@ -37,6 +38,7 @@ namespace RealismOverhaul
                     var specLevel = GetSpecLevelSetting();
                     if (valueEnum > specLevel)
                     {
+                        // TODO: Delete the debug print
                         Debug.Log($"[RealismOverhaulSpecLevel] Engine Config excluded: {cfg.GetValue("name")}, specLevel was {valueEnum}, compared to {specLevel}");
                         return false;
                     }
@@ -57,11 +59,11 @@ namespace RealismOverhaul
         public static RealismOverhaulSpeculative GetSpecLevelFromTags(AvailablePart ap)
         {
             string tagsString = ap.tags;
-            if (tagsString.Contains("speclevelreal")) { return RealismOverhaulSpeculative.real; }
-            if (tagsString.Contains("speclevelprototype")) { return RealismOverhaulSpeculative.prototype; }
-            if (tagsString.Contains("speclevelconcept")) { return RealismOverhaulSpeculative.concept; }
-            if (tagsString.Contains("speclevelspeculative")) { return RealismOverhaulSpeculative.speculative; }
-            if (tagsString.Contains("speclevelfictional")) { return RealismOverhaulSpeculative.fictional; }
+            if (tagsString.Contains("ro_speculativetag_real")) { return RealismOverhaulSpeculative.real; }
+            if (tagsString.Contains("ro_speculativetag_prototype")) { return RealismOverhaulSpeculative.prototype; }
+            if (tagsString.Contains("ro_speculativetag_concept")) { return RealismOverhaulSpeculative.concept; }
+            if (tagsString.Contains("ro_speculativetag_speculative")) { return RealismOverhaulSpeculative.speculative; }
+            if (tagsString.Contains("ro_speculativetag_fictional")) { return RealismOverhaulSpeculative.fictional; }
             return RealismOverhaulSpeculative.real;
         }
     }
