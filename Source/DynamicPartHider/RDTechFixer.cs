@@ -5,10 +5,11 @@ namespace RealismOverhaul
     class RDTechFixer : MonoBehaviour
     {
         public bool fixParts = false;
-        public void Start() { fixParts = true; }
+        public void Start() => fixParts = true;
+
         public void Update()
         {
-            if (fixParts == true)
+            if (fixParts)
             {
                 // Hides unwanted parts from the RnD techtree
                 RDTech tech = GetComponent<RDTech>();

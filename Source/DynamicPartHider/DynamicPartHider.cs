@@ -9,8 +9,8 @@ namespace RealismOverhaul
     class DynamicPartHider : MonoBehaviour
     {
         public static EditorPartListFilter<AvailablePart> searchFilterParts;
-        public static RDTechFilters.Filter RDFilter;
-        private RealismOverhaulSpeculative specLevel;
+        private SpeculativeLevel specLevel;
+
         public void Start()
         {
             GameEvents.onLevelWasLoadedGUIReady.Add(OnLevelLoaded);
@@ -43,26 +43,26 @@ namespace RealismOverhaul
         {
             Debug.Log("[RealismOverhaulSpecLevel] Attached filters");
             string partFilterID = "SpeculativeFilter";
-            Func<AvailablePart, bool> _criteria = (_aPart) => HelperFuncs.IsPartAvailable(_aPart);
-            searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, _criteria);
+            Func<AvailablePart, bool> criteria = (aPart) => Utilities.IsPartAvailable(aPart);
+            searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, criteria);
             if (EditorPartList.Instance != null)
             {
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
             }
 
-            RDFilter = new RDTechFilters.Filter(partFilterID, _criteria);
-            RDTechFilters.Instance.filters.AddFilter(RDFilter);
+            if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(partFilterID))
+                RDTechFilters.Instance.filters.Add(partFilterID, criteria);
 
             string rfFilterID = "SpeculativeRFFilter";
-            Func<ConfigNode, bool> _filterRF = (_cfg) => HelperFuncs.IsRFConfigAvailable(_cfg);
+            Func<ConfigNode, bool> filterRF = (cfg) => Utilities.IsRFConfigAvailable(cfg);
             if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(rfFilterID))
-                ConfigFilters.Instance.configDisplayFilters.Add(rfFilterID, _filterRF);
+                ConfigFilters.Instance.configDisplayFilters.Add(rfFilterID, filterRF);
         }
 
         // Is this logging needed?
         private void onGameSettingsApplied()
         {
-            RealismOverhaulSpeculative oldSpecLevel = specLevel;
+            SpeculativeLevel oldSpecLevel = specLevel;
             specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             if (oldSpecLevel != specLevel)
             {

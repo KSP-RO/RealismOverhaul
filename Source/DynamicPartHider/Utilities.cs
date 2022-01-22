@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RealismOverhaul
 {
-    public static class HelperFuncs
+    public static class Utilities
     {
         public static bool IsPartAvailable(AvailablePart ap)
         {
@@ -11,8 +11,8 @@ namespace RealismOverhaul
             {
                 return false;
             }
-            var specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-            RealismOverhaulSpeculative level = GetSpecLevelFromTags(ap);
+            SpeculativeLevel specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
+            SpeculativeLevel level = GetSpecLevelFromTags(ap);
 
             if (level > specLevel)
             {
@@ -33,9 +33,9 @@ namespace RealismOverhaul
             if (cfg.HasValue("specLevel"))
             {
                 string value = cfg.GetValue("specLevel");
-                if(RealismOverhaulSpeculative.TryParse(value, out RealismOverhaulSpeculative valueEnum))
+                if (SpeculativeLevel.TryParse(value, out SpeculativeLevel valueEnum))
                 {
-                    var specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
+                    SpeculativeLevel specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
                     if (valueEnum > specLevel)
                     {
                         // TODO: Delete the debug print
@@ -50,24 +50,24 @@ namespace RealismOverhaul
             return true;
         }
 
-        public static RealismOverhaulSpeculative GetSpecLevelFromTags(AvailablePart ap)
+        public static SpeculativeLevel GetSpecLevelFromTags(AvailablePart ap)
         {
             string tagsString = ap.tags;
-            if (tagsString.Contains("ro_speculativetag_real")) { return RealismOverhaulSpeculative.real; }
-            if (tagsString.Contains("ro_speculativetag_prototype")) { return RealismOverhaulSpeculative.prototype; }
-            if (tagsString.Contains("ro_speculativetag_concept")) { return RealismOverhaulSpeculative.concept; }
-            if (tagsString.Contains("ro_speculativetag_speculative")) { return RealismOverhaulSpeculative.speculative; }
-            if (tagsString.Contains("ro_speculativetag_fictional")) { return RealismOverhaulSpeculative.fictional; }
-            return RealismOverhaulSpeculative.real;
+            if (tagsString.Contains("ro_speculativetag_real")) { return SpeculativeLevel.Real; }
+            if (tagsString.Contains("ro_speculativetag_prototype")) { return SpeculativeLevel.Prototype; }
+            if (tagsString.Contains("ro_speculativetag_concept")) { return SpeculativeLevel.Concept; }
+            if (tagsString.Contains("ro_speculativetag_speculative")) { return SpeculativeLevel.Speculative; }
+            if (tagsString.Contains("ro_speculativetag_fictional")) { return SpeculativeLevel.Fictional; }
+            return SpeculativeLevel.Real;
         }
     }
 
-    public enum RealismOverhaulSpeculative
+    public enum SpeculativeLevel
     {
-        real,
-        prototype,
-        concept,
-        speculative,
-        fictional
+        Real,
+        Prototype,
+        Concept,
+        Speculative,
+        Fictional
     }
 }
