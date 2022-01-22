@@ -14,9 +14,6 @@ namespace RealismOverhaul
             var specLevel = GetSpecLevelSetting();
             RealismOverhaulSpeculative level = GetSpecLevelFromTags(ap);
 
-            var module = ap.partPrefab.Modules.GetModule<SpeculativePartModule>();
-            level = module != null ? module.specLevel : RealismOverhaulSpeculative.real;
-
             if (level > specLevel)
             {
                 Debug.Log($"[RealismOverhaulSpecLevel] Part excluded: {ap.name}, specLevel was {level}, compared to {specLevel}");
