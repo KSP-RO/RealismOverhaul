@@ -11,7 +11,7 @@ namespace RealismOverhaul
             {
                 return false;
             }
-            var specLevel = GetSpecLevelSetting();
+            var specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             RealismOverhaulSpeculative level = GetSpecLevelFromTags(ap);
 
             if (level > specLevel)
@@ -35,7 +35,7 @@ namespace RealismOverhaul
                 string value = cfg.GetValue("specLevel");
                 if(RealismOverhaulSpeculative.TryParse(value, out RealismOverhaulSpeculative valueEnum))
                 {
-                    var specLevel = GetSpecLevelSetting();
+                    var specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
                     if (valueEnum > specLevel)
                     {
                         // TODO: Delete the debug print
@@ -48,12 +48,6 @@ namespace RealismOverhaul
             }
 
             return true;
-        }
-
-        public static RealismOverhaulSpeculative GetSpecLevelSetting()
-        {
-            RealismOverhaulSettings _settings = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>();
-            return _settings.speculativeLevel;
         }
 
         public static RealismOverhaulSpeculative GetSpecLevelFromTags(AvailablePart ap)

@@ -17,7 +17,7 @@ namespace RealismOverhaul
             GameEvents.onLevelWasLoadedGUIReady.Add(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Add(new EventData<RDTechTree>.OnEvent(OnUpdateRnD));
 
-            specLevel = SpecFuncs.GetSpecLevelSetting();
+            specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             GameEvents.OnGameSettingsApplied.Add(OnSpecLevelChanged);
             Debug.Log($"[RealismOverhaulSpecLevel] Started specLevelhandler with level {specLevel}");
             AttachFilters();
@@ -62,7 +62,7 @@ namespace RealismOverhaul
         void OnSpecLevelChanged()
         {
             RealismOverhaulSpeculative oldSpecLevel = specLevel;
-            specLevel = SpecFuncs.GetSpecLevelSetting();
+            specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             if (oldSpecLevel != specLevel)
             {
                 Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldSpecLevel} to {specLevel}");
@@ -74,7 +74,11 @@ namespace RealismOverhaul
             Debug.Log($"[RealismOverhaulSpecLevel] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
             {
+                // This filtering doesn't get persisted, but is done to avoid
+                // confusion with other mods that interact with the tech tree
                 RDTechFilters.Instance.FilterRDNode(node.tech);
+
+                // Attach the actual filtering component that does the filtering
                 node.gameObject.AddComponent<RDTechFixer>();
             }
         }
