@@ -9,7 +9,6 @@ namespace RealismOverhaul
     class DynamicPartHider : MonoBehaviour
     {
         public static EditorPartListFilter<AvailablePart> searchFilterParts;
-        public static ConfigFilters.Filter engineConfigFilter;
         public static RDTechFilters.Filter RDFilter;
         private RealismOverhaulSpeculative specLevel;
         public void Start()
@@ -56,8 +55,8 @@ namespace RealismOverhaul
 
             string rfFilterID = "SpeculativeRFFilter";
             Func<ConfigNode, bool> _filterRF = (_cfg) => HelperFuncs.IsRFConfigAvailable(_cfg);
-            engineConfigFilter = new ConfigFilters.Filter(rfFilterID, _filterRF);
-            ConfigFilters.Instance.configDisplayFilters.AddFilter(engineConfigFilter);
+            if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(rfFilterID))
+                ConfigFilters.Instance.configDisplayFilters.Add(rfFilterID, _filterRF);
         }
 
         // Is this logging needed?
