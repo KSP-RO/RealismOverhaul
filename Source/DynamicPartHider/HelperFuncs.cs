@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RealismOverhaul
 {
-    public static class SpecFuncs
+    public static class HelperFuncs
     {
         public static bool IsPartAvailable(AvailablePart ap)
         {

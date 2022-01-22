@@ -6,7 +6,7 @@ using RealFuels;
 namespace RealismOverhaul
 {
     [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
-    class SpeculativeHider : MonoBehaviour
+    class DynamicPartHider : MonoBehaviour
     {
         public static EditorPartListFilter<AvailablePart> searchFilterParts;
         public static ConfigFilters.Filter engineConfigFilter;
@@ -18,7 +18,8 @@ namespace RealismOverhaul
             RDTechTree.OnTechTreeSpawn.Add(new EventData<RDTechTree>.OnEvent(OnUpdateRnD));
 
             specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-            GameEvents.OnGameSettingsApplied.Add(OnSpecLevelChanged);
+            GameEvents.OnGameSettingsApplied.Add(onGameSettingsApplied);
+            // Is this logging needed?
             Debug.Log($"[RealismOverhaulSpecLevel] Started specLevelhandler with level {specLevel}");
             AttachFilters();
         }
@@ -28,10 +29,10 @@ namespace RealismOverhaul
             GameEvents.onLevelWasLoadedGUIReady.Remove(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Remove(new EventData<RDTechTree>.OnEvent(OnUpdateRnD));
 
-            GameEvents.OnGameSettingsApplied.Remove(OnSpecLevelChanged);
+            GameEvents.OnGameSettingsApplied.Remove(onGameSettingsApplied);
         }
 
-        public void OnLevelLoaded(GameScenes scene)
+        private void OnLevelLoaded(GameScenes scene)
         {
             if (scene == GameScenes.EDITOR)
             {
@@ -39,11 +40,11 @@ namespace RealismOverhaul
             }
         }
 
-        void AttachFilters()
+        private void AttachFilters()
         {
             Debug.Log("[RealismOverhaulSpecLevel] Attached filters");
             string partFilterID = "SpeculativeFilter";
-            Func<AvailablePart, bool> _criteria = (_aPart) => SpecFuncs.IsPartAvailable(_aPart);
+            Func<AvailablePart, bool> _criteria = (_aPart) => HelperFuncs.IsPartAvailable(_aPart);
             searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, _criteria);
             if (EditorPartList.Instance != null)
             {
@@ -54,12 +55,13 @@ namespace RealismOverhaul
             RDTechFilters.Instance.filters.AddFilter(RDFilter);
 
             string rfFilterID = "SpeculativeRFFilter";
-            Func<ConfigNode, bool> _filterRF = (_cfg) => SpecFuncs.IsRFConfigAvailable(_cfg);
+            Func<ConfigNode, bool> _filterRF = (_cfg) => HelperFuncs.IsRFConfigAvailable(_cfg);
             engineConfigFilter = new ConfigFilters.Filter(rfFilterID, _filterRF);
             ConfigFilters.Instance.configDisplayFilters.AddFilter(engineConfigFilter);
         }
 
-        void OnSpecLevelChanged()
+        // Is this logging needed?
+        private void onGameSettingsApplied()
         {
             RealismOverhaulSpeculative oldSpecLevel = specLevel;
             specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
@@ -69,7 +71,7 @@ namespace RealismOverhaul
             }
         }
 
-        void OnUpdateRnD(RDTechTree tree)
+        private void OnUpdateRnD(RDTechTree tree)
         {
             Debug.Log($"[RealismOverhaulSpecLevel] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
