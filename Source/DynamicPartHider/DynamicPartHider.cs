@@ -50,7 +50,7 @@ namespace RealismOverhaul
                 EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
             }
 
-            if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(partFilterID))
+            if (!RDTechFilters.Instance.filters.ContainsKey(partFilterID))
                 RDTechFilters.Instance.filters.Add(partFilterID, criteria);
 
             string rfFilterID = "SpeculativeRFFilter";
