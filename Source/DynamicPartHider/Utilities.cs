@@ -1,4 +1,4 @@
-using System.Linq;
+using System;
 using UnityEngine;
 
 namespace RealismOverhaul
@@ -53,11 +53,11 @@ namespace RealismOverhaul
         public static SpeculativeLevel GetSpecLevelFromTags(AvailablePart ap)
         {
             string tagsString = ap.tags;
-            if (tagsString.Contains("ro_speculativetag_real")) { return SpeculativeLevel.Real; }
-            if (tagsString.Contains("ro_speculativetag_prototype")) { return SpeculativeLevel.Prototype; }
-            if (tagsString.Contains("ro_speculativetag_concept")) { return SpeculativeLevel.Concept; }
-            if (tagsString.Contains("ro_speculativetag_speculative")) { return SpeculativeLevel.Speculative; }
-            if (tagsString.Contains("ro_speculativetag_fictional")) { return SpeculativeLevel.Fictional; }
+            if (tagsString.IndexOf("ro_speculativetag_real", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Real; }
+            if (tagsString.IndexOf("ro_speculativetag_prototype", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Prototype; }
+            if (tagsString.IndexOf("ro_speculativetag_concept", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Concept; }
+            if (tagsString.IndexOf("ro_speculativetag_speculative", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Speculative; }
+            if (tagsString.IndexOf("ro_speculativetag_fictional", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Fictional; }
             return SpeculativeLevel.Real;
         }
     }
