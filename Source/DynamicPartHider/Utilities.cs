@@ -53,11 +53,11 @@ namespace RealismOverhaul
         public static SpeculativeLevel GetSpecLevelFromTags(AvailablePart ap)
         {
             string tagsString = ap.tags;
-            if (tagsString.IndexOf("ro_speculativetag_real", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Real; }
-            if (tagsString.IndexOf("ro_speculativetag_prototype", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Prototype; }
-            if (tagsString.IndexOf("ro_speculativetag_concept", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Concept; }
-            if (tagsString.IndexOf("ro_speculativetag_speculative", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Speculative; }
-            if (tagsString.IndexOf("ro_speculativetag_fictional", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Fictional; }
+            if (tagsString.IndexOf("ro_specleveltag_real", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Real; }
+            if (tagsString.IndexOf("ro_specleveltag_prototype", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Prototype; }
+            if (tagsString.IndexOf("ro_specleveltag_concept", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Concept; }
+            if (tagsString.IndexOf("ro_specleveltag_speculative", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Speculative; }
+            if (tagsString.IndexOf("ro_specleveltag_fictional", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Fictional; }
             return SpeculativeLevel.Real;
         }
     }
