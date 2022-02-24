@@ -8,25 +8,28 @@ namespace RealismOverhaul
     [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
     class DynamicPartHider : MonoBehaviour
     {
-        public static EditorPartListFilter<AvailablePart> searchFilterParts;
         private SpeculativeLevel specLevel;
+        private string partFilterID = "SpeculativeFilter";
+        private Func<AvailablePart, bool> criteria = (aPart) => Utilities.IsPartAvailable(aPart);
+        private string rfFilterID = "SpeculativeRFFilter";
+        private Func<ConfigNode, bool> filterRF = (cfg) => Utilities.IsRFConfigAvailable(cfg);
 
         public void Start()
         {
             GameEvents.onLevelWasLoadedGUIReady.Add(OnLevelLoaded);
-            RDTechTree.OnTechTreeSpawn.Add(new EventData<RDTechTree>.OnEvent(OnUpdateRnD));
+            RDTechTree.OnTechTreeSpawn.Add(OnUpdateRnD);
 
             specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             GameEvents.OnGameSettingsApplied.Add(onGameSettingsApplied);
-            // Is this logging needed?
-            Debug.Log($"[RealismOverhaulSpecLevel] Started specLevelhandler with level {specLevel}");
+            // TODO: Is this logging needed?
+            Debug.Log($"[RODynamicPartHider] Started specLevelhandler with level {specLevel}");
             AttachFilters();
         }
 
         public void Destroy()
         {
             GameEvents.onLevelWasLoadedGUIReady.Remove(OnLevelLoaded);
-            RDTechTree.OnTechTreeSpawn.Remove(new EventData<RDTechTree>.OnEvent(OnUpdateRnD));
+            RDTechTree.OnTechTreeSpawn.Remove(OnUpdateRnD);
 
             GameEvents.OnGameSettingsApplied.Remove(onGameSettingsApplied);
         }
@@ -41,38 +44,31 @@ namespace RealismOverhaul
 
         private void AttachFilters()
         {
-            Debug.Log("[RealismOverhaulSpecLevel] Attached filters");
-            string partFilterID = "SpeculativeFilter";
-            Func<AvailablePart, bool> criteria = (aPart) => Utilities.IsPartAvailable(aPart);
-            searchFilterParts = new EditorPartListFilter<AvailablePart>(partFilterID, criteria);
+            Debug.Log("[RODynamicPartHider] Attached filters");
             if (EditorPartList.Instance != null)
-            {
-                EditorPartList.Instance.ExcludeFilters.AddFilter(searchFilterParts);
-            }
+                EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(partFilterID, criteria));
 
             if (!RDTechFilters.Instance.filters.ContainsKey(partFilterID))
                 RDTechFilters.Instance.filters.Add(partFilterID, criteria);
 
-            string rfFilterID = "SpeculativeRFFilter";
-            Func<ConfigNode, bool> filterRF = (cfg) => Utilities.IsRFConfigAvailable(cfg);
             if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(rfFilterID))
                 ConfigFilters.Instance.configDisplayFilters.Add(rfFilterID, filterRF);
         }
 
-        // Is this logging needed?
+        // TODO: Is this logging needed?
         private void onGameSettingsApplied()
         {
             SpeculativeLevel oldSpecLevel = specLevel;
             specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             if (oldSpecLevel != specLevel)
             {
-                Debug.Log($"[RealismOverhaulSpecLevel] Spec level changed from {oldSpecLevel} to {specLevel}");
+                Debug.Log($"[RODynamicPartHider] Spec level changed from {oldSpecLevel} to {specLevel}");
             }
         }
 
         private void OnUpdateRnD(RDTechTree tree)
         {
-            Debug.Log($"[RealismOverhaulSpecLevel] TechTree updated");
+            Debug.Log($"[RODynamicPartHider] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
             {
                 // This filtering doesn't get persisted, but is done to avoid

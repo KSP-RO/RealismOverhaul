@@ -11,18 +11,19 @@ namespace RealismOverhaul
             {
                 return false;
             }
-            SpeculativeLevel specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
+            SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             SpeculativeLevel level = GetSpecLevelFromTags(ap);
 
-            if (level > specLevel)
+            if (level > setting)
             {
                 // TODO: Delete the debug print
-                Debug.Log($"[RealismOverhaulSpecLevel] Part excluded: {ap.name}, specLevel was {level}, compared to {specLevel}");
+                Debug.Log($"[RODynamicPartHider] Part excluded: {ap.name}, specLevel was {level}, compared to {setting}");
                 return false;
             }
             return true;
         }
 
+        // Passed to RF to validate if a engine config should be available
         public static bool IsRFConfigAvailable(ConfigNode cfg)
         {
             if (cfg == null)
@@ -35,16 +36,16 @@ namespace RealismOverhaul
                 string value = cfg.GetValue("specLevel");
                 if (SpeculativeLevel.TryParse(value, out SpeculativeLevel valueEnum))
                 {
-                    SpeculativeLevel specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-                    if (valueEnum > specLevel)
+                    SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
+                    if (valueEnum > setting)
                     {
                         // TODO: Delete the debug print
-                        Debug.Log($"[RealismOverhaulSpecLevel] Engine Config excluded: {cfg.GetValue("name")}, specLevel was {valueEnum}, compared to {specLevel}");
+                        Debug.Log($"[RODynamicPartHider] Engine Config excluded: {cfg.GetValue("name")}, specLevel was {valueEnum}, compared to {setting}");
                         return false;
                     }
                     return true;
                 }
-                Debug.Log($"[RealismOverhaulSpecLevel] Parsing specLevel failed on Engine Config: {cfg.GetValue("name")} ");
+                Debug.Log($"[RODynamicPartHider] Parsing specLevel failed on Engine Config: {cfg.GetValue("name")} ");
             }
 
             return true;
