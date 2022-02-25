@@ -34,7 +34,7 @@ namespace RealismOverhaul
             if (cfg.HasValue("specLevel"))
             {
                 string value = cfg.GetValue("specLevel");
-                if (SpeculativeLevel.TryParse(value, out SpeculativeLevel valueEnum))
+                if (SpeculativeLevel.TryParse(value, true, out SpeculativeLevel valueEnum))
                 {
                     SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
                     if (valueEnum > setting)
@@ -54,21 +54,23 @@ namespace RealismOverhaul
         public static SpeculativeLevel GetSpecLevelFromTags(AvailablePart ap)
         {
             string tagsString = ap.tags;
-            if (tagsString.IndexOf("ro_specleveltag_real", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Real; }
+            if (tagsString.IndexOf("ro_specleveltag_operational", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Operational; }
             if (tagsString.IndexOf("ro_specleveltag_prototype", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Prototype; }
             if (tagsString.IndexOf("ro_specleveltag_concept", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Concept; }
             if (tagsString.IndexOf("ro_specleveltag_speculative", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Speculative; }
-            if (tagsString.IndexOf("ro_specleveltag_fictional", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Fictional; }
-            return SpeculativeLevel.Real;
+            if (tagsString.IndexOf("ro_specleveltag_althist", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.AltHist; }
+            if (tagsString.IndexOf("ro_specleveltag_scifi", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.SciFi; }
+            return SpeculativeLevel.Operational;
         }
     }
 
     public enum SpeculativeLevel
     {
-        Real,
+        Operational,
         Prototype,
         Concept,
         Speculative,
-        Fictional
+        AltHist,
+        SciFi
     }
 }

@@ -9,7 +9,14 @@ namespace RealismOverhaul
         public override int SectionOrder { get { return 1; } }
         public override bool HasPresets { get { return false; } }
 
-        [GameParameters.CustomParameterUI("Speculative Level", toolTip = "What parts are available.\nReal = Only real hardware is available.\nProposal = Real proposals that were never built are available.\nScifi = Scifi parts are available.")]
-        public SpeculativeLevel speculativeLevel = SpeculativeLevel.Real;
+        [GameParameters.CustomParameterUI("Speculative Level", toolTip =
+        "What parts are available.\n"+
+        "Operational = Historically flown hardware.\n"+
+        "Prototype = Hardware that was tested in whole or in part, but has not flown.\n"+
+        "Concept = Real projects that made it to a paper design study or mockup.\n"+
+        "Speculative = Realistic extrapolations of historical designs.\n"+
+        "AltHist = Designs from fictional timelines that nonetheless match the performance of real hardware.\n"+
+        "SciFi = The sky's the limit!")]
+        public SpeculativeLevel speculativeLevel = SpeculativeLevel.Operational;
     }
 }
