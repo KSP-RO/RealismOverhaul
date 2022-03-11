@@ -14,13 +14,7 @@ namespace RealismOverhaul
             SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
             SpeculativeLevel level = GetSpecLevelFromTags(ap);
 
-            if (level > setting)
-            {
-                // TODO: Delete the debug print
-                Debug.Log($"[RODynamicPartHider] Part excluded: {ap.name}, specLevel was {level}, compared to {setting}");
-                return false;
-            }
-            return true;
+            return level <= setting;
         }
 
         // Passed to RF to validate if a engine config should be available
@@ -31,19 +25,13 @@ namespace RealismOverhaul
                 return false;
             }
 
-            if (cfg.HasValue("specLevel"))
+            string value = null;
+            if (cfg.TryGetValue("specLevel", ref value))
             {
-                string value = cfg.GetValue("specLevel");
                 if (SpeculativeLevel.TryParse(value, true, out SpeculativeLevel valueEnum))
                 {
                     SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-                    if (valueEnum > setting)
-                    {
-                        // TODO: Delete the debug print
-                        Debug.Log($"[RODynamicPartHider] Engine Config excluded: {cfg.GetValue("name")}, specLevel was {valueEnum}, compared to {setting}");
-                        return false;
-                    }
-                    return true;
+                    return valueEnum <= setting;
                 }
                 Debug.Log($"[RODynamicPartHider] Parsing specLevel failed on Engine Config: {cfg.GetValue("name")} ");
             }

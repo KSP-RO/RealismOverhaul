@@ -8,7 +8,6 @@ namespace RealismOverhaul
     [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
     class DynamicPartHider : MonoBehaviour
     {
-        private SpeculativeLevel specLevel;
         private string partFilterID = "SpeculativeFilter";
         private Func<AvailablePart, bool> criteria = (aPart) => Utilities.IsPartAvailable(aPart);
         private string rfFilterID = "SpeculativeRFFilter";
@@ -18,11 +17,6 @@ namespace RealismOverhaul
         {
             GameEvents.onLevelWasLoadedGUIReady.Add(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Add(OnUpdateRnD);
-
-            specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-            GameEvents.OnGameSettingsApplied.Add(onGameSettingsApplied);
-            // TODO: Is this logging needed?
-            Debug.Log($"[RODynamicPartHider] Started specLevelhandler with level {specLevel}");
             AttachFilters();
         }
 
@@ -30,8 +24,6 @@ namespace RealismOverhaul
         {
             GameEvents.onLevelWasLoadedGUIReady.Remove(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Remove(OnUpdateRnD);
-
-            GameEvents.OnGameSettingsApplied.Remove(onGameSettingsApplied);
         }
 
         private void OnLevelLoaded(GameScenes scene)
@@ -53,17 +45,6 @@ namespace RealismOverhaul
 
             if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(rfFilterID))
                 ConfigFilters.Instance.configDisplayFilters.Add(rfFilterID, filterRF);
-        }
-
-        // TODO: Is this logging needed?
-        private void onGameSettingsApplied()
-        {
-            SpeculativeLevel oldSpecLevel = specLevel;
-            specLevel = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-            if (oldSpecLevel != specLevel)
-            {
-                Debug.Log($"[RODynamicPartHider] Spec level changed from {oldSpecLevel} to {specLevel}");
-            }
         }
 
         private void OnUpdateRnD(RDTechTree tree)
