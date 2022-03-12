@@ -4,18 +4,12 @@ namespace RealismOverhaul
 {
     class RDTechFixer : MonoBehaviour
     {
-        public bool fixParts = false;
-        public void Start() => fixParts = true;
-
         public void Update()
         {
-            if (fixParts)
-            {
-                // Hides unwanted parts from the RnD techtree
-                RDTech tech = GetComponent<RDTech>();
-                RDTechFilters.Instance.FilterRDNode(tech);
-                Destroy(this);
-            }
+            // Hides unwanted parts from the RnD techtree
+            RDTech tech = GetComponent<RDTech>();
+            RDTechFilters.Instance.FilterRDNode(tech);
+            Destroy(this);
         }
     }
 }
