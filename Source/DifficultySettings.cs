@@ -17,6 +17,6 @@ namespace RealismOverhaul
         "Speculative = Realistic extrapolations of historical designs.\n"+
         "AltHist = Designs from fictional timelines that nonetheless match the performance of real hardware.\n"+
         "SciFi = The sky's the limit!")]
-        public SpeculativeLevel speculativeLevel = SpeculativeLevel.Operational;
+        public SpeculativeLevel speculativeLevel = SpeculativeLevel.Speculative;
     }
 }
