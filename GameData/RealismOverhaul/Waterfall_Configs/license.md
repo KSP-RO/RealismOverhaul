@@ -24,5 +24,5 @@ The following files are from [Katniss's Parts Pack](https://github.com/Katniss21
 
 * `_Audio/Clips/solid_loop_hard.ogg`
 * `_Audio/Clips/sound_srb4_enhanced.ogg`
-* `_Templates/hybrid/rowaterfall-hybrid-srm-1_ss.cfg`
-* `_Templates/hybrid/rowaterfall-hybrid-srm-1_wf.cfg`
+* All files under `_Templates/hybrid`
+* All files under `_Templates/katniss`
