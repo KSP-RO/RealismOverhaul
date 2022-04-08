@@ -29,12 +29,12 @@ avc = {
 	"NAME" : "RealismOverhaul",
 	"URL" : "https://raw.githubusercontent.com/NathanKell/RealismOverhaul/master/RealismOverhaul/RO.version",
 	"DOWNLOAD" : "https://github.com/NathanKell/RealismOverhaul/releases",
-     "GITHUB":
-     {
-         "USERNAME":"NathanKell",
-         "REPOSITORY":"RealismOverhaul",
-         "ALLOW_PRE_RELEASE": False
-     },
+	"GITHUB":
+	{
+		"USERNAME":"NathanKell",
+		"REPOSITORY":"RealismOverhaul",
+		"ALLOW_PRE_RELEASE": False
+	},
 	"VERSION" :
 	{
 		"MAJOR" : major,
@@ -62,4 +62,4 @@ avc = {
 	}
 }
 with open("RO.version", "w") as f:
-	f.write(json.dumps(avc))
+	f.write(json.dumps(avc, indent=4))
