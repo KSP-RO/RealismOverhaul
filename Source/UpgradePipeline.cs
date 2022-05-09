@@ -30,8 +30,8 @@ namespace ProceduralParts
         {
             nodeName = NodeUtil.GetPartNodeNameValue(node, loadContext);
             TestResult res = TestResult.Pass;
-            if (node.GetNode("MODULE", "name", "ModuleEngineConfigs") is ConfigNode mecNode)
-                res = EngineConfigMatches(mecNode.GetValue("configuration")) ? TestResult.Upgradeable : TestResult.Pass;
+            //if (node.GetNode("MODULE", "name", "ModuleEngineConfigs") is ConfigNode mecNode)
+            //    res = EngineConfigMatches(mecNode.GetValue("configuration")) ? TestResult.Upgradeable : TestResult.Pass;
             return res;
         }
 
@@ -42,7 +42,7 @@ namespace ProceduralParts
             if (mecNode.GetValue("configuration") == "LR87-AJ-9-Kero-15AR")
             {
                 mecNode.SetValue("configuration", "LR87-AJ-9-Kero");
-                mecNode.AddValue("__mpecPatchName", "15AR");
+                mecNode.SetValue("__mpecPatchName", "15AR", true);
             }
 
             Debug.Log($"[RealismOverhaul] UpgradePipeline context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)} from ModuleEngineConfigs to ModulePatchableEngineConfigs");
