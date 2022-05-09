@@ -39,6 +39,11 @@ namespace ProceduralParts
         {
             var mecNode = node.GetNode("MODULE", "name", "ModuleEngineConfigs");
             mecNode.SetValue("name", "ModulePatchableEngineConfigs");
+            if (mecNode.GetValue("configuration") == "LR87-AJ-9-Kero-15AR")
+            {
+                mecNode.SetValue("configuration", "LR87-AJ-9-Kero");
+                mecNode.AddValue("__mpecPatchName", "15AR");
+            }
 
             Debug.Log($"[RealismOverhaul] UpgradePipeline context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)} from ModuleEngineConfigs to ModulePatchableEngineConfigs");
         }
