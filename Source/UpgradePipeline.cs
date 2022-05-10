@@ -30,8 +30,8 @@ namespace RealismOverhaul
         {
             nodeName = NodeUtil.GetPartNodeNameValue(node, loadContext);
             TestResult res = TestResult.Pass;
-            if (node.GetNode("MODULE", "name", "ModuleEngineConfigs") is ConfigNode mecNode)
-                res = EngineConfigMatches(mecNode.GetValue("configuration")) ? TestResult.Upgradeable : TestResult.Pass;
+            //if (node.GetNode("MODULE", "name", "ModuleEngineConfigs") is ConfigNode mecNode)
+            //    res = EngineConfigMatches(mecNode.GetValue("configuration")) ? TestResult.Upgradeable : TestResult.Pass;
             return res;
         }
 
