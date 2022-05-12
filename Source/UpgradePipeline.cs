@@ -15,7 +15,7 @@ namespace RealismOverhaul
         //protected override bool CheckMaxVersion(Version v) => true; // Upgrades are ProcParts-dependent, not KSP version.
         protected override TestResult VersionTest(Version v) => TestResult.Upgradeable;
 
-        const char Separator = '$';
+        const string Separator = "$";
 
         protected static Dictionary<string, string> upgradeList = new Dictionary<string, string>();
 
@@ -33,18 +33,28 @@ namespace RealismOverhaul
             }
         }
 
+        protected string GetConfigString(ConfigNode mecNode)
+        {
+            string configName = mecNode.GetValue("configuration");
+
+            if (string.IsNullOrEmpty(configName))
+                return configName;
+
+            string subConfigName = mecNode.GetValue("activePatchName");
+            if (!string.IsNullOrEmpty(subConfigName))
+                configName = configName + Separator + subConfigName;
+
+            return configName;
+        }
+
         protected bool TestEngineConfig(ConfigNode mecNode)
         {
             LoadData();
 
-            string configName = mecNode.GetValue("configuration");
+            string configName = GetConfigString(mecNode);
 
             if (string.IsNullOrEmpty(configName))
                 return false;
-
-            string subConfigName = mecNode.GetValue("__mpecPatchName");
-            if (!string.IsNullOrEmpty(subConfigName))
-                configName = configName + Separator + subConfigName;
 
             return upgradeList.ContainsKey(configName);
         }
@@ -62,24 +72,28 @@ namespace RealismOverhaul
         {
             LoadData();
             var mecNode = node.GetNode("MODULE", "name", "ModuleEngineConfigs");
-            string oldConfig = mecNode.GetValue("configuration");
+            string oldConfig = GetConfigString(mecNode);
             string newConfig;
+            string newSubConfig = string.Empty;
             if (!upgradeList.TryGetValue(oldConfig, out newConfig))
             {
                 // Should never hit, since we do OnTest first, but...
                 Debug.LogError($"[RealismOverhaul] UpgradePipeline error: couldn't find oldconfig {oldConfig} in set of configs to upgrade! Context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)}");
                 return;
             }
-            int idx = newConfig.IndexOf('$');
+            int idx = newConfig.IndexOf(Separator);
             if (idx != -1)
             {
-                string subconfig = newConfig.Substring(idx + 1);
+                newSubConfig = newConfig.Substring(idx + 1);
                 newConfig = newConfig.Substring(0, idx);
-                mecNode.SetValue("__mpecPatchName", subconfig, true);
             }
             mecNode.SetValue("configuration", newConfig);
+            if (string.IsNullOrEmpty(newSubConfig))
+                mecNode.RemoveValue("activePatchName");
+            else
+                mecNode.SetValue("activePatchName", newSubConfig, true);
 
-            Debug.Log($"[RealismOverhaul] UpgradePipeline context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)} module ModuleEngineConfigs config {oldConfig} to {newConfig}");
+            Debug.Log($"[RealismOverhaul] UpgradePipeline context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)} module ModuleEngineConfigs config {oldConfig} to {newConfig} with subconfig {newSubConfig}.");
         }
     }
 
