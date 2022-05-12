@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using SaveUpgradePipeline;
 using UnityEngine;
 
@@ -10,40 +10,76 @@ namespace RealismOverhaul
     {
         public override string Name { get => "RO MEC Config Upgrader"; }
         public override string Description { get => "Updates Engines configs from outdated to new"; }
-        public override Version EarliestCompatibleVersion { get => new Version(1, 0, 0); }
-        public override Version TargetVersion { get => new Version(1, 8, 1); }
+        public override Version EarliestCompatibleVersion { get => new Version(1, 10, 0); }
+        public override Version TargetVersion { get => new Version(1, 12, 3); }
         //protected override bool CheckMaxVersion(Version v) => true; // Upgrades are ProcParts-dependent, not KSP version.
         protected override TestResult VersionTest(Version v) => TestResult.Upgradeable;
 
-        protected bool EngineConfigMatches(string configName)
+        const char Separator = '$';
+
+        protected static Dictionary<string, string> upgradeList = new Dictionary<string, string>();
+
+        protected static bool hasLoadedData = false;
+
+        protected static void LoadData()
         {
+            if (hasLoadedData)
+                return;
+
+            foreach (var node in GameDatabase.Instance.GetConfigNodes("ROMECCONFIGUPGRADES"))
+            {
+                foreach (ConfigNode.Value kvp in node.values)
+                    upgradeList[kvp.name] = kvp.value;
+            }
+        }
+
+        protected bool TestEngineConfig(ConfigNode mecNode)
+        {
+            LoadData();
+
+            string configName = mecNode.GetValue("configuration");
+
             if (string.IsNullOrEmpty(configName))
                 return false;
 
-            if (configName == "LR87-AJ-9-Kero-15AR")
-                return true;
+            string subConfigName = mecNode.GetValue("__mpecPatchName");
+            if (!string.IsNullOrEmpty(subConfigName))
+                configName = configName + Separator + subConfigName;
 
-            return false;
+            return upgradeList.ContainsKey(configName);
         }
 
         public override TestResult OnTest(ConfigNode node, LoadContext loadContext, ref string nodeName)
         {
             nodeName = NodeUtil.GetPartNodeNameValue(node, loadContext);
             TestResult res = TestResult.Pass;
-            //if (node.GetNode("MODULE", "name", "ModuleEngineConfigs") is ConfigNode mecNode)
-            //    res = EngineConfigMatches(mecNode.GetValue("configuration")) ? TestResult.Upgradeable : TestResult.Pass;
+            if (node.GetNode("MODULE", "name", "ModuleEngineConfigs") is ConfigNode mecNode)
+                res = TestEngineConfig(mecNode) ? TestResult.Upgradeable : TestResult.Pass;
             return res;
         }
 
         public override void OnUpgrade(ConfigNode node, LoadContext loadContext, ConfigNode parentNode)
         {
+            LoadData();
             var mecNode = node.GetNode("MODULE", "name", "ModuleEngineConfigs");
             string oldConfig = mecNode.GetValue("configuration");
-            string newConfig = "LR87-AJ-9-Kero";
+            string newConfig;
+            if (!upgradeList.TryGetValue(oldConfig, out newConfig))
+            {
+                // Should never hit, since we do OnTest first, but...
+                Debug.LogError($"[RealismOverhaul] UpgradePipeline error: couldn't find oldconfig {oldConfig} in set of configs to upgrade! Context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)}");
+                return;
+            }
+            int idx = newConfig.IndexOf('$');
+            if (idx != -1)
+            {
+                string subconfig = newConfig.Substring(idx + 1);
+                newConfig = newConfig.Substring(0, idx);
+                mecNode.SetValue("__mpecPatchName", subconfig, true);
+            }
             mecNode.SetValue("configuration", newConfig);
-            mecNode.SetValue("__mpecPatchName", "15AR", true);
 
-            Debug.Log($"[RealismOverhaul] UpgradePipeline context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)} module ModuleEngineConfigs config {oldConfig} to {newConfig} with subconfig 15AR");
+            Debug.Log($"[RealismOverhaul] UpgradePipeline context {loadContext} updated part {NodeUtil.GetPartNodeNameValue(node, loadContext)} module ModuleEngineConfigs config {oldConfig} to {newConfig}");
         }
     }
 
