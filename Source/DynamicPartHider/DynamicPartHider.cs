@@ -20,7 +20,7 @@ namespace RealismOverhaul
             AttachFilters();
         }
 
-        public void Destroy()
+        public void OnDestroy()
         {
             GameEvents.onLevelWasLoadedGUIReady.Remove(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Remove(OnUpdateRnD);
