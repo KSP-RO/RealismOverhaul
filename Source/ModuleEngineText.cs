@@ -51,7 +51,7 @@ namespace RealismOverhaul
                 {
                     if (engineIDs[i] == engine.engineID)
                     {
-                        UpdateStrings(engine, KSP.Localization.Localizer.Format(engineNames[i]));
+                        UpdateStrings(engine, KSP.Localization.Localizer.GetStringByTag(engineNames[i]));
                         break;
                     }
                 }
