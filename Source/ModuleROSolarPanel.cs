@@ -7,7 +7,6 @@ namespace RealismOverhaul
 {
     public class ModuleROSolarPanel : PartModule
     {
-        private static readonly HashSet<string> cbOptions = new HashSet<string>();
         public const string groupName = "solarCellPlanner";
         public const string groupDisplayName = "Solar Cell Planner";
 
@@ -28,11 +27,24 @@ namespace RealismOverhaul
         [KSPField(guiActiveEditor = true, guiName = "Output at Ap", guiFormat = "F2", guiUnits = " W", groupName = groupName)]
         public float solarOutputAp = 0;
 
+        private static List<string> planets_ = null;
+        private static string[] Planets
+        {
+            get
+            {
+                if (planets_ == null)
+                {
+                    planets_ = PlanetWalk();
+                }
+                return planets_.ToArray();
+            }
+        }
+
         public override void OnStart(StartState state)
         {
             Fields[nameof(daysElapsed)].uiControlEditor.onFieldChanged = PlanningChange;
             Fields[nameof(selectedBody)].uiControlEditor.onFieldChanged = PlanningChange;
-            (Fields[nameof(selectedBody)].uiControlEditor as UI_ChooseOption).options = PlanetWalk();
+            (Fields[nameof(selectedBody)].uiControlEditor as UI_ChooseOption).options = Planets;
             selectedBody = Planetarium.fetch.Home.name;
             GameEvents.onEditorShipModified.Add(OnEditorShipModified);
         }
@@ -40,17 +52,17 @@ namespace RealismOverhaul
         public void OnDestroy() => GameEvents.onEditorShipModified.Remove(OnEditorShipModified);
 
         /// <summary>
-        /// Return names of all direct children of Planetarium.fetch.Sun
+        /// Return names of all direct children of Planetarium.fetch.Sun, sorted by SMA
         /// </summary>
-        public string[] PlanetWalk()
+        private static List<string> PlanetWalk()
         {
-            cbOptions.Clear();
             CelestialBody theSun = Planetarium.fetch.Sun;
-            foreach (CelestialBody body in FlightGlobals.Bodies.Where(x => x.referenceBody == theSun && x != theSun))
-            {
-                cbOptions.Add(body.name);
-            }
-            return cbOptions.ToArray();
+            List<CelestialBody> planets = FlightGlobals
+                .Bodies
+                .Where(cb => cb.referenceBody == theSun && cb != theSun)
+                .ToList();
+            planets.Sort((a, b) => a.orbit.semiMajorAxis.CompareTo(b.orbit.semiMajorAxis));
+            return planets.Select(p => p.name).Distinct().ToList();
         }
 
         private void CalculateRates()
