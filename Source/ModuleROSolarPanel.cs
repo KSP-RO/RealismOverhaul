@@ -7,6 +7,7 @@ namespace RealismOverhaul
 {
     public class ModuleROSolarPanel : PartModule
     {
+        private static string[] cbOptions = null;
         public const string groupName = "solarCellPlanner";
         public const string groupDisplayName = "Solar Cell Planner";
 
@@ -27,24 +28,11 @@ namespace RealismOverhaul
         [KSPField(guiActiveEditor = true, guiName = "Output at Ap", guiFormat = "F2", guiUnits = " W", groupName = groupName)]
         public float solarOutputAp = 0;
 
-        private static List<string> planets_ = null;
-        private static string[] Planets
-        {
-            get
-            {
-                if (planets_ == null)
-                {
-                    planets_ = PlanetWalk();
-                }
-                return planets_.ToArray();
-            }
-        }
-
         public override void OnStart(StartState state)
         {
             Fields[nameof(daysElapsed)].uiControlEditor.onFieldChanged = PlanningChange;
             Fields[nameof(selectedBody)].uiControlEditor.onFieldChanged = PlanningChange;
-            (Fields[nameof(selectedBody)].uiControlEditor as UI_ChooseOption).options = Planets;
+            (Fields[nameof(selectedBody)].uiControlEditor as UI_ChooseOption).options = (cbOptions ??= PlanetWalk());
             selectedBody = Planetarium.fetch.Home.name;
             GameEvents.onEditorShipModified.Add(OnEditorShipModified);
         }
@@ -54,7 +42,7 @@ namespace RealismOverhaul
         /// <summary>
         /// Return names of all direct children of Planetarium.fetch.Sun, sorted by SMA
         /// </summary>
-        private static List<string> PlanetWalk()
+        public string[] PlanetWalk()
         {
             CelestialBody theSun = Planetarium.fetch.Sun;
             List<CelestialBody> planets = FlightGlobals
@@ -62,7 +50,7 @@ namespace RealismOverhaul
                 .Where(cb => cb.referenceBody == theSun && cb != theSun)
                 .ToList();
             planets.Sort((a, b) => a.orbit.semiMajorAxis.CompareTo(b.orbit.semiMajorAxis));
-            return planets.Select(p => p.name).Distinct().ToList();
+            return planets.Select(p => p.name).Distinct().ToArray();
         }
 
         private void CalculateRates()
