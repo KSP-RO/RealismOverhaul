@@ -17,11 +17,15 @@ if not args.tag or len(args.tag) < 1:
     print("ERROR: git tag must be specified and must be in the format major.minor.patch.build-configuration.e.g. 0.4.6.0")
     sys.exit(2)
 
-version = args.tag[0].split("v")[1].split(".")
-major = int(version[0])
-minor = int(version[1])
-patch = int(version[2])
-build = int(version[2])
+version = args.tag[0]
+
+if version.startswith('v'):
+    version = version.split('v')[1]
+
+major = int(version.split(".")[0])
+minor = int(version.split(".")[1])
+patch = int(version.split(".")[2])
+build = int(version.split(".")[3])
 if len(version) == 4:
 	build = int(version[3])
 # create AVC .version file
