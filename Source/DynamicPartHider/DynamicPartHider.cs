@@ -6,17 +6,21 @@ using RealFuels;
 namespace RealismOverhaul
 {
     [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
-    class DynamicPartHider : MonoBehaviour
+    public class DynamicPartHider : MonoBehaviour
     {
         private string partFilterID = "SpeculativeFilter";
-        private Func<AvailablePart, bool> criteria = (aPart) => Utilities.IsPartAvailable(aPart);
+        private static Func<AvailablePart, bool> criteria = (aPart) => Utilities.IsPartAvailable(aPart);
         private string rfFilterID = "SpeculativeRFFilter";
-        private Func<ConfigNode, bool> filterRF = (cfg) => Utilities.IsRFConfigAvailable(cfg);
+        private static Func<ConfigNode, bool> filterRF = (cfg) => Utilities.IsRFConfigAvailable(cfg);
 
-        public void Start()
+        public void Awake()
         {
             GameEvents.onLevelWasLoadedGUIReady.Add(OnLevelLoaded);
             RDTechTree.OnTechTreeSpawn.Add(OnUpdateRnD);
+        }
+
+        public void Start()
+        {
             AttachFilters();
         }
 
@@ -37,7 +41,7 @@ namespace RealismOverhaul
         private void AttachFilters()
         {
             Debug.Log("[RODynamicPartHider] Attached filters");
-            if (EditorPartList.Instance != null)
+            if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[partFilterID] == null)
                 EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(partFilterID, criteria));
 
             if (!RDTechFilters.Instance.filters.ContainsKey(partFilterID))
