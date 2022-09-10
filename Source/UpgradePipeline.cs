@@ -80,7 +80,7 @@ namespace RealismOverhaul
             for (int i = 0; i < upgrades.Count; ++i)
             {
                 var dict = upgrades.Values[i];
-                for (int j = i + 1; j < upgrades.Count; ++i)
+                for (int j = i + 1; j < upgrades.Count; ++j)
                 {
                     var dict2 = upgrades.Values[j];
                     foreach (var kvp in dict2)
