@@ -160,30 +160,30 @@ namespace RealismOverhaul
             loadContext == LoadContext.Craft ? TestResult.Pass : base.OnTest(node, loadContext, ref nodeName);
     }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/VABList/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/VABList/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT1 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHList/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHList/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT2 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/VABWarehouse/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/VABWarehouse/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT3 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHWarehouse/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHWarehouse/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT4 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/VABPlans/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/VABPlans/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT5 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHPlans/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHPlans/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT6 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/BuildList/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/BuildList/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT7 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/Warehouse/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/Warehouse/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT8 : MECEngineConfigUpgrade_KCTBase { }
 
-    [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/Plans/KCTVessel/ShipNode/PART", craftNodeUrl = "PART")]
+    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/Plans/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT9 : MECEngineConfigUpgrade_KCTBase { }
 }
