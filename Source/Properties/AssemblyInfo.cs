@@ -37,5 +37,5 @@ using System.Runtime.InteropServices;
 #if CIBUILD
 [assembly: AssemblyFileVersion("@MAJOR@.@MINOR@.@PATCH.@BUILD@")]
 #else
-[assembly: AssemblyFileVersion("14.2.0.0")]
+[assembly: AssemblyFileVersion("14.18.0.0")]
 #endif

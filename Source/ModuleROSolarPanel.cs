@@ -7,7 +7,7 @@ namespace RealismOverhaul
 {
     public class ModuleROSolarPanel : PartModule
     {
-        private static readonly HashSet<string> cbOptions = new HashSet<string>();
+        private static string[] cbOptions = null;
         public const string groupName = "solarCellPlanner";
         public const string groupDisplayName = "Solar Cell Planner";
 
@@ -32,7 +32,7 @@ namespace RealismOverhaul
         {
             Fields[nameof(daysElapsed)].uiControlEditor.onFieldChanged = PlanningChange;
             Fields[nameof(selectedBody)].uiControlEditor.onFieldChanged = PlanningChange;
-            (Fields[nameof(selectedBody)].uiControlEditor as UI_ChooseOption).options = PlanetWalk();
+            (Fields[nameof(selectedBody)].uiControlEditor as UI_ChooseOption).options = (cbOptions ??= PlanetWalk());
             selectedBody = Planetarium.fetch.Home.name;
             GameEvents.onEditorShipModified.Add(OnEditorShipModified);
         }
@@ -40,17 +40,17 @@ namespace RealismOverhaul
         public void OnDestroy() => GameEvents.onEditorShipModified.Remove(OnEditorShipModified);
 
         /// <summary>
-        /// Return names of all direct children of Planetarium.fetch.Sun
+        /// Return names of all direct children of Planetarium.fetch.Sun, sorted by SMA
         /// </summary>
         public string[] PlanetWalk()
         {
-            cbOptions.Clear();
             CelestialBody theSun = Planetarium.fetch.Sun;
-            foreach (CelestialBody body in FlightGlobals.Bodies.Where(x => x.referenceBody == theSun && x != theSun))
-            {
-                cbOptions.Add(body.name);
-            }
-            return cbOptions.ToArray();
+            List<CelestialBody> planets = FlightGlobals
+                .Bodies
+                .Where(cb => cb.referenceBody == theSun && cb != theSun)
+                .ToList();
+            planets.Sort((a, b) => a.orbit.semiMajorAxis.CompareTo(b.orbit.semiMajorAxis));
+            return planets.Select(p => p.name).Distinct().ToArray();
         }
 
         private void CalculateRates()
