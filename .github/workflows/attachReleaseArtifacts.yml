@@ -13,73 +13,55 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          
       - name: Get Branch
         shell: bash
         run: |
           releaseBranch=${{ github.event.release.target_commitish }}
           echo "Found branch ${releaseBranch}"
           echo "tagged_branch=${releaseBranch}" >> $GITHUB_ENV
-        
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ env.tagged_branch }}
+
       - name: Download required assemblies
         id: download-assemblies
-        shell: bash
-        env: 
+        uses: KSP-RO/BuildTools/download-assemblies@master
+        with:
           KSP_ZIP_PASSWORD: ${{ secrets.KSP_ZIP_PASSWORD }}
-        run: |
-          curl https://ksp-ro.s3-us-west-2.amazonaws.com/KSPAssemblies-1.12.zip --output /tmp/bins.zip
-          KSP_DLL_PATH="/opt/ksp/assembly"
-          echo "::set-output name=ksp-dll-path::${KSP_DLL_PATH}"
-          mkdir -p "${KSP_DLL_PATH}"
-          unzip -P "${KSP_ZIP_PASSWORD}" '/tmp/bins.zip' -d "${KSP_DLL_PATH}"
-          rm '/tmp/bins.zip'          
-          
+
+      - name: Update AssemblyInfo
+        uses: KSP-RO/BuildTools/update-assembly-info@master
+        with:
+          path: ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
+          tag: ${{ github.event.release.tag_name }}
+
       - name: Build mod solution
         shell: bash
         env:
           TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
-          VFULL="$(echo $TAG_STRING | sed -e s/v//)"
-          VMAJOR="$(echo $VFULL | cut -f 1 -d '.')"
-          VMINOR="$(echo $VFULL | cut -f 2 -d '.')"
-          VPATCH="$(echo $VFULL | cut -f 3 -d '.')"
-          VBUILD="$(echo $VFULL | cut -f 4 -d '.')"
-          
-          rm -f ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/*.dll
-          rm -f ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/*.dll
-          
-          echo "Version string: $TAG_STRING"
-          echo "Version is $VMAJOR dot $VMINOR dot $VPATCH dot $VBUILD"
-          sed \
-            -e "s/CIBUILD_disabled/CIBUILD/" \
-            -e "s/@MAJOR@/$VMAJOR/" \
-            -e "s/@MINOR@/$VMINOR/" \
-            -e "s/@PATCH/$VPATCH/" \
-            -e "s/@BUILD@/$VBUILD/" \
-            -i ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
-            
-          grep CIBUILD ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
-          grep AssemblyFileVersion ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
-          
           msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/RealismOverhaul.sln
           msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/KerbalPlugins.EngineGroupController.sln
           cp -v ${GITHUB_WORKSPACE}/Source/obj/Release/RealismOverhaul.dll ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/RealismOverhaul.dll
           cp -v ${GITHUB_WORKSPACE}/Source/EngineGroupController/obj/Release/EngineGroupController.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/EngineGroupController.dll
           cp -v ${GITHUB_WORKSPACE}/Source/UnityGUIFramework/obj/Release/UnityGUIFramework.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/UnityGUIFramework.dll
-        
-      - name: Setup python
-        uses: actions/setup-python@v2
+
+      - name: Update version file
+        uses: KSP-RO/BuildTools/update-version-file@master
         with:
-          python-version: 3.0
-          
-      - name: Make metadata
-        run: |
-          python ${GITHUB_WORKSPACE}/makeMeta.py ${{ github.event.release.tag_name }}
-          
+          tag: ${{ github.event.release.tag_name }}
+          path: ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version
+
+      - name: Update changelog file
+        uses: KSP-RO/BuildTools/process-changelog@master
+        with:
+          tag: ${{ github.event.release.tag_name }}
+          body: ${{ github.event.release.body }}
+          path: ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/changelog.cfg
+
       - name: Assemble release
         id: assemble-release
         run: |
@@ -90,7 +72,6 @@ jobs:
           echo "::set-output name=release-dir::${RELEASE_DIR}"
           cp -v -R "${GITHUB_WORKSPACE}/Ships" "${RELEASE_DIR}"
           cp -v -R "${GITHUB_WORKSPACE}/GameData" "${RELEASE_DIR}"
-          cp -v "${GITHUB_WORKSPACE}/RO.version" "${RELEASE_DIR}/GameData/RealismOverhaul/RO.version"
           cp -v "${GITHUB_WORKSPACE}/README.md" "${RELEASE_DIR}/README.md"
           cd ${RELEASE_DIR}
           zip -r RealismOverhaul-${{ github.event.release.tag_name }}.zip GameData Ships README.md
@@ -116,11 +97,6 @@ jobs:
           TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
           RELEASEBRANCH=${{ env.tagged_branch }}
-          echo "Checking out branch ${RELEASEBRANCH}"
-          git checkout $RELEASEBRANCH
-          git reset --hard origin/$RELEASEBRANCH
-          cp -v "${GITHUB_WORKSPACE}/RO.version" "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
-          cp -v "${GITHUB_WORKSPACE}/README_TEMP.md" "${GITHUB_WORKSPACE}/README.md"
           git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
           git add "${GITHUB_WORKSPACE}/README.md"
           git commit -m "Update version to $TAG_STRING"
