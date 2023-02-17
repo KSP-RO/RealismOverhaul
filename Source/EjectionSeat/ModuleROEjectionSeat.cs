@@ -11,6 +11,7 @@ namespace RealismOverhaul
         public const string GroupDisplayName = "Ejection Seat";
 
         private const string GameObjName = "ModuleROEjectionSeat";
+        private const string JetpackPartName = "evaJetpack";
 
         [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Ejection seat(s)", groupName = GroupName, groupDisplayName = GroupDisplayName)]
         [UI_Toggle(disabledText = "<color=red><b>Disabled</b></color>", enabledText = "<color=green>Enabled</color>", scene = UI_Scene.Editor)]
@@ -161,6 +162,8 @@ namespace RealismOverhaul
 
             if (!CheckSafeToEject()) return;
 
+            ProcessInventory();
+
 #if DEBUG
             if (_dbgCollider != null)
                 _dbgCollider.gameObject.DestroyGameObjectImmediate();
@@ -256,6 +259,54 @@ namespace RealismOverhaul
             }
 
             return isAllowed;
+        }
+
+        private void ProcessInventory()
+        {
+            foreach (ProtoCrewMember pcm in part.protoModuleCrew)
+            {
+                ModuleInventoryPart nautInv = pcm.KerbalInventoryModule;
+                int jetpackIdx = -1;
+                StoredPart jetpackPart = null;
+                for (int i = 0; i < nautInv.InventorySlots; i++)
+                {
+                    if (nautInv.storedParts.TryGetValue(i, out StoredPart val) && val.partName == JetpackPartName)
+                    {
+                        Debug.Log($"[ROEjectionSeat] Naut {pcm.name} has EVA jetpack in inventory which should get moved to parent part");
+                        jetpackIdx = i;
+                        jetpackPart = val;
+                        break;
+                    }
+                }
+
+                if (jetpackIdx > -1)
+                {
+                    Debug.Log($"[ROEjectionSeat] Removing EVA jetpack from naut slot {jetpackIdx}");
+                    nautInv.ClearPartAtSlot(jetpackIdx);
+
+                    TryAddJetpackToParentPartInventory(jetpackPart);
+                }
+            }
+        }
+
+        private void TryAddJetpackToParentPartInventory(StoredPart jetpackPart)
+        {
+            ModuleInventoryPart partInv = part.FindModuleImplementing<ModuleInventoryPart>();
+            if (partInv == null)
+            {
+                Debug.Log($"[ROEjectionSeat] Part {part.name} does not have ModuleInventoryPart");
+                return;
+            }
+
+            int slotIdx = partInv.FirstEmptySlot();
+            if (slotIdx < 0)
+            {
+                Debug.Log($"[ROEjectionSeat] Part {part.name} does not have inventory space to add EVA jetpack");
+                return;
+            }
+
+            Debug.Log($"[ROEjectionSeat] Adding EVA jetpack to part slot {slotIdx}");
+            partInv.StoreCargoPartAtSlot(jetpackPart.snapshot, slotIdx);
         }
 
         private void OnEnabledChanged(BaseField field, object obj)
