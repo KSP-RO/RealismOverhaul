@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RealismOverhaul
 {
-    public static class Utilities
+    public static class SciFiHider
     {
         public static bool IsPartAvailable(AvailablePart ap)
         {
