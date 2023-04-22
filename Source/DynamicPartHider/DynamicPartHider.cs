@@ -7,29 +7,23 @@ namespace RealismOverhaul
 {
     public class Filters
     {
-        public class Filter
+        public interface IFilter
         {
-            public string name;
-            public Func<AvailablePart, bool> criteria;
-            public Func<ConfigNode, bool> RFcriteria;
-            public Filter(string name, Func<AvailablePart, bool> criteria, Func<ConfigNode, bool> RFcriteria)
-            {
-                this.name = name;
-                this.criteria = criteria;
-                this.RFcriteria = RFcriteria;
-            }
+            public string Name();
+            public Func<AvailablePart, bool> IsPartAvailable();
+            public Func<ConfigNode, bool> IsRFConfigAvailable();
         }
 
-        private static Filter[] _filters;
-        public static Filter[] Instance
+        private static IFilter[] _filters;
+        public static IFilter[] Instance
         {
             get
             {
                 if (_filters == null)
                 {
-                    Filter SciFi = new Filter("SpeculativeFilter", (aPart) => SciFiHider.IsPartAvailable(aPart), (cfg) => SciFiHider.IsRFConfigAvailable(cfg));
-                    Filter Deprecated = new Filter("DeprecatedFilter", (aPart) => DeprecatedHider.IsPartAvailable(aPart), (cfg) => DeprecatedHider.IsRFConfigAvailable(cfg));
-                    _filters = new Filter[] {SciFi, Deprecated};
+                    IFilter SciFi = new SciFiHider();
+                    IFilter Deprecated = new DeprecatedHider();
+                    _filters = new IFilter[] { SciFi, Deprecated };
                 }
                 return _filters;
             }
@@ -67,16 +61,16 @@ namespace RealismOverhaul
         private void AttachFilters()
         {
             Debug.Log("[RODynamicPartHider] Attached filters");
-            foreach (Filters.Filter filter in Filters.Instance)
+            foreach (Filters.IFilter filter in Filters.Instance)
             {
-                if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[filter.name] == null)
-                    EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(filter.name, filter.criteria));
+                if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[filter.Name()] == null)
+                    EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(filter.Name(), filter.IsPartAvailable()));
 
-                if (!RDTechFilters.Instance.filters.ContainsKey(filter.name))
-                    RDTechFilters.Instance.filters.Add(filter.name, filter.criteria);
+                if (!RDTechFilters.Instance.filters.ContainsKey(filter.Name()))
+                    RDTechFilters.Instance.filters.Add(filter.Name(), filter.IsPartAvailable());
 
-                if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(filter.name))
-                    ConfigFilters.Instance.configDisplayFilters.Add(filter.name, filter.RFcriteria);
+                if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(filter.Name()))
+                    ConfigFilters.Instance.configDisplayFilters.Add(filter.Name(), filter.IsRFConfigAvailable());
             }
         }
 
