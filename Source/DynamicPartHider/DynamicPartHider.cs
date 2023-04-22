@@ -36,7 +36,7 @@ namespace RealismOverhaul
         }
     }
 
-    [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
+    [KSPAddon(KSPAddon.Startup.SpaceCentre, true)]
     public class DynamicPartHider : MonoBehaviour
     {
         public void Awake()
@@ -47,7 +47,7 @@ namespace RealismOverhaul
 
         public void Start()
         {
-            AttachFilters();
+            DontDestroyOnLoad(this);
         }
 
         public void OnDestroy()
@@ -58,10 +58,8 @@ namespace RealismOverhaul
 
         private void OnLevelLoaded(GameScenes scene)
         {
-            Debug.Log("[RODynamicPartHider] Called OnLevelLoaded");
             if (scene == GameScenes.EDITOR)
             {
-                Debug.Log("[RODynamicPartHider] Called AttachFilters");
                 AttachFilters();
             }
         }
@@ -71,15 +69,8 @@ namespace RealismOverhaul
             Debug.Log("[RODynamicPartHider] Attached filters");
             foreach (Filters.Filter filter in Filters.Instance)
             {
-                Debug.Log($"Attaching {filter.name}");
-                Debug.Log($"instance is not null: {EditorPartList.Instance != null}");
-                if (EditorPartList.Instance != null)
-                    Debug.Log($"{filter.name} not in list: {EditorPartList.Instance.ExcludeFilters[filter.name] == null}");
                 if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[filter.name] == null)
-                {
-                    Debug.Log($"Sucessfully attached {filter.name}");
                     EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(filter.name, filter.criteria));
-                }
 
                 if (!RDTechFilters.Instance.filters.ContainsKey(filter.name))
                     RDTechFilters.Instance.filters.Add(filter.name, filter.criteria);
@@ -91,6 +82,7 @@ namespace RealismOverhaul
 
         private void OnUpdateRnD(RDTechTree tree)
         {
+            AttachFilters();
             Debug.Log($"[RODynamicPartHider] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
             {
