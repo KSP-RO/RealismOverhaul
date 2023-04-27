@@ -9,22 +9,22 @@ namespace RealismOverhaul
     {
         public interface IFilter
         {
-            public string Name();
-            public Func<AvailablePart, bool> IsPartAvailable();
-            public Func<ConfigNode, bool> IsRFConfigAvailable();
+            public string Name { get; }
+            public Func<AvailablePart, bool> IsPartAvailable { get; }
+            public Func<ConfigNode, bool> IsRFConfigAvailable { get; }
         }
 
         private static IFilter[] _filters;
+
         public static IFilter[] Instance
         {
             get
             {
-                if (_filters == null)
+                _filters ??= new IFilter[]
                 {
-                    IFilter SciFi = new SciFiHider();
-                    IFilter Deprecated = new DeprecatedHider();
-                    _filters = new IFilter[] { SciFi, Deprecated };
-                }
+                    new SciFiHider(),
+                    new DeprecatedHider(),
+                };
                 return _filters;
             }
         }
@@ -63,14 +63,14 @@ namespace RealismOverhaul
             Debug.Log("[RODynamicPartHider] Attached filters");
             foreach (Filters.IFilter filter in Filters.Instance)
             {
-                if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[filter.Name()] == null)
-                    EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(filter.Name(), filter.IsPartAvailable()));
+                if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[filter.Name] == null)
+                    EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(filter.Name, filter.IsPartAvailable));
 
-                if (!RDTechFilters.Instance.filters.ContainsKey(filter.Name()))
-                    RDTechFilters.Instance.filters.Add(filter.Name(), filter.IsPartAvailable());
+                if (!RDTechFilters.Instance.filters.ContainsKey(filter.Name))
+                    RDTechFilters.Instance.filters.Add(filter.Name, filter.IsPartAvailable);
 
-                if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(filter.Name()))
-                    ConfigFilters.Instance.configDisplayFilters.Add(filter.Name(), filter.IsRFConfigAvailable());
+                if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(filter.Name))
+                    ConfigFilters.Instance.configDisplayFilters.Add(filter.Name, filter.IsRFConfigAvailable);
             }
         }
 

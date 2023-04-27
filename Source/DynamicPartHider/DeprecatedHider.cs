@@ -5,44 +5,38 @@ namespace RealismOverhaul
 {
     public class DeprecatedHider : Filters.IFilter
     {
-        public string Name()
-        {
-            return "DeprecatedFilter";
-        }
-        public Func<AvailablePart, bool> IsPartAvailable()
-        {
-            return (AvailablePart ap) =>
-            {
-                if (ap == null)
-                    return false;
+        public string Name => "DeprecatedFilter";
 
-                if (HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().showDeprecated)
-                    return true;
+        public Func<AvailablePart, bool> IsPartAvailable =>
+        (AvailablePart ap) =>
+        {
+            if (ap == null)
+                return false;
 
-                // Check for not present because the config says if it IS deprecated, the function wants NOT deprecated
-                return ap.tags.IndexOf("ro_deprecated", StringComparison.OrdinalIgnoreCase) < 0;
-            };
-        }
+            if (HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().showDeprecated)
+                return true;
+
+            // Check for not present because the config says if it IS deprecated, the function wants NOT deprecated
+            return ap.tags.IndexOf("ro_deprecated", StringComparison.OrdinalIgnoreCase) < 0;
+        };
 
         // Passed to RF to validate if a engine config should be available
-        public Func<ConfigNode, bool> IsRFConfigAvailable()
+        public Func<ConfigNode, bool> IsRFConfigAvailable =>
+        (ConfigNode cfg) =>
         {
-            return (ConfigNode cfg) =>
-            {
-                if (cfg == null)
-                    return false;
+            if (cfg == null)
+                return false;
 
-                string value = null;
-                if (HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().showDeprecated)
-                    return true;
-
-                if (cfg.TryGetValue("RODeprecated", ref value) && Boolean.TryParse(value, out bool result))
-                {
-                    // Invert because the config says if it IS deprecated, the function wants NOT deprecated
-                    return !result;
-                }
+            if (HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().showDeprecated)
                 return true;
-            };
-        }
+
+            bool value = false;
+            if (cfg.TryGetValue("RODeprecated", ref value))
+            {
+                // Invert because the config says if it IS deprecated, the function wants NOT deprecated
+                return !value;
+            }
+            return true;
+        };
     }
 }
