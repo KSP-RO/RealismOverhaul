@@ -10,8 +10,10 @@ namespace RealismOverhaul
         public interface IFilter
         {
             public string Name { get; }
-            public Func<AvailablePart, bool> IsPartAvailable { get; }
-            public Func<ConfigNode, bool> IsRFConfigAvailable { get; }
+
+            public bool IsPartAvailable(AvailablePart ap);
+
+            public bool IsRFConfigAvailable(ConfigNode cfg);
         }
 
         private static IFilter[] _filters;

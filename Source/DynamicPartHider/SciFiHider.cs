@@ -7,39 +7,37 @@ namespace RealismOverhaul
     {
         public string Name => "SpeculativeFilter";
 
-        public Func<AvailablePart, bool> IsPartAvailable =>
-            (AvailablePart ap) =>
+        public bool IsPartAvailable(AvailablePart ap)
+        {
+            if (ap == null)
             {
-                if (ap == null)
-                {
-                    return false;
-                }
-                SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-                SpeculativeLevel level = GetSpecLevelFromTags(ap);
+                return false;
+            }
+            SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
+            SpeculativeLevel level = GetSpecLevelFromTags(ap);
 
-                return level <= setting;
-            };
+            return level <= setting;
+        }
 
         // Passed to RF to validate if a engine config should be available
-        public Func<ConfigNode, bool> IsRFConfigAvailable =>
-            (ConfigNode cfg) =>
+        public bool IsRFConfigAvailable(ConfigNode cfg)
+        {
+            if (cfg == null)
+                return false;
+
+            string value = null;
+            if (cfg.TryGetValue("specLevel", ref value))
             {
-                if (cfg == null)
-                    return false;
-
-                string value = null;
-                if (cfg.TryGetValue("specLevel", ref value))
+                if (SpeculativeLevel.TryParse(value, true, out SpeculativeLevel valueEnum))
                 {
-                    if (SpeculativeLevel.TryParse(value, true, out SpeculativeLevel valueEnum))
-                    {
-                        SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
-                        return valueEnum <= setting;
-                    }
-                    Debug.Log($"[RODynamicPartHider] Parsing specLevel failed on Engine Config: {cfg.GetValue("name")} ");
+                    SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
+                    return valueEnum <= setting;
                 }
+                Debug.Log($"[RODynamicPartHider] Parsing specLevel failed on Engine Config: {cfg.GetValue("name")} ");
+            }
 
-                return true;
-            };
+            return true;
+        }
 
         public static SpeculativeLevel GetSpecLevelFromTags(AvailablePart ap)
         {
