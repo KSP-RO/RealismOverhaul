@@ -3,9 +3,11 @@ using UnityEngine;
 
 namespace RealismOverhaul
 {
-    public static class Utilities
+    public class SciFiHider : Filters.IFilter
     {
-        public static bool IsPartAvailable(AvailablePart ap)
+        public string Name => "SpeculativeFilter";
+
+        public bool IsPartAvailable(AvailablePart ap)
         {
             if (ap == null)
             {
@@ -18,12 +20,10 @@ namespace RealismOverhaul
         }
 
         // Passed to RF to validate if a engine config should be available
-        public static bool IsRFConfigAvailable(ConfigNode cfg)
+        public bool IsRFConfigAvailable(ConfigNode cfg)
         {
             if (cfg == null)
-            {
                 return false;
-            }
 
             string value = null;
             if (cfg.TryGetValue("specLevel", ref value))

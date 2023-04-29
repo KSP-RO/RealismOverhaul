@@ -5,14 +5,36 @@ using RealFuels;
 
 namespace RealismOverhaul
 {
-    [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
+    public class Filters
+    {
+        public interface IFilter
+        {
+            public string Name { get; }
+
+            public bool IsPartAvailable(AvailablePart ap);
+
+            public bool IsRFConfigAvailable(ConfigNode cfg);
+        }
+
+        private static IFilter[] _filters;
+
+        public static IFilter[] Instance
+        {
+            get
+            {
+                _filters ??= new IFilter[]
+                {
+                    new SciFiHider(),
+                    new DeprecatedHider(),
+                };
+                return _filters;
+            }
+        }
+    }
+
+    [KSPAddon(KSPAddon.Startup.SpaceCentre, true)]
     public class DynamicPartHider : MonoBehaviour
     {
-        private string partFilterID = "SpeculativeFilter";
-        private static Func<AvailablePart, bool> criteria = (aPart) => Utilities.IsPartAvailable(aPart);
-        private string rfFilterID = "SpeculativeRFFilter";
-        private static Func<ConfigNode, bool> filterRF = (cfg) => Utilities.IsRFConfigAvailable(cfg);
-
         public void Awake()
         {
             GameEvents.onLevelWasLoadedGUIReady.Add(OnLevelLoaded);
@@ -21,7 +43,7 @@ namespace RealismOverhaul
 
         public void Start()
         {
-            AttachFilters();
+            DontDestroyOnLoad(this);
         }
 
         public void OnDestroy()
@@ -41,18 +63,22 @@ namespace RealismOverhaul
         private void AttachFilters()
         {
             Debug.Log("[RODynamicPartHider] Attached filters");
-            if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[partFilterID] == null)
-                EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(partFilterID, criteria));
+            foreach (Filters.IFilter filter in Filters.Instance)
+            {
+                if (EditorPartList.Instance != null && EditorPartList.Instance.ExcludeFilters[filter.Name] == null)
+                    EditorPartList.Instance.ExcludeFilters.AddFilter(new EditorPartListFilter<AvailablePart>(filter.Name, filter.IsPartAvailable));
 
-            if (!RDTechFilters.Instance.filters.ContainsKey(partFilterID))
-                RDTechFilters.Instance.filters.Add(partFilterID, criteria);
+                if (!RDTechFilters.Instance.filters.ContainsKey(filter.Name))
+                    RDTechFilters.Instance.filters.Add(filter.Name, filter.IsPartAvailable);
 
-            if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(rfFilterID))
-                ConfigFilters.Instance.configDisplayFilters.Add(rfFilterID, filterRF);
+                if (!ConfigFilters.Instance.configDisplayFilters.ContainsKey(filter.Name))
+                    ConfigFilters.Instance.configDisplayFilters.Add(filter.Name, filter.IsRFConfigAvailable);
+            }
         }
 
         private void OnUpdateRnD(RDTechTree tree)
         {
+            AttachFilters();
             Debug.Log($"[RODynamicPartHider] TechTree updated");
             foreach (RDNode node in tree.controller.nodes)
             {
