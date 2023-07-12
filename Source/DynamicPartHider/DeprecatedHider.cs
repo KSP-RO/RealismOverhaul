@@ -36,5 +36,10 @@ namespace RealismOverhaul
             }
             return true;
         }
+
+        public bool IsUpgradeAvaliable(PartUpgradeHandler.Upgrade upgrade)
+        {
+            return true;
+        }
     }
 }
