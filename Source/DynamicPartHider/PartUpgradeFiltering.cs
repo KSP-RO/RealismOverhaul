@@ -1,5 +1,6 @@
 using HarmonyLib;
 using KSP.UI.Screens;
+using UnityEngine;
 
 namespace RealismOverhaul.Harmony
 {
@@ -8,13 +9,14 @@ namespace RealismOverhaul.Harmony
 	{
 		[HarmonyPrefix]
 		[HarmonyPatch("AddUpgradeListItem")]
-		private void Prefix_AddUpgradeListItem(PartUpgradeHandler.Upgrade upgrade, bool purchased)
+		internal static bool Prefix_AddUpgradeListItem(PartUpgradeHandler.Upgrade upgrade, bool purchased)
 		{
-			foreach (var filter in Filters.Instance)
+			foreach (Filters.IFilter filter in Filters.Instance)
 			{
 				if (!filter.IsUpgradeAvaliable(upgrade))
-					return;
+					return false;
 			}
+			return true;
 		}
 	}
 }

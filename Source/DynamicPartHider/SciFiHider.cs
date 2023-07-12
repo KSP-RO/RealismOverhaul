@@ -53,7 +53,26 @@ namespace RealismOverhaul
 
         public bool IsUpgradeAvaliable(PartUpgradeHandler.Upgrade upgrade)
         {
-            throw new NotImplementedException();
+            if (upgrade == null)
+            {
+                return false;
+            }
+            SpeculativeLevel setting = HighLogic.CurrentGame.Parameters.CustomParams<RealismOverhaulSettings>().speculativeLevel;
+            SpeculativeLevel level = GetSpeculativeLevelFromUpgradeDescription(upgrade);
+
+            return level <= setting;
+        }
+
+        public static SpeculativeLevel GetSpeculativeLevelFromUpgradeDescription(PartUpgradeHandler.Upgrade upgrade)
+        {
+            string description = upgrade.description;
+            if (description.IndexOf("available at specLevel operational", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Operational; }
+            if (description.IndexOf("available at specLevel prototype", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Prototype; }
+            if (description.IndexOf("available at specLevel concept", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Concept; }
+            if (description.IndexOf("available at specLevel speculative", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.Speculative; }
+            if (description.IndexOf("available at specLevel althist", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.AltHist; }
+            if (description.IndexOf("available at specLevel scifi", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.SciFi; }
+            return SpeculativeLevel.Operational;
         }
     }
 

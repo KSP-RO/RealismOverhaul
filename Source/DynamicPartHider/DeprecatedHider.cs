@@ -39,7 +39,7 @@ namespace RealismOverhaul
 
         public bool IsUpgradeAvaliable(PartUpgradeHandler.Upgrade upgrade)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
