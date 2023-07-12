@@ -50,6 +50,11 @@ namespace RealismOverhaul
             if (tagsString.IndexOf("ro_specleveltag_scifi", StringComparison.OrdinalIgnoreCase) >= 0) { return SpeculativeLevel.SciFi; }
             return SpeculativeLevel.Operational;
         }
+
+        public bool IsUpgradeAvaliable(PartUpgradeHandler.Upgrade upgrade)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum SpeculativeLevel
