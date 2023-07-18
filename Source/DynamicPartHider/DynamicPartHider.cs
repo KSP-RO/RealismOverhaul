@@ -14,6 +14,8 @@ namespace RealismOverhaul
             public bool IsPartAvailable(AvailablePart ap);
 
             public bool IsRFConfigAvailable(ConfigNode cfg);
+
+            public bool IsUpgradeAvaliable(PartUpgradeHandler.Upgrade upgrade);
         }
 
         private static IFilter[] _filters;
