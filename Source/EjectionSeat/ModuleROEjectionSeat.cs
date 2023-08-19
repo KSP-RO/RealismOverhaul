@@ -174,12 +174,14 @@ namespace RealismOverhaul
 
         private IEnumerator DoStaggeredEjectionRoutine()
         {
-            int curCrewIdx = 0;
-            while (part.protoModuleCrew.Count > 0)
+            int curCrewIdx = 0, failCount = 0;
+            while (part.protoModuleCrew.Count > 0 && failCount < part.protoModuleCrew.Count)
             {
-                ProtoCrewMember crew = part.protoModuleCrew[0];
+                ProtoCrewMember crew = part.protoModuleCrew[failCount];    // Do not attempt to re-process crewmembers whose ejection failed
                 SeatConfig curSeat = _seats[curCrewIdx % _seats.Count];
-                EjectCrewmember(crew, curSeat);
+                bool wasEjected = EjectCrewmember(crew, curSeat);
+                if (!wasEjected)
+                    failCount++;
                 curCrewIdx++;
 
                 if (part.protoModuleCrew.Count > 0)
@@ -190,7 +192,7 @@ namespace RealismOverhaul
             }
         }
 
-        private void EjectCrewmember(ProtoCrewMember crew, SeatConfig seat)
+        private bool EjectCrewmember(ProtoCrewMember crew, SeatConfig seat)
         {
             var go = new GameObject(GameObjName);
             go.layer = 21;
@@ -222,7 +224,7 @@ namespace RealismOverhaul
             if (eva == null)
             {
                 Debug.Log("[ROEjectionSeat] It appears that nobody was EVA'd");
-                return;
+                return false;
             }
 
             eva.autoGrabLadderOnStart = false;
@@ -239,6 +241,8 @@ namespace RealismOverhaul
             handler.ChuteDelay = chuteDelay;
             handler.ForceDirection = forceVector;
             handler.StartProcessing();
+
+            return true;
         }
 
         private bool CheckSafeToEject()
