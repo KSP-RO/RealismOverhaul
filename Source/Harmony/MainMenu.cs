@@ -12,6 +12,8 @@ namespace RealismOverhaul.Harmony
     {
         private static bool _needCheckRP1 = true;
         private static bool _hasRP1;
+        private static bool _needCheckDB = false;
+        private static bool _overrideCareer = false;
 
         [HarmonyPrefix]
         [HarmonyPatch("ConfirmNewGame")]
@@ -22,8 +24,19 @@ namespace RealismOverhaul.Harmony
                 _hasRP1 = AssemblyLoader.loadedAssemblies.FirstOrDefault(a => a.name == "RP-0") != null;
                 _needCheckRP1 = false;
             }
+
+            if (_needCheckDB)
+            {
+                foreach (ConfigNode node in GameDatabase.Instance.GetConfigNodes("REALISMOVERHAULSETTINGS"))
+                {
+                    bool btmp = false;
+                    node.TryGetValue("allowCareer", ref btmp);
+                    _overrideCareer |= btmp;
+                }
+                _needCheckDB = false;
+            }
             
-            if (_hasRP1)
+            if (_hasRP1 || _overrideCareer)
                 return true;
 
             if (___newGameMode != Game.Modes.SCIENCE_SANDBOX && ___newGameMode != Game.Modes.CAREER)
