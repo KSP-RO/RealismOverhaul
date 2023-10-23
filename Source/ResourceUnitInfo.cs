@@ -92,9 +92,9 @@ namespace RealismOverhaul
             return info;
         }
 
-        public static string PrintMassRate(double massFlow)
+        public static string PrintMass(double mass)
         {
-            return massFlow < 1d ? KSPUtil.PrintSI(massFlow * 1000d * 1000d, "g") : KSPUtil.PrintSI(massFlow, "t");
+            return mass < 1d ? KSPUtil.PrintSI(mass * 1000d * 1000d, "g") : KSPUtil.PrintSI(mass, "t");
         }
 
         public static string PrintRatePerSecBare(double rate, int resID, int sigFigs = 3, string precision = "G2", bool longPrefix = false)
@@ -159,23 +159,23 @@ namespace RealismOverhaul
             {
                 if (Math.Abs(rate) > 0.1d)
                 {
-                    string massRate = density * rate > 0d ? " - " + PrintMassRate(rate * density) : string.Empty;
+                    string massRate = density * rate > 0d ? " - " + PrintMass(rate * density) : string.Empty;
                     output += Localizer.Format("#autoLOC_244197", title, rate.ToString("0.0") + unitRate + massRate);
                 }
                 else if (Math.Abs(rate) > (0.1d / 60d))
                 {
-                    string massRate = density * rate > 0d ? " - " + PrintMassRate(rate * density * 60d) : string.Empty;
+                    string massRate = density * rate > 0d ? " - " + PrintMass(rate * density * 60d) : string.Empty;
                     output += Localizer.Format("#autoLOC_244201", title, (rate * 60d).ToString("0.0") + unitRate + massRate);
                 }
                 else
                 {
-                    string massRate = density * rate > 0d ? " - " + PrintMassRate(rate * density * 3600d) : string.Empty;
+                    string massRate = density * rate > 0d ? " - " + PrintMass(rate * density * 3600d) : string.Empty;
                     output += Localizer.Format("#autoLOC_6002411", title, (rate * 3600d).ToString("0.0") + unitRate + massRate);
                 }
             }
             else
             {
-                string massRate = density * rate > 0d ? " - " + Localizer.Format("#autoLOC_6001048", PrintMassRate(rate * density)) : string.Empty;
+                string massRate = density * rate > 0d ? " - " + Localizer.Format("#autoLOC_6001048", PrintMass(rate * density)) : string.Empty;
                 if (useSI)
                     output += "- <b>" + title + ": </b>" + KSPUtil.PrintSI(rate, unitRate, sigFigs, longPrefix) + massRate + "\n";
                 else
@@ -233,6 +233,27 @@ namespace RealismOverhaul
         public static string PrintSIAmount(double rate, ResourceUnitInfo rui, int sigFigs = 3, bool longPrefix = false)
         {
             return PrintSIAmount(rate * rui.MultiplierToUnit, rui.AmountUnit, sigFigs, longPrefix);
+        }
+
+        public static string PrintSI(double amount, string unitName, int sigFigs = 3, bool longPrefix = false)
+        {
+            if (amount == 0d || double.IsInfinity(amount) || double.IsNaN(amount))
+                return Localizer.Format("<<1>><<2>>", amount.ToString(), unitName);
+
+            int exp = (int)Math.Floor(Math.Log10(Math.Abs(amount)));
+            int prefix = ((exp >= 0) ? (exp / 3) : ((exp - 2) / 3));
+            int digits = exp - prefix * 3 + 1;
+            int decimals = sigFigs - digits;
+            int index = Math.Max(0, Math.Min(prefix + KSPUtil.unitIndex, KSPUtil.prefixMults.Length - 1));
+            string prefixString = (longPrefix ? KSPUtil.longSIprefixes[index] : KSPUtil.shortSIprefixes[index]);
+            amount /= KSPUtil.prefixMults[index];
+            if (decimals < 0)
+            {
+                double mult = KSPUtil.digitsScale[-decimals];
+                amount = Math.Round(amount / mult) * mult;
+                decimals = 0;
+            }
+            return Localizer.Format("<<1>><<2>><<3>>", amount.ToString(decimals == 0 ? "F0" : "0." + new string('#', decimals)), prefixString, unitName);
         }
     }
 }
