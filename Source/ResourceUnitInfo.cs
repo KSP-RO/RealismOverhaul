@@ -96,6 +96,29 @@ namespace RealismOverhaul
         {
             return massFlow < 1d ? KSPUtil.PrintSI(massFlow * 1000d * 1000d, "g") : KSPUtil.PrintSI(massFlow, "t");
         }
+
+        public static string PrintRatePerSecBare(double rate, int resID, int sigFigs = 3, string precision = "G2", bool longPrefix = false)
+        {
+            string unitRate = string.Empty;
+            bool useSI = false;
+            if (GetResourceUnitInfo(resID) is ResourceUnitInfo rui)
+            {
+                unitRate = rui.RateUnit;
+                rate  *= rui.MultiplierToUnit;
+                if (rui.UseHuman)
+                {
+                    useSI = false;
+                }
+                else
+                {
+                    useSI = true;
+                }
+            }
+            if (useSI)
+                return KSPUtil.PrintSI(rate, unitRate, sigFigs, longPrefix);
+            else
+                return rate.ToString(precision) + unitRate;
+        }
         
         public static string PrintRate(double rate, int resID, bool showFlowMode, ModuleResource res = null, Propellant p = null, bool showMass = false, int sigFigs = 3, bool longPrefix = false)
         {
@@ -168,13 +191,12 @@ namespace RealismOverhaul
             return output;
         }
 
-        public static string PrintAmount(double amount, int resID, int sigFigs = 3, string precision = "G2", bool longPrefix = false)
+        public static string PrintAmount(double amount, int resID, int sigFigs = 3, string precision = "G2", bool preventSI = false, bool longPrefix = false)
         {
             string unit = string.Empty;
             if (GetResourceUnitInfo(resID) is ResourceUnitInfo rui)
             {
-
-                if (rui.UseHuman)
+                if (rui.UseHuman || preventSI)
                     unit = rui.AmountUnit;
                 else
                     return PrintSIAmount(amount, rui, sigFigs, longPrefix);
