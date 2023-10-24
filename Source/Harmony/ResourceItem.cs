@@ -35,8 +35,8 @@ namespace RealismOverhaul.Harmony
 
             __instance.resourceBar.value = (float)__instance.resourceValue;
 
-            __instance.amountText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceCurrent, resID, 5, __instance.vesselResourceCurrent > 100 ? "F0" : "F2") + "</color>";
-            __instance.maxText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceTotal, resID, 5, __instance.vesselResourceCurrent > 100 ? "F0" : "F2") + "</color>";
+            __instance.amountText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceCurrent, resID, 5, __instance.vesselResourceCurrent < 100 ? "F2" : "F0") + "</color>";
+            __instance.maxText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceTotal, resID, 5, __instance.vesselResourceCurrent < 100 ? "F2" : "F0") + "</color>";
 
             if (__instance.deltaSmoothed == 0f)
                 __instance.deltaText.text = "<color=#000000>(0)</color>";
