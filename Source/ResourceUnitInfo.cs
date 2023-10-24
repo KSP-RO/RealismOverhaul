@@ -92,9 +92,9 @@ namespace RealismOverhaul
             return info;
         }
 
-        public static string PrintMass(double mass)
+        public static string PrintMass(double mass, int sigFigs = 3, bool longPrefix = false)
         {
-            return mass < 1d ? KSPUtil.PrintSI(mass * 1000d * 1000d, "g") : KSPUtil.PrintSI(mass, "t");
+            return mass < 1d ? KSPUtil.PrintSI(mass * 1000d * 1000d, longPrefix ? "grams" : "g", sigFigs, longPrefix) : KSPUtil.PrintSI(mass, longPrefix ? "tons" : "t", sigFigs, longPrefix);
         }
 
         public static string PrintRatePerSecBare(double rate, int resID, int sigFigs = 3, string precision = "G2", bool longPrefix = false)
