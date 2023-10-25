@@ -253,7 +253,7 @@ namespace RealismOverhaul
                 amount = Math.Round(amount / mult) * mult;
                 decimals = 0;
             }
-            return Localizer.Format("<<1>><<2>><<3>>", amount.ToString(decimals == 0 ? "F0" : "0." + new string('#', decimals)), prefixString, unitName);
+            return Localizer.Format("<<1>> <<2>><<3>>", amount.ToString(decimals == 0 ? "F0" : "0." + new string('#', decimals)), prefixString, unitName);
         }
     }
 }
