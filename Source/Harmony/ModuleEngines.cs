@@ -19,7 +19,7 @@ namespace RealismOverhaul.Harmony
                 output += ResourceUnits.PrintRate(flow, propellant.id, true, null, propellant, true);
             }
             if (massFlow > 0d)
-                output += Localizer.Format("#autoLOC_900654") + " " + Localizer.Format("#autoLOC_6001048", ResourceUnits.PrintMass(massFlow)) + "\n";
+                output += Localizer.Format("#autoLOC_900654") + " " + Localizer.Format(ResourceUnits.PerSecLocString, ResourceUnits.PrintMass(massFlow)) + "\n";
 
             output += Localizer.Format("#autoLOC_220759", (mod.ignitionThreshold * 100f).ToString("0.#"));
             if (!mod.allowShutdown)

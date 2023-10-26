@@ -11,7 +11,7 @@ namespace RealismOverhaul.Harmony
         internal static void Postfix_Setup(UIPartActionResource __instance)
         {
             int resID = __instance.resource.info._id;
-            __instance.resourceMax.text = ResourceUnits.PrintAmount(__instance.resource.maxAmount, resID, 5, __instance.resource.maxAmount < 100 ? "F2" : "F0");
+            __instance.resourceMax.text = ResourceUnits.PrintAmount(__instance.resource.maxAmount, resID, 3, __instance.resource.maxAmount < 100 ? "F2" : "F0");
         }
 
         [HarmonyPrefix]
@@ -32,7 +32,7 @@ namespace RealismOverhaul.Harmony
                 __instance.SetSymCounterpartsAmount(__instance.resource.amount);
             }
 
-            __instance.resourceAmnt.text = ResourceUnits.PrintAmount(__instance.resource.amount, resID, 5, "F1");
+            __instance.resourceAmnt.text = ResourceUnits.PrintAmount(__instance.resource.amount, resID, 3, "F1");
 
             return false;
         }

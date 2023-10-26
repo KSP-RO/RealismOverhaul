@@ -6,9 +6,31 @@ namespace RealismOverhaul
 {
     public class ResourceUnits
     {
+        private static bool _useSI = true;
+        public static bool UseSI => _useSI;
+
         public static void ModuleManagerPostLoad()
         {
+            foreach (var node in GameDatabase.Instance.GetConfigNodes("Kerbalism"))
+                node.TryGetValue("UseSIUnits", ref _useSI);
+
             LoadResourceUnitInfo();
+        }
+
+        private static string _perSecLocString = null;
+        public static string PerSecLocString
+        {
+            get
+            {
+                if (_perSecLocString == null)
+                {
+                    if (Localizer.TryGetStringByTag("#KERBALISM_Generic_perSecond", out string ps))
+                        _perSecLocString = "<<1>>" + ps;
+                    else
+                        _perSecLocString = Localizer.GetStringByTag("#autoLOC_6001048");
+                }
+                return _perSecLocString;
+            }
         }
 
         public static readonly int ECResID = "ElectricCharge".GetHashCode();
@@ -47,8 +69,24 @@ namespace RealismOverhaul
                 ConfigNode.LoadObjectFromConfig(this, node);
                 if (string.IsNullOrEmpty(rateUnit))
                     rateUnit = amountUnit;
-                if (!useHuman && useRatePostfix && rateUnit != null)
-                    rateUnit = Localizer.Format("#autoLOC_6001048", rateUnit);
+
+                if (!UseSI)
+                {
+                    if (multiplierToUnit != 1d)
+                    {
+                        int exp = (int)Math.Floor(Math.Log10(multiplierToUnit));
+                        int prefix = ((exp >= 0) ? (exp / 3) : ((exp - 2) / 3));
+                        int index = Math.Max(0, Math.Min(prefix + KSPUtil.unitIndex, KSPUtil.prefixMults.Length - 1));
+                        string prefixString = KSPUtil.shortSIprefixes[index];
+                        rateUnit = prefixString + rateUnit;
+                        amountUnit = prefixString + amountUnit;
+
+                        multiplierToUnit /= Math.Pow(10d, exp);
+                    }
+                    useHuman = true;
+                }
+                else if (!useHuman && useRatePostfix && rateUnit != null)
+                    rateUnit = Localizer.Format(PerSecLocString, rateUnit);
 
                 isValid = !string.IsNullOrEmpty(name) && rateUnit != null && amountUnit != null;
             }
@@ -104,7 +142,7 @@ namespace RealismOverhaul
             if (GetResourceUnitInfo(resID) is ResourceUnitInfo rui)
             {
                 unitRate = rui.RateUnit;
-                rate  *= rui.MultiplierToUnit;
+                rate *= rui.MultiplierToUnit;
                 if (rui.UseHuman)
                 {
                     useSI = false;
@@ -135,15 +173,16 @@ namespace RealismOverhaul
             }
             if (GetResourceUnitInfo(resID) is ResourceUnitInfo rui)
             {
-                unitRate = rui.RateUnit;
                 rMult = rui.MultiplierToUnit;
                 if (rui.UseHuman)
                 {
                     useSI = false;
                     varyTime = true;
+                    unitRate = rui.AmountUnit;
                 }
                 else
                 {
+                    unitRate = rui.RateUnit;
                     useSI = true;
                     varyTime = false;
                 }
@@ -175,7 +214,7 @@ namespace RealismOverhaul
             }
             else
             {
-                string massRate = density * rate > 0d ? " - " + Localizer.Format("#autoLOC_6001048", PrintMass(rate * density)) : string.Empty;
+                string massRate = density * rate > 0d ? " - " + Localizer.Format(PerSecLocString, PrintMass(rate * density)) : string.Empty;
                 if (useSI)
                     output += "- <b>" + title + ": </b>" + KSPUtil.PrintSI(rate, unitRate, sigFigs, longPrefix) + massRate + "\n";
                 else

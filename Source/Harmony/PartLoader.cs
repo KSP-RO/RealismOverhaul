@@ -21,9 +21,9 @@ namespace RealismOverhaul.Harmony
                 AvailablePart.ResourceInfo resourceInfo = new AvailablePart.ResourceInfo();
                 resourceInfo.resourceName = partResource.resourceName;
                 resourceInfo.displayName = partResource.info.displayName.LocalizeRemoveGender();
-                resourceInfo.info = Localizer.Format("#autoLOC_166269", ResourceUnits.PrintAmount(partResource.amount, resID, 6, "F1"));
+                resourceInfo.info = Localizer.Format("#autoLOC_166269", ResourceUnits.PrintAmount(partResource.amount, resID, 3, "F1"));
                 if (partResource.amount != partResource.maxAmount)
-                    resourceInfo.info += " " + Localizer.Format("#autoLOC_6004042", ResourceUnits.PrintAmount(partResource.maxAmount, resID, 6, "F1"));
+                    resourceInfo.info += " " + Localizer.Format("#autoLOC_6004042", ResourceUnits.PrintAmount(partResource.maxAmount, resID, 3, "F1"));
                 double tons = partResource.amount * (double)partResource.info.density;
                 if (tons > 0d)
                     resourceInfo.info += Localizer.Format("#autoLOC_166270", ResourceUnits.PrintMass(tons));

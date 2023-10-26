@@ -27,6 +27,13 @@ namespace RealismOverhaul.Harmony
             return code;
         }
 
+        [HarmonyPostfix]
+        [HarmonyPatch("Setup")]
+        internal static void Postfix_Setup(ResourceItem __instance)
+        {
+            __instance.deltaText.enableAutoSizing = true;
+        }
+
         [HarmonyPrefix]
         [HarmonyPatch("Update")]
         internal static bool Prefix_Update(ResourceItem __instance)
@@ -35,13 +42,13 @@ namespace RealismOverhaul.Harmony
 
             __instance.resourceBar.value = (float)__instance.resourceValue;
 
-            __instance.amountText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceCurrent, resID, 5, __instance.vesselResourceCurrent < 100 ? "F2" : "F0") + "</color>";
-            __instance.maxText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceTotal, resID, 5, __instance.vesselResourceCurrent < 100 ? "F2" : "F0") + "</color>";
+            __instance.amountText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceCurrent, resID, 3, __instance.vesselResourceCurrent < 100 ? "F2" : "F0") + "</color>";
+            __instance.maxText.text = "<color=#000000>" + ResourceUnits.PrintAmount(__instance.vesselResourceTotal, resID, 3, __instance.vesselResourceCurrent < 100 ? "F2" : "F0") + "</color>";
 
             if (__instance.deltaSmoothed == 0f)
                 __instance.deltaText.text = "<color=#000000>(0)</color>";
             else if (__instance.deltaSmoothed > 0f)
-                __instance.deltaText.text = "<color=#110000>(-" + ResourceUnits.PrintRatePerSecBare(-__instance.deltaSmoothed, resID, 3, "F2") + ")</color>";
+                __instance.deltaText.text = "<color=#110000>(" + ResourceUnits.PrintRatePerSecBare(-__instance.deltaSmoothed, resID, 3, "F2") + ")</color>";
             else
                 __instance.deltaText.text = "<color=#000011>(" + ResourceUnits.PrintRatePerSecBare(-__instance.deltaSmoothed, resID, 3, "F2") + ")</color>";
 
