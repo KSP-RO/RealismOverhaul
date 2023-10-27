@@ -59,6 +59,20 @@ namespace RealismOverhaul
         private bool isEnabled = true;
         private bool shouldCheckEnabled = true;
 
+        public override void OnLoad(ConfigNode node)
+        {
+            angularVelocity = Vessel.mainBody.bodyTransform.rotation * angularVelocity;
+            targetDirection = Vessel.mainBody.bodyTransform.rotation * targetDirection;
+        }
+
+        public override void OnSave(ConfigNode node)
+        {
+            base.OnSave(node);
+            var rot = Quaternion.Inverse(Vessel.mainBody.bodyTransform.rotation);
+            node.SetValue(nameof(angularVelocity), KSPUtil.WriteVector(rot * angularVelocity));
+            node.SetValue(nameof(targetDirection), KSPUtil.WriteVector(rot * targetDirection));
+        }
+
         private bool CheckEnabled()
         {
             shouldCheckEnabled = false;
@@ -87,6 +101,7 @@ namespace RealismOverhaul
             if (!IsEnabled)
                 return;
 
+            bool packRotate = false;
             if (Vessel.loaded)
             {
                 targetDirection = AutopilotTargetDirection();
@@ -103,17 +118,7 @@ namespace RealismOverhaul
                         autopilotTargetHold = TargetHoldValidity();
                     }
 
-                    // If angular velocity is over the threshold, rotate--even if we have SAS on. No cheating Newton!
-                    // Note this is the magnitude, so 0.5 implies 0.3deg/sec in each axis, give or take.
-                    if (IsOverThreshold(vessel.orbit.referenceBody.bodyTransform.rotation * angularVelocity))
-                    {
-                        RotatePacked();
-                    }
-                    // We keep the vessel rotated toward the SAS target
-                    else if (autopilotTargetHold)
-                    {
-                        RotateTowardTarget();
-                    }
+                    packRotate = true;
                 }
                 else if (FlightGlobals.ready) // The vessel is in physics simulation and fully loaded
                 {
@@ -143,7 +148,7 @@ namespace RealismOverhaul
                     if (restoreAngularVelocity) // Restoring saved rotation if it was above the threshold
                     {
                         // Debug.Log("[US] " + Vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
-                        if (IsOverThreshold(vessel.orbit.referenceBody.bodyTransform.rotation * angularVelocity))
+                        if (IsOverThreshold(angularVelocity))
                         {
                             ApplyAngularVelocity();
                             okToSaveAngularVelocity = false;
@@ -173,6 +178,25 @@ namespace RealismOverhaul
                     // Saving angular velocity (if we can), SAS mode, and check target hold status
                     SaveOffRailsStatus(okToSaveAngularVelocity);
                 }
+                else if (FlightGlobals.ready)
+                {
+                    packRotate = true;
+                }
+
+                if (packRotate)
+                {
+                    // If angular velocity is over the threshold, rotate--even if we have SAS on. No cheating Newton!
+                    if (IsOverThreshold(angularVelocity))
+                    {
+                        RotatePacked();
+                    }
+                    // We keep the vessel rotated toward the SAS target
+                    else if (autopilotTargetHold)
+                    {
+                        RotateTowardTarget();
+                    }
+                }
+
                 lastUT = GetUT();
             }
             // Saving this FixedUpdate target, autopilot context and maneuver node, to check if they have changed in the next FixedUpdate
@@ -201,14 +225,13 @@ namespace RealismOverhaul
             // Debug.Log("[US] Restoring " + Vessel.vesselName + "rotation after timewarp/load" );
             Vector3 COM = Vessel.CoM;
             Quaternion rotation = Vessel.ReferenceTransform.rotation;
-            Vector3d localAngularVel = vessel.orbit.referenceBody.bodyTransform.rotation * angularVelocity;
 
             // Applying force on every part
             foreach (Part p in Vessel.parts)
             {
                 if (!p.GetComponent<Rigidbody>()) continue;
-                p.GetComponent<Rigidbody>().AddTorque(rotation * localAngularVel, ForceMode.VelocityChange);
-                p.GetComponent<Rigidbody>().AddForce(Vector3.Cross(rotation * localAngularVel, (p.transform.position - COM)), ForceMode.VelocityChange);
+                p.GetComponent<Rigidbody>().AddTorque(rotation * angularVelocity, ForceMode.VelocityChange);
+                p.GetComponent<Rigidbody>().AddForce(Vector3.Cross(rotation * angularVelocity, (p.transform.position - COM)), ForceMode.VelocityChange);
 
                 // Doing this through rigidbody is deprecated but I can't find a reliable way to use the 1.2 part.addforce/addtorque so they provide reliable results
                 // see 1.2 patchnotes and unity docs for ForceMode.VelocityChange/ForceMode.Force
@@ -222,7 +245,7 @@ namespace RealismOverhaul
                 return;
             }
 
-            Vessel.SetRotation(Quaternion.FromToRotation(Vessel.GetTransform().up, targetDirection) * Vessel.transform.rotation, true); // SetPos=false seems to break the game on some occasions...
+            Vessel.SetRotation(FromToRotation(Vessel.GetTransform().up, targetDirection) * Vessel.transform.rotation, true); // SetPos=false seems to break the game on some occasions...
         }
 
         private void RotatePacked()
@@ -231,18 +254,16 @@ namespace RealismOverhaul
             {
                 return;
             }
-            Vector3d localAngularVel = vessel.orbit.referenceBody.bodyTransform.rotation * angularVelocity;
-
             double timestep = lastUT < 0 ? TimeWarp.fixedDeltaTime : (GetUT() - lastUT);
             timestep *= 50d; // for some reason we need to divide out normal fixed delta time of 0.02s
-            double rotAngle = (double)localAngularVel.magnitude * timestep;
+            double rotAngle = (double)angularVelocity.magnitude * timestep;
             int subMult = (int)(rotAngle / 360d);
             if (subMult > 0)
             {
                 rotAngle -= subMult * 360d;
             }
 
-            Vessel.SetRotation(Quaternion.AngleAxis((float)rotAngle, Vessel.ReferenceTransform.rotation * localAngularVel) * Vessel.transform.rotation, true); // false seems to fix the "infinite roll bug"
+            Vessel.SetRotation(Quaternion.AngleAxis((float)rotAngle, Vessel.ReferenceTransform.rotation * angularVelocity) * Vessel.transform.rotation, true); // false seems to fix the "infinite roll bug"
         }
 
         private bool RestoreSASMode(int mode)
@@ -266,7 +287,7 @@ namespace RealismOverhaul
             {
                 if (IsOverThreshold(Vessel.angularVelocity))
                 {
-                    angularVelocity = Quaternion.Inverse(vessel.orbit.referenceBody.bodyTransform.rotation) * Vessel.angularVelocity;
+                    angularVelocity = Vessel.angularVelocity;
                 }
                 else
                 {
@@ -277,7 +298,7 @@ namespace RealismOverhaul
             // Checking if the autopilot hold mode should be enabled
             if (Vessel.Autopilot.Enabled
                 && !(Vessel.Autopilot.Mode.Equals(VesselAutopilot.AutopilotMode.StabilityAssist))
-                && !IsOverThreshold(Planetarium.fetch.rotation * angularVelocity) // The vessel isn't rotating too much
+                && !IsOverThreshold(angularVelocity) // The vessel isn't rotating too much
                 && Vector3.Dot(Vessel.Autopilot.SAS.targetOrientation.normalized, Vessel.GetTransform().up.normalized) > 0.999f) // about 2.5 degrees
             {
                 autopilotTargetHold = true;
