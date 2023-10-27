@@ -59,20 +59,6 @@ namespace RealismOverhaul
         private bool isEnabled = true;
         private bool shouldCheckEnabled = true;
 
-        public override void OnLoad(ConfigNode node)
-        {
-            angularVelocity = Vessel.mainBody.bodyTransform.rotation * angularVelocity;
-            targetDirection = Vessel.mainBody.bodyTransform.rotation * targetDirection;
-        }
-
-        public override void OnSave(ConfigNode node)
-        {
-            base.OnSave(node);
-            var rot = Quaternion.Inverse(Vessel.mainBody.bodyTransform.rotation);
-            node.SetValue(nameof(angularVelocity), KSPUtil.WriteVector(rot * angularVelocity));
-            node.SetValue(nameof(targetDirection), KSPUtil.WriteVector(rot * targetDirection));
-        }
-
         private bool CheckEnabled()
         {
             shouldCheckEnabled = false;
