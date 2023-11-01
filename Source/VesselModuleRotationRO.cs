@@ -11,6 +11,14 @@ namespace RealismOverhaul
         [KSPField(isPersistant = true)]
         public Vector3 angularVelocity;
 
+        [KSPField(isPersistant = true)]
+        public Quaternion vesselRot;
+
+        private static int VERSION = 2;
+        [KSPField(isPersistant = true)]
+        public int loadedVersion = 0;
+
+
         // True if we are keeping the vessel oriented toward the SAS target
         [KSPField(isPersistant = true)]
         public bool autopilotTargetHold;
@@ -48,38 +56,95 @@ namespace RealismOverhaul
         public int autopilotContextCurrent;
 
         // SAS target direction is made available for the ModuleTorqueController
+        [KSPField(isPersistant = true)]
         public Vector3 targetDirection;
 
-        // Note this is the magnitude, so 0.5 implies 0.3deg/sec in each axis, give or take.
         private const float RotationThreshold = 0.1f * Mathf.Deg2Rad;
         private const float RotationThresholdSAS = 0.5f * Mathf.Deg2Rad;
 
-        private static double GetUT() => HighLogic.LoadedSceneIsEditor ? HighLogic.CurrentGame.UniversalTime : Planetarium.GetUniversalTime();
-
-        private bool isEnabled = true;
-        private bool shouldCheckEnabled = true;
-
-        private bool CheckEnabled()
+        private static Vector3d ToPlanetarium(Vector3d vec)
         {
-            shouldCheckEnabled = false;
+            return Planetarium.Zup.LocalToWorld(vec.xzy);
+        }
+
+        private static Vector3 ToUnity(Vector3d vec)
+        {
+            return Planetarium.Zup.WorldToLocal(vec).xzy;
+        }
+
+        private Vector3 ToVesselLocal(Vector3d vec)
+        {
+            return Quaternion.Inverse(vessel.GetTransform().rotation) * ToUnity(vec);
+        }
+
+        private static bool _isEnabled = true;
+        private static bool _shouldCheckEnabled = true;
+
+        private static bool CheckEnabled()
+        {
+            _shouldCheckEnabled = false;
             foreach (var a in AssemblyLoader.loadedAssemblies)
             {
                 // ksp_plugin_adapter is Principia
                 if (a.name == "PersistentRotation" || a.name == "PersistentRotationUpgraded" || a.name == "ksp_plugin_adapter" || a.name == "MandatoryRCS")
                 {
-                    isEnabled = false;
+                    _isEnabled = false;
                     break;
                 }
             }
-            return isEnabled;
+            return _isEnabled;
         }
 
-        private bool IsEnabled => shouldCheckEnabled ? CheckEnabled() : isEnabled;
+        private static bool IsEnabled => _shouldCheckEnabled ? CheckEnabled() : _isEnabled;
 
         private bool IsOverThreshold(Vector3 rot)
         {
-            float thresh = Vessel.Autopilot.Enabled ? RotationThresholdSAS : RotationThreshold;
+            float thresh = vessel.Autopilot.Enabled ? RotationThresholdSAS : RotationThreshold;
             return Mathf.Abs(rot.x) > thresh || Mathf.Abs(rot.y) > thresh || Mathf.Abs(rot.z) > thresh;
+        }
+
+        private void StoreRot()
+        {
+            QuaternionD rot = vessel.transform.rotation;
+            vesselRot = Planetarium.Zup.Rotation * rot.swizzle;
+        }
+
+        private Quaternion UnityRot()
+        {
+            return (QuaternionD.Inverse(Planetarium.Zup.Rotation) * (QuaternionD)vesselRot).swizzle;
+        }
+
+        private void SetRot()
+        {
+            if (IgnoreRot)
+                return;
+
+            vessel.SetRotation(UnityRot(), true);
+        }
+
+        private bool IgnoreRot => vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.SPLASHED;
+
+        protected override void OnLoad(ConfigNode node)
+        {
+            base.OnLoad(node);
+            if (loadedVersion < VERSION)
+            {
+                if (loadedVersion < 2)
+                {
+                    angularVelocity = Vector3d.zero;
+                    targetDirection = ToPlanetarium(vessel.GetTransform().up);
+                    StoreRot();
+                }
+                loadedVersion = VERSION;
+            }
+
+            SetRot();
+        }
+
+        public override void OnUnloadVessel()
+        {
+            base.OnUnloadVessel();
+            StoreRot();
         }
 
         private void FixedUpdate()
@@ -88,15 +153,13 @@ namespace RealismOverhaul
                 return;
 
             bool packRotate = false;
-            if (Vessel.loaded)
+            if (vessel.loaded)
             {
-                targetDirection = AutopilotTargetDirection();
-
                 // Vessel is loaded but not in physics, either because
                 // - It is in the physics bubble but in non-physics timewarp
                 // - It has gone outside of the physics bubble
                 // - It was just loaded, is in the physics bubble and will be unpacked in a few frames
-                if (Vessel.packed)
+                if (vessel.packed)
                 {
                     // Check if target / maneuver is modified/deleted during timewarp
                     if (autopilotTargetHold && TimeWarp.WarpMode == TimeWarp.Modes.HIGH && TimeWarp.CurrentRateIndex > 0)
@@ -126,15 +189,15 @@ namespace RealismOverhaul
                     {
                         if (autopilotContext == autopilotContextCurrent) // Abort if the navball context (orbit/surface/target) has changed
                         {
-                            // Debug.Log("[US] " + Vessel.vesselName + " going OFF rails : applying rotation toward SAS target, autopilotMode=" + autopilotMode + ", targetMode=" + autopilotContext);
+                            // Debug.Log("[US] " + vessel.vesselName + " going OFF rails : applying rotation toward SAS target, autopilotMode=" + autopilotMode + ", targetMode=" + autopilotContext);
                             RotateTowardTarget();
                         }
                         restoreAutopilotTarget = false;
                     }
                     if (restoreAngularVelocity) // Restoring saved rotation if it was above the threshold
                     {
-                        // Debug.Log("[US] " + Vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
-                        if (IsOverThreshold(angularVelocity))
+                        // Debug.Log("[US] " + vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
+                        if (IsOverThreshold(ToVesselLocal(angularVelocity)))
                         {
                             ApplyAngularVelocity();
                             okToSaveAngularVelocity = false;
@@ -164,27 +227,30 @@ namespace RealismOverhaul
                     // Saving angular velocity (if we can), SAS mode, and check target hold status
                     SaveOffRailsStatus(okToSaveAngularVelocity);
                 }
-                else if (FlightGlobals.ready)
-                {
-                    packRotate = true;
-                }
-
-                if (packRotate)
-                {
-                    // If angular velocity is over the threshold, rotate--even if we have SAS on. No cheating Newton!
-                    if (IsOverThreshold(angularVelocity))
-                    {
-                        RotatePacked();
-                    }
-                    // We keep the vessel rotated toward the SAS target
-                    else if (autopilotTargetHold)
-                    {
-                        RotateTowardTarget();
-                    }
-                }
-
-                lastUT = GetUT();
             }
+            else if (FlightGlobals.ready)
+            {
+                packRotate = true;
+            }
+
+            if (packRotate)
+            {
+                // If angular velocity is over the threshold, rotate--even if we have SAS on. No cheating Newton!
+                if (IsOverThreshold(ToVesselLocal(angularVelocity)))
+                {
+                    RotatePacked();
+                    StoreRot();
+                }
+                // We keep the vessel rotated toward the SAS target
+                else if (autopilotTargetHold)
+                {
+                    RotateTowardTarget();
+                    StoreRot();
+                }
+            }
+
+            lastUT = Planetarium.GetUniversalTime();
+
             // Saving this FixedUpdate target, autopilot context and maneuver node, to check if they have changed in the next FixedUpdate
             SaveLastUpdateStatus();
         }
@@ -203,21 +269,21 @@ namespace RealismOverhaul
 
         private void ApplyAngularVelocity()
         {
-            if (Vessel.situation == Vessel.Situations.PRELAUNCH || Vessel.situation == Vessel.Situations.LANDED || Vessel.situation == Vessel.Situations.SPLASHED)
+            if (IgnoreRot)
             {
                 return;
             }
 
-            // Debug.Log("[US] Restoring " + Vessel.vesselName + "rotation after timewarp/load" );
-            Vector3 COM = Vessel.CoM;
-            Quaternion rotation = Vessel.ReferenceTransform.rotation;
+            // Debug.Log("[US] Restoring " + vessel.vesselName + "rotation after timewarp/load" );
+            Vector3 COM = vessel.CoM;
+            Vector3 angVel = ToUnity(angularVelocity);
 
             // Applying force on every part
-            foreach (Part p in Vessel.parts)
+            foreach (Part p in vessel.parts)
             {
                 if (!p.GetComponent<Rigidbody>()) continue;
-                p.GetComponent<Rigidbody>().AddTorque(rotation * angularVelocity, ForceMode.VelocityChange);
-                p.GetComponent<Rigidbody>().AddForce(Vector3.Cross(rotation * angularVelocity, (p.transform.position - COM)), ForceMode.VelocityChange);
+                p.GetComponent<Rigidbody>().AddTorque(angVel, ForceMode.VelocityChange);
+                p.GetComponent<Rigidbody>().AddForce(Vector3.Cross(angVel, (p.transform.position - COM)), ForceMode.VelocityChange);
 
                 // Doing this through rigidbody is deprecated but I can't find a reliable way to use the 1.2 part.addforce/addtorque so they provide reliable results
                 // see 1.2 patchnotes and unity docs for ForceMode.VelocityChange/ForceMode.Force
@@ -226,37 +292,32 @@ namespace RealismOverhaul
 
         private void RotateTowardTarget()
         {
-            if (Vessel.situation == Vessel.Situations.PRELAUNCH || Vessel.situation == Vessel.Situations.LANDED || Vessel.situation == Vessel.Situations.SPLASHED)
+            if (IgnoreRot)
             {
                 return;
             }
 
-            Vessel.SetRotation(FromToRotation(Vessel.GetTransform().up, targetDirection) * Vessel.transform.rotation, true); // SetPos=false seems to break the game on some occasions...
+            vessel.SetRotation(FromToRotation(vessel.GetTransform().up, ToUnity(targetDirection)) * vessel.transform.rotation, true); // SetPos=false seems to break the game on some occasions...
         }
 
         private void RotatePacked()
         {
-            if (Vessel.situation == Vessel.Situations.PRELAUNCH || Vessel.situation == Vessel.Situations.LANDED || Vessel.situation == Vessel.Situations.SPLASHED)
+            if (IgnoreRot)
             {
                 return;
             }
-            double timestep = lastUT < 0 ? TimeWarp.fixedDeltaTime : (GetUT() - lastUT);
+            double timestep = lastUT < 0 ? TimeWarp.fixedDeltaTime : (Planetarium.GetUniversalTime() - lastUT);
             timestep *= 50d; // for some reason we need to divide out normal fixed delta time of 0.02s
-            double rotAngle = (double)angularVelocity.magnitude * timestep;
-            int subMult = (int)(rotAngle / 360d);
-            if (subMult > 0)
-            {
-                rotAngle -= subMult * 360d;
-            }
+            double rotAngleRadians = (double)angularVelocity.magnitude * timestep;
 
-            Vessel.SetRotation(Quaternion.AngleAxis((float)rotAngle, Vessel.ReferenceTransform.rotation * angularVelocity) * Vessel.transform.rotation, true); // false seems to fix the "infinite roll bug"
+            vessel.SetRotation(Quaternion.AngleAxis((float)rotAngleRadians, ToUnity(angularVelocity)) * UnityRot(), true); // false seems to fix the "infinite roll bug"
         }
 
         private bool RestoreSASMode(int mode)
         {
-            if (Vessel.Autopilot.Enabled)
+            if (vessel.Autopilot.Enabled)
             {
-                return Vessel.Autopilot.SetMode((VesselAutopilot.AutopilotMode)mode);
+                return vessel.Autopilot.SetMode((VesselAutopilot.AutopilotMode)mode);
             }
             else
             {
@@ -271,45 +332,63 @@ namespace RealismOverhaul
             // otherwise we might zero it out by mistake.
             if (okToSaveAngularVelocity)
             {
-                if (IsOverThreshold(Vessel.angularVelocity))
+                if (IsOverThreshold(vessel.angularVelocity))
                 {
-                    angularVelocity = Vessel.angularVelocity;
+                    float mass = 0f;
+                    Vector3 aVel = Vector3.zero;
+                    foreach (var p in vessel.Parts)
+                    {
+                        if (p.rb != null)
+                        {
+                            float m = (float)p.physicsMass;
+                            aVel += p.rb.angularVelocity * m;
+                            mass += m;
+                        }
+                    }
+                    if (mass > 0f)
+                        aVel /= mass;
+                    angularVelocity = ToPlanetarium(aVel);
+                    //angularVelocity = ToPlanetarium(Quaternion.Inverse(vessel.ReferenceTransform.rotation) * vessel.angularVelocity);
                 }
                 else
                 {
-                    angularVelocity = Vector3.zero;
+                    angularVelocity = Vector3d.zero;
                 }
             }
 
             // Checking if the autopilot hold mode should be enabled
-            if (Vessel.Autopilot.Enabled
-                && !(Vessel.Autopilot.Mode.Equals(VesselAutopilot.AutopilotMode.StabilityAssist))
-                && !IsOverThreshold(angularVelocity) // The vessel isn't rotating too much
-                && Vector3.Dot(Vessel.Autopilot.SAS.targetOrientation.normalized, Vessel.GetTransform().up.normalized) > 0.999f) // about 2.5 degrees
+            if (vessel.Autopilot.Enabled
+                && !(vessel.Autopilot.Mode.Equals(VesselAutopilot.AutopilotMode.StabilityAssist))
+                && !IsOverThreshold(ToVesselLocal(angularVelocity)) // The vessel isn't rotating too much
+                && Vector3.Dot(vessel.Autopilot.SAS.targetOrientation.normalized, vessel.GetTransform().up.normalized) > 0.999f) // about 2.5 degrees
             {
                 autopilotTargetHold = true;
+                targetDirection = ToPlanetarium(AutopilotTargetDirection());
             }
             else
             {
                 autopilotTargetHold = false;
+                targetDirection = Vector3d.zero;
             }
 
             // Saving the current SAS mode
-            autopilotMode = (int)Vessel.Autopilot.Mode;
+            autopilotMode = (int)vessel.Autopilot.Mode;
+
+            StoreRot();
         }
 
         private void SaveLastUpdateStatus()
         {
             // Saving the current target
-            lastTarget = Vessel.targetObject;
+            lastTarget = vessel.targetObject;
             // Saving the current autopilot context
             autopilotContext = autopilotContextCurrent;
             // Saving the maneuver vector magnitude
-            if (Vessel.patchedConicSolver != null)
+            if (vessel.patchedConicSolver != null)
             {
-                if (Vessel.patchedConicSolver.maneuverNodes.Count > 0)
+                if (vessel.patchedConicSolver.maneuverNodes.Count > 0)
                 {
-                    lastManeuverParameters = Vessel.patchedConicSolver.maneuverNodes[0].DeltaV.magnitude + Vessel.patchedConicSolver.maneuverNodes[0].UT;
+                    lastManeuverParameters = vessel.patchedConicSolver.maneuverNodes[0].DeltaV.magnitude + vessel.patchedConicSolver.maneuverNodes[0].UT;
                 }
             }
         }
@@ -323,7 +402,7 @@ namespace RealismOverhaul
             }
 
             // Disable target hold if target was modified
-            if ((autopilotMode == 7 || autopilotMode == 8 || autopilotContext == 2) && Vessel.targetObject != lastTarget)
+            if ((autopilotMode == 7 || autopilotMode == 8 || autopilotContext == 2) && vessel.targetObject != lastTarget)
             {
                 return false;
             }
@@ -331,11 +410,11 @@ namespace RealismOverhaul
             // Disable target hold if the maneuver node was modified or deleted
             if (autopilotMode == 9)
             {
-                if (Vessel.patchedConicSolver.maneuverNodes.Count == 0)
+                if (vessel.patchedConicSolver.maneuverNodes.Count == 0)
                 {
                     return false;
                 }
-                else if (Math.Abs(Vessel.patchedConicSolver.maneuverNodes[0].DeltaV.magnitude + Vessel.patchedConicSolver.maneuverNodes[0].UT) - Math.Abs(lastManeuverParameters) > 0.01f)
+                else if (Math.Abs(vessel.patchedConicSolver.maneuverNodes[0].DeltaV.magnitude + vessel.patchedConicSolver.maneuverNodes[0].UT) - Math.Abs(lastManeuverParameters) > 0.01f)
                 {
                     return false;
                 }
@@ -353,15 +432,15 @@ namespace RealismOverhaul
             if (autopilotMode == 1 || autopilotMode == 2)
             {
                 if (autopilotContext == 0) // Orbit prograde
-                    target = Vessel.obt_velocity;
+                    target = vessel.obt_velocity;
                 else if (autopilotContext == 1) // Surface prograde
-                    target = Vessel.srf_velocity;
+                    target = vessel.srf_velocity;
                 else if (autopilotContext == 2) // Target prograde
                 {
-                    if (Vessel.targetObject != null)
-                        target = -(Vessel.targetObject.GetObtVelocity() - Vessel.obt_velocity);
+                    if (vessel.targetObject != null)
+                        target = -(vessel.targetObject.GetObtVelocity() - vessel.obt_velocity);
                     else
-                        return Vessel.GetTransform().up;
+                        return vessel.GetTransform().up;
                 }
 
                 if (autopilotMode == 2) // Invert vector for retrograde
@@ -374,14 +453,14 @@ namespace RealismOverhaul
             else if (autopilotMode == 3 || autopilotMode == 4 || autopilotMode == 5 || autopilotMode == 6)
             {
                 // Get body up vector
-                Vector3 planetUp = (Vessel.rootPart.transform.position - Vessel.mainBody.position).normalized;
+                Vector3 planetUp = (vessel.rootPart.transform.position - vessel.mainBody.position).normalized;
 
                 // Get normal vector
                 Vector3 normal = new Vector3();
                 if (autopilotContext == 0) // Orbit
-                    normal = Vector3.Cross(Vessel.obt_velocity, planetUp).normalized;
+                    normal = Vector3.Cross(vessel.obt_velocity, planetUp).normalized;
                 else if (autopilotContext == 1 || autopilotContext == 2) // Surface/Target (seems to be the same for normal/radial)
-                    normal = Vector3.Cross(Vessel.srf_velocity, planetUp).normalized;
+                    normal = Vector3.Cross(vessel.srf_velocity, planetUp).normalized;
 
                 // Return normal/antinormal or calculate radial
                 if (autopilotMode == 3) // Normal
@@ -393,9 +472,9 @@ namespace RealismOverhaul
                     // Get RadialIn vector
                     Vector3 radial = new Vector3();
                     if (autopilotContext == 0) // Orbit
-                        radial = Vector3.Cross(Vessel.obt_velocity, normal).normalized;
+                        radial = Vector3.Cross(vessel.obt_velocity, normal).normalized;
                     else if (autopilotContext == 1 || autopilotContext == 2) // Surface/Target (seems to be the same for normal/radial)
-                        radial = Vector3.Cross(Vessel.srf_velocity, normal).normalized;
+                        radial = Vector3.Cross(vessel.srf_velocity, normal).normalized;
 
                     // Return radial vector
                     if (autopilotMode == 5) // Radial In
@@ -408,31 +487,31 @@ namespace RealismOverhaul
             // Target/Antitarget
             else if (autopilotMode == 7 || autopilotMode == 8)
             {
-                if (Vessel.targetObject != null)
+                if (vessel.targetObject != null)
                 {
                     if (autopilotMode == 7) // Target
-                        target = Vessel.targetObject.GetTransform().position - Vessel.transform.position;
+                        target = vessel.targetObject.GetTransform().position - vessel.GetTransform().position;
                     else if (autopilotMode == 8) // AntiTarget
-                        target = -(Vessel.targetObject.GetTransform().position - Vessel.transform.position);
+                        target = -(vessel.targetObject.GetTransform().position - vessel.GetTransform().position);
                 }
                 else
                 {
                     // No orientation keeping if target is null
-                    return Vessel.GetTransform().up;
+                    return vessel.GetTransform().up;
                 }
             }
 
             // Maneuver
             else if (autopilotMode == 9)
             {
-                if (Vessel.patchedConicSolver.maneuverNodes.Count > 0)
+                if (vessel.patchedConicSolver.maneuverNodes.Count > 0)
                 {
-                    target = Vessel.patchedConicSolver.maneuverNodes[0].GetBurnVector(Vessel.orbit);
+                    target = vessel.patchedConicSolver.maneuverNodes[0].GetBurnVector(vessel.orbit);
                 }
                 else
                 {
                     // No orientation keeping if there is no more maneuver node
-                    return Vessel.GetTransform().up;
+                    return vessel.GetTransform().up;
                 }
             }
 
@@ -441,7 +520,7 @@ namespace RealismOverhaul
             {
                 // Abort orientation keeping
                 // autopilotTargetHold = false;
-                return Vessel.GetTransform().up;
+                return vessel.GetTransform().up;
             }
 
             return target;
