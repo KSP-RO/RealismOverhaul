@@ -14,7 +14,7 @@ namespace RealismOverhaul
         [KSPField(isPersistant = true)]
         public Quaternion vesselRot;
 
-        private static int VERSION = 2;
+        private static int VERSION = 3;
         [KSPField(isPersistant = true)]
         public int loadedVersion = 0;
 
@@ -37,15 +37,24 @@ namespace RealismOverhaul
         [KSPField(isPersistant = true)]
         public double lastUT = 0d;
 
+        [KSPField(isPersistant = true)]
+        public Vector3 referenceUpLocal;
+        [KSPField(isPersistant = true)]
+        public Vector3 referencePosLocal;
+
+
+        // variables used to check if things have changed since last fixedUpdate
+        // or when loading / switching vessels
+        public double _lastManeuverParameters;
+        private ITargetable _lastTarget = null;
+
         // Restore the angular velocity when going off rails
         private bool _restoreAngularVelocity = false;
-
         // Restore SAS when going off rails
         private bool _restoreSAS = false;
-
         // Restore vessel target in FixedUpdate when VM or vessel loads (grabs from protovessel if not loaded)
         private bool _restoreTarget = false;
-
+        // Restore maneuver node hash in FixedUpdate when VM or vessel loads
         private bool _restoreManeuverHash = false;
 
         // Var used to retry setting the SAS selection when loading / switching vessels
@@ -53,15 +62,7 @@ namespace RealismOverhaul
         private int _retrySASCount;
         private int _setSASMode;
 
-        // variables used to check if things have changed since last fixedUpdate
-        // or when loading / switching vessels
-        public double _lastManeuverParameters;
-        private ITargetable _lastTarget = null;
-
-        [KSPField(isPersistant = true)]
-        public Vector3 referenceUpLocal;
-        [KSPField(isPersistant = true)]
-        public Vector3 referencePosLocal;
+        
 
         private const float RotationThreshold = 0.1f * Mathf.Deg2Rad;
         private const float RotationThresholdSAS = 0.5f * Mathf.Deg2Rad;
@@ -74,11 +75,6 @@ namespace RealismOverhaul
         private static Vector3 ToUnity(Vector3d vec)
         {
             return Planetarium.Zup.WorldToLocal(vec).xzy;
-        }
-
-        private Vector3 ToVesselLocal(Vector3d vec)
-        {
-            return vessel.GetTransform().InverseTransformDirection(ToUnity(vec));
         }
 
         private static bool _isEnabled = true;
@@ -154,7 +150,7 @@ namespace RealismOverhaul
 
         private void FixedUpdate()
         {
-            if (!IsEnabled || vessel.GetCrewCount() == 0)
+            if (!IsEnabled)
                 return;
 
             if (_restoreManeuverHash)
