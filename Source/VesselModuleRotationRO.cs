@@ -62,6 +62,8 @@ namespace RealismOverhaul
         private int _retrySASCount;
         private int _setSASMode;
 
+        private bool _isInitialized = false;
+
         
 
         private const float RotationThreshold = 0.1f * Mathf.Deg2Rad;
@@ -142,8 +144,21 @@ namespace RealismOverhaul
 
         public static bool IgnoreRot(Vessel vessel) => vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.SPLASHED;
 
+        private void Initialize()
+        {
+            _isInitialized = true;
+            StoreRot();
+            referenceUpLocal = vessel.transform.InverseTransformDirection(vessel.GetTransform().up);
+            loadedVersion = VERSION;
+            _restoreSAS = false;
+            _restoreTarget = false;
+            _restoreManeuverHash = false;
+            _restoreAngularVelocity = false;
+        }
+
         protected override void OnLoad(ConfigNode node)
         {
+            _isInitialized = true;
             _restoreTarget = true;
             _restoreManeuverHash = true;
 
@@ -164,6 +179,17 @@ namespace RealismOverhaul
                 return;
 
             SetRot();
+        }
+
+        protected override void OnAwake()
+        {
+            // will be stomped in OnLoad if this is via AddComponent
+            if (loadedVersion < VERSION)
+            {
+                StoreRot();
+                referenceUpLocal = vessel.transform.InverseTransformDirection(vessel.GetTransform().up);
+                loadedVersion = VERSION;
+            }
         }
 
         public void RestoreState()
@@ -228,20 +254,21 @@ namespace RealismOverhaul
             if (!IsEnabled)
                 return;
 
+            if (!_isInitialized)
+                Initialize();
+
             RestoreState();
 
-            //bool packRotate = false;
             if (vessel.loaded)
             {
+                // packed:
                 // Vessel is loaded but not in physics, either because
                 // - It is in the physics bubble but in non-physics timewarp
                 // - It has gone outside of the physics bubble
                 // - It was just loaded, is in the physics bubble and will be unpacked in a few frames
-                if (vessel.packed)
-                {
-                    //packRotate = true;
-                }
-                else if (FlightGlobals.ready) // The vessel is in physics simulation and fully loaded
+
+                // unpacked:
+                if (!vessel.packed && FlightGlobals.ready) // The vessel is in physics simulation and fully loaded
                 {
                     bool okToSaveAngularVelocity = true;
 
@@ -257,16 +284,6 @@ namespace RealismOverhaul
                     SaveOffRailsStatus(okToSaveAngularVelocity);
                 }
             }
-            //else
-            //{
-            //    packRotate = true;
-                
-            //}
-
-            //if (packRotate)
-            //{
-            //    RailsUpdate(vessel.vesselTransform.position);
-            //}
 
             // Saving this FixedUpdate target, autopilot context and maneuver node, to check if they have changed in the next FixedUpdate
             SaveLastUpdateStatus();
@@ -274,6 +291,9 @@ namespace RealismOverhaul
 
         public void RailsUpdate(Vector3d pos)
         {
+            if (!_isInitialized)
+                Initialize();
+
             // Check if target / maneuver is modified/deleted during timewarp
             bool holdValid = false;
             if (autopilotTargetHold)
