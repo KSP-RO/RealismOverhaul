@@ -360,9 +360,9 @@ namespace RealismOverhaul
             // Applying force on every part
             foreach (Part p in vessel.parts)
             {
-                if (!p.GetComponent<Rigidbody>()) continue;
-                p.GetComponent<Rigidbody>().AddTorque(angVel, ForceMode.VelocityChange);
-                p.GetComponent<Rigidbody>().AddForce(Vector3.Cross(angVel, (p.transform.position - COM)), ForceMode.VelocityChange);
+                if (p.rb == null || p.rb.isKinematic) continue;
+                p.rb.AddTorque(angVel, ForceMode.VelocityChange);
+                p.rb.AddForce(Vector3.Cross(angVel, (p.transform.position - COM)), ForceMode.VelocityChange);
 
                 // Doing this through rigidbody is deprecated but I can't find a reliable way to use the 1.2 part.addforce/addtorque so they provide reliable results
                 // see 1.2 patchnotes and unity docs for ForceMode.VelocityChange/ForceMode.Force
