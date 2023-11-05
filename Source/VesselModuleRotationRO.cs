@@ -95,7 +95,7 @@ namespace RealismOverhaul
             return _isEnabled;
         }
 
-        private static bool IsEnabled => _shouldCheckEnabled ? CheckEnabled() : _isEnabled;
+        public static bool IsEnabled => _shouldCheckEnabled ? CheckEnabled() : _isEnabled;
 
         private bool IsOverThreshold(Vector3 rot)
         {
@@ -116,13 +116,31 @@ namespace RealismOverhaul
 
         private void SetRot()
         {
-            if (IgnoreRot)
+            if (IgnoreRot(vessel))
                 return;
 
             vessel.SetRotation(UnityRot(), true);
         }
 
-        private bool IgnoreRot => vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.SPLASHED;
+        private void SetPosRot(Quaternion rotation, Vector3d position)
+        {
+            if (!vessel.loaded)
+            {
+                vessel.vesselTransform.rotation = rotation;
+                vessel.vesselTransform.position = position;
+                return;
+            }
+            int count = vessel.parts.Count;
+            QuaternionD rotD = rotation;
+            for (int i = 0; i < count; i++)
+            {
+                Part part = vessel.parts[i];
+                part.partTransform.rotation = rotation * part.orgRot;
+                part.partTransform.position = position + rotD * part.orgPos;
+            }
+        }
+
+        public static bool IgnoreRot(Vessel vessel) => vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.SPLASHED;
 
         protected override void OnLoad(ConfigNode node)
         {
@@ -148,15 +166,11 @@ namespace RealismOverhaul
             SetRot();
         }
 
-        private void FixedUpdate()
+        public void RestoreState()
         {
-            if (!IsEnabled)
-                return;
-
             if (_restoreManeuverHash)
                 StoreManeuverHash();
 
-            bool packRotate = false;
             if (vessel.loaded)
             {
                 if (_restoreTarget)
@@ -165,18 +179,8 @@ namespace RealismOverhaul
                     _lastTarget = vessel.targetObject;
                 }
 
-                // Vessel is loaded but not in physics, either because
-                // - It is in the physics bubble but in non-physics timewarp
-                // - It has gone outside of the physics bubble
-                // - It was just loaded, is in the physics bubble and will be unpacked in a few frames
-                if (vessel.packed)
+                if (!vessel.packed && FlightGlobals.ready)
                 {
-                    packRotate = true;
-                }
-                else if (FlightGlobals.ready) // The vessel is in physics simulation and fully loaded
-                {
-                    bool okToSaveAngularVelocity = true;
-
                     // Restoring previous SAS selection
                     if (_restoreSAS)
                     {
@@ -188,18 +192,9 @@ namespace RealismOverhaul
                             _retrySASCount = 10;
                         }
                     }
-
-                    if (_restoreAngularVelocity) // Restoring saved rotation if it was above the threshold
-                    {
-                        // Debug.Log("[US] " + vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
-                        ApplyAngularVelocity();
-                        okToSaveAngularVelocity = false;
-                        _restoreAngularVelocity = false;
-                    }
-
                     // When a vessel loads, VesselAutopilot gets enabled in Update based on SAS actiongroup being on
                     // (the actiongroup is what's persisted). So we're going to run (in FixedUpdate) before that happens.
-                    if (_retrySAS)
+                    else if (_retrySAS)
                     {
                         if (_retrySASCount > 0)
                         {
@@ -216,49 +211,91 @@ namespace RealismOverhaul
                             // Debug.Log("[US] can't set autopilot mode.");
                         }
                     }
-
-                    // Saving angular velocity (if we can), SAS mode, and check target hold status
-                    SaveOffRailsStatus(okToSaveAngularVelocity);
                 }
             }
-            else if (FlightGlobals.ready)
+            else
             {
-                packRotate = true;
                 if (_restoreTarget)
                 {
                     _restoreTarget = false;
                     _lastTarget = vessel.protoVessel.targetInfo?.FindTarget();
                 }
             }
+        }
 
-            if (packRotate)
+        private void FixedUpdate()
+        {
+            if (!IsEnabled)
+                return;
+
+            RestoreState();
+
+            //bool packRotate = false;
+            if (vessel.loaded)
             {
-                // Check if target / maneuver is modified/deleted during timewarp
-                bool holdValid = false;
-                if (autopilotTargetHold)
+                // Vessel is loaded but not in physics, either because
+                // - It is in the physics bubble but in non-physics timewarp
+                // - It has gone outside of the physics bubble
+                // - It was just loaded, is in the physics bubble and will be unpacked in a few frames
+                if (vessel.packed)
                 {
-                    holdValid = TargetHoldValidity();
-                    if (TimeWarp.WarpMode == TimeWarp.Modes.HIGH && TimeWarp.CurrentRateIndex > 0)
-                        autopilotTargetHold = holdValid;
+                    //packRotate = true;
                 }
+                else if (FlightGlobals.ready) // The vessel is in physics simulation and fully loaded
+                {
+                    bool okToSaveAngularVelocity = true;
 
-                // if we don't have over-thresh angular velocity and we do
-                // have a target, orient to the target
-                if (angularVelocity == Vector3.zero && autopilotTargetHold && holdValid)
-                {
-                    RotateTowardTarget();
-                    StoreRot();
-                }
-                else
-                {
-                    RotatePacked();
-                    // We don't store rot here, it relies on lastUT
-                    // and original orientation
+                    if (_restoreAngularVelocity) // Restoring saved rotation if it was above the threshold
+                    {
+                        // Debug.Log("[US] " + vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
+                        ApplyAngularVelocity();
+                        okToSaveAngularVelocity = false;
+                        _restoreAngularVelocity = false;
+                    }
+
+                    // Saving angular velocity (if we can), SAS mode, and check target hold status
+                    SaveOffRailsStatus(okToSaveAngularVelocity);
                 }
             }
+            //else
+            //{
+            //    packRotate = true;
+                
+            //}
+
+            //if (packRotate)
+            //{
+            //    RailsUpdate(vessel.vesselTransform.position);
+            //}
 
             // Saving this FixedUpdate target, autopilot context and maneuver node, to check if they have changed in the next FixedUpdate
             SaveLastUpdateStatus();
+        }
+
+        public void RailsUpdate(Vector3d pos)
+        {
+            // Check if target / maneuver is modified/deleted during timewarp
+            bool holdValid = false;
+            if (autopilotTargetHold)
+            {
+                holdValid = TargetHoldValidity();
+                if (TimeWarp.WarpMode == TimeWarp.Modes.HIGH && TimeWarp.CurrentRateIndex > 0)
+                    autopilotTargetHold = holdValid;
+            }
+
+            // if we don't have over-thresh angular velocity and we do
+            // have a target, orient to the target
+            if (angularVelocity == Vector3.zero && autopilotTargetHold && holdValid)
+            {
+                RotateTowardTarget(pos);
+                StoreRot();
+            }
+            else
+            {
+                RotatePacked(pos);
+                // We don't store rot here, it relies on lastUT
+                // and original orientation
+            }
         }
 
         // Vessel is entering physics simulation, either by being loaded or getting out of timewarp
@@ -291,7 +328,7 @@ namespace RealismOverhaul
 
         private void ApplyAngularVelocity()
         {
-            if (IgnoreRot)
+            if (IgnoreRot(vessel))
             {
                 return;
             }
@@ -312,9 +349,9 @@ namespace RealismOverhaul
             }
         }
 
-        private void RotateTowardTarget()
+        private void RotateTowardTarget(Vector3d pos)
         {
-            if (IgnoreRot)
+            if (IgnoreRot(vessel))
             {
                 return;
             }
@@ -323,12 +360,12 @@ namespace RealismOverhaul
             Vector3 up = vessel.transform.TransformDirection(referenceUpLocal);
             float dot = Vector3.Dot(tgt, up);
             if (!vessel.loaded || dot < 0.99999f)
-                vessel.SetRotation(FromToRotation(up, tgt) * vessel.transform.rotation, true); // SetPos=false seems to break the game on some occasions...
+                SetPosRot(FromToRotation(up, tgt) * vessel.transform.rotation, pos);
         }
 
-        private void RotatePacked()
+        private void RotatePacked(Vector3d pos)
         {
-            if (IgnoreRot)
+            if (IgnoreRot(vessel))
             {
                 return;
             }
@@ -337,7 +374,7 @@ namespace RealismOverhaul
             // If we don't have angular velocity, just update our rotation
             if (angularVelocity == Vector3.zero)
             {
-                vessel.SetRotation(unityRot, true);
+                SetPosRot(unityRot, pos);
                 return;
             }
 
@@ -347,7 +384,7 @@ namespace RealismOverhaul
             double fullRotations = Math.Floor(rotAngle * (1d / 360d));
             rotAngle -= fullRotations * 360d;
 
-            vessel.SetRotation(Quaternion.AngleAxis((float)rotAngle, ToUnity(angularVelocity)) * UnityRot(), true); // false seems to fix the "infinite roll bug"
+            SetPosRot(Quaternion.AngleAxis((float)rotAngle, ToUnity(angularVelocity)) * UnityRot(), pos);
         }
 
         private bool RestoreSASMode(int mode)
