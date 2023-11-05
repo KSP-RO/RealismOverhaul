@@ -105,9 +105,13 @@ namespace RealismOverhaul
             return Mathf.Abs(rot.x) > thresh || Mathf.Abs(rot.y) > thresh || Mathf.Abs(rot.z) > thresh;
         }
 
-        private void StoreRot()
+        public void StoreRot()
         {
-            QuaternionD rot = vessel.transform.rotation;
+            StoreRot(vessel.transform.rotation);
+        }
+
+        public void StoreRot(QuaternionD rot)
+        {
             vesselRot = Planetarium.Zup.Rotation * rot.swizzle;
         }
 
@@ -124,7 +128,7 @@ namespace RealismOverhaul
             vessel.SetRotation(UnityRot(), true);
         }
 
-        private void SetPosRot(Quaternion rotation, Vector3d position)
+        public void SetPosRot(Quaternion rotation, Vector3d position)
         {
             if (!vessel.loaded)
             {
