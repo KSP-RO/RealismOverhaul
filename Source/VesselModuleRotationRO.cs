@@ -274,10 +274,13 @@ namespace RealismOverhaul
 
                     if (_restoreAngularVelocity) // Restoring saved rotation if it was above the threshold
                     {
-                        // Debug.Log("[US] " + vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
-                        ApplyAngularVelocity();
                         okToSaveAngularVelocity = false;
-                        _restoreAngularVelocity = false;
+                        if (vessel.rootPart.rb != null && !vessel.rootPart.rb.isKinematic)
+                        {
+                            // Debug.Log("[US] " + vessel.vesselName + " going OFF rails : restoring angular velocity, angvel=" + angularVelocity.magnitude);
+                            ApplyAngularVelocity();
+                            _restoreAngularVelocity = false;
+                        }
                     }
 
                     // Saving angular velocity (if we can), SAS mode, and check target hold status
