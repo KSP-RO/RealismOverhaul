@@ -10,23 +10,15 @@ namespace RealismOverhaul.Harmony
         [HarmonyPatch(nameof(Vessel.SetRotation), typeof(Quaternion), typeof(bool))]
         internal static bool Prefix_SetRotation(Vessel __instance, Quaternion rotation, bool setPos)
         {
-            VesselModuleRotationRO mod = null;
-            foreach (var vm in __instance.vesselModules)
-            {
-                if (vm is VesselModuleRotationRO vmr)
-                {
-                    mod = vmr;
-                    break;
-                }
-            }
-            if (mod == null)
+            VesselModuleRotationRO vmr = VesselModuleRotationRO.GetModule(__instance);
+            if (vmr == null)
                 return true;
 
-            mod.StoreRot(rotation);
+            vmr.StoreRot(rotation);
             if (!setPos)
                 return true;
 
-            mod.SetPosRot(rotation, __instance.transform.position);
+            vmr.SetPosRot(rotation, __instance.transform.position);
 
             return false;
         }

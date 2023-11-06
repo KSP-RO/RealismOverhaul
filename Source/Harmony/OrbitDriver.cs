@@ -34,29 +34,21 @@ namespace RealismOverhaul.Harmony
                 UnityEngine.Object.Destroy(__instance.vessel.gameObject);
                 return false;
             }
-            VesselModuleRotationRO mod = null;
-            foreach (var vm in __instance.vessel.vesselModules)
-            {
-                if (vm is VesselModuleRotationRO vmr)
-                {
-                    mod = vmr;
-                    break;
-                }
-            }
+            VesselModuleRotationRO vmr = VesselModuleRotationRO.GetModule(__instance.vessel);
             if (!__instance.reverse)
             {
                 Vector3d offset = (QuaternionD)__instance.driverTransform.rotation * (Vector3d)__instance.vessel.localCoM;
                 Vector3d pos = __instance.referenceBody.position + __instance.pos - offset;
-                if (mod != null)
-                    mod.RailsUpdate(pos);
+                if (vmr != null)
+                    vmr.RailsUpdate(pos);
                 else
                     __instance.vessel.SetPosition(pos);
             }
             else
             {
                 __instance.referenceBody.position = ((Vector3d)__instance.driverTransform.position) - __instance.pos;
-                if (mod != null)
-                    mod.RailsUpdate(__instance.vessel.vesselTransform.position);
+                if (vmr != null)
+                    vmr.RailsUpdate(__instance.vessel.vesselTransform.position);
             }
 
             return false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 
 // Modified version of the VesselModule of the same name in MandatoryRCS by gotmachine
@@ -125,24 +126,22 @@ namespace RealismOverhaul
             if (IgnoreRot(vessel))
                 return;
 
-            vessel.SetRotation(UnityRot(), true);
+            SetPosRot(UnityRot(), vessel.transform.position);
         }
 
-        public void SetPosRot(Quaternion rotation, Vector3d position)
+        public void SetPosRot(Quaternion rotation, Vector3 position)
         {
             if (!vessel.loaded)
             {
-                vessel.vesselTransform.rotation = rotation;
-                vessel.vesselTransform.position = position;
+                vessel.vesselTransform.SetPositionAndRotation(position, rotation);
                 return;
             }
-            int count = vessel.parts.Count;
-            QuaternionD rotD = rotation;
-            for (int i = 0; i < count; i++)
+
+            List<Part> parts = vessel.parts;
+            for (int i = parts.Count; i-- > 0;)
             {
-                Part part = vessel.parts[i];
-                part.partTransform.rotation = rotation * part.orgRot;
-                part.partTransform.position = position + rotD * part.orgPos;
+                Part part = parts[i];
+                part.transform.SetPositionAndRotation(position + rotation * part.orgPos, rotation * part.orgRot);
             }
         }
 
@@ -653,6 +652,34 @@ namespace RealismOverhaul
             double wval = dot + Math.Sqrt(fromv.sqrMagnitude * tov.sqrMagnitude);
             double norm = 1.0 / Math.Sqrt(cross.sqrMagnitude + wval * wval);
             return new QuaternionD(cross.x * norm, cross.y * norm, cross.z * norm, wval * norm);
+        }
+
+        private static readonly Dictionary<Vessel, VesselModuleRotationRO> _vesselCache = new Dictionary<Vessel, VesselModuleRotationRO>();
+        
+        public static void ClearCache() { _vesselCache.Clear(); }
+        public static void RemoveVessel(Vessel v) { _vesselCache.Remove(v); }
+
+        public static VesselModuleRotationRO GetModule(Vessel v)
+        {
+            if (_vesselCache.TryGetValue(v, out var vmr))
+                return vmr;
+
+            foreach (var vm in v.vesselModules)
+            {
+                if (vm is VesselModuleRotationRO vmr2)
+                {
+                    vmr = vmr2;
+                    break;
+                }
+            }
+
+            // We only store if non-null. This is because the VM is added
+            // to all vessels, so if it's ever null this must be being run
+            // before the VM gets added, and we want to store it on next
+            // cache hit (i.e. after it's been added).
+            if (vmr != null)
+                _vesselCache[v] = vmr;
+            return vmr;
         }
     }
 }
