@@ -14,7 +14,7 @@ namespace RealismOverhaul.Harmony
             if (vmr == null)
                 return true;
 
-            vmr.StoreRot(rotation);
+            vmr.StoreRotAndTime(rotation);
             if (!setPos)
                 return true;
 

@@ -106,14 +106,15 @@ namespace RealismOverhaul
             return Mathf.Abs(rot.x) > thresh || Mathf.Abs(rot.y) > thresh || Mathf.Abs(rot.z) > thresh;
         }
 
-        public void StoreRot()
+        public void StoreRotAndTime()
         {
-            StoreRot(vessel.transform.rotation);
+            StoreRotAndTime(vessel.transform.rotation);
         }
 
-        public void StoreRot(QuaternionD rot)
+        public void StoreRotAndTime(QuaternionD rot)
         {
             vesselRot = Planetarium.Zup.Rotation * rot.swizzle;
+            lastUT = Planetarium.GetUniversalTime();
         }
 
         private Quaternion UnityRot()
@@ -150,7 +151,7 @@ namespace RealismOverhaul
         private void Initialize()
         {
             _isInitialized = true;
-            StoreRot();
+            StoreRotAndTime();
             referenceUpLocal = vessel.transform.InverseTransformDirection(vessel.GetTransform().up);
             loadedVersion = VERSION;
             _restoreSAS = false;
@@ -170,7 +171,7 @@ namespace RealismOverhaul
                 if (loadedVersion < 2)
                 {
                     angularVelocity = Vector3d.zero;
-                    StoreRot();
+                    StoreRotAndTime();
                 }
                 if (loadedVersion < 3)
                 {
@@ -182,17 +183,6 @@ namespace RealismOverhaul
                 return;
 
             SetRot();
-        }
-
-        protected override void OnAwake()
-        {
-            // will be stomped in OnLoad if this is via AddComponent
-            if (loadedVersion < VERSION)
-            {
-                StoreRot();
-                referenceUpLocal = vessel.transform.InverseTransformDirection(vessel.GetTransform().up);
-                loadedVersion = VERSION;
-            }
         }
 
         public void RestoreState()
@@ -314,7 +304,7 @@ namespace RealismOverhaul
             if (angularVelocity == Vector3.zero && autopilotTargetHold && holdValid)
             {
                 RotateTowardTarget(pos);
-                StoreRot();
+                StoreRotAndTime();
             }
             else
             {
@@ -349,7 +339,7 @@ namespace RealismOverhaul
             if (!IsEnabled)
                 return;
 
-            StoreRot();
+            StoreRotAndTime();
         }
 
         private void ApplyAngularVelocity()
@@ -480,8 +470,7 @@ namespace RealismOverhaul
             // Saving the current SAS mode
             autopilotMode = (int)vessel.Autopilot.Mode;
 
-            StoreRot();
-            lastUT = Planetarium.GetUniversalTime();
+            StoreRotAndTime();
         }
 
         private void StoreManeuverHash()
