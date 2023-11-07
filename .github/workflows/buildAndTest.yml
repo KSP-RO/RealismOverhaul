@@ -51,7 +51,12 @@ jobs:
           cp -v ${GITHUB_WORKSPACE}/Source/InstallChecker/obj/Release/ROInstallChecker.dll ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/ROInstallChecker.dll
           cp -v ${GITHUB_WORKSPACE}/Source/EngineGroupController/obj/Release/EngineGroupController.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/EngineGroupController.dll
           cp -v ${GITHUB_WORKSPACE}/Source/UnityGUIFramework/obj/Release/UnityGUIFramework.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/UnityGUIFramework.dll
-    
+
+      - name: Remove excess DLLs
+        uses: KSP-RO/BuildTools/remove-excess-dlls@master
+        with:
+          path: ${GITHUB_WORKSPACE}/GameData/
+
       - name: Assemble release
         id: assemble-release
         run: |
