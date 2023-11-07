@@ -13,7 +13,7 @@ namespace ROInstallChecker
             if (assembliesToCheck.Any(an => !AssemblyLoader.loadedAssemblies.Any(a => a.name.Equals(an, StringComparison.OrdinalIgnoreCase))))
             {
                 string titleText = "Incorrect Realism Overhaul Install";
-                string contentText = "This could be caused by downloading the RO repo or some specific branch directly from GitHub. " +
+                string contentText = "This could be caused by downloading the RO repo or some specific branch directly from GitHub, or by not installing or not updating dependencies. " +
                     "Make sure to install via CKAN or use the RP-1 Install Guide.";
                 ShowErrorDialog(titleText, contentText);
                 return;
