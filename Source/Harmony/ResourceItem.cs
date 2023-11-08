@@ -4,6 +4,7 @@ using KSP.UI.Screens;
 using System.Reflection.Emit;
 using System.Reflection;
 using System.Collections.Generic;
+using ROUtils;
 
 namespace RealismOverhaul.Harmony
 {

@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using UnityEngine;
+using ROUtils;
 
 namespace RealismOverhaul.Harmony
 {
