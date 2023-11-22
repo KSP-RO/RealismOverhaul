@@ -138,11 +138,13 @@ namespace RealismOverhaul
                 return;
             }
 
-            List<Part> parts = vessel.parts;
-            for (int i = parts.Count; i-- > 0;)
+            var parts = vessel.parts;
+            // Have to iterate forwards to preserve hierarchy
+            int c = parts.Count;
+            for (int i = 0; i < c; ++i)
             {
                 Part part = parts[i];
-                part.transform.SetPositionAndRotation(position + rotation * part.orgPos, rotation * part.orgRot);
+                part.partTransform.SetPositionAndRotation(position + rotation * part.orgPos, rotation * part.orgRot);
             }
         }
 
