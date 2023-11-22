@@ -15,10 +15,26 @@ namespace RealismOverhaul.Harmony
                 return true;
 
             vmr.StoreRotAndTime(rotation);
-            if (!setPos)
-                return true;
+            if (setPos)
+            {
+                vmr.SetPosRot(rotation, __instance.transform.position);
+                return false;
+            }
 
-            vmr.SetPosRot(rotation, __instance.transform.position);
+            if (!__instance.loaded)
+            {
+                __instance.vesselTransform.rotation = rotation;
+                return false;
+            }
+
+            var parts = __instance.parts;
+            // Have to iterate forwards to preserve hierarchy
+            int c = parts.Count;
+            for (int i = 0; i < c; ++i)
+            {
+                Part part = parts[i];
+                part.partTransform.rotation = rotation * part.orgRot;
+            }
 
             return false;
         }
