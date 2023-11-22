@@ -22,5 +22,13 @@ namespace RealismOverhaul.Harmony
 
             return false;
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(Vessel.Awake))]
+        internal static void Postfix_Awake(Vessel __instance)
+        {
+            // will reorder vessel module list if needed.
+            VesselModuleRotationRO.GetModule(__instance);
+        }
     }
 }

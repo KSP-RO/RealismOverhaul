@@ -643,32 +643,27 @@ namespace RealismOverhaul
             return new QuaternionD(cross.x * norm, cross.y * norm, cross.z * norm, wval * norm);
         }
 
-        private static readonly Dictionary<Vessel, VesselModuleRotationRO> _vesselCache = new Dictionary<Vessel, VesselModuleRotationRO>();
-        
-        public static void ClearCache() { _vesselCache.Clear(); }
-        public static void RemoveVessel(Vessel v) { _vesselCache.Remove(v); }
-
         public static VesselModuleRotationRO GetModule(Vessel v)
         {
-            if (_vesselCache.TryGetValue(v, out var vmr))
-                return vmr;
-
-            foreach (var vm in v.vesselModules)
+            int c = v.vesselModules.Count;
+            for (int i = c; i-- > 0;)
             {
-                if (vm is VesselModuleRotationRO vmr2)
+                var vmr = v.vesselModules[i] as VesselModuleRotationRO;
+                // We're testing the cast, so we don't need to do the Unity memory management check
+                // (other places will fully check for null)
+                if ((object)vmr != null)
                 {
-                    vmr = vmr2;
-                    break;
+                    if (i != c - 1)
+                    {
+                        // put it at the back so the next time we find it first.
+                        v.vesselModules.RemoveAt(i);
+                        v.vesselModules.Add(vmr);
+                    }
+                    return vmr;
                 }
             }
 
-            // We only store if non-null. This is because the VM is added
-            // to all vessels, so if it's ever null this must be being run
-            // before the VM gets added, and we want to store it on next
-            // cache hit (i.e. after it's been added).
-            if (vmr != null)
-                _vesselCache[v] = vmr;
-            return vmr;
+            return null;
         }
     }
 }
