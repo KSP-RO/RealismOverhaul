@@ -19,6 +19,14 @@ namespace ROInstallChecker
                 return;
             }
 
+            if (AssemblyLoader.loadedAssemblies.Any(a => a.name.Equals("PersistentThrust", StringComparison.OrdinalIgnoreCase)))
+            {
+                string titleText = "Incompatible mods detected";
+                string contentText = "You have the Persistent Thrust mod installed which is incompatible with RO. It will cause issues where some engines do not work properly and thus should be uninstalled.";
+                ShowErrorDialog(titleText, contentText);
+                return;
+            }
+
             var commonBadPathSymbols = new[] { "'", "+", "&"};
             if (commonBadPathSymbols.Any(s => KSPUtil.ApplicationRootPath.Contains(s)))
             {
