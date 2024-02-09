@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.props" Condition="Exists('packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -35,9 +37,23 @@
     <Compile Include="AdjustableCoMShifter.cs" />
     <Compile Include="DebugTools\DebugDrawer.cs" />
     <Compile Include="DebugTools\DrawTools.cs" />
+    <Compile Include="Harmony\ModuleEngines.cs" />
+    <Compile Include="Harmony\KSPUtil.cs" />
+    <Compile Include="Harmony\KSPWheel.cs" />
+    <Compile Include="Harmony\VesselPrecalculate.cs" />
+    <Compile Include="Harmony\Vessel.cs" />
+    <Compile Include="Harmony\PartLoader.cs" />
+    <Compile Include="Harmony\OrbitDriver.cs" />
+    <Compile Include="Harmony\UIPartActionResourceEditor.cs" />
+    <Compile Include="Harmony\UIPartActionResource.cs" />
+    <Compile Include="Harmony\ResourceItem.cs" />
+    <Compile Include="Harmony\ModuleRCS.cs" />
+    <Compile Include="Harmony\ModuleResource.cs" />
+    <Compile Include="DynamicBatteryStorageNuker.cs" />
     <Compile Include="EjectionSeat\CrewEjectionHandler.cs" />
-    <Compile Include="EventHandlers.cs" />
     <Compile Include="HarmonyPatcher.cs" />
+    <Compile Include="Harmony\ModuleGimbal.cs" />
+    <Compile Include="Harmony\MainMenu.cs" />
     <Compile Include="Harmony\KerbalEVA.cs" />
     <Compile Include="ModuleEngineText.cs" />
     <Compile Include="EjectionSeat\ModuleROEjectionSeat.cs" />
@@ -51,9 +67,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DifficultySettings.cs" />
     <Compile Include="DynamicPartHider\DynamicPartHider.cs" />
-    <Compile Include="DynamicPartHider\Utilities.cs" />
+    <Compile Include="DynamicPartHider\DeprecatedHider.cs" />
+    <Compile Include="DynamicPartHider\SciFiHider.cs" />
     <Compile Include="DynamicPartHider\RDTechFilter.cs" />
     <Compile Include="DynamicPartHider\RDTechFixer.cs" />
+    <Compile Include="DynamicPartHider\PartUpgradeFiltering.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -61,6 +79,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ROUtils">
+      <HintPath>..\..\..\..\..\..\Games\R112\GameData\ROUtils\Plugins\ROUtils.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
@@ -87,7 +109,30 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <!--Krafs.Publicizer items-->
+  <ItemGroup>
+    <Publicize Include="Assembly-CSharp" />
+    <DoNotPublicize Include="Assembly-CSharp:BaseField`1.OnValueModified" />
+    <DoNotPublicize Include="Assembly-CSharp:SaveUpgradePipeline.UpgradeScript.VersionTest" />
+    <DoNotPublicize Include="Assembly-CSharp:VesselModule.OnLoad" />
+    <DoNotPublicize Include="Assembly-CSharp:VesselModule.OnSave" />
+    <DoNotPublicize Include="Assembly-CSharp:VesselModule.OnAwake" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.props'))" />
+    <Error Condition="!Exists('packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.targets'))" />
+  </Target>
+  <Import Project="packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.targets" Condition="Exists('packages\\Krafs.Publicizer.1.0.3\build\Krafs.Publicizer.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
