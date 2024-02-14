@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 
 // Modified version of the VesselModule of the same name in MandatoryRCS by gotmachine
@@ -132,6 +133,11 @@ namespace RealismOverhaul
 
         public void SetPosRot(Quaternion rotation, Vector3 position)
         {
+            if (rotation.x == float.NaN)
+            {
+                Debug.LogError("[RealismOverhaul] VesselModuleRotationRO is setting rotation to NaN!");
+            }
+
             if (!vessel.loaded)
             {
                 vessel.vesselTransform.SetPositionAndRotation(position, rotation);
@@ -538,13 +544,13 @@ namespace RealismOverhaul
             if (autopilotMode == 1 || autopilotMode == 2)
             {
                 if (autopilotContext == 0) // Orbit prograde
-                    target = vessel.obt_velocity;
+                    target = GetVesselObtVelocity();
                 else if (autopilotContext == 1) // Surface prograde
-                    target = vessel.srf_velocity;
+                    target = GetVesselSrfVelocity();
                 else if (autopilotContext == 2) // Target prograde
                 {
                     if (_lastTarget != null)
-                        target = -(_lastTarget.GetObtVelocity() - vessel.obt_velocity);
+                        target = -(_lastTarget.GetObtVelocity() - GetVesselObtVelocity());
                     else
                         return vessel.transform.TransformDirection(referenceUpLocal);
                 }
@@ -559,14 +565,14 @@ namespace RealismOverhaul
             else if (autopilotMode == 3 || autopilotMode == 4 || autopilotMode == 5 || autopilotMode == 6)
             {
                 // Get body up vector
-                Vector3 planetUp = (vessel.rootPart.transform.position - vessel.mainBody.position).normalized;
+                Vector3 planetUp = (vessel.transform.position - vessel.mainBody.position).normalized;
 
                 // Get normal vector
                 Vector3 normal = new Vector3();
                 if (autopilotContext == 0) // Orbit
-                    normal = Vector3.Cross(vessel.obt_velocity, planetUp).normalized;
+                    normal = Vector3.Cross(GetVesselObtVelocity(), planetUp).normalized;
                 else if (autopilotContext == 1 || autopilotContext == 2) // Surface/Target (seems to be the same for normal/radial)
-                    normal = Vector3.Cross(vessel.srf_velocity, planetUp).normalized;
+                    normal = Vector3.Cross(GetVesselSrfVelocity(), planetUp).normalized;
 
                 // Return normal/antinormal or calculate radial
                 if (autopilotMode == 3) // Normal
@@ -578,9 +584,9 @@ namespace RealismOverhaul
                     // Get RadialIn vector
                     Vector3 radial = new Vector3();
                     if (autopilotContext == 0) // Orbit
-                        radial = Vector3.Cross(vessel.obt_velocity, normal).normalized;
+                        radial = Vector3.Cross(GetVesselObtVelocity(), normal).normalized;
                     else if (autopilotContext == 1 || autopilotContext == 2) // Surface/Target (seems to be the same for normal/radial)
-                        radial = Vector3.Cross(vessel.srf_velocity, normal).normalized;
+                        radial = Vector3.Cross(GetVesselSrfVelocity(), normal).normalized;
 
                     // Return radial vector
                     if (autopilotMode == 5) // Radial In
@@ -635,14 +641,34 @@ namespace RealismOverhaul
             return target.normalized;
         }
 
-        // Copypasted from PersistentRotation main.cs
-        private Quaternion FromToRotation(Vector3d fromv, Vector3d tov) //Stock FromToRotation() doesn't work correctly
+        /// <summary>
+        /// Returns NaN when either input vector is (0,0,0)
+        /// Copypasted from PersistentRotation main.cs
+        /// Stock FromToRotation() doesn't work correctly
+        /// </summary>
+        /// <param name="fromv"></param>
+        /// <param name="tov"></param>
+        /// <returns></returns>
+        private Quaternion FromToRotation(Vector3d fromv, Vector3d tov)
         {
             Vector3d cross = Vector3d.Cross(fromv, tov);
             double dot = Vector3d.Dot(fromv, tov);
             double wval = dot + Math.Sqrt(fromv.sqrMagnitude * tov.sqrMagnitude);
             double norm = 1.0 / Math.Sqrt(cross.sqrMagnitude + wval * wval);
             return new QuaternionD(cross.x * norm, cross.y * norm, cross.z * norm, wval * norm);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Vector3d GetVesselObtVelocity()
+        {
+            return vessel.obt_velocity.IsZero() ? vessel.orbit.GetRelativeVel() : vessel.obt_velocity;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Vector3d GetVesselSrfVelocity()
+        {
+            return vessel.srf_velocity.IsZero() ? vessel.orbit.GetVel() - vessel.mainBody.getRFrmVelOrbit(vessel.orbit) :
+                                                  vessel.srf_velocity;
         }
 
         public static VesselModuleRotationRO GetModule(Vessel v)
