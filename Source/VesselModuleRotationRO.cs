@@ -379,6 +379,8 @@ namespace RealismOverhaul
             float dot = Vector3.Dot(tgt, up);
             if (!vessel.loaded || dot < 0.99999f)
                 SetPosRot(FromToRotation(up, tgt) * vessel.transform.rotation, pos);
+            else
+                vessel.SetPosition(pos);
         }
 
         private void RotatePacked(Vector3d pos)
