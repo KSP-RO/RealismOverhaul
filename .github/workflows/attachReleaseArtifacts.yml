@@ -5,6 +5,9 @@ on:
   release:
     types: [published]
     
+env:
+  KSP_ROOT: /tmp/ksp
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   attach-release-artifacts:
@@ -28,14 +31,18 @@ jobs:
 
       - name: Download required assemblies
         id: download-assemblies
-        uses: KSP-RO/BuildTools/download-assemblies@master
+        uses: KSP-RO/BuildTools/download-assemblies-v2@master
         with:
           KSP_ZIP_PASSWORD: ${{ secrets.KSP_ZIP_PASSWORD }}
+          dependency-identifiers: |
+            Harmony2
+            ROUtils
+            RealFuels
 
       - name: Update AssemblyInfo
         uses: KSP-RO/BuildTools/update-assembly-info@master
         with:
-          path: ${GITHUB_WORKSPACE}/Source/Properties/AssemblyInfo.cs
+          path: ${{ github.workspace }}/Source/Properties/AssemblyInfo.cs
           tag: ${{ github.event.release.tag_name }}
 
       - name: Build mod solution
@@ -43,28 +50,28 @@ jobs:
         env:
           TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
-          msbuild /restore /p:RestorePackagesConfig=true /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/RealismOverhaul.sln
-          msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/KerbalPlugins.EngineGroupController.sln
-          cp -v ${GITHUB_WORKSPACE}/Source/obj/Release/RealismOverhaul.dll ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/RealismOverhaul.dll
-          cp -v ${GITHUB_WORKSPACE}/Source/InstallChecker/obj/Release/ROInstallChecker.dll ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/ROInstallChecker.dll
-          cp -v ${GITHUB_WORKSPACE}/Source/EngineGroupController/obj/Release/EngineGroupController.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/EngineGroupController.dll
-          cp -v ${GITHUB_WORKSPACE}/Source/UnityGUIFramework/obj/Release/UnityGUIFramework.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/UnityGUIFramework.dll
+          msbuild /restore /p:RestorePackagesConfig=true /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${{ github.workspace }}/Source/RealismOverhaul.sln /p:KSPRoot="${{ env.KSP_ROOT }}"
+          msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${{ github.workspace }}/Source/KerbalPlugins.EngineGroupController.sln /p:KSPRoot="${{ env.KSP_ROOT }}"
+          cp -v ${{ github.workspace }}/Source/obj/Release/RealismOverhaul.dll ${{ github.workspace }}/GameData/RealismOverhaul/Plugins/RealismOverhaul.dll
+          cp -v ${{ github.workspace }}/Source/InstallChecker/obj/Release/ROInstallChecker.dll ${{ github.workspace }}/GameData/RealismOverhaul/Plugins/ROInstallChecker.dll
+          cp -v ${{ github.workspace }}/Source/EngineGroupController/obj/Release/EngineGroupController.dll ${{ github.workspace }}/GameData/EngineGroupController/Plugins/EngineGroupController.dll
+          cp -v ${{ github.workspace }}/Source/UnityGUIFramework/obj/Release/UnityGUIFramework.dll ${{ github.workspace }}/GameData/EngineGroupController/Plugins/UnityGUIFramework.dll
 
       - name: Remove excess DLLs
         uses: KSP-RO/BuildTools/remove-excess-dlls@master
         with:
-          path: ${GITHUB_WORKSPACE}/GameData/
+          path: ${{ github.workspace }}/GameData/
 
       - name: Update version file
         uses: KSP-RO/BuildTools/update-version-file@master
         with:
           tag: ${{ github.event.release.tag_name }}
-          path: ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version
+          path: ${{ github.workspace }}/GameData/RealismOverhaul/RO.version
 
       - name: Update Readme
         uses: KSP-RO/BuildTools/update-version-in-readme@master
         with:
-          path: ${GITHUB_WORKSPACE}/README.md
+          path: ${{ github.workspace }}/README.md
           tag: ${{ github.event.release.tag_name }}
 
       - name: Update changelog file
@@ -72,7 +79,7 @@ jobs:
         with:
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
-          path: ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/changelog.cfg
+          path: ${{ github.workspace }}/GameData/RealismOverhaul/changelog.cfg
 
       - name: Assemble release
         id: assemble-release
@@ -82,9 +89,9 @@ jobs:
           echo "Release zip: ${RELEASE_DIR}/RealismOverhaul-${{ github.event.release.tag_name }}.zip"
           mkdir -v "${RELEASE_DIR}"
           echo "::set-output name=release-dir::${RELEASE_DIR}"
-          cp -v -R "${GITHUB_WORKSPACE}/Ships" "${RELEASE_DIR}"
-          cp -v -R "${GITHUB_WORKSPACE}/GameData" "${RELEASE_DIR}"
-          cp -v "${GITHUB_WORKSPACE}/README.md" "${RELEASE_DIR}/README.md"
+          cp -v -R "${{ github.workspace }}/Ships" "${RELEASE_DIR}"
+          cp -v -R "${{ github.workspace }}/GameData" "${RELEASE_DIR}"
+          cp -v "${{ github.workspace }}/README.md" "${RELEASE_DIR}/README.md"
           cd ${RELEASE_DIR}
           zip -r RealismOverhaul-${{ github.event.release.tag_name }}.zip GameData Ships README.md
         
@@ -109,9 +116,9 @@ jobs:
           TAG_STRING: ${{ github.event.release.tag_name }}
         run: |
           RELEASEBRANCH=${{ env.tagged_branch }}
-          git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/RO.version"
-          git add "${GITHUB_WORKSPACE}/README.md"
-          git add "${GITHUB_WORKSPACE}/GameData/RealismOverhaul/changelog.cfg"
+          git add "${{ github.workspace }}/GameData/RealismOverhaul/RO.version"
+          git add "${{ github.workspace }}/README.md"
+          git add "${{ github.workspace }}/GameData/RealismOverhaul/changelog.cfg"
           git commit -m "Update version to $TAG_STRING"
           git push origin $RELEASEBRANCH
           git tag $TAG_STRING $RELEASEBRANCH --force
