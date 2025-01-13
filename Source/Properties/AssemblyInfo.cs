@@ -41,3 +41,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("14.99.0.0")]
 [assembly: KSPAssembly("RealismOverhaul", 14, 99)]
 #endif
+
+[assembly: KSPAssemblyDependency("ROUtils", 1, 0, 1)]

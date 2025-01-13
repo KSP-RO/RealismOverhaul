@@ -13,6 +13,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  KSP_ROOT: /tmp/ksp
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   check-secret:
@@ -25,7 +28,7 @@ jobs:
 
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [check-secret]
     if: needs.check-secret.outputs.has-password == 'true'
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -37,20 +40,30 @@ jobs:
           
       - name: Download required assemblies
         id: download-assemblies
-        uses: KSP-RO/BuildTools/download-assemblies@master
+        uses: KSP-RO/BuildTools/download-assemblies-v2@master
         with:
           KSP_ZIP_PASSWORD: ${{ secrets.KSP_ZIP_PASSWORD }}
+          dependency-identifiers: |
+            Harmony2
+            ROUtils
+            RealFuels
 
       - name: Build mod solution
         run: |
-          rm -f ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/*.dll
-          rm -f ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/*.dll
-          msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/RealismOverhaul.sln
-          msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${GITHUB_WORKSPACE}/Source/KerbalPlugins.EngineGroupController.sln
-          cp -v ${GITHUB_WORKSPACE}/Source/obj/Release/RealismOverhaul.dll ${GITHUB_WORKSPACE}/GameData/RealismOverhaul/Plugins/RealismOverhaul.dll
-          cp -v ${GITHUB_WORKSPACE}/Source/EngineGroupController/obj/Release/EngineGroupController.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/EngineGroupController.dll
-          cp -v ${GITHUB_WORKSPACE}/Source/UnityGUIFramework/obj/Release/UnityGUIFramework.dll ${GITHUB_WORKSPACE}/GameData/EngineGroupController/Plugins/UnityGUIFramework.dll
-    
+          rm -f ${{ github.workspace }}/GameData/RealismOverhaul/Plugins/*.dll
+          rm -f ${{ github.workspace }}/GameData/EngineGroupController/Plugins/*.dll
+          msbuild /restore /p:RestorePackagesConfig=true /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${{ github.workspace }}/Source/RealismOverhaul.sln /p:KSPRoot="${{ env.KSP_ROOT }}"
+          msbuild /p:Configuration=Release /p:ReferencePath="${{ steps.download-assemblies.outputs.ksp-dll-path }}" ${{ github.workspace }}/Source/KerbalPlugins.EngineGroupController.sln /p:KSPRoot="${{ env.KSP_ROOT }}"
+          cp -v ${{ github.workspace }}/Source/obj/Release/RealismOverhaul.dll ${{ github.workspace }}/GameData/RealismOverhaul/Plugins/RealismOverhaul.dll
+          cp -v ${{ github.workspace }}/Source/InstallChecker/obj/Release/ROInstallChecker.dll ${{ github.workspace }}/GameData/RealismOverhaul/Plugins/ROInstallChecker.dll
+          cp -v ${{ github.workspace }}/Source/EngineGroupController/obj/Release/EngineGroupController.dll ${{ github.workspace }}/GameData/EngineGroupController/Plugins/EngineGroupController.dll
+          cp -v ${{ github.workspace }}/Source/UnityGUIFramework/obj/Release/UnityGUIFramework.dll ${{ github.workspace }}/GameData/EngineGroupController/Plugins/UnityGUIFramework.dll
+
+      - name: Remove excess DLLs
+        uses: KSP-RO/BuildTools/remove-excess-dlls@master
+        with:
+          path: ${{ github.workspace }}/GameData/
+
       - name: Assemble release
         id: assemble-release
         run: |
@@ -58,12 +71,12 @@ jobs:
           echo "Release dir: ${RELEASE_DIR}"
           mkdir -v "${RELEASE_DIR}"
           echo "::set-output name=release-dir::${RELEASE_DIR}"
-          cp -v -R "${GITHUB_WORKSPACE}/GameData" "${RELEASE_DIR}"
-          cp -v -R "${GITHUB_WORKSPACE}/Ships" "${RELEASE_DIR}"
-          cp -v "${GITHUB_WORKSPACE}/README.md" "${RELEASE_DIR}"
+          cp -v -R "${{ github.workspace }}/GameData" "${RELEASE_DIR}"
+          cp -v -R "${{ github.workspace }}/Ships" "${RELEASE_DIR}"
+          cp -v "${{ github.workspace }}/README.md" "${RELEASE_DIR}"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: RealismOverhaul
           path: ${{ steps.assemble-release.outputs.release-dir }}
