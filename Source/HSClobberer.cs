@@ -97,7 +97,7 @@ namespace RealismOverhaul
             foreach (ModuleAblator pm in pms)
             {
                 if (!pm.useAblator ||
-                    _settings.excludedParts.Contains(pm.part.partName) ||
+                    _settings.excludedParts.Contains(pm.part.name) ||
                     _partAblatorDict.ContainsKey(pm.part))
                 {
                     continue;
