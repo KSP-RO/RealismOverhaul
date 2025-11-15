@@ -15,7 +15,7 @@ namespace RealismOverhaul
             UI_ChooseOption(suppressEditorShipModified = true, options = new[] { "Choose One" })]
         public string selectedBody = string.Empty;
 
-        [KSPField(guiActiveEditor = true, guiName = "Days Elapsed", groupName = groupName),
+        [KSPField(guiActiveEditor = true, guiName = "Days Elapsed (Simulated)", groupName = groupName),
             UI_FloatRange(maxValue = 7300, minValue = 1, stepIncrement = 1, suppressEditorShipModified = true)]
         public float daysElapsed = 1f;
 
