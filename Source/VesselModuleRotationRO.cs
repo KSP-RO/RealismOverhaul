@@ -100,7 +100,10 @@ namespace RealismOverhaul
             return _isEnabled;
         }
 
-        public static bool IsEnabled => _shouldCheckEnabled ? CheckEnabled() : _isEnabled;
+
+        public static bool IsEnabled => !ForceDisabled && (_shouldCheckEnabled ? CheckEnabled() : _isEnabled);
+
+        public static bool ForceDisabled { get; set; }
 
         private bool IsOverThreshold(Vector3 rot)
         {
