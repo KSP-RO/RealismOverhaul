@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("KSP-RO Group")]
 [assembly: AssemblyProduct("RealismOverhaul")]
-[assembly: AssemblyCopyright("Copyright ©  2014-2023")]
+[assembly: AssemblyCopyright("Copyright ©  2014-2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -38,8 +38,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("@MAJOR@.@MINOR@.@PATCH@.@BUILD@")]
 [assembly: KSPAssembly("RealismOverhaul", @MAJOR@, @MINOR@)]
 #else
-[assembly: AssemblyFileVersion("14.99.0.0")]
-[assembly: KSPAssembly("RealismOverhaul", 14, 99)]
+[assembly: AssemblyFileVersion("17.99.0.0")]
+[assembly: KSPAssembly("RealismOverhaul", 17, 99)]
 #endif
 
 [assembly: KSPAssemblyDependency("ROUtils", 1, 0, 1)]
