@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using SaveUpgradePipeline;
 using UnityEngine;
 
-namespace RealismOverhaul
+namespace RealismOverhaul.UpgradeScripts
 {
     [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/FLIGHTSTATE/VESSEL/PART", craftNodeUrl = "PART")]
     public class MECEngineConfigUpgrade : UpgradeScript
