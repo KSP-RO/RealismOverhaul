@@ -10,6 +10,8 @@ namespace RealismOverhaul
         internal TextMeshProUGUI txtEmissiveConstant;
         internal TextMeshProUGUI txtAbsorptiveConstant;
         internal TextMeshProUGUI txtSkinSkinConduction;
+        internal TextMeshProUGUI txtSkinSkinConductionMult;
+        internal TextMeshProUGUI txtSkinInternalConductionMult;
         internal TextMeshProUGUI txtSunFlux;
         internal TextMeshProUGUI txtBodyEmissive;
         internal TextMeshProUGUI txtBodyAlbedo;
@@ -49,12 +51,14 @@ namespace RealismOverhaul
             float topInsertY = thermalMassRT.anchoredPosition.y;
             float condInsertY = conductionRT.anchoredPosition.y;
             float radInsertY = radiationRT.anchoredPosition.y;
+            float bottomInsertY = templateRT.anchoredPosition.y;
 
             bool showAbsorptive = part != null && part.absorptiveConstant != part.emissiveConstant;
             int topNewRows = showAbsorptive ? 3 : 2; // skinExpFrac + emissive [+ absorptive]
-            const int condNewRows = 1; // after txtConductionInternal
+            const int condNewRows = 2; // skinSkinConduction + skinSkinConductionMult
             const int radNewRows = 4;  // after txtRadiationExternal
-            int totalNewRows = topNewRows + condNewRows + radNewRows;
+            const int bottomNewRows = 1; // skinInternalConductionMult after txtSkinToInternal
+            int totalNewRows = topNewRows + condNewRows + radNewRows + bottomNewRows;
 
             // Each existing row accumulates shifts from every insertion point above it.
             // Rows above txtThermalMass are left untouched.
@@ -72,6 +76,8 @@ namespace RealismOverhaul
                     shift += rowStep * condNewRows;
                 if ((rowStep < 0f && y < radInsertY) || (rowStep > 0f && y > radInsertY))
                     shift += rowStep * radNewRows;
+                if ((rowStep < 0f && y < bottomInsertY) || (rowStep > 0f && y > bottomInsertY))
+                    shift += rowStep * bottomNewRows;
 
                 rt.anchoredPosition += new Vector2(0f, shift);
             }
@@ -84,9 +90,10 @@ namespace RealismOverhaul
             if (showAbsorptive)
                 txtAbsorptiveConstant = AddRow(templateRT, rowParent, topInsertY + rowStep * 2f);
 
-            // Insert skin-skin conduction row after txtConductionInternal's new position.
+            // Insert skin-skin conduction rows after txtConductionInternal's new position.
             float newCondY = condInsertY + rowStep * topNewRows;
             txtSkinSkinConduction = AddRow(templateRT, rowParent, newCondY + rowStep, 0);
+            txtSkinSkinConductionMult = AddRow(templateRT, rowParent, newCondY + rowStep * 2f, indentX);
 
             // Insert 4 indented sub-rows after txtRadiationExternal's new position.
             float newRadY = radInsertY + rowStep * (topNewRows + condNewRows);
@@ -94,6 +101,10 @@ namespace RealismOverhaul
             txtBodyEmissive = AddRow(templateRT, rowParent, newRadY + rowStep * 2f, indentX);
             txtBodyAlbedo = AddRow(templateRT, rowParent, newRadY + rowStep * 3f, indentX);
             txtRadiationFluxRow = AddRow(templateRT, rowParent, newRadY + rowStep * 4f, indentX);
+
+            // Insert skin-internal conduction multiplier after txtSkinToInternal.
+            float newBottomY = bottomInsertY + rowStep * (topNewRows + condNewRows + radNewRows);
+            txtSkinInternalConductionMult = AddRow(templateRT, rowParent, newBottomY + rowStep, indentX);
 
             float expandBy = Mathf.Abs(rowStep) * totalNewRows;
             RectTransform myRT = GetComponent<RectTransform>();
@@ -135,6 +146,8 @@ namespace RealismOverhaul
 
             if (txtSkinSkinConduction != null)
                 txtSkinSkinConduction.text = $"Skin-Skin Flux: {ptd.skinSkinConductionFlux * PhysicsGlobals.ThermalConvergenceFactor:F2} kW";
+            if (txtSkinSkinConductionMult != null)
+                txtSkinSkinConductionMult.text = $"Skin-Skin Mult: {part.skinSkinConductionMult:F2}";
 
             if (_fi == null)
                 _fi = part.vessel?.gameObject.GetComponent<FlightIntegrator>();
@@ -172,6 +185,9 @@ namespace RealismOverhaul
                 double emissionKW = sunKW + bodyKW - part.thermalRadiationFlux;
                 txtRadiationFluxRow.text = $"Emission Flux: {-emissionKW:F2} kW";
             }
+
+            if (txtSkinInternalConductionMult != null)
+                txtSkinInternalConductionMult.text = $"Skin-Int Mult: {part.skinInternalConductionMult:F2}";
         }
 
         /// <summary>
