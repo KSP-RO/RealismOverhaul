@@ -90,8 +90,9 @@ namespace RealismOverhaul
             foreach (var a in AssemblyLoader.loadedAssemblies)
             {
                 // ksp_plugin_adapter is Principia
-                if (a.name == "PersistentRotation" || a.name == "PersistentRotationUpgraded" || a.name == "ksp_plugin_adapter" || a.name == "MandatoryRCS")
+                if (a.name == "PersistentRotation" || a.dllName == "PersistentRotationUpgraded" || a.name == "ksp_plugin_adapter" || a.name == "MandatoryRCS")
                 {
+                    Debug.Log($"[RealismOverhaul] VesselModuleRotationRO is disabled because {a.name} is present");
                     _isEnabled = false;
                     break;
                 }
@@ -99,7 +100,10 @@ namespace RealismOverhaul
             return _isEnabled;
         }
 
-        public static bool IsEnabled => _shouldCheckEnabled ? CheckEnabled() : _isEnabled;
+
+        public static bool IsEnabled => !ForceDisabled && (_shouldCheckEnabled ? CheckEnabled() : _isEnabled);
+
+        public static bool ForceDisabled { get; set; }
 
         private bool IsOverThreshold(Vector3 rot)
         {
