@@ -23,7 +23,7 @@ namespace RealismOverhaul
 
             foreach (var a in AssemblyLoader.loadedAssemblies)
             {
-                if (a.name == "PersistentRotation" || a.name == "PersistentRotationUpgraded")
+                if (a.name == "PersistentRotation" || a.dllName == "PersistentRotationUpgraded")
                 {
                     hasPR = true;
                 }
