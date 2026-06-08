@@ -9,7 +9,7 @@ namespace RealismOverhaul
         internal TextMeshProUGUI txtSkinExposedAreaFrac;
         internal TextMeshProUGUI txtEmissiveConstant;
         internal TextMeshProUGUI txtAbsorptiveConstant;
-        internal TextMeshProUGUI txtSkinSkinConduction;
+        internal TextMeshProUGUI txtSkinConduction;
         internal TextMeshProUGUI txtSkinSkinConductionMult;
         internal TextMeshProUGUI txtSkinInternalConductionMult;
         internal TextMeshProUGUI txtSunFlux;
@@ -92,7 +92,7 @@ namespace RealismOverhaul
 
             // Insert skin-skin conduction rows after txtConductionInternal's new position.
             float newCondY = condInsertY + rowStep * topNewRows;
-            txtSkinSkinConduction = AddRow(templateRT, rowParent, newCondY + rowStep, 0);
+            txtSkinConduction = AddRow(templateRT, rowParent, newCondY + rowStep, 0);
             txtSkinSkinConductionMult = AddRow(templateRT, rowParent, newCondY + rowStep * 2f, indentX);
 
             // Insert 4 indented sub-rows after txtRadiationExternal's new position.
@@ -144,10 +144,10 @@ namespace RealismOverhaul
             if (txtAbsorptiveConstant != null)
                 txtAbsorptiveConstant.text = $"Absorptive Constant: {part.absorptiveConstant:F2}";
 
-            if (txtSkinSkinConduction != null)
-                txtSkinSkinConduction.text = $"Skin-Skin Flux: {ptd.skinSkinConductionFlux * PhysicsGlobals.ThermalConvergenceFactor:F2} kW";
+            if (txtSkinConduction != null)
+                txtSkinConduction.text = $"Skin Contact Flux: {ptd.skinConductionFlux * PhysicsGlobals.ThermalConvergenceFactor:F2} kW";
             if (txtSkinSkinConductionMult != null)
-                txtSkinSkinConductionMult.text = $"Skin-Skin Mult: {part.skinSkinConductionMult:F2}";
+                txtSkinSkinConductionMult.text = $"Skin Conduction Mult: {part.skinSkinConductionMult:F2}";
 
             if (_fi == null)
                 _fi = part.vessel?.gameObject.GetComponent<FlightIntegrator>();
