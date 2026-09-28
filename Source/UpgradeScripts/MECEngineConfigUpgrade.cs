@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using SaveUpgradePipeline;
 using UnityEngine;
 
-namespace RealismOverhaul
+namespace RealismOverhaul.UpgradeScripts
 {
     [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/FLIGHTSTATE/VESSEL/PART", craftNodeUrl = "PART")]
     public class MECEngineConfigUpgrade : UpgradeScript
@@ -177,13 +177,4 @@ namespace RealismOverhaul
 
     [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHPlans/KCTVessel/ShipNode/PART")]
     public class MECEngineConfigUpgrade_KCT6 : MECEngineConfigUpgrade_KCTBase { }
-
-    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/BuildList/KCTVessel/ShipNode/PART")]
-    public class MECEngineConfigUpgrade_KCT7 : MECEngineConfigUpgrade_KCTBase { }
-
-    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/Warehouse/KCTVessel/ShipNode/PART")]
-    public class MECEngineConfigUpgrade_KCT8 : MECEngineConfigUpgrade_KCTBase { }
-
-    [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/LaunchComplex/Plans/KCTVessel/ShipNode/PART")]
-    public class MECEngineConfigUpgrade_KCT9 : MECEngineConfigUpgrade_KCTBase { }
 }

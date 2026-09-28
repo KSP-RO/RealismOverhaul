@@ -16,16 +16,22 @@ namespace RealismOverhaul
         [KSPField]
         public Vector3 DescentModeCoM = Vector3.zero;   // If configured, disable customization
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM X-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName, groupDisplayName = groupDisplayName)]
-        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
+        /// <summary>
+        /// Maximum allowed offset as a percentage of the part's dimension.
+        /// </summary>
+        [KSPField]
+        public float maxDimensionOffsetPercent = 0.75f;
+
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM X-offset", guiFormat = "F2", guiUnits = "m", groupName = groupName, groupDisplayName = groupDisplayName)]
+        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -1f, maxValue = 1f, incrementLarge = 0.1f, incrementSmall = 0.01f, incrementSlide = 0.001f, sigFigs = 3)]
         public float offsetX = 0;
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Y-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName)]
-        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Y-offset", guiFormat = "F2", guiUnits = "m", groupName = groupName)]
+        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -1f, maxValue = 1f, incrementLarge = 0.1f, incrementSmall = 0.01f, incrementSlide = 0.001f, sigFigs = 3)]
         public float offsetY = 0;
 
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Z-offset", guiFormat = "F0", guiUnits = "cm", groupName = groupName)]
-        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -100f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 0.01f, sigFigs = 2)]
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "CoM Z-offset", guiFormat = "F2", guiUnits = "m", groupName = groupName)]
+        [UI_FloatEdit(scene = UI_Scene.Editor, minValue = -1f, maxValue = 1f, incrementLarge = 0.1f, incrementSmall = 0.01f, incrementSlide = 0.001f, sigFigs = 3)]
         public float offsetZ = 0;
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiFormat = "P0", guiName = "CoM Offset Limit", groupName = groupName, groupDisplayName = groupDisplayName)]
@@ -62,9 +68,14 @@ namespace RealismOverhaul
             DescentModeChanged(IsDescentMode);
         }
 
-        public void Update()
+        internal void Update()
         {
             Fields[nameof(comString)].guiActive = PhysicsGlobals.ThermalDataDisplay;
+        }
+
+        internal void OnDestroy()
+        {
+            GameEvents.onEditorShipModified.Remove(OnEditorShipModified);
         }
 
         protected void BindUI()
@@ -79,6 +90,9 @@ namespace RealismOverhaul
                 Fields[nameof(offsetX)].uiControlEditor.onFieldChanged += CoMOffsetChanged;
                 Fields[nameof(offsetY)].uiControlEditor.onFieldChanged += CoMOffsetChanged;
                 Fields[nameof(offsetZ)].uiControlEditor.onFieldChanged += CoMOffsetChanged;
+
+                UpdateSliderLimits();
+                GameEvents.onEditorShipModified.Add(OnEditorShipModified);
             }
 
             Actions[nameof(Toggle)].active = ConfiguredForDescentMode;
@@ -90,6 +104,32 @@ namespace RealismOverhaul
             Fields[nameof(offsetX)].guiActiveEditor = !ConfiguredForDescentMode;
             Fields[nameof(offsetY)].guiActiveEditor = !ConfiguredForDescentMode;
             Fields[nameof(offsetZ)].guiActiveEditor = !ConfiguredForDescentMode;
+        }
+
+        private void OnEditorShipModified(ShipConstruct sc)
+        {
+            UpdateSliderLimits();
+        }
+
+        protected void UpdateSliderLimits()
+        {
+            Vector3 extents = PartGeometryUtil.MergeBounds(part.GetRendererBounds(), part.partTransform).extents;
+            var xEdit = Fields[nameof(offsetX)].uiControlEditor as UI_FloatEdit;
+            var yEdit = Fields[nameof(offsetY)].uiControlEditor as UI_FloatEdit;
+            var zEdit = Fields[nameof(offsetZ)].uiControlEditor as UI_FloatEdit;
+            if (xEdit != null && yEdit != null && zEdit != null)
+            {
+                xEdit.minValue = -extents.x * maxDimensionOffsetPercent;
+                xEdit.maxValue = extents.x * maxDimensionOffsetPercent;
+                yEdit.minValue = -extents.y * maxDimensionOffsetPercent;
+                yEdit.maxValue = extents.y * maxDimensionOffsetPercent;
+                zEdit.minValue = -extents.z * maxDimensionOffsetPercent;
+                zEdit.maxValue = extents.z * maxDimensionOffsetPercent;
+
+                Mathf.Clamp(offsetX, xEdit.minValue, xEdit.maxValue);
+                Mathf.Clamp(offsetY, yEdit.minValue, yEdit.maxValue);
+                Mathf.Clamp(offsetZ, zEdit.minValue, zEdit.maxValue);
+            }
         }
 
         protected void OffsetPercentChanged(BaseField bf, object o) => UpdateCoM();
@@ -107,7 +147,7 @@ namespace RealismOverhaul
             if (ConfiguredForDescentMode)
                 part.CoMOffset += IsDescentMode ? DescentModeCoM * offsetPercent : Vector3.zero;
             else
-                part.CoMOffset += new Vector3(offsetX / 100, offsetY / 100, offsetZ / 100);
+                part.CoMOffset += new Vector3(offsetX, offsetY, offsetZ);
 
             comString = $"({part.CoMOffset.x:F2},{part.CoMOffset.y:F2},{part.CoMOffset.z:F2})";
         }
