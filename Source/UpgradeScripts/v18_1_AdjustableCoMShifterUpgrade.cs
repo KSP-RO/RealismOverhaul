@@ -5,12 +5,12 @@ using UnityEngine;
 namespace RealismOverhaul.UpgradeScripts
 {
     [UpgradeModule(LoadContext.SFS | LoadContext.Craft, sfsNodeUrl = "GAME/FLIGHTSTATE/VESSEL/PART", craftNodeUrl = "PART")]
-    public class v17_25_AdjustableCoMShifterUpgrade : UpgradeScript
+    public class v18_1_AdjustableCoMShifterUpgrade : UpgradeScript
     {
         public override string Name => "RO AdjustableCoMShifter Unit Upgrade";
         public override string Description => "Converts AdjustableCoMShifter offset fields from centimeters to meters";
         public override Version EarliestCompatibleVersion => new Version(0, 0, 0);
-        public override Version TargetVersion => new Version(17, 25, 0);
+        public override Version TargetVersion => new Version(18, 1, 0);
 
         public override TestResult OnTest(ConfigNode node, LoadContext loadContext, ref string nodeName)
         {
@@ -46,7 +46,7 @@ namespace RealismOverhaul.UpgradeScripts
         }
     }
 
-    public class v17_25_AdjustableCoMShifterUpgrade_KCTBase : v17_25_AdjustableCoMShifterUpgrade
+    public class v18_1_AdjustableCoMShifterUpgrade_KCTBase : v18_1_AdjustableCoMShifterUpgrade
     {
         public override string Name { get => $"{base.Name} KCT-{nodeUrlSFS}"; }
         public override TestResult OnTest(ConfigNode node, LoadContext loadContext, ref string nodeName) =>
@@ -54,20 +54,20 @@ namespace RealismOverhaul.UpgradeScripts
     }
 
     [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/VABList/KCTVessel/ShipNode/PART")]
-    public class v17_25_AdjustableCoMShifterUpgrade_KCT1 : v17_25_AdjustableCoMShifterUpgrade_KCTBase { }
+    public class v18_1_AdjustableCoMShifterUpgrade_KCT1 : v18_1_AdjustableCoMShifterUpgrade_KCTBase { }
 
     [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHList/KCTVessel/ShipNode/PART")]
-    public class v17_25_AdjustableCoMShifterUpgrade_KCT2 : v17_25_AdjustableCoMShifterUpgrade_KCTBase { }
+    public class v18_1_AdjustableCoMShifterUpgrade_KCT2 : v18_1_AdjustableCoMShifterUpgrade_KCTBase { }
 
     [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/VABWarehouse/KCTVessel/ShipNode/PART")]
-    public class v17_25_AdjustableCoMShifterUpgrade_KCT3 : v17_25_AdjustableCoMShifterUpgrade_KCTBase { }
+    public class v18_1_AdjustableCoMShifterUpgrade_KCT3 : v18_1_AdjustableCoMShifterUpgrade_KCTBase { }
 
     [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHWarehouse/KCTVessel/ShipNode/PART")]
-    public class v17_25_AdjustableCoMShifterUpgrade_KCT4 : v17_25_AdjustableCoMShifterUpgrade_KCTBase { }
+    public class v18_1_AdjustableCoMShifterUpgrade_KCT4 : v18_1_AdjustableCoMShifterUpgrade_KCTBase { }
 
     [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/VABPlans/KCTVessel/ShipNode/PART")]
-    public class v17_25_AdjustableCoMShifterUpgrade_KCT5 : v17_25_AdjustableCoMShifterUpgrade_KCTBase { }
+    public class v18_1_AdjustableCoMShifterUpgrade_KCT5 : v18_1_AdjustableCoMShifterUpgrade_KCTBase { }
 
     [UpgradeModule(LoadContext.SFS, sfsNodeUrl = "GAME/SCENARIO/KSC/SPHPlans/KCTVessel/ShipNode/PART")]
-    public class v17_25_AdjustableCoMShifterUpgrade_KCT6 : v17_25_AdjustableCoMShifterUpgrade_KCTBase { }
+    public class v18_1_AdjustableCoMShifterUpgrade_KCT6 : v18_1_AdjustableCoMShifterUpgrade_KCTBase { }
 }

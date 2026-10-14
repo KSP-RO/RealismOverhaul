@@ -38,8 +38,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("@MAJOR@.@MINOR@.@PATCH@.@BUILD@")]
 [assembly: KSPAssembly("RealismOverhaul", @MAJOR@, @MINOR@)]
 #else
-[assembly: AssemblyFileVersion("17.99.0.0")]
-[assembly: KSPAssembly("RealismOverhaul", 17, 99)]
+[assembly: AssemblyFileVersion("18.99.0.0")]
+[assembly: KSPAssembly("RealismOverhaul", 18, 99)]
 #endif
 
 [assembly: KSPAssemblyDependency("ROUtils", 1, 0, 1)]
