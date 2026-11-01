@@ -147,7 +147,7 @@ namespace RealismOverhaul
             if (txtSkinConduction != null)
                 txtSkinConduction.text = $"Skin Contact Flux: {ptd.skinConductionFlux * PhysicsGlobals.ThermalConvergenceFactor:F2} kW";
             if (txtSkinSkinConductionMult != null)
-                txtSkinSkinConductionMult.text = $"Skin Conduction Mult: {part.skinSkinConductionMult:F2}";
+                txtSkinSkinConductionMult.text = $"Skin Conduction Mult: {part.skinSkinConductionMult:F4}";
 
             if (_fi == null)
                 _fi = part.vessel?.gameObject.GetComponent<FlightIntegrator>();
@@ -187,7 +187,7 @@ namespace RealismOverhaul
             }
 
             if (txtSkinInternalConductionMult != null)
-                txtSkinInternalConductionMult.text = $"Skin-Int Mult: {part.skinInternalConductionMult:F2}";
+                txtSkinInternalConductionMult.text = $"Skin-Int Mult: {part.skinInternalConductionMult:F4}";
         }
 
         /// <summary>
