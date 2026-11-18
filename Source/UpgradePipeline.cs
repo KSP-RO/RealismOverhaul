@@ -71,7 +71,7 @@ namespace RealismOverhaul
                         dict = new Dictionary<string, string>();
                         upgrades.Add(v, dict);
                     }
-                    foreach (ConfigNode.Value kvp in node.values)
+                    foreach (ConfigNode.Value kvp in n.values)
                         dict[kvp.name] = kvp.value;
                 }
             }
@@ -84,9 +84,11 @@ namespace RealismOverhaul
                 {
                     var dict2 = upgrades.Values[j];
                     foreach (var kvp in dict2)
-                        dict.Add(kvp.Key, kvp.Value);
+                        dict[kvp.Key] = kvp.Value;
                 }
             }
+
+            hasLoadedData = true;
         }
 
         protected string GetConfigString(ConfigNode mecNode)
